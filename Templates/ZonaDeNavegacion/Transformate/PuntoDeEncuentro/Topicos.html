@@ -4,7 +4,7 @@
             <div class="subtitle">Punto de encuentro</div>
             <div class="txt-renglon txt-bigger"> ¡Haz públicas tus ideas! <br>
                 Deja que conozcan tus ideas, toma los retos y comenta a los demás.<br/><br/>
-          Para terminar esta actividad debes realizar por lo menos dos publicaciones en cada uno de los siguientes tópicos.
+                Para terminar esta actividad debes realizar por lo menos dos publicaciones en cada uno de los siguientes tópicos.
             </div>
         </section>
         <section class="list txt-renglon">
@@ -23,4 +23,18 @@
             <div class="txt-renglon centered txt-bigger"></div>
         </section>
     </article>
+    <script type="text/ng-template" id="ClosingChallengeModal.html">
+        <div class="modal-robot robot-sm closing-stage-modal user-help">
+            <img src="assets/images/img-robot-sm.svg" alt="robot"/>
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">{{title}}</h3>
+                <p class="txt-renglon centered">{{instructions}}</p>
+            </div>
+        </div>
+    </script>
 </div>

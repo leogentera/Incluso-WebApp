@@ -1,25 +1,39 @@
 <div class="incluso-app step-dashboard topics-forum">
-   <article class="bluespace">
-    <section>
-      <div class="subtitle">Punto de encuentro</div>
-      <div class="txt-renglon txt-bigger"> ¡Haz públicas tus ideas! <br>
-          Deja que conozcan tus ideas, toma los retos y comenta a los demás.<br/><br/>
-          Para terminar esta actividad debes realizar por lo menos dos publicaciones en cada uno de los siguientes tópicos.
-      </div>
-    </section>
-    <section class="list txt-renglon">
-      <div id="item{{$index}}" ng-repeat="t in activity.discussions">
-        <div class="part list-item" ng-click="showComentarios(t.discussion, moodleId)">
-          <span>{{t.name}}</span>
-          <a href="">
-            <span class="icomoon icon-arrow-right-aligned fl-right"></span>
-          </a>
+    <article class="bluespace">
+        <section>
+            <div class="subtitle">Punto de encuentro</div>
+            <div class="txt-renglon txt-bigger"> ¡Haz públicas tus ideas! <br>
+                Deja que conozcan tus ideas, toma los retos y comenta a los demás.<br/><br/>
+                Para terminar esta actividad debes realizar por lo menos dos publicaciones en cada uno de los siguientes tópicos.
+            </div>
+        </section>
+        <section class="list txt-renglon">
+            <div id="item{{$index}}" ng-repeat="t in activity.discussions">
+                <div class="part list-item" ng-click="showComentarios(t.discussion, moodleId)">
+                    <span>{{t.name}}</span>
+                    <a href="">
+                        <span class="icomoon icon-arrow-right-aligned fl-right"></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section>
+            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
+            <div class="txt-renglon centered txt-bigger"></div>
+        </section>
+    </article>
+    <script type="text/ng-template" id="ClosingChallengeModal.html">
+        <div class="modal-robot robot-sm closing-stage-modal user-help">
+            <img src="assets/images/img-robot-sm.svg" alt="robot"/>
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">{{title}}</h3>
+                <p class="txt-renglon centered">{{instructions}}</p>
+            </div>
         </div>
-      </div>
-    </section>
-    <section>
-      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
-      <div class="txt-renglon centered txt-bigger"></div> 
-    </section>
-  </article>    
+    </script>
 </div>
