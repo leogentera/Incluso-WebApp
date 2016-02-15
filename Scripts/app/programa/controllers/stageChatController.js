@@ -38,6 +38,7 @@ angular
                 $scope.idEtapa = 0;
                 $scope.scrollToTop();            
                 $scope.currentPage = 1;
+                $scope.closingChallengeRobotResource = null;
                 var index = 0;
                 var parentIndex = 4;                           
                 var coursemoduleid = parseInt($routeParams.moodleid);
@@ -72,7 +73,62 @@ angular
     
                 if(treeActivity.status == 1){   
                     $location.path('/Chat'); 
-                }            
+                }
+                
+                $scope.finishActivityAndContinue = function () {
+                    
+                    $scope.validateConnection(function() {
+                    
+                        $scope.$emit('ShowPreloader'); //show preloader
+                        if(!treeActivity.status){
+                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        var like_status = $scope.like_status;
+        
+                        var data = {
+                            userid: currentUser.userId,
+                            like_status: like_status
+                        };
+        
+                        // Update activity in usercourse
+                        treeActivity.status = 1;
+                        treeActivity.last_status_update =  moment(Date.now()).unix();
+                        localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                        
+                        for(var i =0; i< $scope.model.stages.length; i++){
+                            var stage = $scope.model.stages[i];
+                            for(var j=0;j < stage.challenges.length; j++){
+                                var challenge = stage.challenges[j];
+                                for(var k=0; k < challenge.activities.length;k++){
+                                    var activity = challenge.activities[k];
+                                    if (activity.coursemoduleid == treeActivity.coursemoduleid){
+                                        activity = treeActivity;
+                                    }
+                                }
+                            }
+                        }
+                                                                    
+                        moodleFactory.Services.PutEndActivity(treeActivity.coursemoduleid, data, treeActivity, currentUser.token, function () {
+                            _setLocalStorageJsonItem('usercourse', $scope.model);
+                            var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
+                            var model = {
+                                userId: currentUser.userId,
+                                stars: $scope.activityPoints,
+                                instance: treeActivity.coursemoduleid,
+                                instanceType: 0,
+                                date: getdate()
+                            };
+                                   
+                            updateLocalStorageStars(model);
+                            profile.stars = parseInt(profile.stars) + treeActivity.points;
+                            moodleFactory.Services.PutStars(model, profile, currentUser.token, putStarsCallbackContinueToChat, errorCallback, true);
+                        }, function(){
+                            $timeout(function(){ $scope.$emit('HidePreloader'); }, 1);
+                        });
+                        }
+                    
+                    }, offlineCallback);
+                    
+                };
                 
     
                 $scope.finishActivity = function () {
@@ -173,6 +229,66 @@ angular
                     $location.path('/'+ currentStage +'/Dashboard/' + userCurrentStage + '/' + currentChallenge); 
                     
                 }
+                
+                function putStarsCallbackContinueToChat() {
+                    //trigger activity type 2 is sent when the activity ends.
+                    var triggerActivity = 2;   
+    
+                    //create notification                    
+                    _activityNotification(treeActivity.coursemoduleid, triggerActivity);
+                    //complete stage
+                    
+                    console.log("activityNotification");
+    
+                    _updateBadgeStatus(treeActivity.coursemoduleid);
+                    console.log("_updateBadgeStatus");
+                    _updateRewardStatus();
+                    // update activity status dictionary used for blocking activity links
+                    updateActivityStatusDictionary(treeActivity.activity_identifier);
+    
+                    var userCurrentStage = localStorage.getItem("currentStage");
+                    
+                    localStorage.removeItem("finishCabinaSoporte/" + userId);
+                    localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
+                    
+                    var idEtapa = Number(userCurrentStage);
+                    var challengeCompletedId = _closeChallenge(idEtapa - 1);
+                    var _userId = localStorage.getItem("userId");
+                    var _user = JSON.parse(localStorage.getItem("Perfil/" + _userId));
+                    var _usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                    
+                    //Exclude challenges initial and final from showing modal robot
+                    var challengeExploracionInicial = 140;
+                    var challengeExploracionFinal = 152;
+                    if (challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)) {
+                        
+                        var thisStage = _usercourse.stages[idEtapa - 1];
+                        console.log(thisStage);
+                        drupalFactory.Services.GetContent(thisStage.activity_identifier, function (data, key) { 
+                            $scope.closingChallengeRobotResource = data.node;
+                            showClosingChallengeRobot(challengeCompletedId);
+                        }, function () {}, false);
+                        
+                    } else {
+                        localStorage.removeItem("challengeMessage");
+                    }
+                    
+                    //Update progress
+                    var _progress = moodleFactory.Services.RefreshProgress(_usercourse, _user);
+                    _setLocalStorageJsonItem("usercourse", _progress.course);
+                    var _stageProgress = _progress.course.stages[idEtapa - 1].stageProgress;
+                    _progressNotification(idEtapa, _stageProgress);
+                }
+                
+                $scope.openModal_CloseChallenge = function (size) {
+                    var modalInstance = $modal.open({
+                        animation: $scope.animationsEnabled,
+                        templateUrl: 'ClosingChallengeModal.html',
+                        controller: 'closingChallengeController',
+                        size: size,
+                        windowClass: 'closing-stage-modal user-help-modal'
+                    });
+                };
     
                 function errorCallback(){
                     $scope.$emit('HidePreloader'); //hide preloader  
@@ -218,6 +334,53 @@ angular
                     }, function () { _loadedResources = true; }, false);
                 }
                 
+                function showClosingChallengeRobot(challengeCompletedId) {
+
+                    $scope.robotMessages = [
+                        {
+                            title: $scope.closingChallengeRobotResource.robot_title_challenge_one,
+                            message: $scope.closingChallengeRobotResource.robot_challenge_one,
+                            read: "false",
+                            challengeId: 113
+                        },
+                        {
+                            title: $scope.closingChallengeRobotResource.robot_title_challenge_two,
+                            message: $scope.closingChallengeRobotResource.robot_challenge_two,
+                            read: "false",
+                            challengeId: 114
+                        },
+                        {
+                            title: $scope.closingChallengeRobotResource.robot_title_challenge_thre,
+                            message: $scope.closingChallengeRobotResource.robot_challenge_three,
+                            read: "false",
+                            challengeId: 115
+                        },
+                        {
+                            title: $scope.closingChallengeRobotResource.robot_title_challenge_four,
+                            message: $scope.closingChallengeRobotResource.robot_challenge_four,
+                            read: "false",
+                            challengeId: 116
+                        }];
+                    
+                    var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
+                    var actualMessage = challengeMessage;
+
+
+                    actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
+                    if (actualMessage) {
+                        _setLocalStorageItem("challengeMessage", JSON.stringify(actualMessage));
+                        $scope.openModal_CloseChallenge();
+                    }
+                }
+                
             }
 
-        }]);
+        }]).controller('closingChallengeController', ['$location', '$scope', '$modalInstance', function ($location, $scope, $modalInstance) {
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+                $location.path('/Chat');
+            };
+
+            var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
+            $scope.actualMessage = challengeMessage;
+}]);
