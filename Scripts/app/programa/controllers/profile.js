@@ -20,6 +20,7 @@ angular
             var _pageLoaded = false;
             var showResultsPage = false;
             $scope.accessedSubsection = false;
+            $scope.$emit('scrollTop');
 
             $scope.$emit('ShowPreloader');
 
