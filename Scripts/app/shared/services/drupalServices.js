@@ -60,6 +60,7 @@
         "2023": 64, /* Zona de Navegaci�n - Exploraci�n Final */
         "3601": 66, /* Zona de Aterrizaje - Exploraci�n Final */
         "3101": 65, /* Zona de Aterrizaje - Exploraci�n Inicial */
+        "1049147": 102, /* Zona de Vuelo - Con�cete - Robot Foros */
         "HelpAndSupport": 82, /*General - Ayuda y soporte*/
         "tuEliges": 96, /* Zona de Navegación - Tu Eliges - Tu Eliges */
         "mapaVida": 97, /* Zona de Navegación - Proyecta tu vida - Mapa de vida */

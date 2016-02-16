@@ -571,6 +571,25 @@
             }
             
         };
+
+        var _putAsyncFirstTimeInfoForForums = function (userId, currentUserToken, dataModel, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            //var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+            _httpFactory({
+                method: 'PUT',
+                url: API_RESOURCE.format('usercourse/' + userId),
+                data: dataModel,
+
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': currentUserToken
+                }
+            }).success(function (data, status, headers, config) {
+                successCallback();
+            }).error(function (data, status, headers, config) {
+                errorCallback();
+            });
+        };
         
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
             _getDeviceVersionAsync();
@@ -1389,6 +1408,7 @@
             PostUserNotifications: _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
             PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
+            PutAsyncFirstTimeInfoForForums : _putAsyncFirstTimeInfoForForums,
             GetAsyncLeaderboard: _getAsyncLeaderboard,
             GetAsyncHallOfFame: _getAsyncHallOfFame,
             GetAsyncCatalog: _getAsyncCatalog,
