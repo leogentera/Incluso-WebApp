@@ -61,6 +61,21 @@
                             </div>
                         </div>
                     </script>
+                    
+                    <script type="text/ng-template" id="ClosingCabinaChallengeModal.html">
+                        <div class="modal-robot robot-sm closing-stage-modal user-help" >
+                            <img src="assets/images/img-robot-sm.svg" alt="robot" />
+                            <div class="modal-header">
+                                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                                    <span class="icomoon icon-cross"></span>
+                                </a>
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                                <p class="txt-renglon centered">{{actualMessage.message}}</p>
+                            </div>
+                        </div>
+                    </script>
 
                     <script type="text/ng-template" id="openingRequirementsModal.html">
                         <div class="modal-robot robot-lg user-help">

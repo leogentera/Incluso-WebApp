@@ -20,6 +20,8 @@ angular
             }
             
             function initController() {
+                
+                console.log("initController");
 
             _timeout = $timeout;
             _httpFactory = $http;
@@ -47,6 +49,7 @@ angular
             } 
             else 
             {                  
+                console.log("setInterval, 60000");
                 interval = setInterval(getMessages,60000);                                    
             }
 
@@ -103,7 +106,8 @@ angular
                                 }
                             }
 
-                            if (latestCoachAndSenderMessages >= 2) {                                
+                            if (latestCoachAndSenderMessages >= 2) {
+                                clearInterval(interval);
                                 localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
                                 _setLocalStorageItem("finishCabinaSoporte/" + userId, _startedActivityCabinaDeSoporte.activity_identifier);
                                 $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);

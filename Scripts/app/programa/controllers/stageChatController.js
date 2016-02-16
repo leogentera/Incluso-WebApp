@@ -237,11 +237,8 @@ angular
                     //create notification                    
                     _activityNotification(treeActivity.coursemoduleid, triggerActivity);
                     //complete stage
-                    
-                    console.log("activityNotification");
     
                     _updateBadgeStatus(treeActivity.coursemoduleid);
-                    console.log("_updateBadgeStatus");
                     _updateRewardStatus();
                     // update activity status dictionary used for blocking activity links
                     updateActivityStatusDictionary(treeActivity.activity_identifier);
@@ -262,10 +259,11 @@ angular
                     var challengeExploracionFinal = 152;
                     if (challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)) {
                         
-                        var thisStage = _usercourse.stages[idEtapa - 1];
-                        console.log(thisStage);
-                        drupalFactory.Services.GetContent(thisStage.activity_identifier, function (data, key) { 
+                        var stageActivity_identifier = idEtapa + "000";
+                        drupalFactory.Services.GetContent(stageActivity_identifier, function (data, key) { 
                             $scope.closingChallengeRobotResource = data.node;
+                            $timeout(function(){ $scope.$emit('HidePreloader'); }, 1);
+                            
                             showClosingChallengeRobot(challengeCompletedId);
                         }, function () {}, false);
                         
@@ -283,7 +281,7 @@ angular
                 $scope.openModal_CloseChallenge = function (size) {
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
-                        templateUrl: 'ClosingChallengeModal.html',
+                        templateUrl: 'ClosingCabinaChallengeModal.html',
                         controller: 'closingChallengeController',
                         size: size,
                         windowClass: 'closing-stage-modal user-help-modal'
@@ -338,33 +336,26 @@ angular
 
                     $scope.robotMessages = [
                         {
-                            title: $scope.closingChallengeRobotResource.robot_title_challenge_one,
-                            message: $scope.closingChallengeRobotResource.robot_challenge_one,
+                            title: $scope.closingChallengeRobotResource.robot_title_challenge_four,
+                            message: $scope.closingChallengeRobotResource.robot_challenge_four,
                             read: "false",
-                            challengeId: 113
-                        },
-                        {
-                            title: $scope.closingChallengeRobotResource.robot_title_challenge_two,
-                            message: $scope.closingChallengeRobotResource.robot_challenge_two,
-                            read: "false",
-                            challengeId: 114
-                        },
-                        {
-                            title: $scope.closingChallengeRobotResource.robot_title_challenge_thre,
-                            message: $scope.closingChallengeRobotResource.robot_challenge_three,
-                            read: "false",
-                            challengeId: 115
+                            challengeId: 116
                         },
                         {
                             title: $scope.closingChallengeRobotResource.robot_title_challenge_four,
                             message: $scope.closingChallengeRobotResource.robot_challenge_four,
                             read: "false",
-                            challengeId: 116
+                            challengeId: 217
+                        },
+                        {
+                            title: $scope.closingChallengeRobotResource.robot_title_challenge_five,
+                            message: $scope.closingChallengeRobotResource.robot_challenge_five,
+                            read: "false",
+                            challengeId: 167
                         }];
                     
                     var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
                     var actualMessage = challengeMessage;
-
 
                     actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
                     if (actualMessage) {
