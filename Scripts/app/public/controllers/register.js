@@ -11,7 +11,8 @@ angular
         '$http',
         '$anchorScroll',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+        'IntervalFactory',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
 
             _timeout = $timeout;
             _httpFactory = $http;
@@ -322,6 +323,8 @@ angular
                         $location.path('/');
 
                     }, true);
+                    
+                    IntervalFactory.StartUserNotificationWeeklyInterval();
 
                     try {
                         $scope.$emit('HidePreloader');

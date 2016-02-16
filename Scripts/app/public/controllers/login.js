@@ -11,7 +11,8 @@ angular
         '$http',
         '$anchorScroll',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+        'IntervalFactory',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
             _timeout = $timeout;
             _httpFactory = $http;
             $scope.scrollToTop();
@@ -41,6 +42,8 @@ angular
             $scope.$watch("userCredentialsModel.modelState.errorMessages", function (newValue, oldValue) {
                 $scope.userCredentialsModel.modelState.isValid = (newValue.length === 0);
             });
+            
+            IntervalFactory.CancelUserNotificationWeeklyInterval();
             
             function validateModel(){                
                 var errors = [];
@@ -212,6 +215,8 @@ angular
 
                                 var course = moodleFactory.Services.GetCacheJson("course");
                                 moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
+                                    
+                                    IntervalFactory.StartUserNotificationWeeklyInterval();
 
                                     //Load Quizzes assets
                                     loadQuizesAssets(data.id, data.token);
@@ -298,6 +303,8 @@ angular
                             moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
                             }, function () {
                             }, false);
+                        
+                            IntervalFactory.StartUserNotificationWeeklyInterval();
 
                             //Load Quizzes assets
                             loadQuizesAssets(userFacebook.id, userFacebook.token);
