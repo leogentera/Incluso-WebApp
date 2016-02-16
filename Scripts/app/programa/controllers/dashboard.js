@@ -270,6 +270,7 @@ angular
                                 $scope.navigateTo('TermsOfUse');
                             }
 
+                            $scope.user.firstname = profile.firstname;
                             $scope.user.rank = profile.rank;
                             $scope.user.stars = parseInt(profile.stars, 10); //Saved as an integer.
 

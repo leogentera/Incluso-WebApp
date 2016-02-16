@@ -205,8 +205,21 @@
     .container{
         padding:0;        
     }
+    
+    .bg-user-avatar {
+        padding: 10vw 4vw;
+        background: url('@{url-images}/svg/bg-avatar-dashboard.svg') no-repeat;
+        background-size: 100% 100%;
+        background-clip: padding-box;
+    }
+    
     .user-avatar {
         figure {border: 0px solid transparent;}
+        h1 {                    
+            margin: 2vw 0px 6vw;
+            padding: 0;
+            font-size: 8vw;
+        }                       
         figcaption {
             background-color: @clr-blueMedium;
             color: @clr-white;
@@ -215,11 +228,16 @@
             display: inline-block;
             font-size: 1em;
             height: 8vw;
-            line-height: 9vw;
+            line-height: 8vw;
             padding: 0 3vw;
             position: relative;
             top: -3vw;
             width: auto;
+            &.points {                  
+                background: transparent;
+                color: @clr-green;      
+                top: 0;                 
+            }                           
         }
     }
     .global-progress {

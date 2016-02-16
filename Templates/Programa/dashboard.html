@@ -3,17 +3,18 @@
         <div class="container">
             <div class="dash-top">
                 <h1 class="text-center">
-                    ¡<span ng-bind="user.gender == 'Masculino' ? contentResources.male_welcome + ' ' + user.alias : contentResources.female_welcome + ' ' + user.alias"></span>!
+                   <!-- ¡<span ng-bind="user.gender == 'Masculino' ? contentResources.male_welcome + ' ' + user.alias : contentResources.female_welcome + ' ' + user.alias"></span>! -->
+                        ¡<span ng-bind="user.gender == 'Masculino' ? contentResources.male_welcome + ' ' + user.firstname : contentResources.female_welcome + ' ' + user.firstname"></span>!                
                 </h1>
-
 				<section class="component">
-					<div class="row">
-                        <div class="col-xs-4 col-xs-offset-4">
+					<div class="row bg-user-avatar">
+                        <div class="col-xs-8 col-xs-offset-2">
                             <a>
                                 <div class="user-avatar">
                                     <figure class="user-avatar-">
                                         <img ng-src="{{user.profileimageurl}}" alt="avatar" ng-click="navigateTo('Perfil/' + user.id)" />
-                                        <figcaption ng-bind="user.rank"></figcaption>
+                                        <h1 class="text-uppercase" ng-bind="user.alias"></h1>
+                                         <figcaption class="points"><span ng-bind="user.stars ? user.stars : 0"></span> <i class="icomoon icon-star"></i></figcaption>
                                     </figure>
                                 </div>
                             </a>
