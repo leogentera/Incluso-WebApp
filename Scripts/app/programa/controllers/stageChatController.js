@@ -282,9 +282,11 @@ angular
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
                         templateUrl: 'ClosingCabinaChallengeModal.html',
-                        controller: 'closingChallengeController',
+                        controller: 'closingCabinaChallengeController',
                         size: size,
                         windowClass: 'closing-stage-modal user-help-modal'
+                    }).result.finally(function() {
+                        $location.path('/Chat');
                     });
                 };
     
@@ -366,10 +368,10 @@ angular
                 
             }
 
-        }]).controller('closingChallengeController', ['$location', '$scope', '$modalInstance', function ($location, $scope, $modalInstance) {
+        }]).controller('closingCabinaChallengeController', ['$location', '$scope', '$modalInstance', function ($location, $scope, $modalInstance) {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
-                $location.path('/Chat');
+                //$location.path('/Chat');
             };
 
             var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
