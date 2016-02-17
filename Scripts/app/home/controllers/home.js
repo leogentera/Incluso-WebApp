@@ -11,6 +11,9 @@ angular
         '$filter',
         '$modal',
         function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal) {
+            
+            $rootScope.OAUTH_ENABLED = false;
+            
             // To handle page reloads
             _httpFactory = $http;
             if ($location.$$path.split('/')[1]) {
