@@ -89,6 +89,13 @@ angular
                 } else {
                     $scope.currentPage = 1;
                 }
+                
+                $scope.$watch("currentPage", function (newValue, oldValue) {
+                    
+                    if($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
+                        $rootScope.pageName = newValue == 1 ? "Configuración" : "Privacidad";
+                    }
+                });
 
                 $rootScope.showFooter = false;
                 $rootScope.showFooterRocks = false;
