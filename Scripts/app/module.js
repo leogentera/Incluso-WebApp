@@ -1014,6 +1014,13 @@ angular
           templateUrl: 'Templates/Partials/shareReconocimiento.html'
         };
     })
+    .directive('preloaderComponent', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Programa/preloader.html'
+        };
+    })
     .directive('menuComponent', function(){
         return {
           restrict: 'E',
@@ -1035,13 +1042,13 @@ angular
           templateUrl: 'Templates/Programa/footer.html'
         };
     })
-    .directive('preloaderComponent', function(){
+    /*.directive('preloaderComponent', function(){
         return {
           restrict: 'E',
           scope: false,
           templateUrl: 'Templates/Shared/_preloader.html'
         };
-    })
+    })*/
     .directive('uiSwitch', ['$injector', function($injector) {
         var $drag = $injector.has('$drag') && $injector.get('$drag');
 

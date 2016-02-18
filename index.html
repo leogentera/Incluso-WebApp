@@ -30,9 +30,7 @@
 
     <body ng-controller="homeCtrl" class="incluso-app ng-scope has-sidebar-left" ng-class="{'sidebar-left-active': sidebar}">
         <!-- preloader -->
-        <div class="app-preloader" id="spinner" ng-show="loading">
-            <div class="spinner spinner-circle"></div>
-        </div>
+        <preloader-component></preloader-component>
 
         <!-- Main menu / sidebar -->
         <menu-component></menu-component>

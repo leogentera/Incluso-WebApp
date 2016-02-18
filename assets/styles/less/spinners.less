@@ -1,0 +1,201 @@
+.translate(@x, @y) {
+    -moz-transform: translate(@x,@y);
+    -ms-transform: translate(@x,@y);
+    -o-transform: translate(@x,@y);
+    -webkit-transform: translate(@x,@y);
+    transform: translate(@x,@y);
+}
+
+.rotate(@deg) {
+    -moz-transform: rotate(@deg);
+    -ms-transform: rotate(@deg);
+    -o-transform: rotate(@deg);
+    -webkit-transform: rotate(@deg);
+    transform: rotate(@deg);
+}
+
+.animation(@kframes, @time){
+    -moz-animation: @kframes @time linear infinite;
+    -o-animation: @kframes @time linear infinite;
+    -webkit-animation: @kframes @time linear infinite;
+    animation: @kframes @time linear infinite;
+}
+
+.animationX2(@kframes, @kframes-2, @time){
+    -moz-animation: @kframes @time linear infinite, @kframes-2 @time linear infinite;
+    -o-animation: @kframes @time linear infinite, @kframes-2 @time linear infinite;
+    -webkit-animation: @kframes @time linear infinite, @kframes-2 @time linear infinite;
+    animation: @kframes @time linear infinite, @kframes-2 @time linear infinite;
+} 
+  
+.vibration() {
+    0% { .translate(-5px,-5px) }
+    25% { .translate(0,0) }
+    50% { .translate(5px,-5px) }
+    75% { .translate(0,0) }
+    100% { .translate(-5px,-5px) }
+}
+
+.opacity() {
+    0% { opacity: .2; }
+    16.5% { opacity: 1; }
+    100% { opacity: .2; }
+}
+
+.opacity-p0() {
+    0% { opacity: 0; }
+    16.6% { opacity: 1; }
+    33.3% { opacity: 1; }
+    50% { opacity: 1; }
+    66.6% { opacity: 0;}
+    83.3% { opacity: 0; }
+    100% { opacity: 0; }
+}
+            
+.opacity-p1() {
+    0% { opacity: 0; }
+    16.6% { opacity: 0; }
+    33.3% { opacity: 1; }
+    50% { opacity: 1; }
+    66.6% { opacity: 1;}
+    83.3% { opacity: 0; }
+    100% { opacity: 0; }
+}
+            
+.opacity-p2() {
+    0% { opacity: 0; }
+    16.6% { opacity: 0; }
+    33.3% { opacity: 0; }
+    50% { opacity: 1; }
+    66.6% { opacity: 1;}
+    83.3% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.orbit() {
+    0% {.translate(26%,344%)}
+    6.9% {.translate(90%,388%)}
+    10.9% {.translate(154%,396%)}
+    18.3% {.translate(236%,383%)}
+    27% {.translate(347%,356%)}
+    36.8% {.translate(512%,282%)}
+    44.1% {.translate(651%,177%)}
+    47.6% {.translate(668%,149%)}
+    50% {.translate(682%,113%)}
+    53.3% {.translate(652%,83%)}
+    57.3% {.translate(603%,70%)}
+    64.3% {.translate(550%,65%)}
+    88.2% {.translate(151%,220%)}
+    94.6% {.translate(69%,284%)}
+    95.5% {.translate(36%,318%)}
+    100% {.translate(26%,344%)}
+}
+
+.orbit-zindex() {
+    0% {z-index: 1}
+    49% {z-index: 1}
+    50% {z-index: -1}
+    100% {z-index: -1}
+}
+        
+.rotating() {
+    from {
+        .rotate(0deg);
+    }
+    to {
+        .rotate(360deg);
+    }
+}
+
+@-webkit-keyframes vibration {.vibration;}
+@-moz-keyframes vibration {.vibration;}
+@-ms-keyframes vibration {.vibration;}
+@-o-keyframes vibration {.vibration;}
+@keyframes vibration {.vibration;}
+
+@-webkit-keyframes opacity {.opacity;}
+@-moz-keyframes opacity {.opacity;}
+@-ms-keyframes opacity {.opacity;}
+@-o-keyframes opacity {.opacity;}
+@keyframes opacity {.opacity;}
+
+@-webkit-keyframes opacity-p1 {.opacity-p1;}
+@-moz-keyframes opacity-p1 {.opacity-p1;}
+@-ms-keyframes opacity-p1 {.opacity-p1;}
+@-o-keyframes opacity-p1 {.opacity-p1;}
+@keyframes opacity-p1 {.opacity-p1;}
+
+@-webkit-keyframes opacity-p2 {.opacity-p2;}
+@-moz-keyframes opacity-p2 {.opacity-p2;}
+@-ms-keyframes opacity-p2 {.opacity-p2;}
+@-o-keyframes opacity-p2 {.opacity-p2;}
+@keyframes opacity-p2 {.opacity-p2;}          
+
+@-webkit-keyframes orbit {.orbit;}
+@-moz-keyframes orbit {.orbit;}
+@-ms-keyframes orbit {.orbit;}
+@-o-keyframes orbit {.orbit;}
+@keyframes orbit {.orbit;}
+
+@-webkit-keyframes orbit-zindex {.orbit-zindex;}
+@-moz-keyframes orbit-zindex {.orbit-zindex;}
+@-ms-keyframes orbit-zindex {.orbit-zindex;}
+@-o-keyframes orbit-zindex {.orbit-zindex;}
+@keyframes orbit-zindex {.orbit-zindex;}
+
+@-webkit-keyframes rotating {.rotating;}
+@-moz-keyframes rotating {.rotating;}
+@-ms-keyframes rotating {.rotating;}
+@-o-keyframes rotating {.rotating;}
+@keyframes rotating {.rotating;}
+
+.spinner-svg.show {
+    width: 25vw;
+    margin: auto;
+    position: relative;
+    .opacity {
+        .animation("opacity", .3s);
+    }
+            
+    .opacity-1s {
+        .animation("opacity", 1s);
+    }
+
+    .rotating {
+        .animation("rotating", 3s);
+    }
+            
+    &.vibration {
+        .animation("vibration", .5s);
+    }
+    .spinner-complement {
+        position: absolute;
+        top: 0;
+        left: 0;
+        &.point-0 {
+            top: 7%;
+            left: 10%;
+            width: 21%;
+            .animation("opacity-p0", 4s);
+        }  
+        &.point-1 {
+            top: 7%;
+            left: 39%;
+            width: 21%;
+            .animation("opacity-p1", 4s);
+        }   
+        &.point-2 {
+            top: 7%;
+            left: 68%;
+            width: 21%;
+            .animation("opacity-p2", 4s);
+        }   
+        &.orbit-bk {
+            z-index: -2;
+        }  
+        &.moon {
+            width: 12%;
+            .animationX2("orbit", "orbit-zindex", 2s);
+        }
+    }
+}
