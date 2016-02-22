@@ -230,6 +230,8 @@ angular
 
             $scope.autologin = function (data) {
                 _loadDrupalResources();
+                $rootScope.OAUTH_ENABLED = false;
+                
                 //save token for further requests and autologin
                 $scope.currentUserModel = data;
                 $scope.currentUserModel.token = data.token;

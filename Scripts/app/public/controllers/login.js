@@ -133,6 +133,8 @@ angular
                             
                         }, function () {
                             
+                            $rootScope.OAUTH_ENABLED = false;
+                            
                             /* para auto iniciar sesión en offline es necesario que se haya cargado por lo menos una vez toda la información */
                             if(localStorage.getItem("leaderboard") && localStorage.getItem("Perfil/" + $scope.currentUserModel.userId)) {
                                 $timeout(function(){
@@ -203,6 +205,7 @@ angular
                         _setId(data.id);
 
                         _loadDrupalResources();
+                        $rootScope.OAUTH_ENABLED = false;
 
                         //Run queue
                         moodleFactory.Services.ExecuteQueue(function () {
@@ -274,6 +277,7 @@ angular
                 var userFacebook = JSON.parse(data);
 
                 _loadDrupalResources();
+                $rootScope.OAUTH_ENABLED = true;
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = userFacebook;
