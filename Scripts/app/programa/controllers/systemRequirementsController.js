@@ -24,6 +24,10 @@ angular
 
             getContentResources("systemRequirements");
 
+            $scope.back = function () {
+                $location.path('/ProgramaDashboard');
+
+            }
             function getContentResources(resourceKey) {
                 drupalFactory.Services.GetContent(resourceKey, function (data, key) {
                     _loadedResources = true;
