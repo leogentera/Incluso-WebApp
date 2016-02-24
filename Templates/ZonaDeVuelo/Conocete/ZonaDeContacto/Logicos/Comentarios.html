@@ -5,7 +5,7 @@
             <div class="icomoon icon-warning"></div>
             <p>¡Error! Verifica tus datos</p>
             <ul ng-if="modelState.errorMessages.length > 0">
-              <li ng-repeat="msg in modelState.errorMessages">{{msg}}</li>
+              <li ng-repeat="msg in modelState.errorMessages" ng-bind-html="msg"></li>
             </ul>
           </div>
         </div>
