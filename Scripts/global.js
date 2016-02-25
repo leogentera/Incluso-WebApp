@@ -1,6 +1,7 @@
 //global variables and functions
 var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-5/RestfulAPI/public/{0}"; //Azure Development environment
 var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
+var SIGNALR_API_RESOURCE = "http://10.15.1.110/realtime/echo"; //Azure Development environment
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
 //var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
@@ -1400,11 +1401,6 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("UserTalents");
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");
-    var existingInterval = localStorage.getItem('Interval');
-    if(existingInterval){
-        clearInterval(existingInterval);
-        localStorage.removeItem("Interval");
-    }    
     $location.path('/');
 };
 

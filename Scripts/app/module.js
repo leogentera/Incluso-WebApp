@@ -1225,5 +1225,54 @@ angular
             CancelUserNotificationWeeklyInterval: _cancelUserNotificationWeeklyInterval
         };
         
+    }])
+    .factory("SignalRFactory", ['$location', function ($location) {
+        var isSignalRChatAlreadySetUp = false;
+        var _callbackWhenReceivedInsideChat;
+        var _callbackWhenReceivedOutsideChat;
+        var _setupSignalRInChat = function (callbackWhenReceivedInsideChat, callbackWhenReceivedOutsideChat) {
+            _callbackWhenReceivedInsideChat = callbackWhenReceivedInsideChat;
+            _callbackWhenReceivedOutsideChat = callbackWhenReceivedOutsideChat;
+            if (!isSignalRChatAlreadySetUp) {
+                
+                // Start setting up SignalR
+                // SIGNALR is For incomming messages only 
+
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                
+                var connSignalR = $.connection(SIGNALR_API_RESOURCE, "userId=" + currentUser.id);
+
+                connSignalR.received(function (data) {
+                    var currentMessages = JSON.parse(localStorage.getItem('userChat'));
+                    currentMessages.push(data);
+                    _setLocalStorageJsonItem('userChat', currentMessages);                    
+                        if ($location.$$path == "/Chat") {
+                            _callbackWhenReceivedInsideChat();
+                        } else {
+                            _callbackWhenReceivedOutsideChat();
+                        }                    
+                });
+
+                connSignalR.error(function (error) {
+                    console.warn(error);
+                });
+
+                connSignalR.start().promise().done(function (data) {
+                    isSignalRChatAlreadySetUp = true;
+                    console.log("SignalR realtime service is successfully connected!!");
+                })
+                .fail(function () {
+                    console.error("Error connecting to SignalR realtime service");
+                });
+
+                // Setting up SignalR ended
+                // SIGNALR is For incomming messages only 
+            }
+
+        }
+
+        return {
+            SetupSignalRInChat: _setupSignalRInChat
+        };
     }]);
      
