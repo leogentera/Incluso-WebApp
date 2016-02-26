@@ -41,11 +41,11 @@ angular
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false;             
-
-            SignalRFactory.SetupSignalRInChat(getUserRefreshChatCallback, getUserChat);
+            $rootScope.showStage3Footer = false;                         
             
-            moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                
+            moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
+            SignalRFactory.SetCallBackChat(getUserRefreshChatCallback);
+
             if ($location.hash() == 'top') {                
             $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
                 $anchorScroll();
@@ -58,7 +58,7 @@ angular
 
 
             function getUserRefreshChatCallback() {
-                $timeout(function() {
+                $timeout(function() {                    
                     $scope.$emit('HidePreloader'); //hide preloader
                     $scope.messages = JSON.parse(localStorage.getItem('userChat'));
                     
@@ -153,28 +153,7 @@ angular
                     
                     
                 }, offlineCallback);        
-            };
-            
-            function getUserChat() {     
-                $timeout(function () {
-
-                _setLocalStorageItem('chatRead', "false");
-
-                var chat = JSON.parse(localStorage.getItem('userChat'));
-                $scope.messages = chat;
-                
-                var userId = localStorage.getItem("userId");
-                        
-                var chatAmount = _.countBy(chat,function(messages){                                
-                        return messages.messagesenderid != userId;
-                    });
-                                                        
-                _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                $scope.showChatNotification();
-
-                }, 100);
-                        
-            }
+            };            
             
             function getUserChatCallback() {                
             }
@@ -188,5 +167,9 @@ angular
             }
                 
             }
+
+            $scope.$on("$routeChangeStart", function (next, current) {
+                SignalRFactory.SetCallBackChat($scope.getUserChat);
+            });
         }
     ]);

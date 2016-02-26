@@ -12,7 +12,8 @@ angular
         '$anchorScroll',
         '$modal',
         'IntervalFactory',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
+        'SignalRFactory',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory, SignalRFactory) {
 
             _timeout = $timeout;
             _httpFactory = $http;
@@ -229,7 +230,7 @@ angular
                 return (errors.length === 0);
             }
 
-            $scope.autologin = function (data) {
+            $scope.autologin = function (data) {                
                 _loadDrupalResources();
                 $rootScope.OAUTH_ENABLED = false;
                 
@@ -239,6 +240,7 @@ angular
                 $scope.currentUserModel.userId = data.id;
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                SignalRFactory.StartChatConnection($scope.getUserChat);
                 _setLocalStorageJsonItem("Credentials", {
                     username: $scope.registerModel.username,
                     password: $scope.registerModel.password,

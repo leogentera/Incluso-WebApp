@@ -12,7 +12,8 @@ angular
         '$anchorScroll',
         '$modal',
         'IntervalFactory',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
+        'SignalRFactory',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory, SignalRFactory) {
             _timeout = $timeout;
             _httpFactory = $http;
             $scope.scrollToTop();
@@ -208,6 +209,9 @@ angular
                         _setId(data.id);
 
                         _loadDrupalResources();
+                        
+                        SignalRFactory.StartChatConnection($scope.getUserChat);
+
                         $rootScope.OAUTH_ENABLED = false;
 
                         //Run queue
@@ -280,7 +284,7 @@ angular
 
             function FacebookLoginSuccess(data) {
                 var userFacebook = JSON.parse(data);
-
+                
                 _loadDrupalResources();
                 $rootScope.OAUTH_ENABLED = true;
 
@@ -290,6 +294,7 @@ angular
                 $scope.currentUserModel.userId = userFacebook.id;
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                SignalRFactory.StartChatConnection($scope.getUserChat);
 
                 _setId(userFacebook.id);
 
@@ -378,7 +383,7 @@ angular
                 }
             };
             
-            
+            SignalRFactory.StopChatConnection();
             if(localStorage.getItem("offlineConnection") == "offline") {
                 $timeout(function(){
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
