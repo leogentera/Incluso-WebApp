@@ -3,7 +3,7 @@
         <div class="alert alert-warning" role="alert" ng-show="!modelState.isValid">
           <div class="alert-message">
             <div class="icomoon icon-warning"></div>
-            <p>¡Error! Verifica tus datos</p>
+            <p ng-show="modelState.errorCode != 406">¡Error! Verifica tus datos</p>
             <ul ng-if="modelState.errorMessages.length > 0">
                 <li ng-repeat="msg in modelState.errorMessages" ng-bind-html="msg"></li>
             </ul>
