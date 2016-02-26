@@ -465,6 +465,7 @@
 
                     successCallback();
                 }).error(function (data, status, headers, config) {
+                    data.statusCode = status;
                     _setLocalStorageJsonItem(key,data);
                     errorCallback(data);
                 });
