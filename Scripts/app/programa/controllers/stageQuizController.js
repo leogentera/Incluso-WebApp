@@ -257,7 +257,7 @@ angular
                 // Quizes: 1001, 1005, 1006, 1007, 1009; 2001, 2009, 2025, 2023; 3101, 3601.
                 // Non editable quizzes: 1001, 1009, 2001, 2023, 3101, 3601.
                 // Quizes with Other: 1001, 1005, 1006, 2001, 2023, 3101, 3601.
-
+                // Quizes with Child activity: 2007, 2016.
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);
 
@@ -299,7 +299,19 @@ angular
                     var activityObject = JSON.parse(_getItem("activity/" + $scope.coursemoduleid));
 
                     if (activityObject !== null) {
-                        $scope.activityObject = activityObject;
+                        //Change format of 'answers' key from Object to Array.
+                        for (var i = 0; i < activityObject.questions.length; i++) {
+                            var newAnswer = [];
+                            for (var key in activityObject.questions[i].answers) {
+                                if (activityObject.questions[i].answers.hasOwnProperty(key)) {
+                                    newAnswer.push(activityObject.questions[i].answers[key]);
+                                }
+                            }
+
+                            activityObject.questions[i].answers = newAnswer;
+                        }
+
+                        $scope.activityObject = activityObject; //Get object in the right 'answers' format.
                     }
 
                     if ($scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...

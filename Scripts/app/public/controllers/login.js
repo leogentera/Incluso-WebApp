@@ -59,41 +59,7 @@ angular
 
             function loadQuizesAssets(userId, userToken) {
                 $scope.$emit('ShowPreloader');
-
-                var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
-                var i;
-                var parentActivity;
-                var childActivity = null;
-
-                for (i = 0; i < quizIdentifiers.length; i++) {
-
-                    parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
-
-                    if (parentActivity != null) {
-
-                        if (parentActivity.activities) {//The activity HAS a "child" activity.
-                            childActivity = parentActivity.activities[0];
-                            $scope.coursemoduleid = childActivity.coursemoduleid;
-                            $scope.activityname = childActivity.activityname;
-                            $scope.activity_status = childActivity.status;
-
-                        } else {//The activity has no "child" activity
-                            $scope.coursemoduleid = parentActivity.coursemoduleid;
-                            $scope.activityname = parentActivity.activityname;
-                            $scope.activity_status = parentActivity.status;
-                        }
-
-                        if ($scope.activity_status === 1) {//If the activity is currently finished.
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, function() {}, function() {}, true);
-
-                        } else {//The activity HAS NOT BEEN FINISHED.
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, userToken, function() {}, function() {}, true);
-                        }
-
-                    } else {
-                        $location.path('/');
-                    }
-                }
+                moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, function() {}, function() {}, true);
             }
 
             $scope.loadCredentials = function () {
@@ -223,7 +189,7 @@ angular
 
                                     //Load Quizzes assets
                                     loadQuizesAssets(data.id, data.token);
-                                    GetExternalAppData();
+                                    //GetExternalAppData();
 
                                     $timeout(
                                     function () {
@@ -298,8 +264,6 @@ angular
                     //Preparing for syncAll...
 
                     //succesful credentials
-                    
-                    
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
                             
                             //Came back from redirecting...                        
@@ -312,7 +276,7 @@ angular
 
                             //Load Quizzes assets
                             loadQuizesAssets(userFacebook.id, userFacebook.token);
-                            GetExternalAppData();
+                            //GetExternalAppData();
 
                             $timeout(
                                 function () {
@@ -352,7 +316,7 @@ angular
                     $scope.$emit('HidePreloader');
                 }, 1);
             }
-
+            /*
             var GetExternalAppData = function () {
                 var user = $scope.currentUserModel.userId;
                 var token = $scope.currentUserModel.token;
@@ -377,7 +341,7 @@ angular
                     }
                 }
             };
-            
+            */
             
             if(localStorage.getItem("offlineConnection") == "offline") {
                 $timeout(function(){

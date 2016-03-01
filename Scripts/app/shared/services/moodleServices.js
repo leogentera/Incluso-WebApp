@@ -68,10 +68,9 @@
 
         var _getAsyncActivityQuizInfo = function (activityId, userId, token, successCallback, errorCallback, forceRefresh) {
             if (userId != -1) {
-                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '?userid=' + userId), token, successCallback, errorCallback, forceRefresh);
-            }
-            else {
-                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
+                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
+            } else {
+                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
             }
         };
         
@@ -146,16 +145,15 @@
 
         var _putEndActivity = function (activityId, data, activityModel, token, successCallback, errorCallback) {
             _endActivity("activitiesCache/" + activityModel.activity_identifier, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
-
         };
 
         var _postAsyncAvatar = function (data, successCallback, errorCallback){
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
-        }
+        };
 
         var _postMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
             _postAsyncDataOffline(key, data, API_RESOURCE.format(url), successCallback, errorCallback, userCourseModel);
-        }
+        };
 
         var _putEndActivityQuizes = function (activityId, data, userCourseModel, token, successCallback, errorCallback, forceRefresh) {
             _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
@@ -208,6 +206,70 @@
             } else {
                 return JSON.parse(str);
             }
+        };
+
+        var _getAsyncData2 = function (key, url, userId, token, successCallback, errorCallback, forceRefresh) {
+
+            _getDeviceVersionAsync();
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+
+            if (returnValue) {
+                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                return returnValue;
+            }
+            else if (forceRefresh){
+                if (token) {
+                    _httpFactory({
+                        method: 'POST',
+                        data: {"userid": userId, "activities":[150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 85, 91, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249]},
+                        url: url,
+                        headers: { 'Content-Type': 'application/json' , 'Authorization': token}
+                    }).success(function (data, status, headers, config) {
+                        //Get & save each activity object.
+                        setTimeout(function() {
+                            var proc = setInterval(function() {
+                                if (data.length > 0) {
+                                    var activity = data.shift();
+                                    var keyName = "activity/" + activity.coursemoduleid;
+                                    _setLocalStorageJsonItem(keyName, activity.data[0]);
+                                } else {
+                                    clearInterval(proc);
+                                }
+                            }, 15);
+                        }, 4000);
+
+                        successCallback();
+                    }).error(function (data, status, headers, config) {
+                        errorCallback(data);
+                    });
+                }
+            } else {
+                if(token){
+                    addRequestToQueue(key, {
+                        type: "httpRequest",
+                        data: {
+                            method: 'GET',
+                            url: url,
+                            headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                        }
+                    });
+                }
+                else{
+                    addRequestToQueue(key, {
+                        type: "httpRequest",
+                        data: {
+                            method: 'GET',
+                            url: url,
+                            headers: { 'Content-Type': 'application/json'}
+                        }
+                    });
+                }
+
+                if(successCallback){
+                    successCallback();
+                }
+            }
+
         };
 
         var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {

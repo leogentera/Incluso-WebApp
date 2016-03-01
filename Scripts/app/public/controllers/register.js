@@ -251,72 +251,8 @@ angular
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
                     var course = moodleFactory.Services.GetCacheJson("course");
                     moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
-
-                        //Load Quizzes assets ----------------------------------------------------------------------
-                        var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
-                        var i;
-                        var parentActivity;
-                        var childActivity = null;
-
-                        for (i = 0; i < quizIdentifiers.length; i++) {
-
-                            parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
-
-                            if (parentActivity != null) {
-
-                                if (parentActivity.activities) {//The activity HAS a "child" activity
-
-                                    childActivity = parentActivity.activities[0];
-                                    $scope.coursemoduleid = childActivity.coursemoduleid;
-                                    $scope.activityname = childActivity.activityname;
-                                    $scope.activity_status = childActivity.status;
-
-                                } else {//The activity has no "child" activity
-                                    $scope.coursemoduleid = parentActivity.coursemoduleid;
-                                    $scope.activityname = parentActivity.activityname;
-                                    $scope.activity_status = parentActivity.status;
-                                }
-
-                                if ($scope.activity_status === 1) {//If the activity is currently finished
-                                    // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, function () {
-                                    }, function () {
-                                    }, true);
-
-                                } else {
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, function () {
-                                    }, function () {
-                                    }, true);
-                                }
-
-                            } else {
-                                $location.path('/');
-                            }
-                        }
-
-                        var user = $scope.currentUserModel.userId;
-                        var token = $scope.currentUserModel.token;
-                        moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function () {}, true);
-                        moodleFactory.Services.GetAsyncForumDiscussions(85, token, function () {}, function () {}, true);
-                        moodleFactory.Services.GetAsyncForumDiscussions(91, token, function () {}, function () {}, true);
-                        var courseModuleIds = [{"id": 1039, "userInfo": true}, {"id": 2012, "userInfo": false}, {"id": 2017,"userInfo": true },
-                                                {"id": 3302, "userInfo": false}, {"id": 3402, "userInfo": true}];
-                        for (var i = 0; i < courseModuleIds.length; i++) {
-                            var courseModule = courseModuleIds[i];
-                            var parentActivity = getActivityByActivity_identifier(courseModule.id);
-                            if (parentActivity && parentActivity.activities && parentActivity.activities.length > 0) {
-                                for (var j = 0; j < parentActivity.activities.length; j++) {
-                                    var activity = parentActivity.activities[j];
-                                    moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid, token, function() {}, function() {}, true);
-                                    if (courseModule.userInfo) {
-                                        if (courseModule.id != 1039 || (courseModule.id == 1039 && activity.activityname.toLowerCase().indexOf("resultados") >= 0)) {
-                                            moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid + "?userid=" + user, token, function() {}, function() {}, true);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //-----------------------------------------------------------------------------------------------
+                        //Get Moodle Assets
+                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, function() {}, function() {}, true);
 
                     }, function () {
 
