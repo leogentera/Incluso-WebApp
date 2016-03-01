@@ -10,7 +10,8 @@ angular
         '$http',
         '$anchorScroll',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {            
+        'SignalRFactory',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, SignalRFactory) {
             $scope.$emit('ShowPreloader'); 
             
             $scope.validateConnection(initController, offlineCallback);
@@ -40,18 +41,15 @@ angular
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false; 
-            var interval = -1;
-            moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                
+            $rootScope.showStage3Footer = false;                         
+            
+            moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
+            SignalRFactory.SetCallBackChat(getUserRefreshChatCallback);
+
             if ($location.hash() == 'top') {                
             $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
                 $anchorScroll();
             } 
-            else 
-            {                  
-                console.log("setInterval, 60000");
-                interval = setInterval(getMessages,60000);                                    
-            }
 
 
             $(".typing-section textarea").keypress(function() {
@@ -60,14 +58,18 @@ angular
 
 
             function getUserRefreshChatCallback() {
-                
-            $scope.$emit('HidePreloader'); //hide preloader
-                $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-                validateCabinaDeSoporte();
+                $timeout(function() {                    
+                    $scope.$emit('HidePreloader'); //hide preloader
+                    $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+                    
+                        validateCabinaDeSoporte();
 
-                setTimeout(function() {
-                    $anchorScroll();
-                }, 1000);                
+                        if ($location.hash() == 'top') {
+                            $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
+                            $anchorScroll();
+                        }   
+                }, 100);
+
             }
 
 
@@ -106,8 +108,7 @@ angular
                                 }
                             }
 
-                            if (latestCoachAndSenderMessages >= 2) {
-                                clearInterval(interval);
+                            if (latestCoachAndSenderMessages >= 2) {                                
                                 localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
                                 _setLocalStorageItem("finishCabinaSoporte/" + userId, _startedActivityCabinaDeSoporte.activity_identifier);
                                 $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
@@ -119,32 +120,6 @@ angular
                     $location.path(zone +'/CabinaDeSoporte/' + finishCabinaSoporte);
                 }
             }            
-
-            function getMessages() {                
-                    
-                $scope.validateConnection(function() {
-                    
-                    var existingInterval = localStorage.getItem('Interval');
-                    if($location.$$path != "/Chat"){
-                        //Necesitamos volver a poner en marcha el refresh de notificaciones del chat
-                        if(!existingInterval){       
-                            clearInterval(interval);
-                            interval = setInterval(getUserChat,180000);          
-                            _setLocalStorageItem('Interval', interval);
-                        }                    
-                    } else {
-                        //Si ya existe un intervalo hay que borrarlo                    
-                       if(existingInterval) {
-                           clearInterval(parseInt(existingInterval));
-                           ClearLocalStorage("Interval");
-                       }                
-
-                        moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                                                                                            
-                    }
-                    
-                }, function() {});
-                    
-            }   
             
             $scope.back = function () {
                 var userCurrentStage = localStorage.getItem("currentStage");              
@@ -178,38 +153,7 @@ angular
                     
                     
                 }, offlineCallback);        
-            };
-            
-            function getUserChat() {     
-                       
-                $scope.validateConnection(function() {
-                    
-                    moodleFactory.Services.GetUserChat(_getItem("userId"), currentUser.token, function() {
-                        
-                        var chat = JSON.parse(localStorage.getItem('userChat'));
-                        var userId = localStorage.getItem("userId");
-                        var messagesFlow = [];
-                        var messagesInterchange = 0;
-                        var messagesToRead = _getItem("currentStage") * 2;
-                        
-                        var chatAmount = _.countBy(chat,function(messages){
-                                messagesFlow.push(messages.messagesenderid != userId);
-                                return messages.messagesenderid != userId;
-                            });
-                                                        
-                        if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                            _setLocalStorageItem('chatRead',"false");
-                        }
-    
-                        _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                        
-                    }, errorCallback, true);                
-                    
-                    
-                }, function() {});
-                           
-                                   
-            }
+            };            
             
             function getUserChatCallback() {                
             }
@@ -222,6 +166,10 @@ angular
                 $anchorScroll();
             }
                 
-        }
+            }
+
+            $scope.$on("$routeChangeStart", function (next, current) {
+                SignalRFactory.SetCallBackChat($scope.getUserChat);
+            });
         }
     ]);

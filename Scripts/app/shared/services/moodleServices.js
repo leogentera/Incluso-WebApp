@@ -43,7 +43,7 @@
         var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
         };
-        
+                        
         var _getAsyncUserPostCounter = function(token, courseId, successCallback, errorCallback, forceRefresh) {
           var key = "postcounter/" + courseId;
           var url = API_RESOURCE.format("postcounter/" + courseId);
@@ -57,7 +57,12 @@
             
             _getAsyncForumDiscussionsData(key, url, token, successCallback, errorCallback, forceRefresh);
         };
-
+        
+        var _getAsyncDiscussionDetail = function(postId,token,successCallback,errorCallback,forceRefresh){
+            _getAsyncForumDiscussionsData("forumDetail/" + postId, API_RESOURCE.format('discussion/' + postId), token, successCallback, errorCallback, forceRefresh);
+            //_getAsyncData("forumDetail/" + postId, API_RESOURCE.format('discussion/' + postId), token, successCallback, errorCallback, forceRefresh);
+        }
+        
         var _putAsyncActivityInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId), successCallback, errorCallback);
         };
@@ -383,7 +388,7 @@
                 errorCallback(data);
             });
         };
-
+            
         var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
             _getDeviceVersionAsync();
             
@@ -527,6 +532,7 @@
 
                     successCallback();
                 }).error(function (data, status, headers, config) {
+                    data.statusCode = status;
                     _setLocalStorageJsonItem(key,data);
                     errorCallback(data);
                 });
@@ -1499,7 +1505,8 @@
             PostMultipleActivities: _postMultipleActivities,
             PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
-            DesactivateUser: _desactivateUser
+            DesactivateUser: _desactivateUser,
+            GetAsyncDiscussionDetail: _getAsyncDiscussionDetail
         };
     })();
 }).call(this);

@@ -10,7 +10,8 @@ angular
         '$http',
         '$filter',
         '$modal',
-        function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal) {
+        '$timeout',
+        function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal, $timeout) {
             
             $rootScope.OAUTH_ENABLED = false;
             
@@ -336,4 +337,23 @@ angular
                     offlineCallback();
                 });
             };
+
+            $scope.getUserChat = function () {
+                $timeout(function () {                
+                    _setLocalStorageItem('chatRead', "false");
+
+                    var chat = JSON.parse(localStorage.getItem('userChat'));
+                    $scope.messages = chat;
+                
+                    var userId = localStorage.getItem("userId");
+                        
+                    var chatAmount = _.countBy(chat,function(messages){                                
+                        return messages.messagesenderid != userId;
+                    });
+                                                        
+                    _setLocalStorageItem('chatAmountRead',chatAmount.true);
+                    $scope.showChatNotification();
+
+                }, 100);                        
+            }
         } ]);

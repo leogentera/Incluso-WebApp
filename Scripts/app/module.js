@@ -1225,5 +1225,58 @@ angular
             CancelUserNotificationWeeklyInterval: _cancelUserNotificationWeeklyInterval
         };
         
+    }])
+    .factory("SignalRFactory", ['$location', function ($location) {
+        var isSignalRChatAlreadySetUp = false,
+            _callbackWhenReceivedChat,
+            connSignalR;
+
+        var _setCallBackChat = function (callbackReference) {
+            _callbackWhenReceivedChat = callbackReference;
+        }
+
+        var _startChatConnection = function (callbackWhenReceivedChat) {
+            console.log(callbackWhenReceivedChat);
+            _callbackWhenReceivedChat = callbackWhenReceivedChat;
+            if (!isSignalRChatAlreadySetUp) {
+
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+
+                connSignalR = $.connection(SIGNALR_API_RESOURCE, "userId=" + currentUser.id);
+
+                connSignalR.received(function (data) {
+                    var currentMessages = JSON.parse(localStorage.getItem('userChat'));
+                    currentMessages.push(data);
+                    _setLocalStorageJsonItem('userChat', currentMessages);
+                    _callbackWhenReceivedChat();
+                });
+
+                connSignalR.error(function (error) {
+                    console.warn(error);
+                });
+
+            }
+
+
+            connSignalR.start().promise().done(function (data) {
+                isSignalRChatAlreadySetUp = true;
+                console.log("SignalR realtime service is successfully connected!!");
+            })
+            .fail(function () {
+                console.error("Error connecting to SignalR realtime service");
+            });
+        }
+
+        var _stopChatConnection = function () {
+            if (connSignalR) {
+                connSignalR.stop();
+            }
+        }
+
+        return {            
+            SetCallBackChat: _setCallBackChat,
+            StartChatConnection: _startChatConnection,
+            StopChatConnection: _stopChatConnection
+        };
     }]);
      
