@@ -230,18 +230,15 @@
                         url: url,
                         headers: { 'Content-Type': 'application/json' , 'Authorization': token}
                     }).success(function (data, status, headers, config) {
-                        //Get & save each activity object.
-                        setTimeout(function() {
-                            var proc = setInterval(function() {
-                                if (data.length > 0) {
-                                    var activity = data.shift();
-                                    var keyName = "activity/" + activity.coursemoduleid;
-                                    _setLocalStorageJsonItem(keyName, activity.data[0]);
-                                } else {
-                                    clearInterval(proc);
-                                }
-                            }, 15);
-                        }, 4000);
+                        var proc = setInterval(function() {//Get & save each activity object.
+                            if (data.length > 0) {
+                                var activity = data.shift();
+                                var keyName = "activity/" + activity.coursemoduleid;
+                                _setLocalStorageJsonItem(keyName, activity.data[0]);
+                            } else {
+                                clearInterval(proc);
+                            }
+                        }, 15);
 
                         successCallback();
                     }).error(function (data, status, headers, config) {
