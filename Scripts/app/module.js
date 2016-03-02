@@ -87,7 +87,6 @@ angular
         $http.get('Templates/Programa/PrivacyNotice.html', { cache: true });
         $http.get('Templates/Programa/TermsOfUse.html', { cache: true });
         $http.get('Templates/Programa/HelpAndSupport.html', { cache: true });
-        $http.get('Templates/Programa/ClosingStage.html', { cache: true });
         $http.get('Templates/Programa/evaluacion.html', { cache: true });
         $http.get('Templates/Programa/formulario.html', { cache: true });
         $http.get('Templates/Programa/community.html', { cache: true });
@@ -107,12 +106,11 @@ angular
         $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: true });          
         $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultiple.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultiple.html', { cache: true });
         $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html', { cache: true });
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html', { cache: true });
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html', { cache: true });  
@@ -194,11 +192,6 @@ angular
         $routeProvider.when('/ProgramaDashboard', {
         	templateUrl: 'Templates/Programa/Dashboard.html',
         	controller: 'programaDashboardController'
-        });
-
-        $routeProvider.when('/Foro', {
-            templateUrl: 'Templates/Programa/foro.html',
-            controller: 'programaForoController'
         });
     
         $routeProvider.when('/', {
@@ -364,11 +357,6 @@ angular
         $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultiple/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultiple.html',
             controller: 'stageGameRetoMultipleController'
-        });
-    
-        $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp/:moodleid', { 
-            templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html',
-            controller: 'stageGameRetoMultipleExternalAppController'
         });
 
         $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados', { 
