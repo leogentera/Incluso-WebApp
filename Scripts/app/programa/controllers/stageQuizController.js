@@ -1065,6 +1065,7 @@ angular
                                 updateUserStars($scope.parentActivity.activity_identifier);
                             }
 
+                            $scope.$emit("HidePreloader");
                             $location.path(destinationPath);
                         },
                         function (responseData) {
@@ -1083,6 +1084,7 @@ angular
                         updateUserStars($scope.parentActivity.activity_identifier);
                     }
 
+                    $scope.$emit("HidePreloader");
                     $location.path(destinationPath);
                 }
 
@@ -1095,7 +1097,7 @@ angular
                 var index, b, i;
                 var numAnswered = 0;
                 var numQuestions = $scope.activityObject.questions.length;
-                
+
                 for (index = 0; index < numQuestions; index++) {
 
                     switch ($scope.questionTypeCode[index]) {
