@@ -176,6 +176,19 @@ angular
 
                         _loadDrupalResources();
                         
+                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        if (currentUser && currentUser.token) {
+                            var objectToken = {
+                                moodleAPI: 'http://definityincluso.cloudapp.net:82/restfulapiv2-5/RestfulAPI/public/{0}',
+                                moodleToken: currentUser.token
+                            };
+                        
+                            cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
+                        }
+                        
+                        
+                        
+                                                
                         SignalRFactory.StartChatConnection($scope.getUserChat);
 
                         $rootScope.OAUTH_ENABLED = false;
