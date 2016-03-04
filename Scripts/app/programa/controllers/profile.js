@@ -774,9 +774,9 @@ angular
                             $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
 
                         }, function () {
-                            console.log("Request error call!");
+                            console.log($routeParams.useralias);
                             $scope.model= {
-                                'alias' : $routeParams.useralias,
+                                'alias' : $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
                                 'stars' : 'No definidas',
                             };
                         }, true);
