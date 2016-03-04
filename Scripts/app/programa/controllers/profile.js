@@ -1829,7 +1829,7 @@ angular
 
                 function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                     var result = false;
-                    
+
                     if ($scope.model.firstname && $scope.model.lastname && $scope.model.mothername && $scope.model.gender && $scope.model.birthCountry
                         && $scope.birthdate_Dateformat && $scope.model.age > 13 && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
                         && $scope.model.address.town && $scope.model.address.postalCode && $scope.model.address.street && $scope.model.address.num_ext
