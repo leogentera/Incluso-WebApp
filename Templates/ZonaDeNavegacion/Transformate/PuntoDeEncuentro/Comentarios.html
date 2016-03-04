@@ -103,10 +103,10 @@
       <div id="item{{$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
         <div class="part post">
           <div class="author">
-            <img ng-click="navigateTo('PerfilAjeno/' + p.post_autor_id +'/'+ r.post_author)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate}}" alt="author" />
-            <img ng-click="navigateTo('PerfilAjeno/' + p.post_autor_id +'/'+ r.post_author)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id )" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate}}" alt="author" />
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id )" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
             <div>
-              <a class="user-alias" ng-click="navigateTo('PerfilAjeno/' + p.post_autor_id +'/'+ r.post_author)">{{p.post_author}} </a>
+              <a class="user-alias" ng-click="navigateTo('Perfil/' + p.post_autor_id )">{{p.post_author}} </a>
               <span>publicó:</span>
               <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
             </div>
