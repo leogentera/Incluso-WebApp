@@ -774,6 +774,11 @@ angular
                             $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
 
                         }, function () {
+                            console.log("Request error call!");
+                            $scope.model= {
+                                'alias' : 'Usuario inactivo',
+                                'stars' : 'No definidas',
+                            };
                         }, true);
                     }
 
