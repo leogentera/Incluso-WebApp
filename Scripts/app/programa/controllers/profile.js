@@ -778,6 +778,7 @@ angular
                             $scope.model= {
                                 'alias' : $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
                                 'stars' : 'No definidas',
+                                'profileimageurl' : 'assets/avatar/default.png',
                             };
                         }, true);
                     }
