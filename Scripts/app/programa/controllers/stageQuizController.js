@@ -1203,16 +1203,17 @@ angular
                             }
 
                             $scope.answers[index] = $scope.validAnswers;
-                            //Check if the "TERMINAR" button is in current question
-                            if (index == $scope.maxPages - 1) {
-                                remained = numAnswers - $scope.validAnswers.length;
-                                var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147 * remained);
-                            }
 
                             $scope.answers[index] = $scope.answers[index].filter(function (item, pos) {
                                 return $scope.answers[index].indexOf(item) == pos;
                             });
+
+                            //Check if the "TERMINAR" button is in current question
+                            if (index == $scope.maxPages - 1) {
+                                remained = numAnswers - $scope.answers[index].length; //$scope.validAnswers.length;
+                                var containerHeight = angular.element('div.owl-wrapper-outer').height();
+                                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147 * remained);
+                            }
 
                             //Correction for the '\n' reserved character.
                             for (b = 0; b < $scope.answers[index].length; b++) {
