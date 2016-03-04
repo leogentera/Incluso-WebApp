@@ -179,7 +179,7 @@ angular
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         if (currentUser && currentUser.token) {
                             var objectToken = {
-                                moodleAPI: 'http://definityincluso.cloudapp.net:82/restfulapiv2-5/RestfulAPI/public/{0}',
+                                moodleAPI: API_RESOURCE.format(''),
                                 moodleToken: currentUser.token
                             };
                         

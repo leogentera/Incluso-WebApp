@@ -1351,6 +1351,15 @@ var logout = function ($scope, $location) {
                     })
             }
         ).success(function (data, status, headers, config) {
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                if (currentUser && currentUser.token) {
+                    var objectToken = {
+                        moodleAPI: API_RESOURCE.format(''),
+                        moodleToken: currentUser.token
+                    };
+
+                    cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
+                }
             }
         );
     }
