@@ -1077,6 +1077,7 @@ angular
                                 updateUserStars($scope.parentActivity.activity_identifier);
                             }
 
+                            $scope.$emit("HidePreloader");
                             $location.path(destinationPath);
                         },
                         function (responseData) {
@@ -1095,6 +1096,7 @@ angular
                         updateUserStars($scope.parentActivity.activity_identifier);
                     }
 
+                    $scope.$emit("HidePreloader");
                     $location.path(destinationPath);
                 }
 
@@ -1199,10 +1201,29 @@ angular
                             break;
 
                         case "essay":
-
                             //Remove repeated entries and blanks in the question.
+                            var numAnswers = $scope.answers[index].length;
+                            var remained;
+                            var j;
+                            $scope.validAnswers = [];
+
+                            for (j = 0; j < $scope.answers[index].length; j++) {
+                                if ($scope.answers[index][j].trim().length > 0) {
+                                    //Remove the empty string
+                                    $scope.validAnswers.push($scope.answers[index][j]);
+                                }
+                            }
+
+                            $scope.answers[index] = $scope.validAnswers;
+                            //Check if the "TERMINAR" button is in current question
+                            if (index == $scope.maxPages - 1) {
+                                remained = numAnswers - $scope.validAnswers.length;
+                                var containerHeight = angular.element('div.owl-wrapper-outer').height();
+                                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147 * remained);
+                            }
+
                             $scope.answers[index] = $scope.answers[index].filter(function (item, pos) {
-                                return item.trim().length > 0 && $scope.answers[index].indexOf(item) == pos;
+                                return $scope.answers[index].indexOf(item) == pos;
                             });
 
                             //Correction for the '\n' reserved character.
@@ -1220,9 +1241,10 @@ angular
                         default:
                             break;
                     }
+
                 }
 
-                if (numAnswered == numQuestions) {
+                if (numAnswered == numQuestions) {//The Quiz questions are all completed.
                     $scope.showWarning = false;
 
                     if ($scope.activityname == "Exploración final") {
@@ -1235,6 +1257,10 @@ angular
                 } else {
                     $scope.warningMessage = "Asegúrate de contestar todas las preguntas antes de guardar";
                     $scope.showWarning = true;
+
+                    if ($scope.activityname == "Exploración final") {
+
+                    }
                     showWarningAndGoToTop();
                 }
 
@@ -1372,7 +1398,7 @@ angular
 
             function removeHeightEssay(elem) {
                 var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 127);
+                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147);
             }
 
             //This function is activated from Template, with ESSAY type questions

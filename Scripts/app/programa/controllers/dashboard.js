@@ -261,6 +261,15 @@ angular
                             var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                             $timeout(function(){
                                 $scope.user.profileimageurl = profile != null ? profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
+
+                                $scope.validateConnection(function () {
+                                }, function () {
+
+                                    getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function (niceImageUrl) {
+                                        $scope.user.profileimageurl = niceImageUrl;
+                                    });
+
+                                });
                             }, 1);
 
                             _pageLoaded = true;
