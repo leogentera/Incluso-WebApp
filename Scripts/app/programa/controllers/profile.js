@@ -776,7 +776,7 @@ angular
                         }, function () {
                             console.log("Request error call!");
                             $scope.model= {
-                                'alias' : 'Usuario inactivo',
+                                'alias' : $routeParams.useralias,
                                 'stars' : 'No definidas',
                             };
                         }, true);
