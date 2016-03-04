@@ -1067,8 +1067,8 @@ angular
 
                             $location.path(destinationPath);
                         },
-                        function (responseData) {
 
+                        function (responseData) {
                         }
                     );
 
@@ -1095,7 +1095,7 @@ angular
                 var index, b, i;
                 var numAnswered = 0;
                 var numQuestions = $scope.activityObject.questions.length;
-                
+
                 for (index = 0; index < numQuestions; index++) {
 
                     switch ($scope.questionTypeCode[index]) {
@@ -1195,29 +1195,29 @@ angular
 
                             for (j = 0; j < $scope.answers[index].length; j++) {
                                 if ($scope.answers[index][j].trim().length > 0) {
-                                    //Remove the empty string
                                     $scope.validAnswers.push($scope.answers[index][j]);
                                 }
                             }
 
                             $scope.answers[index] = $scope.validAnswers;
-                            //Check if the "TERMINAR" button is in current question
-                            if (index == $scope.maxPages - 1) {
-                                remained = numAnswers - $scope.validAnswers.length;
-                                var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147 * remained);
-                            }
 
                             $scope.answers[index] = $scope.answers[index].filter(function (item, pos) {
                                 return $scope.answers[index].indexOf(item) == pos;
                             });
+
+                            //Check if the "TERMINAR" button is in current question
+                            if (index == $scope.maxPages - 1) {
+                                remained = numAnswers - $scope.answers[index].length;
+                                var containerHeight = angular.element('div.owl-wrapper-outer').height();
+                                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147 * remained);
+                            }
 
                             //Correction for the '\n' reserved character.
                             for (b = 0; b < $scope.answers[index].length; b++) {
                                 $scope.answers[index][b] = $scope.answers[index][b].replace(/\r?\n|\r/g, " ").trim();
                             }
 
-                            //Check is some of the questions has an invalid answer
+                            //Check if question has valid answers.
                             if ($scope.answers[index].length > 0) {
                                 numAnswered++;
                             }
@@ -1240,13 +1240,10 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
 
-                } else {
+                } else {//The Quiz questions were not completed.
                     $scope.warningMessage = "Asegúrate de contestar todas las preguntas antes de guardar";
                     $scope.showWarning = true;
 
-                    if ($scope.activityname == "Exploración final") {
-
-                    }
                     showWarningAndGoToTop();
                 }
 
@@ -1292,7 +1289,6 @@ angular
                                 } else {
                                     $scope.chosenByUserAndWrong[i][j] = false;
                                 }
-
                             }
 
                             if ($scope.questionTypeCode[i] == 'simplechoice') {
