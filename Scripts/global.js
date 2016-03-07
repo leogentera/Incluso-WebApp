@@ -1400,7 +1400,7 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("UserTalents");
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");
-    localStorage.removeItem("Credentials"); //Clean username & password (INC-4066)
+
     var existingInterval = localStorage.getItem('Interval');
     if(existingInterval){
         clearInterval(existingInterval);
