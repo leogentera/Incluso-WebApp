@@ -173,6 +173,10 @@ angular
             templateUrl: 'Templates/Programa/profile.html',
             controller: 'programaProfileController'
         });
+        $routeProvider.when('/PerfilAjeno/:id/:useralias', {
+            templateUrl: 'Templates/Programa/profile.html',
+            controller: 'programaProfileController'
+        });
 
         $routeProvider.when('/evaluacion', {
             templateUrl: 'Templates/Programa/evaluacion.html',

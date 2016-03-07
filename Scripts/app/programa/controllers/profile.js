@@ -774,6 +774,12 @@ angular
                             $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
 
                         }, function () {
+                            console.log($routeParams.useralias);
+                            $scope.model= {
+                                'alias' : $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
+                                'stars' : 'No definidas',
+                                'profileimageurl' : 'assets/avatar/default.png',
+                            };
                         }, true);
                     }
 
@@ -1750,10 +1756,8 @@ angular
                     var itemWithoutPhone = false;
 
                     if (phones.length > 0) {//There is at least one phone item.
-
                         for (i = 0; i < phones.length; i++) {
                             //For all items, if phone then something in phoneId too.
-
                             if (phones[i].phone == "No tengo teléfono") {
                                 itemWithoutPhone = true;
                             } else {
@@ -1772,7 +1776,7 @@ angular
                     } else {
                         validInfo = false;
                     }
-
+                    console.log(validInfo);
                     return validInfo;
                 }
 
@@ -1835,10 +1839,11 @@ angular
                     if ($scope.model.firstname && $scope.model.lastname && $scope.model.mothername && $scope.model.gender && $scope.model.birthCountry
                         && $scope.birthdate_Dateformat && $scope.model.age > 13 && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
                         && $scope.model.address.town && $scope.model.address.postalCode && $scope.model.address.street && $scope.model.address.num_ext
-                        && $scope.model.address.colony && phonesAreValid($scope.model.phones) && socialNetsAreValid($scope.model.socialNetworks)
-                        && compartamosIsValid($scope.model.familiaCompartamos)) {
+                        && $scope.model.address.colony && $scope.model.phones.length > 0 && $scope.model.socialNetworks.length > 0
+                        && $scope.model.familiaCompartamos.length > 0) {
                         result = true;
                     }
+
                     return result;
                 }
 
