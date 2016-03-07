@@ -1,13 +1,13 @@
 <div class="incluso-app step-dashboard comments-forum">
   <article class="blueprint forum">
         <div class="alert alert-warning" role="alert" ng-show="!modelState.isValid">
-            <div class="alert-message" ng-show="modelState.errorCode != 406">
+            <div class="alert-message" ng-show="modelState.errorCode != 406"> 
                 <div class="icomoon icon-warning"></div>
-                <p>¡Error! Verifica tus datos</p>
+                     <p>¡Error! Verifica tus datos</p> 
                 <ul ng-if="modelState.errorMessages.length > 0">
-                    <li ng-repeat="msg in modelState.errorMessages" ng-bind-html="msg"></li>
+                  <li ng-repeat="msg in modelState.errorMessages" ng-bind-html="msg"></li>
                 </ul>
-            </div>
+          </div>
             <div class="alert-message" ng-show="modelState.errorCode == 406">
                 <div class="icomoon icon-warning"></div>
                 <p ng-bind-html="modelState.errorMessages[0]"></p>
