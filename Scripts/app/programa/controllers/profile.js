@@ -774,6 +774,12 @@ angular
                             $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
 
                         }, function () {
+                            console.log($routeParams.useralias);
+                            $scope.model= {
+                                'alias' : $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
+                                'stars' : 'No definidas',
+                                'profileimageurl' : 'assets/avatar/default.png',
+                            };
                         }, true);
                     }
 
