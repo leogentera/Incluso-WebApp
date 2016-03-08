@@ -60,8 +60,8 @@ angular
 
             function loadQuizesAssets(userId, userToken) {
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, function() {}, function() {}, true);
-            }
+                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, function() {}, function() {}, true);
+                    }
 
             $scope.loadCredentials = function () {
 
@@ -127,6 +127,8 @@ angular
 
             $scope.login = function (username, password) {
                 $scope.$emit('ShowPreloader');
+                $scope.userCredentialsModel.modelState.isValid = true;
+                $scope.userCredentialsModel.modelState.errorMessages = [];
                 $scope.validateConnection(function () {
                     loginConnectedCallback();
                 }, offlineCallback);
@@ -150,7 +152,6 @@ angular
 
             function loginConnectedCallback() {
                 // reflect loading state at UI
-                
                 
                 if(validateModel()) {
                     
@@ -226,7 +227,7 @@ angular
                         _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
 
                     }).error(function (data, status, headers, config) {
-
+                        $scope.userCredentialsModel.modelState.isValid = false;
                         var errorMessage = "";
                         if(data && data.messageerror) {
                             errorMessage = window.atob(data.messageerror);  
@@ -256,6 +257,9 @@ angular
                 //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
+                $scope.userCredentialsModel.modelState.isValid = true;
+                $scope.userCredentialsModel.modelState.errorMessages = [];
+
                 if (window.mobilecheck()) {
                     cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
                 }
@@ -263,7 +267,7 @@ angular
 
             function FacebookLoginSuccess(data) {
                 var userFacebook = JSON.parse(data);
-                
+
                 _loadDrupalResources();
                 $rootScope.OAUTH_ENABLED = true;
 
@@ -318,9 +322,10 @@ angular
             }
 
             function FacebookLoginFailure(data) {
-
                 $scope.$emit('HidePreloader');
+                $scope.userCredentialsModel.modelState.isValid = false;
                 var errorMessage = window.atob(data.messageerror);
+
                 $timeout(function () {
                     $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
                 }, 1000);
@@ -362,7 +367,7 @@ angular
             */
             
             SignalRFactory.StopChatConnection();
-
+            
             if(localStorage.getItem("offlineConnection") == "offline") {
                 $timeout(function(){
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];

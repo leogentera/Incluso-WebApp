@@ -774,7 +774,6 @@ angular
                             $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
 
                         }, function () {
-                            console.log($routeParams.useralias);
                             $scope.model= {
                                 'alias' : $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
                                 'stars' : 'No definidas',
@@ -1059,7 +1058,7 @@ angular
                     //studies
                     if ($scope.model.studies && $scope.model.studies.length > 0) {
                         for (i = 0; i < $scope.model.studies.length; i++) {
-                            if (typeof $scope.model.studies[i].school === "undefined" || typeof $scope.model.studies[i].levelOfStudies === "undefined") {
+                            if (typeof $scope.model.studies[i].school == "undefined" || typeof $scope.model.studies[i].levelOfStudies == "undefined") {
                                 $scope.model.studies.splice(i, 1);
                                 i = i - 1;
                             }
@@ -1069,7 +1068,7 @@ angular
                     //phones
                     if ($scope.model.phones && $scope.model.phones.length > 0) {
                         for (i = 0; i < $scope.model.phones.length; i++) {
-                            if (typeof $scope.model.phones[i] === "undefined" || $scope.model.phones[i].length === 0) {
+                            if (typeof $scope.model.phones[i].phone == "undefined" || typeof $scope.model.phones[i].phoneId == "undefined" || $scope.model.phones[i].phoneId.trim().length == 0) {
                                 $scope.model.phones.splice(i, 1);
                                 i = i - 1;
                             }
@@ -1079,7 +1078,7 @@ angular
                     //socialNetworks
                     if ($scope.model.socialNetworks && $scope.model.socialNetworks.length > 0) {
                         for (i = 0; i < $scope.model.socialNetworks.length; i++) {
-                            if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined") {
+                            if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined" || typeof $scope.model.socialNetworks[i].socialNetworkId === "undefined" || $scope.model.socialNetworks[i].socialNetworkId.trim().length == 0) {
                                 $scope.model.socialNetworks.splice(i, 1);
                                 i = i - 1;
                             }
@@ -1089,7 +1088,7 @@ angular
                     //familiaCompartamos
                     if ($scope.model.familiaCompartamos && $scope.model.familiaCompartamos.length > 0) {
                         for (i = 0; i < $scope.model.familiaCompartamos.length; i++) {
-                            if (typeof $scope.model.familiaCompartamos[i].relationship === "undefined") {
+                            if (typeof $scope.model.familiaCompartamos[i].idClient == "undefined" || typeof $scope.model.familiaCompartamos[i].relationship == "undefined" || typeof $scope.model.familiaCompartamos[i].relativeName == "undefined" || $scope.model.familiaCompartamos[i].idClient.trim().length == 0 || $scope.model.familiaCompartamos[i].relativeName.trim().length == 0) {
                                 $scope.model.familiaCompartamos.splice(i, 1);
                                 i = i - 1;
                             }
@@ -1162,7 +1161,7 @@ angular
                     //inspirationalCharacters
                     if ($scope.model.inspirationalCharacters && $scope.model.inspirationalCharacters.length > 0) {
                         for (i = 0; i < $scope.model.inspirationalCharacters.length; i++) {
-                            if (typeof $scope.model.inspirationalCharacters[i].characterType === "undefined") {
+                            if (typeof $scope.model.inspirationalCharacters[i].characterType == "undefined" || typeof $scope.model.inspirationalCharacters[i].characterName == "undefined" || $scope.model.inspirationalCharacters[i].characterName.trim().length == 0) {
                                 $scope.model.inspirationalCharacters.splice(i, 1);
                                 i = i - 1;
                             }
@@ -1749,89 +1748,6 @@ angular
                     });
                 };
 
-                function phonesAreValid(phones) {
-
-                    var validInfo = true;
-                    var i;
-                    var itemWithoutPhone = false;
-
-                    if (phones.length > 0) {//There is at least one phone item.
-                        for (i = 0; i < phones.length; i++) {
-                            //For all items, if phone then something in phoneId too.
-                            if (phones[i].phone == "No tengo teléfono") {
-                                itemWithoutPhone = true;
-                            } else {
-                                if (phones[i].phoneId == "") {//The value must be nonempty numeric string of size 10.
-                                    validInfo = false;
-                                }
-                            }
-                        }
-
-                        if (validInfo) {
-                            if (itemWithoutPhone && phones.length > 1) {
-                                validInfo = false;
-                            }
-                        }
-
-                    } else {
-                        validInfo = false;
-                    }
-                    console.log(validInfo);
-                    return validInfo;
-                }
-
-                function socialNetsAreValid(nets) {
-
-                    var validInfo = true;
-                    var i;
-                    var itemWithoutNet = false;
-
-                    if (nets.length > 0) {//There is at least one social network item.
-
-                        for (i = 0; i < nets.length; i++) {//For all items, if phone then something in phoneId too.
-
-                            if (nets[i].socialNetwork == "No tengo redes sociales") {
-                                itemWithoutNet = true;
-                            } else {
-                                if (nets[i].socialNetworkId == "") {//The value must be a nonempty string.
-                                    validInfo = false;
-                                }
-                            }
-                        }
-
-                    } else {
-                        validInfo = false;
-                    }
-
-                    return validInfo;
-                }
-
-                function compartamosIsValid(data) {
-                    var validInfo = true;
-                    var i;
-                    var itemWithoutCompartamos = false;
-
-                    if (data.length > 0) {//There is at least one Compartamos relative item.
-                        for (i = 0; i < data.length; i++) {//For all items, if Compartamos relative then something in idClient and relativeName too.
-                            if (data[i].relationship == "No tengo") {
-                                itemWithoutCompartamos = true;
-                            } else {
-                                if (data[i].idClient == "" || data[i].relativeName == "") {//The values must be nonempty strings.
-                                    validInfo = false;
-                                }
-                            }
-                        }
-                        if (validInfo) {
-                            if (itemWithoutCompartamos && data.length > 1) {
-                                validInfo = false;
-                            }
-                        }
-                    } else {
-                        validInfo = false;
-                    }
-
-                    return validInfo;
-                }
 
                 function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                     var result = false;
@@ -1847,44 +1763,12 @@ angular
                     return result;
                 }
 
-                function charactersIsValid(data) {
-                    var validInfo = true;
-                    var i;
-                    var itemWithoutCharacter = false;
-
-                    if (data.length > 0) {//There is at least one character item.
-
-                        for (i = 0; i < data.length; i++) {//For all items, if characterType then something in characterName too.
-
-                            if (data[i].characterType == "No tengo") {
-                                itemWithoutCharacter = true;
-                            } else {
-                                if (data[i].characterName == "") {//The value must be a nonempty string.
-                                    validInfo = false;
-                                }
-                            }
-                        }
-
-                        if (validInfo) {
-
-                            if (itemWithoutCharacter && data.length > 1) {
-                                validInfo = false;
-                            }
-
-                        }
-
-                    } else { //The user has not entered characters.
-                        validInfo = false;
-                    }
-
-                    return validInfo;
-                }
 
                 function assignmentMiPersonalidad() {
                     var result = false;
                     if ($scope.model.favoriteSports.length > 0 && $scope.model.artisticActivities.length > 0 && $scope.model.hobbies.length > 0
                         && $scope.model.talents.length > 0 && $scope.model.values.length > 0 && $scope.model.habilities.length > 0
-                        && charactersIsValid($scope.model.inspirationalCharacters)) {
+                        && $scope.model.inspirationalCharacters.length > 0) {
                         result = true;
                     }
                     return result;
@@ -1893,19 +1777,7 @@ angular
                 function checkMedicalServices() {
                     var validInfo = true;
 
-                    if ($scope.model.medicalCoverage == "Sí") {
-                        if ($scope.model.medicalInsurance == "" || $scope.model.medicalInsurance == "No tengo seguro") {
-                            validInfo = false;
-                        }
-                    }
-
-                    if ($scope.model.medicalCoverage == "No") {
-                        if ($scope.model.medicalInsurance != "No tengo seguro" && $scope.model.medicalInsurance != "") {
-                            validInfo = false;
-                        }
-                    }
-
-                    if ($scope.model.medicalCoverage == "" && $scope.model.medicalInsurance != "No tengo seguro") {
+                    if (typeof $scope.model.medicalCoverage == "undefined" || typeof $scope.model.medicalInsurance == "undefined" || $scope.model.medicalCoverage.trim().length == 0 || $scope.model.medicalInsurance.trim().length == 0) {
                         validInfo = false;
                     }
 
