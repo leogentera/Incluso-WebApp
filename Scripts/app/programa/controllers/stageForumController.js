@@ -66,7 +66,7 @@ angular
                         }
                     } else {
                         var userCurrentStage = localStorage.getItem("currentStage");
-                        $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
+                        $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/0');
                     }
                 };
 
