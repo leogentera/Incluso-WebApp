@@ -283,6 +283,7 @@ angular
             }
 
             function FacebookLoginSuccess(data) {
+                $scope.$emit('ShowPreloader');
                 var userFacebook = JSON.parse(data);
 
                 _loadDrupalResources();
