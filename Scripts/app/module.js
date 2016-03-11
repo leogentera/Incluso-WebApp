@@ -173,6 +173,10 @@ angular
             templateUrl: 'Templates/Programa/profile.html',
             controller: 'programaProfileController'
         });
+        $routeProvider.when('/PerfilAjeno/:id/:useralias', {
+            templateUrl: 'Templates/Programa/profile.html',
+            controller: 'programaProfileController'
+        });
 
         $routeProvider.when('/evaluacion', {
             templateUrl: 'Templates/Programa/evaluacion.html',
@@ -1002,6 +1006,13 @@ angular
           templateUrl: 'Templates/Partials/shareReconocimiento.html'
         };
     })
+    .directive('preloaderComponent', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Programa/preloader.html'
+        };
+    })
     .directive('menuComponent', function(){
         return {
           restrict: 'E',
@@ -1023,13 +1034,13 @@ angular
           templateUrl: 'Templates/Programa/footer.html'
         };
     })
-    .directive('preloaderComponent', function(){
+    /*.directive('preloaderComponent', function(){
         return {
           restrict: 'E',
           scope: false,
           templateUrl: 'Templates/Shared/_preloader.html'
         };
-    })
+    })*/
     .directive('uiSwitch', ['$injector', function($injector) {
         var $drag = $injector.has('$drag') && $injector.get('$drag');
 
@@ -1131,6 +1142,80 @@ angular
             });
           }
         };
-      }]);
+    }])
+    .factory("IntervalFactory", ['$interval', '$timeout', function($interval, $timeout) {
+        
+        var _userNotificationWeeklyIntervalPromise;
+        var lastNotificationWeeklyReminderDateKey;
+        
+        var _startUserNotificationWeeklyInterval = function() {
+            if(!_userNotificationWeeklyIntervalPromise) {
+                
+                var intervalTime = 86400000; /* 1 week */
+                var intervalTimeSeconds = 86400;
+                
+                /* sets cache */
+                lastNotificationWeeklyReminderDateKey = "lastNotificationWeeklyReminderDate/" + _getItem("userId");
+                var lastNotificationWeeklyRemider = localStorage.getItem(lastNotificationWeeklyReminderDateKey);
+                if(lastNotificationWeeklyRemider) {
+                    /* update interval time */
+                    var now = moment(Date.now()).unix();
+                    var diffTime = now - Number(lastNotificationWeeklyRemider);
+                    
+                    var finalTimeLowerThanZero =  (intervalTimeSeconds - diffTime) <= 0;
+                    intervalTime = ((intervalTimeSeconds - diffTime) <= 0) ? (intervalTimeSeconds * 1000) : ((intervalTimeSeconds - diffTime) * 1000);
+                    if(finalTimeLowerThanZero) {
+                        $timeout(function(){ intervalFunction(); }, 5000);   
+                    }
+                }else {
+                    /* first time */
+                    localStorage.setItem(lastNotificationWeeklyReminderDateKey, moment(Date.now()).unix());
+                }
+                
+                _userNotificationWeeklyIntervalPromise = $interval(function() {
+                    intervalFunction();
+                }, intervalTime);
+            }
+        };
+        
+        var _cancelUserNotificationWeeklyInterval = function() {
+            if(_userNotificationWeeklyIntervalPromise) {
+                $interval.cancel(_userNotificationWeeklyIntervalPromise);
+                _userNotificationWeeklyIntervalPromise = null;
+            }
+        };
+        
+        var getUserNotifications = function(callback) {
+            var course = localStorage.getItem("course");
+            var currentUser = localStorage.getItem("CurrentUser");
+            var userId = _getItem("userId");
 
+            if(course != null && userId != null && currentUser != null) {
+                moodleFactory.Services.GetUserNotification(userId, JSON.parse(course).courseid, JSON.parse(currentUser).token, function () {
+                    callback();
+                }, function(){}, true);   
+            }
+        };
+        
+        function intervalFunction() {
+            _forceUpdateConnectionStatus(function() {
+                if (_isDeviceOnline) {
+                    getUserNotifications(function() {
+                        localStorage.setItem(lastNotificationWeeklyReminderDateKey, moment(Date.now()).unix());
+                        angular.element('[ng-controller=homeCtrl]').scope().showNotification();
+
+                        $interval.cancel(_userNotificationWeeklyIntervalPromise);
+                        _userNotificationWeeklyIntervalPromise = null;
+                        _startUserNotificationWeeklyInterval();
+                    });
+                }
+            }, function() {});
+        };
+        
+        return {
+            StartUserNotificationWeeklyInterval: _startUserNotificationWeeklyInterval,
+            CancelUserNotificationWeeklyInterval: _cancelUserNotificationWeeklyInterval
+        };
+        
+    }]);
      

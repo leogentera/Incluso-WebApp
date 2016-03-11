@@ -1,0 +1,49 @@
+<div class="app-preloader" id="spinner" ng-show="loading" ng-init="loaderRandom()">
+    <div>
+        <div class="spinner-svg {{spinnerShow!=0 ? 'hide' : 'show'}}">
+            <div class="vibration">
+                <img src="assets/images/spinners/spaceship/img-spaceship.svg" alt="..."/>
+                <img src="assets/images/spinners/spaceship/img-fire.svg" alt="..." class="opacity" />
+            </div>
+            <div class="points">
+                <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-0"/>
+                <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-1"/>
+                <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-2"/>
+            </div>
+        </div>
+
+        <div class="spinner-svg {{spinnerShow!=1 ? 'hide' : 'show'}}">
+            <div>
+                <img src="assets/images/spinners/asteroid/img-asteroid.svg" alt="..." class="rotating" />
+                <img src="assets/images/spinners/asteroid/img-trail.svg" alt="..." class="opacity trail" />               
+            </div>
+            <div class="points">
+                <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-0"/>
+                <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-1"/>
+                <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-2"/>
+            </div>
+        </div>
+
+        <div class="spinner-svg {{spinnerShow!=2 ? 'hide' : 'show'}}">
+            <img src="assets/images/spinners/robot/img-robot.svg" alt="..." />
+            <img src="assets/images/spinners/robot/img-light.svg" alt="..." class="spinner-complement opacity-1s"/>
+            <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-0 robot"/>
+            <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-1 robot"/>
+            <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-2 robot"/>
+        </div>
+
+        <div class="spinner-svg planet {{spinnerShow!=3 ? 'hide' : 'show'}}">
+            <div>
+                <img src="assets/images/spinners/planet/img-orbit-bk.svg" alt="..." class="spinner-complement orbit-bk"/>
+                <img src="assets/images/spinners/planet/img-planet.svg" alt="..." />
+                <img src="assets/images/spinners/planet/img-orbit-front.svg" alt="..." class="spinner-complement orbit-front"/>
+                <img src="assets/images/spinners/planet/img-moon.svg" alt="..." class="spinner-complement moon"/>
+            </div>
+            <div class="points">
+                <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-0"/>
+                <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-1"/>
+                <img src="assets/images/spinners/robot/img-circle.svg" alt="..." class="spinner-complement point-2"/>
+            </div>
+        </div>
+    </div>
+</div>

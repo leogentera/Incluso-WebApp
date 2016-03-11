@@ -1,18 +1,18 @@
 <div class="incluso-app step-dashboard comments-forum">
   <article class="bluespace forum">
-        <div class="alert alert-warning" role="alert" ng-show="!modelState.isValid"> 
+        <div class="alert alert-warning" role="alert" ng-show="!modelState.isValid">
              <div class="alert-message" ng-show="modelState.errorCode != 406"> 
-                 <div class="icomoon icon-warning"></div> 
+            <div class="icomoon icon-warning"></div>
                  <p>¡Error! Verifica tus datos</p> 
-                 <ul ng-if="modelState.errorMessages.length > 0"> 
-                     <li ng-repeat="msg in modelState.errorMessages" ng-bind-html="msg"></li> 
-                 </ul> 
-             </div> 
+            <ul ng-if="modelState.errorMessages.length > 0">
+              <li ng-repeat="msg in modelState.errorMessages" ng-bind-html="msg"></li>
+            </ul>
+          </div>
              <div class="alert-message" ng-show="modelState.errorCode == 406"> 
                  <div class="icomoon icon-warning"></div> 
                  <p ng-bind-html="modelState.errorMessages[0]"></p> 
              </div> 
-         </div>
+        </div>
     <section>
       <div class="txt-renglon centered txt-bigger"></div>
       <div class="subtitle">{{discussion.name}}</div>
@@ -127,9 +127,9 @@
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
             <div class="coment block">
-              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate}}" alt="author" />
-              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
-              <div><a class="user-alias" ng-click="navigateTo('Perfil/' + r.post_autor_id)">{{r.post_author}} </a> <span>comentó:</span>   <div>{{r.message}}</div>
+              <img ng-click="navigateTo('PerfilAjeno/' + r.post_autor_id +'/'+ r.post_author)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate}}" alt="author" />
+              <img ng-click="navigateTo('PerfilAjeno/' + r.post_autor_id +'/'+ r.post_author)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
+              <div><a class="user-alias" ng-click="navigateTo('PerfilAjeno/' + r.post_autor_id +'/'+ r.post_author)">{{r.post_author}} </a> <span>comentó:</span>   <div>{{r.message}}</div>
               </div>
             </div>
           </div>

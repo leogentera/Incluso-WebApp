@@ -30,9 +30,7 @@
 
     <body ng-controller="homeCtrl" class="incluso-app ng-scope has-sidebar-left" ng-class="{'sidebar-left-active': sidebar}">
         <!-- preloader -->
-        <div class="app-preloader" id="spinner" ng-show="loading">
-            <div class="spinner spinner-circle"></div>
-        </div>
+        <preloader-component></preloader-component>
 
         <!-- Main menu / sidebar -->
         <menu-component></menu-component>
@@ -58,6 +56,21 @@
                                 <h3 class="subtitle centered">Actualizaci&oacute;n</h3>
                                 <p class="centered">Hemos detectado que no cuentas con la &uacute;ltima versi&oacute;n de Misi&oacute;n Incluso, por lo que la aplicaci&oacute;n ser&aacute; actualizada en este momento para que puedas continuar navegando.</p>
                                 <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="updateApp()">Continuar</a>
+                            </div>
+                        </div>
+                    </script>
+                    
+                    <script type="text/ng-template" id="ClosingCabinaChallengeModal.html">
+                        <div class="modal-robot robot-sm closing-stage-modal user-help" >
+                            <img src="assets/images/img-robot-sm.svg" alt="robot" />
+                            <div class="modal-header">
+                                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                                    <span class="icomoon icon-cross"></span>
+                                </a>
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                                <p class="txt-renglon centered">{{actualMessage.message}}</p>
                             </div>
                         </div>
                     </script>

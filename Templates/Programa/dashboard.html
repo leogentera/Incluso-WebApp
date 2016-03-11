@@ -3,33 +3,24 @@
         <div class="container">
             <div class="dash-top">
                 <h1 class="text-center">
-                    ¡<span ng-bind="user.gender == 'Masculino' ? contentResources.male_welcome + ' ' + user.alias : contentResources.female_welcome + ' ' + user.alias"></span>!
+                   <!-- ¡<span ng-bind="user.gender == 'Masculino' ? contentResources.male_welcome + ' ' + user.alias : contentResources.female_welcome + ' ' + user.alias"></span>! -->
+                        ¡<span ng-bind="user.gender == 'Masculino' ? contentResources.male_welcome + ' ' + user.firstname : contentResources.female_welcome + ' ' + user.firstname"></span>!                
                 </h1>
-
-                <section class="component" ng-controller="videoCollapsiblePanelController">
-                    <div class="panel panel-video">
-                        <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
-                            <h3>
-                                <span class="icomoon icon-video-file"></span>
-                                <span ng-bind="contentResources.video_title"></span>
-                                <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
-                                <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
-                            </h3>
-                        </div>
-                        <div class="panel-body" collapse="isCollapsed">
-                            <div class="video-player">
-                                <div class="stage">
-                                    <a class="icon icon-play" href="{{contentResources.home_video_url}}" target="_blank">
-                                        <span class="glyphicon glyphicon-play"></span>
-                                    </a>
-                                    <figure class="poster">
-                                        <img src="assets/media/thumb-bienvenida-2.jpg" alt="video"/>
+				<section class="component">
+					<div class="row bg-user-avatar">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <a>
+                                <div class="user-avatar">
+                                    <figure class="user-avatar-">
+                                        <img ng-src="{{user.profileimageurl}}" alt="avatar" ng-click="navigateTo('Perfil/' + user.id)" />
+                                        <h1 class="text-uppercase" ng-bind="user.alias"></h1>
+                                         <figcaption class="points"><span ng-bind="user.stars ? user.stars : 0"></span> <i class="icomoon icon-star"></i></figcaption>
                                     </figure>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
-                </section>
+				</section>
 
                 <section class="component global-progress txt-renglon centered">
                     <h3 ng-bind="'- ' + contentResources.global_progress + ' -'"></h3>
@@ -145,7 +136,7 @@
                                 <a href="">
                                     <div class="user-avatar">
                                         <figure class="user-avatar-">
-                                            <img ng-src="{{user.profileimageurl}}" alt="avatar"/>
+                                            <img ng-src="{{user.profileimageurl}}" alt="avatar" ng-click="navigateTo('Perfil/' + user.id)" />
                                             <figcaption ng-bind="user.rank"></figcaption>
                                         </figure>
                                     </div>

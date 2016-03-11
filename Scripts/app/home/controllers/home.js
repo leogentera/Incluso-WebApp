@@ -16,11 +16,20 @@ angular
             
             // To handle page reloads
             _httpFactory = $http;
+
             if ($location.$$path.split('/')[1]) {
                 $scope.loading = true;
             } else {
                 $scope.loading = false;
             }
+
+            $scope.loaderRandom = function () {
+                $scope.spinnerShow = Math.floor((Math.random() * 4));
+                setInterval(function () { 
+                    if(!$("#spinner").is(':visible'))
+                         $scope.spinnerShow = Math.floor((Math.random() * 4));
+                }, 200);
+            };
 
             var classdisable;
 
@@ -135,7 +144,7 @@ angular
                     //$rootScope.pageName = "Zona de Vuelo";
                     name != '' ? $rootScope.pageName = name : $rootScope.pageName = "Zona de Vuelo";
                     //$("#menuton span").text('Zona de Vuelo');
-                }//Stage 2 is green
+                } //Stage 2 is green
                 if (url.indexOf("/ZonaDeNavegacion") === 0) {
                     $rootScope.navbarOrange = false;
                     $rootScope.navbarBlue = false;
@@ -144,7 +153,7 @@ angular
                     //$rootScope.pageName = "Zona de Navegación";
                     name != '' ? $rootScope.pageName = name : $rootScope.pageName = "Zona de Navegación";
 
-                }//Stage 3 is pink
+                } //Stage 3 is pink
                 if (url.indexOf("/ZonaDeAterrizaje") === 0) {
                     $rootScope.navbarOrange = false;
                     $rootScope.navbarBlue = false;
@@ -327,4 +336,4 @@ angular
                     offlineCallback();
                 });
             };
-        }]);
+        } ]);

@@ -4,8 +4,8 @@
     <section class="txt-renglon pill">
       <div class="fl-left">{{contentResources.tu_eliges_stars_to_win}}</div><div class="fl-right sm-pill">{{stars}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
     </section>
-    <div class="txt-renglon" ng-bind="contentResources.tu_eliges_instructions_tit"></div>
-    <section class="txt-renglon up-line" ng-bind-html="contentResources.tu_eliges_instructions.safe_value | linky"></section>    
+    <div class="txt-renglon" ng-bind-html="contentResources.tu_eliges_instructions_tit"></div>
+    <section class="txt-renglon up-line" ng-bind-html="contentResources.tu_eliges_instructions.safe_value"></section>
     <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()" ng-bind="contentResources.tu_eliges_download_game"></a>
     <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="isInstalled" ng-click="downloadGame()" ng-bind="contentResources.tu_eliges_start_game"></a>
     <div role="button" class="txt-renglon centered" ng-click="back()" ng-bind="contentResources.tu_eliges_cancel"></div>

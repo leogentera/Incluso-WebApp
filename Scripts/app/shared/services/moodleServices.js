@@ -153,6 +153,15 @@
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
         }
 
+        var _getAsyncMultipleChallengeInfo = function(token, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("retoMultiplePartials" , API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh);
+            _getAsyncData("retoMultipleCompleted" , API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh);
+        }
+
+        var _putMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
+            _putAsyncData(key, data, API_RESOURCE.format('partialactivities/' + data.moduleid), successCallback, errorCallback, userCourseModel);
+        }
+
         var _postMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
             _postAsyncDataOffline(key, data, API_RESOURCE.format(url), successCallback, errorCallback, userCourseModel);
         }
@@ -472,7 +481,7 @@
             }
         };
         
-        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
+        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback, otherDataModel) {
             _getDeviceVersionAsync();
             
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -486,6 +495,7 @@
                                'Authorization': currentUser.token }
                 }
             });
+            dataModel = !otherDataModel ? dataModel : otherDataModel;
             _setLocalStorageJsonItem(key,dataModel);
 
             if(successCallback){
@@ -571,6 +581,25 @@
                 successCallback(); 
             }
             
+        };
+
+        var _putAsyncFirstTimeInfoForForums = function (userId, currentUserToken, dataModel, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            //var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+            _httpFactory({
+                method: 'PUT',
+                url: API_RESOURCE.format('usercourse/' + userId),
+                data: dataModel,
+
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': currentUserToken
+                }
+            }).success(function (data, status, headers, config) {
+                successCallback();
+            }).error(function (data, status, headers, config) {
+                errorCallback();
+            });
         };
         
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
@@ -1390,6 +1419,7 @@
             PostUserNotifications: _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
             PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
+            PutAsyncFirstTimeInfoForForums : _putAsyncFirstTimeInfoForForums,
             GetAsyncLeaderboard: _getAsyncLeaderboard,
             GetAsyncHallOfFame: _getAsyncHallOfFame,
             GetAsyncCatalog: _getAsyncCatalog,
@@ -1415,7 +1445,9 @@
             GetServerDate: _getServerDate,
             ExecuteQueue: _executeQueue,
             PostAsyncAvatar: _postAsyncAvatar,
+            GetAsyncMultipleChallengeInfo: _getAsyncMultipleChallengeInfo,
             PostMultipleActivities: _postMultipleActivities,
+            PutMultipleActivities: _putMultipleActivities,
             PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
             DesactivateUser: _desactivateUser
