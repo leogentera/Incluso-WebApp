@@ -158,7 +158,6 @@ angular
                   }
                 });
                 $scope.$emit('HidePreloader');
-                successGame();
                 
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [request]);
