@@ -230,7 +230,7 @@ angular
                 return (errors.length === 0);
             }
 
-            $scope.autologin = function (data) {                
+            $scope.autologin = function (data) {
                 _loadDrupalResources();
                 $rootScope.OAUTH_ENABLED = false;
                 
