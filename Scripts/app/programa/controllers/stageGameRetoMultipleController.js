@@ -49,15 +49,6 @@ angular
 
             $scope.isInstalled = false;
 
-            if(!$routeParams.retry){
-              try {
-                cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
-              }
-              catch (e) {
-                $scope.isInstalled = true;
-              }
-            }
-
             var loadData = function(){
               $scope.retoMultipleActivities = [];
               if ($scope.retosMultipleChallenge) {
@@ -170,6 +161,7 @@ angular
               }
               else{
                 _loadedDrupalResources = true;
+                
                 try {
                   document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setRetoMultipleCallback", [])}, false);
                 }
@@ -363,7 +355,6 @@ angular
                       userCourseUpdated.isMultipleChallengeActivityFinished = $scope.IsComplete;
                       $scope.$emit('ShowPreloader');
                       $scope.saveQuiz(quizzes, userCourseUpdated);
-                      saveLocalStorageActivities($scope.retoMultipleActivities);
                       _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
                       _setLocalStorageJsonItem("usercourse", userCourseUpdated);
                     }else{
@@ -452,6 +443,17 @@ angular
                 result.push(fill);
               }
               return result;
+            }
+
+            if(!$routeParams.retry){
+              try {
+                cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+              }
+              catch (e) {
+                $scope.isInstalled = true;
+              }
+            }else{
+              loadData();
             }
 
             Array.prototype.getIndexBy = function (name, value) {
