@@ -149,7 +149,6 @@ angular
                   }
                 });
                 $scope.$emit('HidePreloader');
-                
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [request]);
                 }
@@ -372,7 +371,7 @@ angular
                     }, 1000);
                   }
                 });
-              }, 1000);
+              }, 2000);
             }
 
             $scope.saveQuiz = function(quizzes, userCourseUpdated) {
