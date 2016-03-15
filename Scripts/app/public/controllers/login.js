@@ -186,9 +186,6 @@ angular
                         
                             cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
                         }
-                        
-                        
-                        
                                                 
                         SignalRFactory.StartChatConnection($scope.getUserChat);
 

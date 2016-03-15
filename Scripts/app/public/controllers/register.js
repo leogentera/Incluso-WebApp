@@ -248,6 +248,8 @@ angular
                 });
                 _setId(data.id);
 
+                
+                
                 moodleFactory.Services.PostGeolocation(-1);
 
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
@@ -256,6 +258,15 @@ angular
                         //Get Moodle Assets
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, function() {}, function() {}, true);
 
+                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        if (currentUser && currentUser.token) {
+                            var objectToken = {
+                                moodleAPI: API_RESOURCE.format(''),
+                                moodleToken: currentUser.token
+                            };
+                            cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
+                        }
+                        
                     }, function () {
 
                         $scope.$emit('HidePreloader');
