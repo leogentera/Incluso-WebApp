@@ -64,7 +64,7 @@ angular
                 }
 
                 var treeActivity = getActivityByActivity_identifier(activityIdentifier, userCourse);
-
+                console.log(JSON.stringify(treeActivity));
                 $scope.activityPoints = treeActivity.points;
 
                 $scope.goChat = function () {
@@ -76,11 +76,11 @@ angular
                     $scope.currentPage = 2;
                     $scope.$emit('HidePreloader');
                 }
-                /*
+
                  if(treeActivity.status == 1){
-                 $location.path('/Chat');
+                     $location.path('/Chat/' + activityIdentifier);
                  }
-                 */
+
 
                 //$location.path('/Chat'); //Added
 
@@ -118,7 +118,7 @@ angular
 
                             moodleFactory.Services.PutEndActivity(treeActivity.coursemoduleid, data, treeActivity, currentUser.token, function () {
                                 _setLocalStorageJsonItem('usercourse', $scope.model);
-                                var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
+                                var profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.userId));
                                 var model = {
                                     userId: currentUser.userId,
                                     stars: $scope.activityPoints,

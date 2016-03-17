@@ -315,7 +315,12 @@ angular
        $routeProvider.when('/AlbumIncluso', {
             templateUrl: 'Templates/Programa/AlbumIncluso.html',
             controller: 'AlbumInclusoController'
-       });       
+       });
+
+        $routeProvider.when('/Chat', {
+            templateUrl: 'Templates/Chat/index.html',
+            controller: 'programaChatController'
+        });
        
         $routeProvider.when('/Chat/:moodleid', {
             templateUrl: 'Templates/Chat/index.html',
