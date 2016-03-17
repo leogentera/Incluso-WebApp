@@ -317,7 +317,7 @@ angular
             controller: 'AlbumInclusoController'
        });       
        
-        $routeProvider.when('/Chat', { 
+        $routeProvider.when('/Chat/:moodleid', {
             templateUrl: 'Templates/Chat/index.html',
             controller: 'programaChatController'
         });

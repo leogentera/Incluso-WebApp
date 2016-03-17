@@ -1494,7 +1494,7 @@ var _activityRoutes = [
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
 
-var _activitiesCabinaDeSoporte = [1002,2022,3501];
+var _activitiesCabinaDeSoporte = [1002, 2022, 3501];
 
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [

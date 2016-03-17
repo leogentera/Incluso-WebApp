@@ -223,7 +223,7 @@ angular
                 var url = _.filter(_activityRoutes, function (x) {
                     return x.id == activity.activity_identifier
                 })[0].url;
-
+                console.log(url);
                 //Store an Index of the chosen menu item.
                 _setLocalStorageJsonItem("owlIndex", parentIndex);
 

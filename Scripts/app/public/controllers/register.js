@@ -37,21 +37,6 @@ angular
                 }, 1000);
             }
 
-            var waitForCatalogsLoaded = setInterval(waitForCatalogsLoadedTimer, 1500);
-
-            function waitForCatalogsLoadedTimer() {
-
-                if (_catalogsLoaded != null) {
-                    $scope.$emit('HidePreloader');
-                    clearInterval(waitForCatalogsLoaded);
-                    $scope.genderItems = _getCatalogValuesBy("gender");
-                    $scope.countryItems = _getCatalogValuesBy("country");
-                    $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
-                    $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
-                    $scope.$apply();
-                }
-            }
-
             $scope.genderItems = _getCatalogValuesBy("gender");
             $scope.countryItems = _getCatalogValuesBy("country");
             $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
@@ -383,6 +368,7 @@ angular
             function waitForCatalogsLoadedTimer() {
 
                 if (_catalogsLoaded != null) {
+                    $scope.$emit('HidePreloader');
                     clearInterval(waitForCatalogsLoaded);
                     $scope.genderItems = _getCatalogValuesBy("gender");
                     $scope.countryItems = _getCatalogValuesBy("country");
