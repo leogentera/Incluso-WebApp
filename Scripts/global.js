@@ -1351,14 +1351,13 @@ var logout = function ($scope, $location) {
                     })
             }
         ).success(function (data, status, headers, config) {
-                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                if (currentUser && currentUser.token) {
+                if ($scope.currentUser && $scope.currentUser.token) {
                     var objectToken = {
                         moodleAPI: API_RESOURCE.format(''),
-                        moodleToken: currentUser.token
+                        moodleToken: $scope.currentUser.token
                     };
 
-                    cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
+                    cordova.exec(function () {}, function () {},"CallToAndroid", "logout", [objectToken]);
                 }
             }
         );
