@@ -156,15 +156,6 @@
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
         };
 
-        var _getAsyncMultipleChallengeInfo = function(token, successCallback, errorCallback, forceRefresh){
-            _getAsyncData("retoMultiplePartials" , API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh);
-            _getAsyncData("retoMultipleCompleted" , API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh);
-        }
-
-        var _putMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
-            _putAsyncData(key, data, API_RESOURCE.format('partialactivities/' + data.moduleid), successCallback, errorCallback, userCourseModel);
-        }
-
         var _postMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
             _postAsyncDataOffline(key, data, API_RESOURCE.format(url), successCallback, errorCallback, userCourseModel);
         };
@@ -235,7 +226,7 @@
                 if (token) {
                     _httpFactory({
                         method: 'POST',
-                        data: {"userid": userId, "activities":[150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 85, 91, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249]},
+                        data: {"userid": userId, "activities":[150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249]},
                         url: url,
                         headers: { 'Content-Type': 'application/json' , 'Authorization': token}
                     }).success(function (data, status, headers, config) {
@@ -243,7 +234,24 @@
                             if (data.length > 0) {
                                 var activity = data.shift();
                                 var keyName = "activity/" + activity.coursemoduleid;
+                                var activitiesToConvert = [75, 89, 96, 170, 211];
+
+                                if ( activitiesToConvert.indexOf(parseInt(activity.coursemoduleid)) > -1 ) {
+                                    // ------    Change format of 'answers' key from Object to Array.
+                                    for (i = 0; i < activity.data[0].questions.length; i++) {
+                                        var newAnswer = [];
+                                        for (var key in activity.data[0].questions[i].answers) {
+                                            if (activity.data[0].questions[i].answers.hasOwnProperty(key)) {
+                                                newAnswer.push(activity.data[0].questions[i].answers[key]);
+                                            }
+                                        }
+
+                                        activity.data[0].questions[i].answers = newAnswer;
+                                    }
+                                }
+
                                 _setLocalStorageJsonItem(keyName, activity.data[0]);
+
                             } else {
                                 clearInterval(proc);
                             }
@@ -545,7 +553,7 @@
             }
         };
         
-        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback, otherDataModel) {
+        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -559,7 +567,6 @@
                                'Authorization': currentUser.token }
                 }
             });
-            dataModel = !otherDataModel ? dataModel : otherDataModel;
             _setLocalStorageJsonItem(key,dataModel);
 
             if(successCallback){
@@ -1509,9 +1516,7 @@
             GetServerDate: _getServerDate,
             ExecuteQueue: _executeQueue,
             PostAsyncAvatar: _postAsyncAvatar,
-            GetAsyncMultipleChallengeInfo: _getAsyncMultipleChallengeInfo,
             PostMultipleActivities: _postMultipleActivities,
-            PutMultipleActivities: _putMultipleActivities,
             PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
             DesactivateUser: _desactivateUser,
