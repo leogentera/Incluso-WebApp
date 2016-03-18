@@ -746,7 +746,7 @@ function updateUserStarsUsingExternalActivity(activity_identifier) {
         }
 
 
-var _progressNotification = function(currentProgress){
+var _progressNotification = function(){
     
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
     
@@ -754,7 +754,7 @@ var _progressNotification = function(currentProgress){
     
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
-    var profile = JSON.parse(logalStorage.getItem("profile/" + currentUser.id))
+    var profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.id))
     
     if(profile && notifications){
       
@@ -762,18 +762,19 @@ var _progressNotification = function(currentProgress){
             var currentNotification = notifications[i];
             
              //{rangeId : 1, progressMin: 0, progressMax:0},
-             
-             if (currentNotification.type == notificationTypes.progressNotifications && currentNotification.globalProgress) {
+             if (currentNotification.type == notificationTypes.globalProgressNotifications && currentNotification.globalprogress) {
                  
-                var notificationRanges = _.where(_globalProgressRanges, {rangeId: currentNotification.globalProgress} );
-
-                var userRegisterDate = profile.timeCreated;
-                var userLastAccessDate  = profile.lastAccess;
+                var notificationRanges = _.findWhere(_globalProgressRanges, {rangeId: currentNotification.globalprogress} );
+                var notificationRegistrerDate = new Date(currentNotification.registerdate * 1000);
+                var notificationLastAccessDate = currentNotification.lastaccessdate ? new Date(currentNotification.lastaccessdate * 1000) : null;
+                var userRegisterDate = new Date(profile.timeCreated * 1000);
+                var userLastAccessDate  = new Date(profile.lastAccess * 1000);
                 
                 if (currentNotification.status != "won" && 
-                        ((notificationRanges.progressMax == 0 && currentNotification.registerdate == userRegisterDate) || 
-                            (currentNotification.registerdate == registerdate && currentNotification.lasaccessdate == userLastAccessDate && 
-                                currentProgress >=  notificationRanges.progressMin && currentProgress <= notificationRanges.progressMax))) {
+                        ((notificationRanges.progressMax == 0 && currentNotification.registerdate == moment(userRegisterDate).format('DD-MM-YYYY')) || 
+                            (moment(notificationRegistrerDate).format('DD-MM-YYYY') == moment(userRegisterDate).format('DD-MM-YYYY') &&
+                                moment(notificationLastAccessDate).format('DD-MM-YYYY') == moment(userLastAccessDate).format('DD-MM-YYYY') && 
+                                userCourse.globalProgress > notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
 
                     var wonDate = new Date();
                     var dataModelNotification = {
