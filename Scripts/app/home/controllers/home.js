@@ -54,9 +54,39 @@ angular
                         return false;
                     }
 
-                    if (activityId) {
+                    if (activityId) {console.log("The INITIAL parameter is: " + activityId);
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
-                        logStartActivityAction(activityId, timeStamp);
+
+                        if (activityId == "chat") {
+
+                            var currentStage = parseInt(localStorage.getItem("currentStage")); //Last Stage attained by the user.
+
+                            switch (currentStage) {
+                                case 1:
+                                    activityId = "1002";
+                                    url = "ZonaDeVuelo/CabinaDeSoporte/";
+                                    break;
+                                case 2:
+                                    activityId = "2022";
+                                    url = "ZonaDeNavegacion/CabinaDeSoporte/";
+                                    break;
+                                case 3:
+                                    activityId = "3501";
+                                    url = "ZonaDeAterrizaje/CabinaDeSoporte/";
+                                    break;
+                                default:
+                                    activityId = "blocked";  //Chat está bloqueado.
+                            }
+
+                            url = url + activityId;
+                        }
+                        console.log("The FINAL parameter is: " + activityId);
+
+                        if (activityId == "blocked") {
+                            //$location.path("/");
+                        } else {
+                            logStartActivityAction(activityId, timeStamp);
+                        }
                     }
 
                     $location.path(url);
@@ -165,7 +195,7 @@ angular
                 }
 
             };
-
+            $scope.mySS = "1022";
             $scope.toolbarOptionActive = function (path) {
 
                 if (path.constructor === Array) {
@@ -180,13 +210,16 @@ angular
                             classdisable = "active disabled";
                         }
                     }
+
                     return classdisable;
 
                 } else {
-                    if ($location.path().substr(0, path.length) === path)
+                    if ($location.path().substr(0, path.length) === path) {
                         return "active disabled";
-                    else
+                    } else {
                         return "";
+                    }
+
                 }
             };
 
@@ -259,7 +292,7 @@ angular
                 if (!_activityBlocked || !_activityBlocked.length || _activityBlocked.length <= 0) {
                     _activityBlocked = moodleFactory.Services.GetCacheJson("activityblocked");
                 }
-                $rootScope.activityBlocked = _activityBlocked;
+                $rootScope.activityBlocked = _activityBlocked;console.log(JSON.stringify($rootScope.activityBlocked));
             };
             $scope.resetActivityBlockedStatus();
 

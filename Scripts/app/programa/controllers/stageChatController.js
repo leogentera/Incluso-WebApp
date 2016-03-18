@@ -68,6 +68,7 @@ angular
                 $scope.activityPoints = treeActivity.points;
 
                 $scope.goChat = function () {
+                    console.log("From Cabina de Soporte to " + activityIdentifier);
                     $location.path('/Chat/' + activityIdentifier);
                 };
 
@@ -77,12 +78,10 @@ angular
                     $scope.$emit('HidePreloader');
                 }
 
-                 if(treeActivity.status == 1){
-                     $location.path('/Chat/' + activityIdentifier);
-                 }
+                if (treeActivity.status == 1) {
+                    $location.path('/Chat/' + activityIdentifier);
+                }
 
-
-                //$location.path('/Chat'); //Added
 
                 $scope.finishActivity = function () {
 

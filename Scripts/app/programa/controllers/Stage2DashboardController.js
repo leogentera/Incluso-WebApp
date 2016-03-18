@@ -20,6 +20,28 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
+            if (!$rootScope.activityBlocked["2022"].disabled) { //disabled = false for Cabina de Soporte in Stage 2.
+                //Put Call to Remote Service.
+                console.log("You can go to Chat");
+            }
+            var activityBlocObj;
+            for (activityBlocObj in $rootScope.activityBlocked) {
+
+                var status = $rootScope.activityBlocked[activityBlocObj];
+
+                switch (activityBlocObj) {
+                    case "1002":
+                        console.log("Activity 1002 blocked: " + status.disabled);
+                        break;
+                    case "2022":
+                        console.log("Activity 2022 blocked: " + status.disabled);
+                        break;
+                    case "3501":
+                        console.log("Activity 3501 blocked: " + status.disabled);
+                        break;
+                }
+            }
+
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;

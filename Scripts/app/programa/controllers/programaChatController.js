@@ -15,7 +15,7 @@ angular
             $scope.$emit('ShowPreloader');
 
             $scope.validateConnection(initController, offlineCallback);
-            console.log("********  CHAT  *****************");
+
             function offlineCallback() {
                 $timeout(function () {
                     $location.path("/Offline");
@@ -23,7 +23,7 @@ angular
             }
 
             function initController() {
-
+                console.log("********  CHAT  *****************");
                 _timeout = $timeout;
                 _httpFactory = $http;
                 $rootScope.showFooter = false;
@@ -52,7 +52,7 @@ angular
 
                     console.log("course module id in Chat Controller = " + activityIdentifier);
                     var treeActivity = getActivityByActivity_identifier(activityIdentifier, _usercourse);  //Get activity object
-
+                    console.log("El status de la actividad es: " + treeActivity.status);
                     if (treeActivity.status === 0) {//Chat activity has not been finished
                         $scope.isDisabled = false;
                     }

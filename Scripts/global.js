@@ -560,7 +560,7 @@ var _updateRewardStatus = function () {
     localStorage.setItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
-var logStartActivityAction = function(activityId, timeStamp) {
+var logStartActivityAction = function(activityId, timeStamp) {console.log("ActivityId from global.js = " + activityId);
     
     if( Number(activityId) == 50000 || activityId == 'null' || !activityId){
             return false;
@@ -587,20 +587,21 @@ var logStartActivityAction = function(activityId, timeStamp) {
             _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
             if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
-                var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
+                var key1 = "startedActivityCabinaDeSoporte/" + currentUser.id;
+                var key2 = "finishCabinaSoporte/" + currentUser.id;
+                if (localStorage.getItem(key1) == null && !treeActivity.status && localStorage.getItem(key2) == null) {
                     moodleFactory.Services.GetServerDate(function(date){
-                    _setLocalStorageJsonItem(key, {
+                    _setLocalStorageJsonItem(key1, {
                         datestarted: date.time,
                         coursemoduleid: treeActivity.coursemoduleid,
                         activity_identifier: treeActivity.activity_identifier
                     });
                     
-                    localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                    localStorage.removeItem(key2);
                     })                    
                 }
             }
-            
+
 
         }, function () {
             console.log('Error callback');
