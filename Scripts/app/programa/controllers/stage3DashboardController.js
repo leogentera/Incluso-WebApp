@@ -222,7 +222,7 @@ angular
 
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                _progressNotification($scope.idEtapa, $scope.stageProgress);
+                _progressNotification($scope.stageProgress);
             }
 
             function getContentResources(activityIdentifierId) {
