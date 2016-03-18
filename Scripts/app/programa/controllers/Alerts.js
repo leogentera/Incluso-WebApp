@@ -134,6 +134,7 @@ angular
                 };
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
+                    cordova.exec(function () {}, function () {},"CallToAndroid", "seenNotification", [postid]);
                 }, function () {
                 },true);
             };        

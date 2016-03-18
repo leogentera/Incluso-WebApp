@@ -57,7 +57,10 @@ angular
             $scope.stageProgress = 0;
 
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
-            $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
+            if (!$scope.user.profileimageurl) {
+                $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
+            }
+            
             
             var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
             if (profileData && profileData.stars) {
@@ -257,7 +260,16 @@ angular
                             
                             var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                             $timeout(function(){
-                                $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
+                                $scope.user.profileimageurl = profile != null ? profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
+
+                                $scope.validateConnection(function () {
+                                }, function () {
+
+                                    getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function (niceImageUrl) {
+                                        $scope.user.profileimageurl = niceImageUrl;
+                                    });
+
+                                });
                             }, 1);
 
                             _pageLoaded = true;

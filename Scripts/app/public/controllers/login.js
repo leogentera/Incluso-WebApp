@@ -60,8 +60,8 @@ angular
 
             function loadQuizesAssets(userId, userToken) {
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, function() {}, function() {}, true);
-            }
+                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, function() {}, function() {}, true);
+                    }
 
             $scope.loadCredentials = function () {
 
@@ -127,6 +127,8 @@ angular
 
             $scope.login = function (username, password) {
                 $scope.$emit('ShowPreloader');
+                $scope.userCredentialsModel.modelState.isValid = true;
+                $scope.userCredentialsModel.modelState.errorMessages = [];
                 $scope.validateConnection(function () {
                     loginConnectedCallback();
                 }, offlineCallback);
@@ -150,7 +152,6 @@ angular
 
             function loginConnectedCallback() {
                 // reflect loading state at UI
-                
                 
                 if(validateModel()) {
                     
@@ -176,6 +177,16 @@ angular
 
                         _loadDrupalResources();
                         
+                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        if (currentUser && currentUser.token) {
+                            var objectToken = {
+                                moodleAPI: API_RESOURCE.format(''),
+                                moodleToken: currentUser.token
+                            };
+                        
+                            cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
+                        }
+                                                
                         SignalRFactory.StartChatConnection($scope.getUserChat);
 
                         $rootScope.OAUTH_ENABLED = false;
@@ -213,7 +224,7 @@ angular
                         _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
 
                     }).error(function (data, status, headers, config) {
-
+                        $scope.userCredentialsModel.modelState.isValid = false;
                         var errorMessage = "";
                         if(data && data.messageerror) {
                             errorMessage = window.atob(data.messageerror);  
@@ -243,14 +254,18 @@ angular
                 //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
+                $scope.userCredentialsModel.modelState.isValid = true;
+                $scope.userCredentialsModel.modelState.errorMessages = [];
+
                 if (window.mobilecheck()) {
                     cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
                 }
             }
 
             function FacebookLoginSuccess(data) {
+                $scope.$emit('ShowPreloader');
                 var userFacebook = JSON.parse(data);
-                
+
                 _loadDrupalResources();
                 $rootScope.OAUTH_ENABLED = true;
 
@@ -305,9 +320,10 @@ angular
             }
 
             function FacebookLoginFailure(data) {
-
                 $scope.$emit('HidePreloader');
+                $scope.userCredentialsModel.modelState.isValid = false;
                 var errorMessage = window.atob(data.messageerror);
+
                 $timeout(function () {
                     $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
                 }, 1000);
@@ -328,6 +344,7 @@ angular
                 moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function () {}, true);
                 moodleFactory.Services.GetAsyncForumDiscussions(85, token, function () {}, function () {}, true);
                 moodleFactory.Services.GetAsyncForumDiscussions(91, token, function () {}, function () {}, true);
+                moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                 var courseModuleIds = [{"id": 1039, "userInfo": true}, {"id": 2012, "userInfo": false}, {"id": 2017,"userInfo": true}, 
                                         {"id": 3302, "userInfo": false}, {"id": 3402, "userInfo": true}];
                 for (var i = 0; i < courseModuleIds.length; i++) {
@@ -349,7 +366,7 @@ angular
             */
             
             SignalRFactory.StopChatConnection();
-
+            
             if(localStorage.getItem("offlineConnection") == "offline") {
                 $timeout(function(){
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];

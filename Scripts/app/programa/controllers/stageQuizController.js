@@ -1079,8 +1079,8 @@ angular
 
                             $location.path(destinationPath);
                         },
-                        function (responseData) {
 
+                        function (responseData) {
                         }
                     );
 
@@ -1199,18 +1199,37 @@ angular
                             break;
 
                         case "essay":
-
                             //Remove repeated entries and blanks in the question.
+                            var numAnswers = $scope.answers[index].length;
+                            var remained;
+                            var j;
+                            $scope.validAnswers = [];
+
+                            for (j = 0; j < $scope.answers[index].length; j++) {
+                                if ($scope.answers[index][j].trim().length > 0) {
+                                    $scope.validAnswers.push($scope.answers[index][j]);
+                                }
+                            }
+
+                            $scope.answers[index] = $scope.validAnswers;
+
                             $scope.answers[index] = $scope.answers[index].filter(function (item, pos) {
-                                return item.trim().length > 0 && $scope.answers[index].indexOf(item) == pos;
+                                return $scope.answers[index].indexOf(item) == pos;
                             });
+
+                            //Check if the "TERMINAR" button is in current question
+                            if (index == $scope.maxPages - 1) {
+                                remained = numAnswers - $scope.answers[index].length;
+                                var containerHeight = angular.element('div.owl-wrapper-outer').height();
+                                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147 * remained);
+                            }
 
                             //Correction for the '\n' reserved character.
                             for (b = 0; b < $scope.answers[index].length; b++) {
                                 $scope.answers[index][b] = $scope.answers[index][b].replace(/\r?\n|\r/g, " ").trim();
                             }
 
-                            //Check is some of the questions has an invalid answer
+                            //Check if question has valid answers.
                             if ($scope.answers[index].length > 0) {
                                 numAnswered++;
                             }
@@ -1220,9 +1239,10 @@ angular
                         default:
                             break;
                     }
+
                 }
 
-                if (numAnswered == numQuestions) {
+                if (numAnswered == numQuestions) {//The Quiz questions are all completed.
                     $scope.showWarning = false;
 
                     if ($scope.activityname == "Exploración final") {
@@ -1232,9 +1252,10 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
 
-                } else {
+                } else {//The Quiz questions were not completed.
                     $scope.warningMessage = "Asegúrate de contestar todas las preguntas antes de guardar";
                     $scope.showWarning = true;
+
                     showWarningAndGoToTop();
                 }
 
@@ -1280,7 +1301,6 @@ angular
                                 } else {
                                     $scope.chosenByUserAndWrong[i][j] = false;
                                 }
-
                             }
 
                             if ($scope.questionTypeCode[i] == 'simplechoice') {
@@ -1372,7 +1392,7 @@ angular
 
             function removeHeightEssay(elem) {
                 var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 127);
+                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147);
             }
 
             //This function is activated from Template, with ESSAY type questions
