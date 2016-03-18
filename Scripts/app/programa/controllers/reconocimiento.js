@@ -30,7 +30,9 @@ angular
         $rootScope.showStage1Footer = false;
         $rootScope.showStage2Footer = false;
         $rootScope.showStage3Footer = false;
-        $scope.currentYear = moment().format('YYYY');
+        
+        //Get last activity's year of Incluso course.
+        $scope.lastActivityYear = lastActivityYear();
 
         $scope.hasCommunityAccess = false;
         $scope.discussion = null;
@@ -45,13 +47,16 @@ angular
 
         var canvas = document.createElement("canvas"),
             ctx = canvas.getContext('2d');
-        canvas.width = 1200;
-        canvas.height = 1200;
+            canvas.width = 1200;
+            canvas.height = 1200;
 
+        var lastActivityYear = moment($scope.lastActivityYear * 1000).year();
+        var courseYear = 'Incluso {0}'.format(String(lastActivityYear));
+        
         var oText = {
             username: '',
             title: 'OTORGA EL PRESENTE RECONOCIMIENTO A',
-            reason: ['Por su participación en la misión', 'Incluso 2015', 'Para una inclusión Productiva Sana'],
+            reason: ['Por su participación en la misión', courseYear, 'Para una inclusión Productiva Sana'],
             quote: ['Todos tenemos sueños', 'pero para que se vuelvan realidad se necesita una gran', 'determinación, autodisciplina y esfuerzo…', 'Jesse Owens']
         };
 
@@ -203,6 +208,21 @@ angular
                 );
         }
 
+        function lastActivityYear() {
+            var userCourse = JSON.parse(localStorage.getItem('usercourse'));
+            if (userCourse) {
+                var courseStages = _.filter(userCourse.stages,function(stage){
+                    return stage.activityname != 'General';
+                });
+                
+                var lastStage = userCourse.stages[courseStages.length - 1];
+                var lastChallenge = lastStage.challenges[lastStage.challenges.length - 1];
+                var lastActivity = lastChallenge.activities[lastChallenge.activities.length - 1];
+                return lastActivity.last_status_update;
+            }
+        }
+        
+        
         $scope.shareToCommunityClick = function () {
             $scope.validateConnection(function () {
                 $timeout(function () { $scope.communityModalOpen = !$scope.communityModalOpen; }, 500);

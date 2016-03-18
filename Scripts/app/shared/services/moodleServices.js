@@ -43,7 +43,7 @@
         var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
         };
-        
+                        
         var _getAsyncUserPostCounter = function(token, courseId, successCallback, errorCallback, forceRefresh) {
           var key = "postcounter/" + courseId;
           var url = API_RESOURCE.format("postcounter/" + courseId);
@@ -57,7 +57,12 @@
             
             _getAsyncForumDiscussionsData(key, url, token, successCallback, errorCallback, forceRefresh);
         };
-
+        
+        var _getAsyncDiscussionDetail = function(postId,token,successCallback,errorCallback,forceRefresh){
+            _getAsyncForumDiscussionsData("forumDetail/" + postId, API_RESOURCE.format('discussion/' + postId), token, successCallback, errorCallback, forceRefresh);
+            //_getAsyncData("forumDetail/" + postId, API_RESOURCE.format('discussion/' + postId), token, successCallback, errorCallback, forceRefresh);
+        }
+        
         var _putAsyncActivityInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId), successCallback, errorCallback);
         };
@@ -68,10 +73,9 @@
 
         var _getAsyncActivityQuizInfo = function (activityId, userId, token, successCallback, errorCallback, forceRefresh) {
             if (userId != -1) {
-                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '?userid=' + userId), token, successCallback, errorCallback, forceRefresh);
-            }
-            else {
-                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
+                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
+            } else {
+                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
             }
         };
         
@@ -146,16 +150,24 @@
 
         var _putEndActivity = function (activityId, data, activityModel, token, successCallback, errorCallback) {
             _endActivity("activitiesCache/" + activityModel.activity_identifier, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
-
         };
 
         var _postAsyncAvatar = function (data, successCallback, errorCallback){
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
+        };
+
+        var _getAsyncMultipleChallengeInfo = function(token, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("retoMultiplePartials" , API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh);
+            _getAsyncData("retoMultipleCompleted" , API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh);
+        }
+
+        var _putMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
+            _putAsyncData(key, data, API_RESOURCE.format('partialactivities/' + data.moduleid), successCallback, errorCallback, userCourseModel);
         }
 
         var _postMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
             _postAsyncDataOffline(key, data, API_RESOURCE.format(url), successCallback, errorCallback, userCourseModel);
-        }
+        };
 
         var _putEndActivityQuizes = function (activityId, data, userCourseModel, token, successCallback, errorCallback, forceRefresh) {
             _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
@@ -208,6 +220,67 @@
             } else {
                 return JSON.parse(str);
             }
+        };
+
+        var _getAsyncData2 = function (key, url, userId, token, successCallback, errorCallback, forceRefresh) {
+
+            _getDeviceVersionAsync();
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+
+            if (returnValue) {
+                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                return returnValue;
+            }
+            else if (forceRefresh){
+                if (token) {
+                    _httpFactory({
+                        method: 'POST',
+                        data: {"userid": userId, "activities":[150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 85, 91, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249]},
+                        url: url,
+                        headers: { 'Content-Type': 'application/json' , 'Authorization': token}
+                    }).success(function (data, status, headers, config) {
+                        var proc = setInterval(function() {//Get & save each activity object.
+                            if (data.length > 0) {
+                                var activity = data.shift();
+                                var keyName = "activity/" + activity.coursemoduleid;
+                                _setLocalStorageJsonItem(keyName, activity.data[0]);
+                            } else {
+                                clearInterval(proc);
+                            }
+                        }, 15);
+
+                        successCallback();
+                    }).error(function (data, status, headers, config) {
+                        errorCallback(data);
+                    });
+                }
+            } else {
+                if(token){
+                    addRequestToQueue(key, {
+                        type: "httpRequest",
+                        data: {
+                            method: 'GET',
+                            url: url,
+                            headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                        }
+                    });
+                }
+                else{
+                    addRequestToQueue(key, {
+                        type: "httpRequest",
+                        data: {
+                            method: 'GET',
+                            url: url,
+                            headers: { 'Content-Type': 'application/json'}
+                        }
+                    });
+                }
+
+                if(successCallback){
+                    successCallback();
+                }
+            }
+
         };
 
         var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
@@ -321,7 +394,7 @@
                 errorCallback(data);
             });
         };
-
+            
         var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
             _getDeviceVersionAsync();
             
@@ -472,7 +545,7 @@
             }
         };
         
-        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
+        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback, otherDataModel) {
             _getDeviceVersionAsync();
             
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -486,6 +559,7 @@
                                'Authorization': currentUser.token }
                 }
             });
+            dataModel = !otherDataModel ? dataModel : otherDataModel;
             _setLocalStorageJsonItem(key,dataModel);
 
             if(successCallback){
@@ -1435,10 +1509,13 @@
             GetServerDate: _getServerDate,
             ExecuteQueue: _executeQueue,
             PostAsyncAvatar: _postAsyncAvatar,
+            GetAsyncMultipleChallengeInfo: _getAsyncMultipleChallengeInfo,
             PostMultipleActivities: _postMultipleActivities,
+            PutMultipleActivities: _putMultipleActivities,
             PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
-            DesactivateUser: _desactivateUser
+            DesactivateUser: _desactivateUser,
+            GetAsyncDiscussionDetail: _getAsyncDiscussionDetail
         };
     })();
 }).call(this);

@@ -1352,6 +1352,14 @@ var logout = function ($scope, $location) {
                     })
             }
         ).success(function (data, status, headers, config) {
+                if ($scope.currentUser && $scope.currentUser.token) {
+                    var objectToken = {
+                        moodleAPI: API_RESOURCE.format(''),
+                        moodleToken: $scope.currentUser.token
+                    };
+
+                    cordova.exec(function () {}, function () {},"CallToAndroid", "logout", [objectToken]);
+                }
             }
         );
     }
@@ -1387,7 +1395,10 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("mapaDeVidaActivities");
     localStorage.removeItem("starsToAssignedAfterFinishActivity");
     localStorage.removeItem("userStars");
-    localStorage.removeItem("likesByUser");
+    localStorage.removeItem("likesByUser");    
+    localStorage.removeItem("retoMultiplePartials");
+    localStorage.removeItem("retoMultipleCompleted");
+    
     ClearLocalStorage("termsAndConditions");
     ClearLocalStorage("activity");
     ClearLocalStorage("drupal"); //If content must be refreshed every time user log in - TODO: Is better to not delete this info and create a process to uptated? 
