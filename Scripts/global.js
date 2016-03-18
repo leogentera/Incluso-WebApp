@@ -270,7 +270,9 @@ var notificationTypes = {
     activityNotifications: 1,
     generalNotifications: 2,
     profileNotifications: 3,
-    progressNotifications: 4
+    progressNotifications: 4,
+    commentsNotifications: 6,
+    likesNotifications: 7
 };
 
 var allServicesCallback = function () {
