@@ -59,34 +59,27 @@ angular
 
                         if (activityId == "chat") {
 
+
                             var currentStage = parseInt(localStorage.getItem("currentStage")); //Last Stage attained by the user.
 
                             switch (currentStage) {
                                 case 1:
                                     activityId = "1002";
-                                    url = "ZonaDeVuelo/CabinaDeSoporte/";
                                     break;
                                 case 2:
                                     activityId = "2022";
-                                    url = "ZonaDeNavegacion/CabinaDeSoporte/";
                                     break;
                                 case 3:
                                     activityId = "3501";
-                                    url = "ZonaDeAterrizaje/CabinaDeSoporte/";
                                     break;
                                 default:
-                                    activityId = "blocked";  //Chat está bloqueado.
+                                    activityId = "1002";  //For a new user.
                             }
 
-                            url = url + activityId;
+                            url = url + "/" + activityId;
                         }
                         console.log("The FINAL parameter is: " + activityId);
-
-                        if (activityId == "blocked") {
-                            //$location.path("/");
-                        } else {
-                            logStartActivityAction(activityId, timeStamp);
-                        }
+                        logStartActivityAction(activityId, timeStamp);
                     }
 
                     $location.path(url);

@@ -13,7 +13,7 @@ angular
         'SignalRFactory',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, SignalRFactory) {
             $scope.$emit('ShowPreloader');
-
+            var _pageLoaded = true;
             $scope.validateConnection(initController, offlineCallback);
 
             function offlineCallback() {
@@ -31,6 +31,9 @@ angular
                 $rootScope.showStage1Footer = false;
                 $rootScope.showStage2Footer = false;
                 $rootScope.showStage3Footer = false;
+                $scope.currentPage = 1;
+
+
 
                 _setLocalStorageItem('chatRead', "true");
                 var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
@@ -45,16 +48,26 @@ angular
                 $scope.isDisabled = true;
                 var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
 
+                $scope.goChat = function () {
+                    $scope.currentPage = 2;
+                };
+
 
                 if ($routeParams.moodleid) {
                     var activityIdentifier = parseInt($routeParams.moodleid); //Call this View with a moodleid parameter
                     console.log("$routeParams.moodleid = " + $routeParams.moodleid);
-
                     console.log("course module id in Chat Controller = " + activityIdentifier);
+
+                    getContentResources(activityIdentifier);
+
                     var treeActivity = getActivityByActivity_identifier(activityIdentifier, _usercourse);  //Get activity object
                     console.log("El status de la actividad es: " + treeActivity.status);
-                    if (treeActivity.status === 0) {//Chat activity has not been finished
-                        $scope.isDisabled = false;
+
+                    $scope.resetActivityBlockedStatus(); //Copies last version of activity blocked status into model variable
+
+                    if ($rootScope.activityBlocked[activityIdentifier].disabled || treeActivity.status === 1) { //disabled = false for Cabina de Soporte in Stage 1.
+                        //Put Call to Remote Service.
+                        $scope.isDisabled = true;
                     }
 
                     var currentChallenge = 0;
@@ -179,5 +192,40 @@ angular
             $scope.$on("$routeChangeStart", function (next, current) {
                 SignalRFactory.SetCallBackChat($scope.getUserChat);
             });
+
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    _loadedResources = true;
+                    $scope.setToolbar($location.$$path, data.node.tool_bar_title);
+                    $scope.title = data.node.chat_title;
+                    $scope.welcome = data.node.chat_welcome;
+                    $scope.description = data.node.chat_instructions;
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
+
+                }, function () {
+                    _loadedResources = true;
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
+                }, false);
+                /*
+                var stageClosingContent = "";
+                if (activityIdentifierId > 999 && activityIdentifierId < 2000)
+                    stageClosingContent = "ZonaDeVueloClosing";
+                else if (activityIdentifierId > 1999 && activityIdentifierId < 3000)
+                    stageClosingContent = "ZonaDeNavegacionClosing";
+                else
+                    stageClosingContent = "ZonaDeAterrizajeClosing";
+
+                drupalFactory.Services.GetContent(stageClosingContent, function (data, key) {
+                    _loadedResources = true;
+                    $scope.closingContent = data.node;
+                }, function () {
+                    _loadedResources = true;
+                }, false);
+                */
+            }
         }
     ]);
