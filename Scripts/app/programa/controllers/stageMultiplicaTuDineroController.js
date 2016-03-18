@@ -34,7 +34,7 @@ angular
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false; 
+            $rootScope.showStage3Footer = false;
 
             $scope.scrollToTop();
 
@@ -43,7 +43,7 @@ angular
             $scope.user = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.multiplicaTuDineroActivity = moodleFactory.Services.GetCacheJson("multiplicaTuDineroActivities");
-            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
+            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             $scope.stars = 0;
             $scope.isInstalled = false;
 
@@ -81,7 +81,7 @@ angular
             }
 
             function assignCourseModuleId(asyncRequest, data){
-                $scope.multiplicaTuDineroActivity["coursemoduleid"] = 
+                $scope.multiplicaTuDineroActivity["coursemoduleid"] =
                     ( asyncRequest ? _.find(multiplicaTuDinero.activities, function(r){ return r.activityname == data.name }).coursemoduleid : data.coursemoduleid);
                 $scope.$emit('HidePreloader');
                 _setLocalStorageJsonItem("multiplicaTuDineroActivities", $scope.multiplicaTuDineroActivity);
@@ -179,7 +179,7 @@ angular
                     return (q.userAnswer && q.userAnswer != '' ? 'completed' : 'incompleted');
                 });
 
-                $scope.IsComplete = $scope.multiplicaTuDineroActivity && 
+                $scope.IsComplete = $scope.multiplicaTuDineroActivity &&
                                     questionsAnswered.completed == data.respuestas.length;
 
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
@@ -248,8 +248,8 @@ angular
                     "userId": quiz.userid,
                     "token": currentUser.token,
                     "activityType": "Quiz"
-                };  
-                $scope.$emit('ShowPreloader');          
+                };
+                $scope.$emit('ShowPreloader');
                 _endActivity(activityModel, function(){
                     if ($routeParams.retry) {
                         _forceUpdateConnectionStatus(function() {
@@ -288,7 +288,7 @@ angular
                     }
                 }
             }
-            
+
 
             if ($routeParams.retry){
                 _loadedDrupalResources = true;

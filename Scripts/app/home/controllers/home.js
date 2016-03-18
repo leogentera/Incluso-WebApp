@@ -59,7 +59,6 @@ angular
 
                         if (activityId == "chat") {
 
-
                             var currentStage = parseInt(localStorage.getItem("currentStage")); //Last Stage attained by the user.
 
                             switch (currentStage) {
@@ -77,7 +76,9 @@ angular
                             }
 
                             url = url + "/" + activityId;
+                            activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
                         }
+
                         console.log("The FINAL parameter is: " + activityId);
                         logStartActivityAction(activityId, timeStamp);
                     }
