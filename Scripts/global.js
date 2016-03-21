@@ -271,6 +271,7 @@ var notificationTypes = {
     generalNotifications: 2,
     profileNotifications: 3,
     progressNotifications: 4,
+    globalProgressNotifications: 5
     commentsNotifications: 6,
     likesNotifications: 7
 };
@@ -541,7 +542,7 @@ var _updateBadgeStatus = function (coursemoduleid) {
       } else {
         //This else statement is set to avoid errors while debugging in firefox
       }
-    }else{
+    }else{          
       //This else statement is set to avoid errors while debugging in firefox
     }    
 };
@@ -644,10 +645,10 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
                 console.log("create notification successful");
             }, errorCallback, true);
               
-          } else {
+        } else {
             
-          }
-      }
+        }
+    }
     }
 };
 
@@ -665,10 +666,10 @@ var _coachNotification = function (stageIndex) {
             return notif;
         }
     });
-        
+
     if (notificationCoach && notificationCoach.status == "pending") {      
         var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
-                
+
                         
         var notificationId = notificationCoach.id;
         if ((activity)) {
@@ -728,7 +729,7 @@ function updateUserStarsUsingExternalActivity(activity_identifier) {
         instanceType: 0,
         date: getdate()
     };
-
+    
     var userStars = JSON.parse(localStorage.getItem("userStars"));
                                           
     var localStorageStarsData = {
@@ -749,7 +750,7 @@ function updateUserStarsUsingExternalActivity(activity_identifier) {
         }
 
 
-var _progressNotification = function(indexStageId, currentProgress){
+var _progressNotification = function(){
     
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
     
@@ -757,18 +758,27 @@ var _progressNotification = function(indexStageId, currentProgress){
     
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
-    var stageId = userCourse.stages[indexStageId].section;
+    var profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.id))
     
-    if(notifications){
+    if(profile && notifications){
       
       for(i = 0; i < notifications.length; i++){
           var currentNotification = notifications[i];
           
-          if (currentNotification.type == notificationTypes.progressNotifications && currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
-              && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
+             //{rangeId : 1, progressMin: 0, progressMax:0},
+             if (currentNotification.type == notificationTypes.globalProgressNotifications && currentNotification.globalprogress) {
+                 
+                var notificationRanges = _.findWhere(_globalProgressRanges, {rangeId: currentNotification.globalprogress} );
+                var notificationRegistrerDate = new Date(currentNotification.registerdate * 1000);
+                var notificationLastAccessDate = currentNotification.lastaccessdate ? new Date(currentNotification.lastaccessdate * 1000) : null;
+                var userRegisterDate = new Date(profile.timeCreated * 1000);
+                var userLastAccessDate  = new Date(profile.lastAccess * 1000);
             
-              console.log("progress notification created" + currentNotification.name);
-              //Add create notification logic.
+                if (currentNotification.status != "won" && 
+                        ((notificationRanges.progressMax == 0 && currentNotification.registerdate == moment(userRegisterDate).format('DD-MM-YYYY')) || 
+                            (moment(notificationRegistrerDate).format('DD-MM-YYYY') == moment(userRegisterDate).format('DD-MM-YYYY') &&
+                                moment(notificationLastAccessDate).format('DD-MM-YYYY') == moment(userLastAccessDate).format('DD-MM-YYYY') && 
+                                userCourse.globalProgress >= notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
               
               var wonDate = new Date();
               var dataModelNotification = {
@@ -784,9 +794,10 @@ var _progressNotification = function(indexStageId, currentProgress){
               moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
                   console.log("progress notification created" + currentNotification.name);
               }, errorCallback, true);            
-          }        
       }
-    }
+    }  
+}
+}
 }
 
 var successPutStarsCallback = function (data) {
@@ -1218,7 +1229,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
         instanceType: 0,
         date: getdate()
     };
-    
+
     var userStars = JSON.parse(localStorage.getItem("userStars"));
                         
     var localStorageStarsData = {
@@ -1244,7 +1255,7 @@ function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
     var activity = getActivityByActivity_identifier(activityIdentifier);
     
     profile.stars = Number(profile.stars) + Number(points);
-    
+
     var data = {
         userId: profile.id,
         stars: points,
@@ -1253,9 +1264,9 @@ function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
         date: getdate(),
         is_extra: isExtra
     };
-    
+
       var userStars = JSON.parse(localStorage.getItem("userStars"));
- 
+
       var localStorageStarsData = {
              dateissued: moment(Date.now()).unix(),
              instance: data.instance,
@@ -1336,7 +1347,7 @@ function getdate() {
 
 var logout = function ($scope, $location) {
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-    
+
     _forceUpdateConnectionStatus(function(){
       
       if (_isDeviceOnline) {
@@ -1361,7 +1372,7 @@ var logout = function ($scope, $location) {
                     };
 
                     cordova.exec(function () {}, function () {},"CallToAndroid", "logout", [objectToken]);
-                }
+            }
             }
         );
     }
@@ -1375,7 +1386,7 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("owlIndex");
     ClearLocalStorage("activity");
 
-    localStorage.removeItem("CurrentUser");
+    localStorage.removeItem("CurrentUser");    
     localStorage.removeItem("course");
     localStorage.removeItem("stage");
     localStorage.removeItem("usercourse");
@@ -1449,6 +1460,31 @@ var _badgesPerChallenge = [
     {badgeId: 16, badgeName: "Casco espacial", challengeId: 208, activity_identifier : "3300"},
     {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90, activity_identifier : "3400"},
     {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : "3500"}
+];
+
+
+var _globalProgressRanges = [
+    {rangeId : 1, progressMin: 0, progressMax:0},
+    {rangeId : 2, progressMin: 0, progressMax:5},
+    {rangeId : 3, progressMin: 5, progressMax:10},
+    {rangeId : 4, progressMin: 10, progressMax:15},
+    {rangeId : 5, progressMin: 15, progressMax:20},
+    {rangeId : 6, progressMin: 20, progressMax:25},
+    {rangeId : 7, progressMin: 25, progressMax:30},
+    {rangeId : 8, progressMin: 30, progressMax:35},
+    {rangeId : 9, progressMin: 35, progressMax:40},
+    {rangeId : 10, progressMin: 40, progressMax:45},
+    {rangeId : 11, progressMin: 45, progressMax:50},
+    {rangeId : 12, progressMin: 50, progressMax:55},
+    {rangeId : 13, progressMin: 55, progressMax:60},
+    {rangeId : 14, progressMin: 60, progressMax:65},
+    {rangeId : 15, progressMin: 65, progressMax:70},
+    {rangeId : 16, progressMin: 70, progressMax:75},
+    {rangeId : 17, progressMin: 75, progressMax:80},
+    {rangeId : 18, progressMin: 80, progressMax:85},
+    {rangeId : 19, progressMin: 85, progressMax:90},
+    {rangeId : 20, progressMin: 90, progressMax:95},
+    {rangeId : 21, progressMin: 95, progressMax:100}
 ];
 
 //This array is a dictionary of activities and their route in the application
