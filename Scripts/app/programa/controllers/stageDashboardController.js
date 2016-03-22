@@ -335,7 +335,7 @@ angular
                 _setLocalStorageJsonItem("usercourse", $scope.model);
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                _progressNotification($scope.idEtapa, $scope.stageProgress);
+                _progressNotification();
 
             }
 

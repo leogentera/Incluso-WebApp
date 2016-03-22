@@ -53,7 +53,7 @@ angular
               $scope.retoMultipleActivities = [];
               if ($scope.retosMultipleChallenge) {
                 retoMultipleArray = $scope.retosMultipleChallenge.activities;
-                for(i = 0; i < $scope.retosMultipleChallenge.activities.length; i++){
+                for(var i = 0; i < $scope.retosMultipleChallenge.activities.length; i++){
                   var activity = moodleFactory.Services.GetCacheJson("activity/" + $scope.retosMultipleChallenge.activities[i].coursemoduleid);
                   if (activity) {
                     $scope.retoMultipleActivities.push(activity);
@@ -68,7 +68,7 @@ angular
                   }
                 }
               }
-            }
+            };
 
             var assignCourseModuleId = function(asyncRequest, data){
               $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = 
