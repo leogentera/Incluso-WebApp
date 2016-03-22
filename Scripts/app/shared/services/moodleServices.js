@@ -156,6 +156,15 @@
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
         };
 
+		var _getAsyncMultipleChallengeInfo = function(token, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("retoMultiplePartials" , API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh);
+            _getAsyncData("retoMultipleCompleted" , API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh);
+        }
+
+        var _putMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
+            _putAsyncData(key, data, API_RESOURCE.format('partialactivities/' + data.moduleid), successCallback, errorCallback, userCourseModel);
+        }
+
         var _postMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
             _postAsyncDataOffline(key, data, API_RESOURCE.format(url), successCallback, errorCallback, userCourseModel);
         };
@@ -224,6 +233,9 @@
             }
             else if (forceRefresh){
                 if (token) {
+_getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
+                    _getAsyncForumDiscussions(91, token, function () {}, function () {}, true);
+                    moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                     _httpFactory({
                         method: 'POST',
                         data: {"userid": userId, "activities":[150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249]},
@@ -553,7 +565,7 @@
             }
         };
         
-        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
+        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback,otherDataModel) {
             _getDeviceVersionAsync();
             
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -567,6 +579,7 @@
                                'Authorization': currentUser.token }
                 }
             });
+			dataModel = !otherDataModel ? dataModel : otherDataModel;
             _setLocalStorageJsonItem(key,dataModel);
 
             if(successCallback){
@@ -1516,7 +1529,9 @@
             GetServerDate: _getServerDate,
             ExecuteQueue: _executeQueue,
             PostAsyncAvatar: _postAsyncAvatar,
+            GetAsyncMultipleChallengeInfo: _getAsyncMultipleChallengeInfo,
             PostMultipleActivities: _postMultipleActivities,
+            PutMultipleActivities: _putMultipleActivities,
             PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
             DesactivateUser: _desactivateUser,

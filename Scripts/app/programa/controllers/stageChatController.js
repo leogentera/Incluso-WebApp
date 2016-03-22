@@ -178,7 +178,6 @@ angular
                     localStorage.removeItem("finishCabinaSoporte/" + userId);
                     localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
                     $location.path('/' + currentStage + '/Dashboard/' + userCurrentStage + '/' + currentChallenge);
-                    }
                     
                     //Update progress
                     var _progress = moodleFactory.Services.RefreshProgress(_usercourse, _user);
