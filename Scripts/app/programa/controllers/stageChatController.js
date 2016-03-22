@@ -282,8 +282,7 @@ angular
                         $scope.openModal_CloseChallenge();
                     }
                 }
-
-
+            }
         }]).controller('closingCabinaChallengeController', ['$location', '$scope', '$modalInstance', function ($location, $scope, $modalInstance) {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
