@@ -271,7 +271,7 @@ var notificationTypes = {
     generalNotifications: 2,
     profileNotifications: 3,
     progressNotifications: 4,
-    globalProgressNotifications: 5
+    globalProgressNotifications: 5,
     commentsNotifications: 6,
     likesNotifications: 7
 };
