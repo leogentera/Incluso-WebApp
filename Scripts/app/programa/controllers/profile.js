@@ -146,20 +146,23 @@ angular
                         errorMessages: []
                     };
 
-                    //Get status of Quiz "Mis Cualidades"
-                    var activity71 = moodleFactory.Services.GetCacheJson("activity/71");
-                    if (activity71 !== null) {
-                        $scope.status71 = parseInt(activity71.status, 10);
-                    } else {
-                        $scope.status71 = -1;
-                    }
-
                     //Get status of Quiz "Mis Gustos"
-                    var activity70 = moodleFactory.Services.GetCacheJson("activity/70");
-                    if (activity70 !== null) {
-                        $scope.status70 = parseInt(activity70.status, 10);
+                    var activity70 = localStorage.getItem("activity/70");
+                    console.log("###  " + activity70);
+                    if (activity70 !== null && activity70 !== undefined) {
+                        var obj = JSON.parse(activity70);
+                        $scope.status70 = parseInt(obj.status, 10);
                     } else {
                         $scope.status70 = -1;
+                    }
+
+                    //Get status of Quiz "Mis Cualidades"
+                    var activity71 = localStorage.getItem("activity/71");
+                    if (activity71 !== null && activity71 !== undefined) {
+                        var obj = JSON.parse(activity71);
+                        $scope.status71 = parseInt(obj.status, 10);
+                    } else {
+                        $scope.status71 = -1;
                     }
 
                     $rootScope.pageName = "Mi perfil";

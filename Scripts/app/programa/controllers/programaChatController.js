@@ -31,17 +31,14 @@ angular
                 $rootScope.showStage1Footer = false;
                 $rootScope.showStage2Footer = false;
                 $rootScope.showStage3Footer = false;
-                $scope.currentPage = 1;
+                //$scope.currentPage = 1;
 
-
-
-                _setLocalStorageItem('chatRead', "true");
                 var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
                 var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + currentUser.userId));
                 var userCurrentStage = localStorage.getItem("currentStage");
                 var messagesToRead = userCurrentStage * 2;
                 $scope.senderId = currentUser.userId;
-                $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+                //$scope.messages = JSON.parse(localStorage.getItem('userChat')); //DUPLICATED LINE
                 $scope.currentMessage = "";
                 $scope.setToolbar($location.$$path, "Cabina de Soporte");
 
@@ -49,9 +46,11 @@ angular
                 var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
 
                 $scope.goChat = function () {
-                    $scope.currentPage = 2;
+                    localStorage.setItem("chatRead", "true");   //Turn-off popup.
+                    localStorage.setItem("chatAmountRead", $scope.messages.length);  //Update chatAmountRead
+                    localStorage.setItem("AmountRead", $scope.messages.length);  //Update chatAmountRead FAKE
+                    $scope.currentPage = 2;  //Unlock chat
                 };
-
 
                 if ($routeParams.moodleid) {
                     var activityIdentifier = parseInt($routeParams.moodleid); //Call this View with a moodleid parameter
@@ -65,15 +64,17 @@ angular
 
                     $scope.resetActivityBlockedStatus(); //Copies last version of activity blocked status into model variable
 
-                    if ($rootScope.activityBlocked[activityIdentifier].disabled || treeActivity.status === 1) { //disabled = false for Cabina de Soporte in Stage 1.
+                    if (!$rootScope.activityBlocked[activityIdentifier].disabled && treeActivity.status === 0) { //disabled = false for Cabina de Soporte in Stage 1.
                         //Put Call to Remote Service.
-                        $scope.isDisabled = true;
+                        console.log("Within CHAT: " + $rootScope.activityBlocked[activityIdentifier].disabled + " " + treeActivity.status);
+                        $scope.isDisabled = false;
                     }
 
+                    var coursemoduleid = treeActivity.coursemoduleid;
+                    console.log("Coursemoduleid en Chat = " + coursemoduleid);
+                    /*
                     var currentChallenge = 0;
                     var currentStage;
-                    var coursemoduleid = treeActivity.coursemoduleid; //getCoursemoduleidFromActivity(treeActivity);
-                    console.log("Coursemoduleid en Chat = " + coursemoduleid);
 
                     switch (activityIdentifier) {
                         case 1002:
@@ -89,6 +90,7 @@ angular
                             currentStage = "ZonaDeAterrizaje";
                             break;
                     }
+                    */
                 }
 
                 moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);  //Get Messages From Server.
@@ -107,6 +109,11 @@ angular
                     $timeout(function () {
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
+
+                        //
+                        localStorage.setItem("chatRead", "true");   //Turn-off popup.
+                        localStorage.setItem("chatAmountRead", $scope.messages.length);  //Update chatAmountRead
+                        localStorage.setItem("AmountRead", $scope.messages.length);  //Update chatAmountRead FAKE
 
                         //$scope.finishActivity();
 

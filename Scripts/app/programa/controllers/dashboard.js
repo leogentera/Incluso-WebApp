@@ -393,30 +393,15 @@ angular
             }
 
             function getUserChat(callback) {
-                moodleFactory.Services.GetUserChat(_getItem("userId"), $scope.user.token, function () {
+                moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
                     if (callback) callback();
-                    var chat = JSON.parse(localStorage.getItem('userChat'));
-                    var userId = localStorage.getItem("userId");
-                    var messagesFlow = [];
-                    var messagesInterchange = 0;
-                    var messagesToRead = _getItem("currentStage") * 2;
+                    var chat = JSON.parse(localStorage.getItem('userChat')); //User chat conversation
+                    //var userId = localStorage.getItem("userId");
+                    var currentlyRead = parseInt(localStorage.getItem('chatAmountRead'));
 
-                    var chatAmount = _.countBy(chat, function (messages) {
-                        messagesFlow.push(messages.messagesenderid != userId);
-                        return messages.messagesenderid != userId;
-                    });
-
-                    _.each(messagesFlow, function (m, i) {
-                        if (i > 0 && m && m != messagesFlow[i - 1]) {
-                            messagesInterchange++;
-                        }
-                    });
-
-                    if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                        _setLocalStorageItem('chatRead', "false");
+                    if (chat.length > currentlyRead) {console.log("POP GREEEEEEEEEN CHAT");
+                        localStorage.setItem('chatRead', "false");
                     }
-
-                    _setLocalStorageItem('chatAmountRead', chatAmount.true);
 
                     getUserStarsByPoints();
                     getUserLikes();

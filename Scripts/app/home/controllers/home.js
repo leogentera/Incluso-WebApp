@@ -60,22 +60,27 @@ angular
                         if (activityId == "chat") {
 
                             var currentStage = parseInt(localStorage.getItem("currentStage")); //Last Stage attained by the user.
-
+                            var pref;
                             switch (currentStage) {
                                 case 1:
                                     activityId = "1002";
+                                    pref = "/ZonaDeVuelo/";
                                     break;
                                 case 2:
                                     activityId = "2022";
+                                    pref = "/ZonaDeNavegacion/";
                                     break;
                                 case 3:
                                     activityId = "3501";
+                                    pref = "/ZonaDeAterrizaje/";
                                     break;
                                 default:
                                     activityId = "1002";  //For a new user.
+                                    pref = "/ZonaDeNavegacion/";
                             }
 
-                            url = url + "/" + activityId;
+                            //url = url + "/" + activityId;
+                            url = pref + "CabinaDeSoporte/" + activityId;
                             activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
                         }
 
@@ -259,11 +264,17 @@ angular
                 }
             };
 
-            $scope.showChatNotification = function () {
-                var readChatNotification = localStorage.getItem('chatRead');
-                if ($scope.pageName == 'Chat' || readChatNotification == "true" || readChatNotification == undefined) {
+            $scope.showChatNotification = function () {console.log("ShowChatNotification");
+                var chatRead = localStorage.getItem('chatRead');
+                if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {console.log("FIRST PART");
                     return false;
                 } else {
+                    console.log("SECOND PART");
+
+                    if (chatRead == "false") {
+                        return true;
+                    }
+                    /*
                     var userChat = JSON.parse(localStorage.getItem('userChat'));
                     if (userChat && userChat.length >= 1) {
                         var userId = localStorage.getItem('userId');
@@ -275,9 +286,11 @@ angular
                         if (lastMessage.messagesenderid != userId) {
                             return true;
                         }
+
                     } else {
                         return false;
                     }
+                    */
                 }
             };
 
@@ -347,7 +360,7 @@ angular
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
-            }
+            };
 
 
             /* checks if user has internet connection */
@@ -365,7 +378,7 @@ angular
                 });
             };
 
-            $scope.getUserChat = function () {
+            $scope.getUserChat2 = function () {alert("MYSTERY");
                 $timeout(function () {                
                     _setLocalStorageItem('chatRead', "false");
 

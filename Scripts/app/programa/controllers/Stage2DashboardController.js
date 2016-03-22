@@ -20,27 +20,54 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
-            if (!$rootScope.activityBlocked["2022"].disabled) { //disabled = false for Cabina de Soporte in Stage 2.
+            // ---- Update Chat Status -----------------------------------------------
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
+            }
+
+            function getUserChatCallback() {
+                //Make the pop-up appear in Chat Icon.
+                console.log("POPs !!!");
+                localStorage.setItem("chatRead", "false"); //Turn-on chat pop-up.
+            }
+
+            function errorCallback() {
+            }
+
+            var message2 = localStorage.getItem("message2");
+
+            if (!message2) {
+                message2 = "false"
+            }
+
+            if (!$rootScope.activityBlocked["2022"].disabled && message2 == "false") { //disabled = false for Cabina de Soporte in Stage 1.
+
                 //Put Call to Remote Service.
-                console.log("You can go to Chat");
-            }
-            var activityBlocObj;
-            for (activityBlocObj in $rootScope.activityBlocked) {
+                $scope.validateConnection(function () {
 
-                var status = $rootScope.activityBlocked[activityBlocObj];
+                    $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+                    var currentUser = JSON.parse(localStorage.getItem('CurrentUser')); //Get chat conversations.
+                    var profile = JSON.parse(localStorage.getItem('Perfil/' + currentUser.userId)); //Get chat conversations.
+                    localStorage.setItem("message2", "true"); //Flag for not calling the service again.
 
-                switch (activityBlocObj) {
-                    case "1002":
-                        console.log("Activity 1002 blocked: " + status.disabled);
-                        break;
-                    case "2022":
-                        console.log("Activity 2022 blocked: " + status.disabled);
-                        break;
-                    case "3501":
-                        console.log("Activity 3501 blocked: " + status.disabled);
-                        break;
-                }
-            }
+                    var newMessage = {
+                        "messagetext": "Hola " + profile.firstname + ", éste es tu Mensaje Etapa 3",
+                        "sendAsCouch": true
+                    };
+
+                    /* time out to avoid android lag on fully hiding keyboard */
+                    $timeout(function () {
+                        $scope.messages.push(newMessage);
+                        _setLocalStorageItem('userChat', JSON.stringify($scope.messages));
+
+                        moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                    }, 1000);
+
+                }, offlineCallback);
+            } else { console.log("Message has been written BEFORE for Stage 2");}
+            // --------------------------------------------------------------------------------------
 
             $scope.setToolbar($location.$$path, "");
 

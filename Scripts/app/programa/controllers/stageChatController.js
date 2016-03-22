@@ -69,6 +69,7 @@ angular
 
                 $scope.goChat = function () {
                     console.log("From Cabina de Soporte to " + activityIdentifier);
+                    localStorage.setItem("chatRead", "true");
                     $location.path('/Chat/' + activityIdentifier);
                 };
 
@@ -79,9 +80,9 @@ angular
                 }
 
                 if (treeActivity.status == 1) {
-                    $location.path('/Chat/' + activityIdentifier);
+                    //The next line avoided the showing of robot
+                    //$location.path('/Chat/' + activityIdentifier);
                 }
-
 
                 $scope.finishActivity = function () {
 

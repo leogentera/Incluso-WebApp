@@ -1385,7 +1385,7 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("userId");
     localStorage.removeItem("avatarInfo");
     localStorage.removeItem("chatRead");
-    localStorage.removeItem("chatAmountRead");
+    //localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
     localStorage.removeItem("halloffame");
@@ -1667,7 +1667,7 @@ function _updateDeviceVersionCache () {
     if (window.mobilecheck()) {
         if (!FLAG_DEVICE_VERSION_RUNNING) {
             FLAG_DEVICE_VERSION_RUNNING = true;
-            //console.log("ejecutando device-version");
+            //ejecutando device-version
             cordova.exec(function(data) {
                 deviceVersion.localVersion = data.currentVersion;
                 deviceVersion.remoteVersion = data.latestVersion;
