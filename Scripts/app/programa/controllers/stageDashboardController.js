@@ -51,30 +51,28 @@ angular
             }
 
             if (!$rootScope.activityBlocked["1002"].disabled && fireService) { //disabled = false for Cabina de Soporte in Stage 1.
-
+                console.log("******************************************* FIRING CHAT SERVICE STAGE 1");
                 //Put Call to Remote Service.
                 $scope.validateConnection(function () {
 
-                    //$scope.messages = JSON.parse(localStorage.getItem('userChat'));  //Get chat conversations.
                     var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
-                    var profile = JSON.parse(localStorage.getItem('Perfil/' + currentUser.userId)); //Get chat conversations.
-                    //localStorage.setItem("message1", "true"); //Flag for not calling the service again.
+                    var messageText = "Hola [name], éstas son tus fortalezas: [s0], [s1], [s2]. Y éste es tu escudo: [shield]";
 
                     var newMessage = {
-                        "messagetext": "Hola " + profile.firstname + ", éstas son tus fortalezas: " + profile.strengths[0] + " " + profile.strengths[1] + " " + profile.strengths[2] + " y éste es tu escudo: YYY",
+                        "messagetext": messageText,
                         "sendAsCouch": true
                     };
 
-                    /* time out to avoid android lag on fully hiding keyboard */
+                    // time out to avoid android lag on fully hiding keyboard
                     $timeout(function () {
                         $scope.messages.push(newMessage);
-                        _setLocalStorageItem('userChat', JSON.stringify($scope.messages));
+                        _setLocalStorageItem('userChat', JSON.stringify($scope.messages)); //Save to LS.
 
                         moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
                     }, 1000);
 
                 }, offlineCallback);
-            } else { console.log("Message has been written BEFORE for Stage 1");}
+            } else { console.log("Message has been written BEFORE for Stage 1 OR activity is Blocked");}
             // --------------------------------------------------------------------------------------
 
             $scope.setToolbar($location.$$path, "");

@@ -45,55 +45,22 @@ angular
                 $scope.isDisabled = true;
                 var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
 
-                $scope.goChat = function () {
-                    localStorage.setItem("chatRead", "true");   //Turn-off popup.
-                    localStorage.setItem("chatAmountRead", $scope.messages.length);  //Update chatAmountRead
-                    localStorage.setItem("AmountRead", $scope.messages.length);  //Update chatAmountRead FAKE
-                    $scope.currentPage = 2;  //Unlock chat
-                };
-
                 if ($routeParams.moodleid) {
                     var activityIdentifier = parseInt($routeParams.moodleid); //Call this View with a moodleid parameter
-                    console.log("$routeParams.moodleid = " + $routeParams.moodleid);
-                    console.log("course module id in Chat Controller = " + activityIdentifier);
-
                     getContentResources(activityIdentifier);
-
                     var treeActivity = getActivityByActivity_identifier(activityIdentifier, _usercourse);  //Get activity object
+                    console.log("...Starting Chat With ActivityIdentifier : " + activityIdentifier + "/" + treeActivity.coursemoduleid);
                     console.log("El status de la actividad es: " + treeActivity.status);
 
                     $scope.resetActivityBlockedStatus(); //Copies last version of activity blocked status into model variable
 
                     if (!$rootScope.activityBlocked[activityIdentifier].disabled && treeActivity.status === 0) { //disabled = false for Cabina de Soporte in Stage 1.
-                        //Put Call to Remote Service.
-                        console.log("Within CHAT: " + $rootScope.activityBlocked[activityIdentifier].disabled + " " + treeActivity.status);
-                        $scope.isDisabled = false;
+                        $scope.isDisabled = false;  //Button "CONTINUAR" will be available.
                     }
-
-                    var coursemoduleid = treeActivity.coursemoduleid;
-                    console.log("Coursemoduleid en Chat = " + coursemoduleid);
-                    /*
-                    var currentChallenge = 0;
-                    var currentStage;
-
-                    switch (activityIdentifier) {
-                        case 1002:
-                            currentChallenge = 4;
-                            currentStage = "ZonaDeVuelo";
-                            break;
-                        case 2022:
-                            currentChallenge = 5;
-                            currentStage = "ZonaDeNavegacion";
-                            break;
-                        case 3501:
-                            currentChallenge = 5;
-                            currentStage = "ZonaDeAterrizaje";
-                            break;
-                    }
-                    */
                 }
 
-                moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);  //Get Messages From Server.
+                //Get Messages From Server.
+                moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
                 SignalRFactory.SetCallBackChat(getUserRefreshChatCallback);
 
                 if ($location.hash() == 'top') {
@@ -110,12 +77,42 @@ angular
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
 
-                        //
-                        localStorage.setItem("chatRead", "true");   //Turn-off popup.
-                        localStorage.setItem("chatAmountRead", $scope.messages.length);  //Update chatAmountRead
-                        localStorage.setItem("AmountRead", $scope.messages.length);  //Update chatAmountRead FAKE
+                        if ($scope.messages && $scope.messages.length >= 1) {
+                            // -- Update First Message with <img> tag
+                            var imgPath;
+                            var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
+                            var profile = JSON.parse(localStorage.getItem('Perfil/' + currentUser.userId));
 
-                        //$scope.finishActivity();
+                            if (!profile.strengths[0]) {
+                                profile.strengths[0] = "No strength 1";
+                            }
+
+                            if (!profile.strengths[1]) {
+                                profile.strengths[1] = "No strength 2";
+                            }
+
+                            if (!profile.strengths[2]) {
+                                profile.strengths[2] = "No strength 3";
+                            }
+
+                            if (currentUser.shield == "") {
+                                imgPath = "<img src='assets/images/badges/img-badge-placeholder.svg'>";
+                            } else {
+                                imgPath = "<img src='assets/images/badges/img-" + currentUser.shield.trim().toLowerCase() + ".svg'>";
+                            }
+
+                            //$scope.messages[0].messagetext = "Hola " + "<span style='color:yellow;'>" + currentUser.firstname.toUpperCase() + "</span>"
+
+                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[name]", currentUser.firstname.toUpperCase());
+                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[s0]", profile.strengths[0].toUpperCase());
+                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[s1]", profile.strengths[1].toUpperCase());
+                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[s2]", profile.strengths[2].toUpperCase());
+                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[shield]", imgPath);
+                            // -----
+                        }
+
+                        localStorage.setItem("chatRead", "true");   //Turn-off popup.
+                        //localStorage.setItem("chatAmountRead", $scope.messages.length);  //Update amount of readed messages.
 
                         if ($location.hash() == 'top') {
                             $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
@@ -141,34 +138,12 @@ angular
                         console.log("_startedActivityCabinaDeSoporte = " + _startedActivityCabinaDeSoporte);
                         if (_startedActivityCabinaDeSoporte) {
                             var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);
-                            console.log("currentActivity =" + JSON.stringify(currentActivity));
+
                             if (!currentActivity.status) {//The activity has not been finished.
-                                var latestCoachAndSenderMessages = 0;
-                                /*
-                                 var dateStarted = new Date(_startedActivityCabinaDeSoporte.datestarted * 1000);
-
-                                 var latestMessages = _.filter($scope.messages, function (msg) {
-                                 return (new Date(msg.messagedate)) > dateStarted;
-                                 });
-
-                                 for (var m = 0; m < latestMessages.length; m++) {
-                                 var message = latestMessages[m];
-
-                                 if (message.messagesenderid == $scope.senderId) {
-                                 var nextMessage = (m + 1) < latestMessages.length ? latestMessages[m + 1] : null;
-
-                                 if (nextMessage && nextMessage.messagesenderid != $scope.senderId) {
-                                 latestCoachAndSenderMessages++;
-                                 }
-                                 }
-                                 }
-                                 */
-                                //if (treeActivity.status) { //(latestCoachAndSenderMessages >= 0) {//The Chat activity has been finished
-                                    console.log("REDIRECTING...");
-                                    localStorage.removeItem("startedActivityCabinaDeSoporte/" + currentUser.userId);
-                                    _setLocalStorageItem("finishCabinaSoporte/" + currentUser.userId, _startedActivityCabinaDeSoporte.activity_identifier);
-                                    $location.path(zone + '/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
-                                //}
+                                console.log("...Finishing Cabina de Soporte");
+                                localStorage.removeItem("startedActivityCabinaDeSoporte/" + currentUser.userId);
+                                _setLocalStorageItem("finishCabinaSoporte/" + currentUser.userId, _startedActivityCabinaDeSoporte.activity_identifier);
+                                $location.path(zone + '/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
                             }
                         }
                     } else {
@@ -176,24 +151,8 @@ angular
                         $location.path(zone + '/CabinaDeSoporte/' + finishCabinaSoporte);
                     }
                 };
-                /*
-                 $scope.back = function () {
-                 var userCurrentStage = localStorage.getItem("currentStage");
-                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4');
-                 };
 
-
-                function getUserChatCallback() {
-                }
-
-                 function triggerAndroidKeyboardHide() {
-                 angular.element('#chatMessages').trigger('tap');
-                 $anchorScroll();
-                 }
-                 */
-
-                function errorCallback() {
-                }
+                function errorCallback() { }
             }
 
             $scope.$on("$routeChangeStart", function (next, current) {
@@ -218,21 +177,21 @@ angular
                     }
                 }, false);
                 /*
-                var stageClosingContent = "";
-                if (activityIdentifierId > 999 && activityIdentifierId < 2000)
-                    stageClosingContent = "ZonaDeVueloClosing";
-                else if (activityIdentifierId > 1999 && activityIdentifierId < 3000)
-                    stageClosingContent = "ZonaDeNavegacionClosing";
-                else
-                    stageClosingContent = "ZonaDeAterrizajeClosing";
+                 var stageClosingContent = "";
+                 if (activityIdentifierId > 999 && activityIdentifierId < 2000)
+                 stageClosingContent = "ZonaDeVueloClosing";
+                 else if (activityIdentifierId > 1999 && activityIdentifierId < 3000)
+                 stageClosingContent = "ZonaDeNavegacionClosing";
+                 else
+                 stageClosingContent = "ZonaDeAterrizajeClosing";
 
-                drupalFactory.Services.GetContent(stageClosingContent, function (data, key) {
-                    _loadedResources = true;
-                    $scope.closingContent = data.node;
-                }, function () {
-                    _loadedResources = true;
-                }, false);
-                */
+                 drupalFactory.Services.GetContent(stageClosingContent, function (data, key) {
+                 _loadedResources = true;
+                 $scope.closingContent = data.node;
+                 }, function () {
+                 _loadedResources = true;
+                 }, false);
+                 */
             }
         }
     ]);

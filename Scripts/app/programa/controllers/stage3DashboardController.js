@@ -35,25 +35,28 @@ angular
 
             function errorCallback() {
             }
-
-            var message1 = localStorage.getItem("message3");
+            /*
+            var message3 = localStorage.getItem("message3");
 
             if (!message3) {
                 message3 = "false"
             }
+            */
 
-            if (!$rootScope.activityBlocked["3501"].disabled && message3 == "false") { //disabled = false for Cabina de Soporte in Stage 1.
+            var fireService = false;
+            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+            if ($scope.messages && $scope.messages.length ==  2) {
+                fireService = true;
+            }
 
+            if (!$rootScope.activityBlocked["3501"].disabled && fireService) { //disabled = false for Cabina de Soporte in Stage 1.
+                console.log("******************************************* FIRING CHAT SERVICE STAGE 3");
                 //Put Call to Remote Service.
                 $scope.validateConnection(function () {
-
-                    $scope.messages = JSON.parse(localStorage.getItem('userChat'));
                     var currentUser = JSON.parse(localStorage.getItem('CurrentUser')); //Get chat conversations.
-                    var profile = JSON.parse(localStorage.getItem('Perfil/' + currentUser.userId)); //Get chat conversations.
-                    localStorage.setItem("message3", "true"); //Flag for not calling this service again.
 
                     var newMessage = {
-                        "messagetext": "Hola " + profile.firstname + ", éste es tu Mensaje Etapa 3",
+                        "messagetext": "Hola " + currentUser.firstname + "... Esto es más información",
                         "sendAsCouch": true
                     };
 

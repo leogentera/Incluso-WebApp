@@ -56,11 +56,10 @@ angular
 
             $scope.stageProgress = 0;
 
-            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
+            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
             if (!$scope.user.profileimageurl) {
                 $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
             }
-            
             
             var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
             if (profileData && profileData.stars) {
@@ -393,15 +392,19 @@ angular
             }
 
             function getUserChat(callback) {
+                //Get Messages From Server.
                 moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
-                    if (callback) callback();
-                    var chat = JSON.parse(localStorage.getItem('userChat')); //User chat conversation
-                    //var userId = localStorage.getItem("userId");
+                    if (callback) {
+                        callback();
+                    }
+                    /*
+                    var userChat = JSON.parse(localStorage.getItem('userChat')); //Recover last chat update from LS.
                     var currentlyRead = parseInt(localStorage.getItem('chatAmountRead'));
 
-                    if (chat.length > currentlyRead) {console.log("POP GREEEEEEEEEN CHAT");
+                    if (userChat && userChat.length > currentlyRead) {console.log("...DASHBOARD PROGRAMA POP GREEEEEEEEEN CHAT");
                         localStorage.setItem('chatRead', "false");
                     }
+                    */
 
                     getUserStarsByPoints();
                     getUserLikes();

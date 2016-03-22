@@ -560,7 +560,7 @@ var _updateRewardStatus = function () {
     localStorage.setItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
-var logStartActivityAction = function(activityId, timeStamp) {console.log("ActivityId from global.js = " + activityId);
+var logStartActivityAction = function(activityId, timeStamp) {
     
     if( Number(activityId) == 50000 || activityId == 'null' || !activityId){
             return false;
@@ -1384,7 +1384,7 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("activityStatus");
     localStorage.removeItem("userId");
     localStorage.removeItem("avatarInfo");
-    localStorage.removeItem("chatRead");
+    //localStorage.removeItem("chatRead");
     //localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");

@@ -148,7 +148,7 @@ angular
 
                     //Get status of Quiz "Mis Gustos"
                     var activity70 = localStorage.getItem("activity/70");
-                    console.log("###  " + activity70);
+
                     if (activity70 !== null && activity70 !== undefined) {
                         var obj = JSON.parse(activity70);
                         $scope.status70 = parseInt(obj.status, 10);
@@ -560,8 +560,6 @@ angular
 
                                 $scope.$emit('scrollTop');
                                 $scope.$emit('HidePreloader');
-                                //console.log(data); console.log(JSON.stringify(data));
-                                //var resultData = data;
 
                                 if (data.success == true) {//If the
 

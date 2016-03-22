@@ -64,11 +64,10 @@ angular
                 }
 
                 var treeActivity = getActivityByActivity_identifier(activityIdentifier, userCourse);
-                console.log(JSON.stringify(treeActivity));
+
                 $scope.activityPoints = treeActivity.points;
 
                 $scope.goChat = function () {
-                    console.log("From Cabina de Soporte to " + activityIdentifier);
                     localStorage.setItem("chatRead", "true");
                     $location.path('/Chat/' + activityIdentifier);
                 };

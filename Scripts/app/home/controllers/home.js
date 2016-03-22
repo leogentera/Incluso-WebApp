@@ -54,7 +54,7 @@ angular
                         return false;
                     }
 
-                    if (activityId) {console.log("The INITIAL parameter is: " + activityId);
+                    if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
 
                         if (activityId == "chat") {
@@ -79,19 +79,23 @@ angular
                                     pref = "/ZonaDeNavegacion/";
                             }
 
-                            //url = url + "/" + activityId;
                             url = pref + "CabinaDeSoporte/" + activityId;
-                            activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
+
+                            //Check if CabinaDeSoporte activity is blocked
+                            if ($rootScope.activityBlocked[activityId].disabled) {console.log("### BLOCKED " + activityId);
+                                activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
+                            } else {console.log("### NOT BLOCKED " + activityId);}
                         }
 
-                        console.log("The FINAL parameter is: " + activityId);
                         logStartActivityAction(activityId, timeStamp);
                     }
 
                     $location.path(url);
 
-                    if (sideToggle == "sideToggle")
+                    if (sideToggle == "sideToggle") {
                         $rootScope.sidebar = !$rootScope.sidebar;
+                    }
+
                 }
 
             };
@@ -264,33 +268,16 @@ angular
                 }
             };
 
-            $scope.showChatNotification = function () {console.log("ShowChatNotification");
+            $scope.showChatNotification = function () {
                 var chatRead = localStorage.getItem('chatRead');
-                if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {console.log("FIRST PART");
+
+                if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {
                     return false;
                 } else {
-                    console.log("SECOND PART");
 
                     if (chatRead == "false") {
                         return true;
                     }
-                    /*
-                    var userChat = JSON.parse(localStorage.getItem('userChat'));
-                    if (userChat && userChat.length >= 1) {
-                        var userId = localStorage.getItem('userId');
-
-                        var lastMessage = _.max(userChat, function (chat) {
-                            return chat.messagedate;
-                        });
-
-                        if (lastMessage.messagesenderid != userId) {
-                            return true;
-                        }
-
-                    } else {
-                        return false;
-                    }
-                    */
                 }
             };
 
@@ -299,8 +286,9 @@ angular
                 if (!_activityBlocked || !_activityBlocked.length || _activityBlocked.length <= 0) {
                     _activityBlocked = moodleFactory.Services.GetCacheJson("activityblocked");
                 }
-                $rootScope.activityBlocked = _activityBlocked;console.log(JSON.stringify($rootScope.activityBlocked));
+                $rootScope.activityBlocked = _activityBlocked;
             };
+
             $scope.resetActivityBlockedStatus();
 
             $scope.leftVisible = false;
