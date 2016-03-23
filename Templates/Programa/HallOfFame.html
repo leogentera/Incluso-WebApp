@@ -8,7 +8,7 @@
                         <h3>{{contentResources.hall_of_fame_title}} <span>Avance</span></h3>
                         <div class="user-avatar">
                             <figure>
-                                <img onerror="this.src='assets/avatar/default-2.png'" ng-src="{{userStats.profileImageUrl}}" alt="avatar"/>
+								<img ng-src="{{userStats.profileImageUrl != '' ? userStats.profileImageUrl : 'assets/avatar/default-2.png'}}" alt="avatar"/>
                             </figure>
                         </div>
                         <div class="user-data">
