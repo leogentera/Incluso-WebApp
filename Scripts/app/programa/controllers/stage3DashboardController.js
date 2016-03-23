@@ -54,9 +54,24 @@ angular
                 //Put Call to Remote Service.
                 $scope.validateConnection(function () {
                     var currentUser = JSON.parse(localStorage.getItem('CurrentUser')); //Get chat conversations.
+                    var messageText = "Hola " + currentUser.firstname + ",\n\n";
+                    messageText += "En tu tercera aventura has logrado salir ";
+                    messageText += "de la lluvia de asteroides, ";
+                    messageText += "probablemente los retos fueron mayores ";
+                    messageText += "y por ello aprendiste que las mejores ";
+                    messageText += "decisiones te llevarán por rumbos ";
+                    messageText += "positivos; que existen ideas escondidas ";
+                    messageText += "dentro de ti que pueden impulsarte para ";
+                    messageText += "conquistar tus planes a corto, mediano y ";
+                    messageText += "largo plazo, siempre y cuando ";
+                    messageText += "mantengas un equilibrio en tu mapa de ";
+                    messageText += "vida.\n\n";
+                    messageText += "Capitán estás a punto de terminar la ";
+                    messageText += "zona de aterrizaje\n\n";
+                    messageText += "¡Sigue adelante!";
 
                     var newMessage = {
-                        "messagetext": "Hola " + currentUser.firstname + "... Esto es más información",
+                        "messagetext": messageText,
                         "sendAsCouch": true
                     };
 

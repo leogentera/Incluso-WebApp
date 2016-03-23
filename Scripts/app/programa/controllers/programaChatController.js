@@ -1,5 +1,5 @@
 angular
-    .module('incluso.programa.chatcontroller', [])
+    .module('incluso.programa.chatcontroller', ['ngSanitize'])
     .controller('programaChatController', [
         '$q',
         '$scope',
@@ -81,19 +81,6 @@ angular
                             // -- Update First Message with <img> tag
                             var imgPath;
                             var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
-                            var profile = JSON.parse(localStorage.getItem('Perfil/' + currentUser.userId));
-
-                            if (!profile.strengths[0]) {
-                                profile.strengths[0] = "No strength 1";
-                            }
-
-                            if (!profile.strengths[1]) {
-                                profile.strengths[1] = "No strength 2";
-                            }
-
-                            if (!profile.strengths[2]) {
-                                profile.strengths[2] = "No strength 3";
-                            }
 
                             if (currentUser.shield == "") {
                                 imgPath = "<img src='assets/images/badges/img-badge-placeholder.svg'>";
@@ -102,12 +89,12 @@ angular
                             }
 
                             //$scope.messages[0].messagetext = "Hola " + "<span style='color:yellow;'>" + currentUser.firstname.toUpperCase() + "</span>"
-
-                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[name]", currentUser.firstname.toUpperCase());
-                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[s0]", profile.strengths[0].toUpperCase());
-                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[s1]", profile.strengths[1].toUpperCase());
-                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[s2]", profile.strengths[2].toUpperCase());
-                            $scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[shield]", imgPath);
+                            //$scope.messages[0].messagetext = $scope.messages[0].messagetext.replace(/\[br\]/gm, "\n\n");
+                            //$scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[name]", currentUser.firstname.toUpperCase());
+                            //$scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[s0]", profile.strengths[0].toUpperCase());
+                            //$scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[s1]", profile.strengths[1].toUpperCase());
+                            //$scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[s2]", profile.strengths[2].toUpperCase());
+                            //$scope.messages[0].messagetext = $scope.messages[0].messagetext.replace("[shield]", imgPath);
                             // -----
                         }
 

@@ -130,7 +130,7 @@
                 <div class="{{msge.messagesenderid == senderId ? 'msg sent' : 'msg received'}}" ng-repeat="msge in messages">
                     <div class="msg-icn icomoon"></div>
                     <div class="text">
-                        <span ng-bind-html="msge.messagetext"></span>
+                        <span ng-bind-html="msge.messagetext" style="white-space: pre-line;"></span>
                         <span class="date">{{msge.messagedate | date:'fullDate'}} {{msge.messagedate | date:'mediumTime'}}</span>
                     </div>
                 </div>

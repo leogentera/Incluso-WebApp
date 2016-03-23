@@ -397,14 +397,12 @@ angular
                     if (callback) {
                         callback();
                     }
-                    /*
-                    var userChat = JSON.parse(localStorage.getItem('userChat')); //Recover last chat update from LS.
-                    var currentlyRead = parseInt(localStorage.getItem('chatAmountRead'));
 
-                    if (userChat && userChat.length > currentlyRead) {console.log("...DASHBOARD PROGRAMA POP GREEEEEEEEEN CHAT");
-                        localStorage.setItem('chatRead', "false");
+                    var messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
+
+                    if (messages.length == 0) {
+                        localStorage.setItem("chatRead", "true");
                     }
-                    */
 
                     getUserStarsByPoints();
                     getUserLikes();
