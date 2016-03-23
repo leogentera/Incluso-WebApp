@@ -233,7 +233,7 @@
             }
             else if (forceRefresh){
                 if (token) {
-_getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
+                    _getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
                     _getAsyncForumDiscussions(91, token, function () {}, function () {}, true);
                     moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                     _httpFactory({
@@ -245,29 +245,32 @@ _getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
                         var proc = setInterval(function() {//Get & save each activity object.
                             if (data.length > 0) {
                                 var activity = data.shift();
-                                var keyName = "activity/" + activity.coursemoduleid;
-                                var activitiesToConvert = [75, 89, 96, 170, 211];
 
-                                if ( activitiesToConvert.indexOf(parseInt(activity.coursemoduleid)) > -1 ) {
-                                    // ------    Change format of 'answers' key from Object to Array.
-                                    for (i = 0; i < activity.data[0].questions.length; i++) {
-                                        var newAnswer = [];
-                                        for (var key in activity.data[0].questions[i].answers) {
-                                            if (activity.data[0].questions[i].answers.hasOwnProperty(key)) {
-                                                newAnswer.push(activity.data[0].questions[i].answers[key]);
+                                if (activity && activity.data[0]) {
+                                    var keyName = "activity/" + activity.coursemoduleid;
+                                    var activitiesToConvert = [75, 89, 96, 170, 211];
+
+                                    if ( activitiesToConvert.indexOf(parseInt(activity.coursemoduleid)) > -1 ) {
+                                        // ------    Change format of 'answers' key from Object to Array.
+                                        for (i = 0; i < activity.data[0].questions.length; i++) {
+                                            var newAnswer = [];
+                                            for (var key in activity.data[0].questions[i].answers) {
+                                                if (activity.data[0].questions[i].answers.hasOwnProperty(key)) {
+                                                    newAnswer.push(activity.data[0].questions[i].answers[key]);
+                                                }
                                             }
+
+                                            activity.data[0].questions[i].answers = newAnswer;
                                         }
-
-                                        activity.data[0].questions[i].answers = newAnswer;
                                     }
-                                }
 
-                                _setLocalStorageJsonItem(keyName, activity.data[0]);
+                                    _setLocalStorageJsonItem(keyName, activity.data[0]);
+                                }
 
                             } else {
                                 clearInterval(proc);
                             }
-                        }, 15);
+                        }, 50);
 
                         successCallback();
                     }).error(function (data, status, headers, config) {
