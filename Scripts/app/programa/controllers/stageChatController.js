@@ -164,11 +164,11 @@ angular
     
                     //create notification                    
                     _activityNotification(treeActivity.coursemoduleid, triggerActivity);
-                    //complete stage                
-    
+
+                    //complete stage
                     _updateBadgeStatus(treeActivity.coursemoduleid);
-                    
                     _updateRewardStatus();
+
                     // update activity status dictionary used for blocking activity links
                     updateActivityStatusDictionary(treeActivity.activity_identifier);
     
@@ -178,12 +178,6 @@ angular
                     localStorage.removeItem("finishCabinaSoporte/" + userId);
                     localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
                     $location.path('/' + currentStage + '/Dashboard/' + userCurrentStage + '/' + currentChallenge);
-                    
-                    //Update progress
-                    var _progress = moodleFactory.Services.RefreshProgress(_usercourse, _user);
-                    _setLocalStorageJsonItem("usercourse", _progress.course);
-                    var _stageProgress = _progress.course.stages[idEtapa - 1].stageProgress;
-                    _progressNotification();
                 }
                 
                 $scope.openModal_CloseChallenge = function (size) {
