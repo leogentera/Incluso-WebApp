@@ -56,11 +56,10 @@ angular
 
             $scope.stageProgress = 0;
 
-            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
+            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
             if (!$scope.user.profileimageurl) {
                 $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
             }
-            
             
             var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
             if (profileData && profileData.stars) {
@@ -393,30 +392,19 @@ angular
             }
 
             function getUserChat(callback) {
-                moodleFactory.Services.GetUserChat(_getItem("userId"), $scope.user.token, function () {
-                    if (callback) callback();
-                    var chat = JSON.parse(localStorage.getItem('userChat'));
-                    var userId = localStorage.getItem("userId");
-                    var messagesFlow = [];
-                    var messagesInterchange = 0;
-                    var messagesToRead = _getItem("currentStage") * 2;
-
-                    var chatAmount = _.countBy(chat, function (messages) {
-                        messagesFlow.push(messages.messagesenderid != userId);
-                        return messages.messagesenderid != userId;
-                    });
-
-                    _.each(messagesFlow, function (m, i) {
-                        if (i > 0 && m && m != messagesFlow[i - 1]) {
-                            messagesInterchange++;
-                        }
-                    });
-
-                    if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                        _setLocalStorageItem('chatRead', "false");
+                //Get Messages From Server.
+                moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
+                    if (callback) {
+                        callback();
                     }
+                    /*
+                    var userChat = JSON.parse(localStorage.getItem('userChat')); //Recover last chat update from LS.
+                    var currentlyRead = parseInt(localStorage.getItem('chatAmountRead'));
 
-                    _setLocalStorageItem('chatAmountRead', chatAmount.true);
+                    if (userChat && userChat.length > currentlyRead) {console.log("...DASHBOARD PROGRAMA POP GREEEEEEEEEN CHAT");
+                        localStorage.setItem('chatRead', "false");
+                    }
+                    */
 
                     getUserStarsByPoints();
                     getUserLikes();

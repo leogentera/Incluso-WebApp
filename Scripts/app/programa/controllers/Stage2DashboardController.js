@@ -20,6 +20,58 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
+            // ---- Update Chat Status -----------------------------------------------
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
+            }
+
+            function getUserChatCallback() {
+                //Make the pop-up appear in Chat Icon.
+                console.log("POPs !!!");
+                localStorage.setItem("chatRead", "false"); //Turn-on chat pop-up.
+            }
+
+            function errorCallback() {
+            }
+            /*
+            var message2 = localStorage.getItem("message2");
+
+            if (!message2) {
+                message2 = "false"
+            }
+            */
+
+            var fireService = false;
+            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+            if ($scope.messages && $scope.messages.length ==  1) {
+                fireService = true;
+            }
+
+            if (!$rootScope.activityBlocked["2022"].disabled && fireService) { //disabled = false for Cabina de Soporte in Stage 1.
+                console.log("******************************************* FIRING CHAT SERVICE STAGE 2");
+                //Put Call to Remote Service.
+                $scope.validateConnection(function () {
+                    var currentUser = JSON.parse(localStorage.getItem('CurrentUser')); //Get chat conversations.
+
+                    var newMessage = {
+                        "messagetext": "Hola " + currentUser.firstname + "... Esto es información",
+                        "sendAsCouch": true
+                    };
+
+                    /* time out to avoid android lag on fully hiding keyboard */
+                    $timeout(function () {
+                        $scope.messages.push(newMessage);
+                        _setLocalStorageItem('userChat', JSON.stringify($scope.messages));
+
+                        moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                    }, 1000);
+
+                }, offlineCallback);
+            } else { console.log("Message has been written BEFORE for Stage 2");}
+            // --------------------------------------------------------------------------------------
+
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
@@ -223,8 +275,8 @@ angular
 
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                _progressNotification($scope.idEtapa, $scope.stageProgress);
-
+                _progressNotification();
+                
             }
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes

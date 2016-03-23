@@ -20,8 +20,62 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus(); //Copies last version of activity blocked status into model variable
-            $scope.setToolbar($location.$$path, "");
 
+            // ---- Update Chat Status -----------------------------------------------
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
+            }
+
+            function getUserChatCallback() {
+                //Make the pop-up appear in Chat Icon.
+                console.log("POPs !!!");
+                localStorage.setItem("chatRead", "false"); //Turn-on chat pop-up.
+            }
+
+            function errorCallback() {
+            }
+            /*
+            var message1 = localStorage.getItem("message1");
+
+            if (!message1) {
+                message1 = "false"
+            }
+            */
+
+            var fireService = false;
+            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+            if ($scope.messages && $scope.messages.length ==  0) {
+                fireService = true;
+            }
+
+            if (!$rootScope.activityBlocked["1002"].disabled && fireService) { //disabled = false for Cabina de Soporte in Stage 1.
+                console.log("******************************************* FIRING CHAT SERVICE STAGE 1");
+                //Put Call to Remote Service.
+                $scope.validateConnection(function () {
+
+                    var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
+                    var messageText = "Hola [name], éstas son tus fortalezas: [s0], [s1], [s2]. Y éste es tu escudo: [shield]";
+
+                    var newMessage = {
+                        "messagetext": messageText,
+                        "sendAsCouch": true
+                    };
+
+                    // time out to avoid android lag on fully hiding keyboard
+                    $timeout(function () {
+                        $scope.messages.push(newMessage);
+                        _setLocalStorageItem('userChat', JSON.stringify($scope.messages)); //Save to LS.
+
+                        moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                    }, 1000);
+
+                }, offlineCallback);
+            } else { console.log("Message has been written BEFORE for Stage 1 OR activity is Blocked");}
+            // --------------------------------------------------------------------------------------
+
+            $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = true;
@@ -281,7 +335,7 @@ angular
                 _setLocalStorageJsonItem("usercourse", $scope.model);
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                _progressNotification($scope.idEtapa, $scope.stageProgress);
+                _progressNotification();
 
             }
 

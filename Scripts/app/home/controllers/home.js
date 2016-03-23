@@ -56,13 +56,46 @@ angular
 
                     if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
+
+                        if (activityId == "chat") {
+
+                            var currentStage = parseInt(localStorage.getItem("currentStage")); //Last Stage attained by the user.
+                            var pref;
+                            switch (currentStage) {
+                                case 1:
+                                    activityId = "1002";
+                                    pref = "/ZonaDeVuelo/";
+                                    break;
+                                case 2:
+                                    activityId = "2022";
+                                    pref = "/ZonaDeNavegacion/";
+                                    break;
+                                case 3:
+                                    activityId = "3501";
+                                    pref = "/ZonaDeAterrizaje/";
+                                    break;
+                                default:
+                                    activityId = "1002";  //For a new user.
+                                    pref = "/ZonaDeNavegacion/";
+                            }
+
+                            url = pref + "CabinaDeSoporte/" + activityId;
+
+                            //Check if CabinaDeSoporte activity is blocked
+                            if ($rootScope.activityBlocked[activityId].disabled) {console.log("### BLOCKED " + activityId);
+                                activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
+                            } else {console.log("### NOT BLOCKED " + activityId);}
+                        }
+
                         logStartActivityAction(activityId, timeStamp);
                     }
 
                     $location.path(url);
 
-                    if (sideToggle == "sideToggle")
+                    if (sideToggle == "sideToggle") {
                         $rootScope.sidebar = !$rootScope.sidebar;
+                    }
+
                 }
 
             };
@@ -165,7 +198,7 @@ angular
                 }
 
             };
-
+            $scope.mySS = "1022";
             $scope.toolbarOptionActive = function (path) {
 
                 if (path.constructor === Array) {
@@ -180,13 +213,16 @@ angular
                             classdisable = "active disabled";
                         }
                     }
+
                     return classdisable;
 
                 } else {
-                    if ($location.path().substr(0, path.length) === path)
+                    if ($location.path().substr(0, path.length) === path) {
                         return "active disabled";
-                    else
+                    } else {
                         return "";
+                    }
+
                 }
             };
 
@@ -233,23 +269,14 @@ angular
             };
 
             $scope.showChatNotification = function () {
-                var readChatNotification = localStorage.getItem('chatRead');
-                if ($scope.pageName == 'Chat' || readChatNotification == "true" || readChatNotification == undefined) {
+                var chatRead = localStorage.getItem('chatRead');
+
+                if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {
                     return false;
                 } else {
-                    var userChat = JSON.parse(localStorage.getItem('userChat'));
-                    if (userChat && userChat.length >= 1) {
-                        var userId = localStorage.getItem('userId');
 
-                        var lastMessage = _.max(userChat, function (chat) {
-                            return chat.messagedate;
-                        });
-
-                        if (lastMessage.messagesenderid != userId) {
-                            return true;
-                        }
-                    } else {
-                        return false;
+                    if (chatRead == "false") {
+                        return true;
                     }
                 }
             };
@@ -261,6 +288,7 @@ angular
                 }
                 $rootScope.activityBlocked = _activityBlocked;
             };
+
             $scope.resetActivityBlockedStatus();
 
             $scope.leftVisible = false;
@@ -320,7 +348,7 @@ angular
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
-            }
+            };
 
 
             /* checks if user has internet connection */
@@ -338,7 +366,7 @@ angular
                 });
             };
 
-            $scope.getUserChat = function () {
+            $scope.getUserChat2 = function () {alert("MYSTERY");
                 $timeout(function () {                
                     _setLocalStorageItem('chatRead', "false");
 
