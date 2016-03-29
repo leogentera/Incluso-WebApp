@@ -95,11 +95,12 @@ angular
                 $scope.$emit('HidePreloader');
             }
 
-            function assignCourseModuleId(asyncRequest, data) {
+            function assignCourseModuleId(asyncRequest, data){
                 $scope.multiplicaTuDineroActivity["coursemoduleid"] =
-                    ( asyncRequest ? _.find(multiplicaTuDinero.activities, function (r) {
-                        return r.activityname == data.name
-                    }).coursemoduleid : data.coursemoduleid);
+                    ( asyncRequest ? _.find(multiplicaTuDinero.activities, function(r){
+                        return r.activityname == data.name })
+                        .coursemoduleid : data.coursemoduleid);
+
                 $scope.$emit('HidePreloader');
                 _setLocalStorageJsonItem("multiplicaTuDineroActivities", $scope.multiplicaTuDineroActivity);
             }
@@ -225,8 +226,8 @@ angular
                     return (q.userAnswer && q.userAnswer != '' ? 'completed' : 'incompleted');
                 });
 
-                $scope.IsComplete = $scope.multiplicaTuDineroActivity &&
-                    questionsAnswered.completed == data.respuestas.length;
+                $scope.IsComplete = $scope.multiplicaTuDineroActivity && questionsAnswered.completed == data.respuestas.length;
+
 
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
@@ -310,7 +311,8 @@ angular
                 };
 
                 $scope.$emit('ShowPreloader');
-                _endActivity(activityModel, function () {
+                _endActivity(activityModel, function(){
+
                     if ($routeParams.retry) {
                         _forceUpdateConnectionStatus(function () {
                             if (_isDeviceOnline) {
@@ -350,7 +352,8 @@ angular
                         return i;
                     }
                 }
-            };
+
+            }
 
             if ($routeParams.retry) {
                 _loadedDrupalResources = true;
