@@ -78,11 +78,6 @@ angular
                     $scope.$emit('HidePreloader');
                 }
 
-                if (treeActivity.status == 1) {
-                    //The next line avoided the showing of robot
-                    //$location.path('/Chat/' + activityIdentifier);
-                }
-
                 $scope.finishActivity = function () {
                     
                     $scope.validateConnection(function () {
@@ -188,7 +183,7 @@ angular
                         size: size,
                         windowClass: 'closing-stage-modal user-help-modal'
                     }).result.finally(function () {
-                        $location.path('/Chat');
+                        $location.path('/Chat/' + activityIdentifier);
                     });
                 };
     

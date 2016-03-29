@@ -35,13 +35,6 @@ angular
 
             function errorCallback() {
             }
-            /*
-            var message2 = localStorage.getItem("message2");
-
-            if (!message2) {
-                message2 = "false"
-            }
-            */
 
             var fireService = false;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
