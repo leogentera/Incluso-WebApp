@@ -63,8 +63,6 @@ angular
         'incluso.program.FAQs'
     ])
     .run(function ($templateCache, $http, $rootScope) {
-
-
         
         $http.get('Templates/Public/Login.html', { cache: true });
         $http.get('Templates/Public/RecoverPassword.html', { cache: true });
@@ -315,9 +313,14 @@ angular
        $routeProvider.when('/AlbumIncluso', {
             templateUrl: 'Templates/Programa/AlbumIncluso.html',
             controller: 'AlbumInclusoController'
-       });       
+       });
+
+        $routeProvider.when('/Chat', {
+            templateUrl: 'Templates/Chat/index.html',
+            controller: 'programaChatController'
+        });
        
-        $routeProvider.when('/Chat', { 
+        $routeProvider.when('/Chat/:moodleid', {
             templateUrl: 'Templates/Chat/index.html',
             controller: 'programaChatController'
         });

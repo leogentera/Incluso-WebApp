@@ -591,20 +591,21 @@ var logStartActivityAction = function(activityId, timeStamp) {
             _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
             if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
-                var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
+                var key1 = "startedActivityCabinaDeSoporte/" + currentUser.id;
+                var key2 = "finishCabinaSoporte/" + currentUser.id;
+                if (localStorage.getItem(key1) == null && !treeActivity.status && localStorage.getItem(key2) == null) {
                     moodleFactory.Services.GetServerDate(function(date){
-                    _setLocalStorageJsonItem(key, {
+                    _setLocalStorageJsonItem(key1, {
                         datestarted: date.time,
                         coursemoduleid: treeActivity.coursemoduleid,
                         activity_identifier: treeActivity.activity_identifier
                     });
                     
-                    localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                    localStorage.removeItem(key2);
                     })                    
                 }
             }
-            
+
 
         }, function () {
             console.log('Error callback');
@@ -778,7 +779,7 @@ var _progressNotification = function(){
                         ((notificationRanges.progressMax == 0 && currentNotification.registerdate == moment(userRegisterDate).format('DD-MM-YYYY')) || 
                             (moment(notificationRegistrerDate).format('DD-MM-YYYY') == moment(userRegisterDate).format('DD-MM-YYYY') &&
                                 moment(notificationLastAccessDate).format('DD-MM-YYYY') == moment(userLastAccessDate).format('DD-MM-YYYY') && 
-                                userCourse.globalProgress >= notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
+                                userCourse.globalProgress > notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
               
               var wonDate = new Date();
               var dataModelNotification = {
@@ -1397,8 +1398,8 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("activityStatus");
     localStorage.removeItem("userId");
     localStorage.removeItem("avatarInfo");
-    localStorage.removeItem("chatRead");
-    localStorage.removeItem("chatAmountRead");
+    //localStorage.removeItem("chatRead");
+    //localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
     localStorage.removeItem("halloffame");
@@ -1532,7 +1533,7 @@ var _activityRoutes = [
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
 
-var _activitiesCabinaDeSoporte = [1002,2022,3501];
+var _activitiesCabinaDeSoporte = [1002, 2022, 3501];
 
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [
@@ -1705,7 +1706,7 @@ function _updateDeviceVersionCache () {
     if (window.mobilecheck()) {
         if (!FLAG_DEVICE_VERSION_RUNNING) {
             FLAG_DEVICE_VERSION_RUNNING = true;
-            //console.log("ejecutando device-version");
+            //ejecutando device-version
             cordova.exec(function(data) {
                 deviceVersion.localVersion = data.currentVersion;
                 deviceVersion.remoteVersion = data.latestVersion;

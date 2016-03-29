@@ -1,132 +1,132 @@
 <div class="modal-open">
-   <div class="pages chat-support-modal">     
-      <div class="page" ng-class="currentPage== 1 ? 'active' : '' ">
-        <div class="user-help-modal chat">
-          <div class="modal-robot robot-sm user-help">
-            <img src="assets/images/img-robot-sm.svg">
-            <div class="modal-body">
-                <h3 class="subtitle text-center">{{title}}</h3>
-                <div class="chat-help-modal">
-                    <div>
-                        <p class="txt-renglon centered">
-                            {{welcome}}
-                        </p>
-                    </div>
-                    <div>
-                        <p class="txt-renglon centered">
-                            {{description}}
-                        </p>
-                        <div class="txt-renglon">
-                          <button type="button" ng-click="goChat()" class="btn btn-primary btn-lg btn-cnt">Continuar</button>    
+    <div class="pages chat-support-modal">
+        <div class="page" ng-class="currentPage== 1 ? 'active' : '' ">
+            <div class="user-help-modal chat">
+                <div class="modal-robot robot-sm user-help">
+                    <img src="assets/images/img-robot-sm.svg">
+                    <div class="modal-body">
+                        <h3 class="subtitle text-center">{{title}}</h3>
+                        <div class="chat-help-modal">
+                            <div>
+                                <p class="txt-renglon centered">
+                                    {{welcome}}
+                                </p>
+                            </div>
+                            <div>
+                                <p class="txt-renglon centered">
+                                    {{description}}
+                                </p>
+                                <div class="txt-renglon">
+                                    <button type="button" ng-click="goChat()" class="btn btn-primary btn-lg btn-cnt">Continuar</button>
+                                </div>
+                            </div>
                         </div>
-                    </div> 
-                </div>
-            </div>
-          </div>
-            <section id="controls" class="controls">
-                <div class="paginate">
-                    <a href="#" id="prev">
-                        <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
-                    </a>
-                    <a href="#" id="next">
-                        <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
-                    </a>
-
-                    <div class="centered">
-                        <span id="index" class="txt-bigger">1/</span><span class="white txt-bigger">2</span>
                     </div>
                 </div>
-            </section>
-        </div>
-        <script>
-            $("document").ready(function(){
-                galleryFunctions = {
-                    "init": function (gallery) {
-                        gallery.owlCarousel({
-                            navigation: false,
-                            pagination: false,
-                            paginationSpeed: 1000,
-                            goToFirstSpeed: 2000,
-                            singleItem: true,
-                            autoHeight: false,
-                            touchDrag: false,
-                            mouseDrag: false,
-                            transitionStyle: "fade",
-                            afterAction: galleryFunctions.afterAction,
-                            afterInit: galleryFunctions.initCarousel
-                        });
-                        $("#next").click(function (e) {
-                            if (!$(this).hasClass("disable"))
-                                gallery.trigger('owl.next');
-                            e.preventDefault();
-                        });
-                        $("#prev").click(function (e) {
-                            if (!$(this).hasClass("disable"))
-                                gallery.trigger('owl.prev');
-                            e.preventDefault();
-                        });
-                    },
-                    "initCarousel": function () {
-                        $(".total-number").text(this.owl.owlItems.length);
-                    },
-                    "afterAction": function () {
-                        var item = this.owl.currentItem;
-                        var total = this.owl.owlItems.length;
-                            
-                        if (total === 0) {
-                            $("#prev").addClass("disable");
-                            $("#next").addClass("disable"); 
-                        } else if (item === 0) {
-                            $("#prev").addClass("disable");
-                            $("#next").removeClass("disable"); 
-                        } else if (item === total - 1) {
-                            $("#prev").removeClass("disable");
-                            $("#next").addClass("disable"); 
-                        }
+                <section id="controls" class="controls">
+                    <div class="paginate">
+                        <a href="#" id="prev">
+                            <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
+                        </a>
+                        <a href="#" id="next">
+                            <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
+                        </a>
 
-                        $("#index").text(item + 1 + "/");
-                    }
-                }   
-                galleryFunctions.init($(".chat-help-modal"));   
-            })
-        </script>
-      </div>
-
-      <!-- activity closing  -->
-      <div class="page bluespace evaluation" ng-class="currentPage == 2 ? 'active' : ''">
-        <div id="finalized">
-            <section class="header-title">
-                <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message}}</div>                
-                <div class="subtitle centered min-pad ">"Cabina de soporte"</div>
-                <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div>                
-            </section>
-            <section class="centered txt-bigger ">
-                <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
-            </section>
-            <section class="txt-renglon pill">
-                <div class="pull-left">{{closingContent.earned_stars}}</div>                
-                <div class="pull-right sm-pill">
-                  <span class="pull-left">{{activityPoints}}</span>
-                  <span class="icomoon icon-star pull-right"></span>
-                </div>
-            </section>
-            <section class="txt-renglon centered form ">
-                {{closingContent.activity_rating_label}}                
-                <section class="txt-renglon txt-bigger clearfix">
-                    <div class="opinion">
-                        <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                        <label for="like">{{closingContent.like_label}}</label>                        
-                    </div>
-                    <div class="opinion">
-                        <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                        <label for="dislike">{{closingContent.not_like_label}}</label>                        
+                        <div class="centered">
+                            <span id="index" class="txt-bigger">1/</span><span class="white txt-bigger">2</span>
+                        </div>
                     </div>
                 </section>
-                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a>
-                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivityAndContinue()">{{::closingContent.finish_and_continue_button}}</a>
-            </section>
-          </div>
-      </div>    
+            </div>
+            <script>
+                $("document").ready(function () {
+                    galleryFunctions = {
+                        "init": function (gallery) {
+                            gallery.owlCarousel({
+                                navigation: false,
+                                pagination: false,
+                                paginationSpeed: 1000,
+                                goToFirstSpeed: 2000,
+                                singleItem: true,
+                                autoHeight: false,
+                                touchDrag: false,
+                                mouseDrag: false,
+                                transitionStyle: "fade",
+                                afterAction: galleryFunctions.afterAction,
+                                afterInit: galleryFunctions.initCarousel
+                            });
+                            $("#next").click(function (e) {
+                                if (!$(this).hasClass("disable"))
+                                    gallery.trigger('owl.next');
+                                e.preventDefault();
+                            });
+                            $("#prev").click(function (e) {
+                                if (!$(this).hasClass("disable"))
+                                    gallery.trigger('owl.prev');
+                                e.preventDefault();
+                            });
+                        },
+                        "initCarousel": function () {
+                            $(".total-number").text(this.owl.owlItems.length);
+                        },
+                        "afterAction": function () {
+                            var item = this.owl.currentItem;
+                            var total = this.owl.owlItems.length;
+
+                            if (total === 0) {
+                                $("#prev").addClass("disable");
+                                $("#next").addClass("disable");
+                            } else if (item === 0) {
+                                $("#prev").addClass("disable");
+                                $("#next").removeClass("disable");
+                            } else if (item === total - 1) {
+                                $("#prev").removeClass("disable");
+                                $("#next").addClass("disable");
+                            }
+
+                            $("#index").text(item + 1 + "/");
+                        }
+                    }
+                    galleryFunctions.init($(".chat-help-modal"));
+                })
+            </script>
+        </div>
+
+        <!-- activity closing  -->
+        <div class="page bluespace evaluation" ng-class="currentPage == 2 ? 'active' : ''">
+            <div id="finalized">
+                <section class="header-title">
+                    <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message}}</div>
+                    <div class="subtitle centered min-pad ">"Cabina de soporte"</div>
+                    <div class="txt-renglon centered txt-bigger min-pad ">{{::closingContent.closing_message_congrats}}</div>
+                </section>
+                <section class="centered txt-bigger ">
+                    <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
+                </section>
+                <section class="txt-renglon pill">
+                    <div class="pull-left">{{closingContent.earned_stars}}</div>
+                    <div class="pull-right sm-pill">
+                        <span class="pull-left">{{activityPoints}}</span>
+                        <span class="icomoon icon-star pull-right"></span>
+                    </div>
+                </section>
+                <section class="txt-renglon centered form ">
+                    {{closingContent.activity_rating_label}}
+                    <section class="txt-renglon txt-bigger clearfix">
+                        <div class="opinion">
+                            <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                            <label for="like">{{closingContent.like_label}}</label>
+                        </div>
+                        <div class="opinion">
+                            <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                            <label for="dislike">{{closingContent.not_like_label}}</label>
+                        </div>
+                    </section>
+                    <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a>
+                    <!--     <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivityAndContinue()">{{::closingContent.finish_and_continue_button}}</a> -->
+                </section>
+            </div>
+        </div>
     </div>
-    
+
 </div>

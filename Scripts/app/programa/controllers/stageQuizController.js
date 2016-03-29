@@ -1120,7 +1120,6 @@ angular
                             break;
 
                         case "multichoice":
-                            var repeated = false;
                             //Validation: the multichoice must have some 'true' value...
                             if (($scope.answers[index]).indexOf(1) > -1) {
                                 //...and Other is 'true' and has a non empty string in the input
