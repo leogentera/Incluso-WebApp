@@ -778,7 +778,7 @@ var _progressNotification = function(){
                         ((notificationRanges.progressMax == 0 && currentNotification.registerdate == moment(userRegisterDate).format('DD-MM-YYYY')) || 
                             (moment(notificationRegistrerDate).format('DD-MM-YYYY') == moment(userRegisterDate).format('DD-MM-YYYY') &&
                                 moment(notificationLastAccessDate).format('DD-MM-YYYY') == moment(userLastAccessDate).format('DD-MM-YYYY') && 
-                                userCourse.globalProgress >= notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
+                                userCourse.globalProgress > notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
               
               var wonDate = new Date();
               var dataModelNotification = {
