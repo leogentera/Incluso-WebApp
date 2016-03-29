@@ -99,8 +99,8 @@ angular
         $http.get('Templates/Chat/index.html', { cache: true });
 
         $http.get('Templates/Leaderboard/index.html', { cache: true });          
-        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: true });
+
         $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: true });          
         $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: true });  
@@ -113,12 +113,9 @@ angular
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html', { cache: true });          
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustos.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/Suena.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: true });
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: true });
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html', { cache: true });
         $http.get('Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: true });          
@@ -128,7 +125,6 @@ angular
         $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporte.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html', { cache: true });
-        $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: true });  
 
