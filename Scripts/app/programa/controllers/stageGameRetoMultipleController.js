@@ -53,7 +53,15 @@ angular
               $scope.retoMultipleActivities = [];
               if ($scope.retosMultipleChallenge) {
                 retoMultipleArray = $scope.retosMultipleChallenge.activities;
-                for(var i = 0; i < $scope.retosMultipleChallenge.activities.length; i++){
+
+                
+                _.each($scope.retosMultipleChallenge.activities, function(x, i){
+                   if(x.activityname.toLowerCase().indexOf("resultados")>=0){
+                        $scope.retosMultipleChallenge.activities.splice(i, 1);
+                     }
+                });
+                
+               for(var i = 0; i < $scope.retosMultipleChallenge.activities.length; i++){
                   var activity = moodleFactory.Services.GetCacheJson("activity/" + $scope.retosMultipleChallenge.activities[i].coursemoduleid);
                   if (activity) {
                     $scope.retoMultipleActivities.push(activity);
@@ -66,7 +74,8 @@ angular
                   if ($scope.retoMultipleActivities.length > 0) {
                     assignCourseModuleId(false, $scope.retosMultipleChallenge.activities[i]);
                   }
-                }
+                
+               }
               }
             };
 
