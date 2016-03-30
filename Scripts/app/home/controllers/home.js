@@ -369,7 +369,7 @@ angular
                 });
             };
 
-            $scope.getUserChat2 = function () {alert("MYSTERY");
+            $scope.getUserChat = function () {
                 $timeout(function () {                
                     _setLocalStorageItem('chatRead', "false");
 
