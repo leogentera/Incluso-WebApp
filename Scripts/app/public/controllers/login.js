@@ -186,8 +186,7 @@ angular
                         
                             cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
                         }
-                                                
-                        SignalRFactory.StartChatConnection($scope.getUserChat);
+                                                                        
 
                         $rootScope.OAUTH_ENABLED = false;
 
@@ -274,8 +273,7 @@ angular
                 $scope.currentUserModel.token = userFacebook.token;
                 $scope.currentUserModel.userId = userFacebook.id;
 
-                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-                SignalRFactory.StartChatConnection($scope.getUserChat);
+                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);                
 
                 _setId(userFacebook.id);
 
@@ -364,8 +362,7 @@ angular
                 }
             };
             */
-            
-            SignalRFactory.StopChatConnection();
+                        
             
             if(localStorage.getItem("offlineConnection") == "offline") {
                 $timeout(function(){

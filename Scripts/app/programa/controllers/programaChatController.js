@@ -61,7 +61,6 @@ angular
 
                 //Get Messages From Server.
                 moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
-                SignalRFactory.SetCallBackChat(getUserRefreshChatCallback);
 
                 if ($location.hash() == 'top') {
                     $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
@@ -142,9 +141,6 @@ angular
                 function errorCallback() { }
             }
 
-            $scope.$on("$routeChangeStart", function (next, current) {
-                SignalRFactory.SetCallBackChat($scope.getUserChat);
-            });
 
             function getContentResources(activityIdentifierId) {
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
