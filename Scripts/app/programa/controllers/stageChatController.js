@@ -69,7 +69,7 @@ angular
                 $scope.activityname = treeActivity.sectionname;
 
                 $scope.goChat = function () {
-                    localStorage.setItem("chatRead", "true");
+                    localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");
                     $location.path('/Chat/' + activityIdentifier);
                 };
 

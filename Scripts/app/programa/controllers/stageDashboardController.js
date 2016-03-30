@@ -31,7 +31,7 @@ angular
             function getUserChatCallback() {
                 //Make the pop-up appear in Chat Icon.
                 console.log("POPs !!!");
-                localStorage.setItem("chatRead", "false"); //Turn-on chat pop-up.
+                localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "false"); //Turn-on chat pop-up.
             }
 
             function errorCallback() {

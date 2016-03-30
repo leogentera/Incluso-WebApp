@@ -73,7 +73,7 @@ angular
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
 
-                        localStorage.setItem("chatRead", "true");   //Turn-off Chat warning popup.
+                        localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");   //Turn-off Chat warning popup.
 
                         if ($location.hash() == 'top') {
                             $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom

@@ -223,7 +223,7 @@ angular
             //Callback function for UserCourse call
             function getDataAsyncCallback() {
                 //Load UserCourse structure into model
-                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));alert($scope.usercourse.globalProgress);
                 getUserNotifications($scope.usercourse.courseid);
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function () {
@@ -402,7 +402,7 @@ angular
                     var messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
 
                     if (messages.length == 0) {
-                        localStorage.setItem("chatRead", "true");
+                        localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");
                     }
 
                     getUserStarsByPoints();
