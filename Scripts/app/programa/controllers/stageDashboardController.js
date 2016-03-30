@@ -36,13 +36,6 @@ angular
 
             function errorCallback() {
             }
-            /*
-            var message1 = localStorage.getItem("message1");
-
-            if (!message1) {
-                message1 = "false"
-            }
-            */
 
             var fireService = false;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
@@ -154,6 +147,7 @@ angular
             // --------------------------------------------------------------------------------------
 
             $scope.setToolbar($location.$$path, "");
+
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = true;

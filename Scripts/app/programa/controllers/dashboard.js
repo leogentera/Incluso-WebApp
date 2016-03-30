@@ -76,6 +76,7 @@ angular
 
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
             $scope.setToolbar($location.$$path, "Misión Incluso"); //set global toolbar properties
+
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true;
             $rootScope.showStage1Footer = false;
