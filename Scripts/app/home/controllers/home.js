@@ -57,7 +57,7 @@ angular
                     if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
 
-                        if (activityId == "chat") {
+                        if (activityId == "chat") {//The user pressed the Chat icon on Top bar.
 
                             var currentStage = parseInt(localStorage.getItem("currentStage")); //Last Stage attained by the user.
                             var pref;
@@ -81,10 +81,13 @@ angular
 
                             url = pref + "CabinaDeSoporte/" + activityId;
 
-                            //Check if CabinaDeSoporte activity is blocked
-                            if ($rootScope.activityBlocked[activityId].disabled) {console.log("### BLOCKED " + activityId);
+                            //Check if CabinaDeSoporte activity is blocked...
+                            if ($rootScope.activityBlocked[activityId].disabled) {
+                                console.log("### BLOCKED " + activityId);
                                 activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
-                            } else {console.log("### NOT BLOCKED " + activityId);}
+                            } else {
+                                console.log("### NOT BLOCKED " + activityId);
+                            }
                         }
 
                         logStartActivityAction(activityId, timeStamp);

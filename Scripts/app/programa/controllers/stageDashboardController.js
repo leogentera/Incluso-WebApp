@@ -147,6 +147,7 @@ angular
             // --------------------------------------------------------------------------------------
 
             $scope.setToolbar($location.$$path, "");
+
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = true;
