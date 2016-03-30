@@ -763,11 +763,11 @@ var _progressNotification = function(){
     
     if(profile && notifications){
       
-      for(i = 0; i < notifications.length; i++){
-          var currentNotification = notifications[i];
+        for(i = 0; i < notifications.length; i++){
+            var currentNotification = notifications[i];
           
              //{rangeId : 1, progressMin: 0, progressMax:0},
-             if (currentNotification.type == notificationTypes.globalProgressNotifications && currentNotification.globalprogress) {
+            if (currentNotification.type == notificationTypes.globalProgressNotifications && currentNotification.globalprogress) {
                  
                 var notificationRanges = _.findWhere(_globalProgressRanges, {rangeId: currentNotification.globalprogress} );
                 var notificationRegistrerDate = new Date(currentNotification.registerdate * 1000);
@@ -781,24 +781,25 @@ var _progressNotification = function(){
                                 moment(notificationLastAccessDate).format('DD-MM-YYYY') == moment(userLastAccessDate).format('DD-MM-YYYY') && 
                                 userCourse.globalProgress > notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
               
-              var wonDate = new Date();
-              var dataModelNotification = {
-                notificationid : String(currentNotification.id),
-                userid: currentUser.id,
-                wondate : wonDate
-              };
-              
-              notifications[i].wondate = wonDate;
-              notifications[i].status = "won";
-              localStorage.setItem("notifications", JSON.stringify(notifications));
-    
-              moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
-                  console.log("progress notification created" + currentNotification.name);
-              }, errorCallback, true);            
-      }
-    }  
-}
-}
+                    var wonDate = new Date();
+                    var dataModelNotification = {
+                      notificationid : String(currentNotification.id),
+                      userid: currentUser.id,
+                      wondate : wonDate
+                    };
+                    
+                    notifications[i].wondate = wonDate;
+                    notifications[i].status = "won";
+                    localStorage.setItem("notifications", JSON.stringify(notifications));
+          
+                    moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
+                        console.log("progress notification created" + currentNotification.name);
+                    }, errorCallback, true);
+                    
+                }
+            }  
+        }
+    }
 }
 
 var successPutStarsCallback = function (data) {

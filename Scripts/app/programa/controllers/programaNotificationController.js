@@ -23,7 +23,7 @@ angular
                                                 
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
                                 
-            $scope.notification = _.find(userNotifications, function(d){return d.id == $routeParams.id; });
+            $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });
             
             if ($scope.notification && $scope.notification.postid) {
                 //request al servicio de post;
