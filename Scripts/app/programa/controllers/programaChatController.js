@@ -83,7 +83,7 @@ angular
                     }, 100);
                 }
 
-                $scope.finishActivity = function () {
+                $scope.goToCloseScreen = function () {
 
                     var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + currentUser.userId);
                     var zone = '/ZonaDeVuelo';
