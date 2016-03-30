@@ -223,7 +223,7 @@ angular
             //Callback function for UserCourse call
             function getDataAsyncCallback() {
                 //Load UserCourse structure into model
-                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));alert($scope.usercourse.globalProgress);
+                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
                 getUserNotifications($scope.usercourse.courseid);
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function () {
