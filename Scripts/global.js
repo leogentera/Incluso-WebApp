@@ -1,7 +1,7 @@
 //global variables and functions
-//var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-4/RestfulAPI/public/{0}"; //Azure Development environment
+var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-5/RestfulAPI/public/{0}"; //Azure Development environment
 var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
-var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
+//var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
 //var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
 
@@ -268,7 +268,10 @@ var notificationTypes = {
     activityNotifications: 1,
     generalNotifications: 2,
     profileNotifications: 3,
-    progressNotifications: 4
+    progressNotifications: 4,
+    globalProgressNotifications: 5,
+    commentsNotifications: 6,
+    likesNotifications: 7
 };
 
 var allServicesCallback = function () {
@@ -586,20 +589,21 @@ var logStartActivityAction = function(activityId, timeStamp) {
             _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
             if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
-                var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
+                var key1 = "startedActivityCabinaDeSoporte/" + currentUser.id;
+                var key2 = "finishCabinaSoporte/" + currentUser.id;
+                if (localStorage.getItem(key1) == null && !treeActivity.status && localStorage.getItem(key2) == null) {
                     moodleFactory.Services.GetServerDate(function(date){
-                    _setLocalStorageJsonItem(key, {
+                    _setLocalStorageJsonItem(key1, {
                         datestarted: date.time,
                         coursemoduleid: treeActivity.coursemoduleid,
                         activity_identifier: treeActivity.activity_identifier
                     });
                     
-                    localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                    localStorage.removeItem(key2);
                     })                    
                 }
             }
-            
+
 
         }, function () {
             console.log('Error callback');
@@ -745,7 +749,7 @@ function updateUserStarsUsingExternalActivity(activity_identifier) {
         }
 
 
-var _progressNotification = function(indexStageId, currentProgress){
+var _progressNotification = function(){
     
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
     
@@ -753,36 +757,47 @@ var _progressNotification = function(indexStageId, currentProgress){
     
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
-    var stageId = userCourse.stages[indexStageId].section;
+    var profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.id))
     
-    if(notifications){
+    if(profile && notifications){
       
-      for(i = 0; i < notifications.length; i++){
-          var currentNotification = notifications[i];
+        for(i = 0; i < notifications.length; i++){
+            var currentNotification = notifications[i];
           
-          if (currentNotification.type == notificationTypes.progressNotifications && currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
-              && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
+             //{rangeId : 1, progressMin: 0, progressMax:0},
+            if (currentNotification.type == notificationTypes.globalProgressNotifications && currentNotification.globalprogress) {
+                 
+                var notificationRanges = _.findWhere(_globalProgressRanges, {rangeId: currentNotification.globalprogress} );
+                var notificationRegistrerDate = new Date(currentNotification.registerdate * 1000);
+                var notificationLastAccessDate = currentNotification.lastaccessdate ? new Date(currentNotification.lastaccessdate * 1000) : null;
+                var userRegisterDate = new Date(profile.timeCreated * 1000);
+                var userLastAccessDate  = new Date(profile.lastAccess * 1000);
             
-              console.log("progress notification created" + currentNotification.name);
-              //Add create notification logic.
+                if (currentNotification.status != "won" && 
+                        ((notificationRanges.progressMax == 0 && currentNotification.registerdate == moment(userRegisterDate).format('DD-MM-YYYY')) || 
+                            (moment(notificationRegistrerDate).format('DD-MM-YYYY') == moment(userRegisterDate).format('DD-MM-YYYY') &&
+                                moment(notificationLastAccessDate).format('DD-MM-YYYY') == moment(userLastAccessDate).format('DD-MM-YYYY') && 
+                                userCourse.globalProgress > notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
               
-              var wonDate = new Date();
-              var dataModelNotification = {
-                notificationid : String(currentNotification.id),
-                userid: currentUser.id,
-                wondate : wonDate
-              };
-              
-              notifications[i].wondate = wonDate;
-              notifications[i].status = "won";
-              localStorage.setItem("notifications", JSON.stringify(notifications));
-    
-              moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
-                  console.log("progress notification created" + currentNotification.name);
-              }, errorCallback, true);            
-      }
-    }  
-}
+                    var wonDate = new Date();
+                    var dataModelNotification = {
+                      notificationid : String(currentNotification.id),
+                      userid: currentUser.id,
+                      wondate : wonDate
+                    };
+                    
+                    notifications[i].wondate = wonDate;
+                    notifications[i].status = "won";
+                    localStorage.setItem("notifications", JSON.stringify(notifications));
+          
+                    moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
+                        console.log("progress notification created" + currentNotification.name);
+                    }, errorCallback, true);
+                    
+                }
+            }  
+        }
+    }
 }
 
 var successPutStarsCallback = function (data) {
@@ -1350,6 +1365,14 @@ var logout = function ($scope, $location) {
                     })
             }
         ).success(function (data, status, headers, config) {
+                if ($scope.currentUser && $scope.currentUser.token) {
+                    var objectToken = {
+                        moodleAPI: API_RESOURCE.format(''),
+                        moodleToken: $scope.currentUser.token
+                    };
+
+                    cordova.exec(function () {}, function () {},"CallToAndroid", "logout", [objectToken]);
+            }
             }
         );
     }
@@ -1374,8 +1397,8 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("activityStatus");
     localStorage.removeItem("userId");
     localStorage.removeItem("avatarInfo");
-    localStorage.removeItem("chatRead");
-    localStorage.removeItem("chatAmountRead");
+    //localStorage.removeItem("chatRead");
+    //localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
     localStorage.removeItem("halloffame");
@@ -1403,13 +1426,6 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("UserTalents");
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");
-
-    var existingInterval = localStorage.getItem('Interval');
-    if(existingInterval){
-        clearInterval(existingInterval);
-        localStorage.removeItem("Interval");
-    }
-
     $location.path('/');
 };
 
@@ -1444,6 +1460,31 @@ var _badgesPerChallenge = [
     {badgeId: 16, badgeName: "Casco espacial", challengeId: 208, activity_identifier : "3300"},
     {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90, activity_identifier : "3400"},
     {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : "3500"}
+];
+
+
+var _globalProgressRanges = [
+    {rangeId : 1, progressMin: 0, progressMax:0},
+    {rangeId : 2, progressMin: 0, progressMax:5},
+    {rangeId : 3, progressMin: 5, progressMax:10},
+    {rangeId : 4, progressMin: 10, progressMax:15},
+    {rangeId : 5, progressMin: 15, progressMax:20},
+    {rangeId : 6, progressMin: 20, progressMax:25},
+    {rangeId : 7, progressMin: 25, progressMax:30},
+    {rangeId : 8, progressMin: 30, progressMax:35},
+    {rangeId : 9, progressMin: 35, progressMax:40},
+    {rangeId : 10, progressMin: 40, progressMax:45},
+    {rangeId : 11, progressMin: 45, progressMax:50},
+    {rangeId : 12, progressMin: 50, progressMax:55},
+    {rangeId : 13, progressMin: 55, progressMax:60},
+    {rangeId : 14, progressMin: 60, progressMax:65},
+    {rangeId : 15, progressMin: 65, progressMax:70},
+    {rangeId : 16, progressMin: 70, progressMax:75},
+    {rangeId : 17, progressMin: 75, progressMax:80},
+    {rangeId : 18, progressMin: 80, progressMax:85},
+    {rangeId : 19, progressMin: 85, progressMax:90},
+    {rangeId : 20, progressMin: 90, progressMax:95},
+    {rangeId : 21, progressMin: 95, progressMax:100}
 ];
 
 //This array is a dictionary of activities and their route in the application
@@ -1491,7 +1532,7 @@ var _activityRoutes = [
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
 
-var _activitiesCabinaDeSoporte = [1002,2022,3501];
+var _activitiesCabinaDeSoporte = [1002, 2022, 3501];
 
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [
@@ -1664,7 +1705,7 @@ function _updateDeviceVersionCache () {
     if (window.mobilecheck()) {
         if (!FLAG_DEVICE_VERSION_RUNNING) {
             FLAG_DEVICE_VERSION_RUNNING = true;
-            //console.log("ejecutando device-version");
+            //ejecutando device-version
             cordova.exec(function(data) {
                 deviceVersion.localVersion = data.currentVersion;
                 deviceVersion.remoteVersion = data.latestVersion;
@@ -1729,9 +1770,15 @@ var _loadDrupalResources = function() {
     _loadedDrupalResources = false;
     _loadedDrupalResourcesWithErrors = false;
     
-    for (var prop in drupalFactory.NodeRelation) {
-        drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
-    }
+    //for (var prop in drupalFactory.NodeRelation) {
+    //    drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
+    //}
+    drupalFactory.Services.GetDrupalContent(function(){
+            _loadedDrupalResources = true;
+        }, function(){
+            _loadedDrupalResources = false;
+            _loadedDrupalResourcesWithErrors = true;
+        }, true);
     
     function successDrupalResourcesCallback() {
         propCounter++;

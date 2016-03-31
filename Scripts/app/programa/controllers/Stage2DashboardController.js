@@ -20,6 +20,66 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
+            // ---- Update Chat Status -----------------------------------------------
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
+            }
+
+            function getUserChatCallback() {
+                //Make the pop-up appear in Chat Icon.
+                console.log("POPs !!!");
+                localStorage.setItem("chatRead", "false"); //Turn-on chat pop-up.
+            }
+
+            function errorCallback() {
+            }
+
+            var fireService = false;
+            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+            if ($scope.messages && $scope.messages.length ==  1) {
+                fireService = true;
+            }
+
+            if (!$rootScope.activityBlocked["2022"].disabled && fireService) { //disabled = false for Cabina de Soporte in Stage 1.
+                console.log("******************************************* FIRING CHAT SERVICE STAGE 2");
+                //Put Call to Remote Service.
+                $scope.validateConnection(function () {
+                    var currentUser = JSON.parse(localStorage.getItem('CurrentUser')); //Get chat conversations.
+                    var messageText = "Hola " + currentUser.firstname + ",\n\n";
+                    messageText += "En tu segunda aventura has logrado salir ";
+                    messageText += "de la lluvia de asteroides, ";
+                    messageText += "probablemente los retos fueron mayores ";
+                    messageText += "y por ello aprendiste que las mejores ";
+                    messageText += "decisiones te llevarán por rumbos ";
+                    messageText += "positivos; que existen ideas escondidas ";
+                    messageText += "dentro de ti que pueden impulsarte para ";
+                    messageText += "conquistar tus planes a corto, mediano y ";
+                    messageText += "largo plazo, siempre y cuando ";
+                    messageText += "mantengas un equilibrio en tu mapa de ";
+                    messageText += "vida.\n\n";
+                    messageText += "Capitán estás a punto de terminar la ";
+                    messageText += "zona de navegación\n\n";
+                    messageText += "¡Sigue adelante!";
+
+                    var newMessage = {
+                        "messagetext": messageText,
+                        "sendAsCouch": true
+                    };
+
+                    /* time out to avoid android lag on fully hiding keyboard */
+                    $timeout(function () {
+                        $scope.messages.push(newMessage);
+                        _setLocalStorageItem('userChat', JSON.stringify($scope.messages));
+
+                        moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                    }, 1000);
+
+                }, offlineCallback);
+            } else { console.log("Message has been written BEFORE for Stage 2");}
+            // --------------------------------------------------------------------------------------
+
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
@@ -223,8 +283,8 @@ angular
 
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                _progressNotification($scope.idEtapa, $scope.stageProgress);
-
+                _progressNotification();
+                
             }
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes

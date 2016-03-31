@@ -1,14 +1,73 @@
 <div class="incluso-app notif-dashboard" id="site-wrapper">      
   <article class="starway">
-    <section class="part inbloq text-left">
+    <section class="part inbloq text-left" ng-show="notification.postid == null">
       <div class="notif-title">
         <span class="icomoon icon-earned-stars fl-left txt-bigger"></span><span class="alert-name">{{notification.name}}</span>
       </div>
       <hr>
-      <div ng-bind-html="notification.description"></div>                  
+      <div ng-bind-html="notification.description"></div>
       <p class="actions">
         <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')">Regresar</a>
       </p>
     </section>
+    <section class="wall" ng-show="notification.postid != null">
+      <div id="item{{$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
+        <div class="part post">
+          <div class="author">
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate}}" alt="author" />
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
+            <div>
+              <a class="user-alias" ng-click="navigateTo('Perfil/' + p.post_autor_id)">{{::p.post_author}} </a>
+              <span>publicó:</span>
+              <div>{{::p.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
+            </div>
+          </div>
+          <div class="block">
+            <div ng-switch="p.post_type">
+              <span ng-switch-default>{{:: p.message }}</span>
+              <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>              
+              <span ng-switch-when="3"><a ng-href="{{::p.message}}"><span class="icomoon icon-video-file"></span></a></span>
+              <div ng-switch-when="4">
+                <p ng-bind="p.message"></p>
+                <div class="achievement-badge">
+                  <figure>
+                    <a ng-if="p.attachment.length > 1">
+                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                    <a ng-if="p.attachment.length == 1" href="{{::p.attachment[0].fileurl + '?token=' + userToken}}">
+                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                  </figure>
+                </div>
+              </div>
+            </div>              
+            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> <span ng-hide="p.likes < 2" >jóvenes les</span><span ng-hide="p.likes >= 2" >joven le</span>  gusta esto
+            </div>
+          </div>
+          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
+            <div class="coment block">
+              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate}}" alt="author" />
+              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
+              <div>
+               <a class="user-alias" ng-click="navigateTo('Perfil/' + r.post_autor_id)">{{::r.post_author}} </a>
+                <span>comentó:</span>
+                <div>{{::r.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="coment block" ng-show="(showAllCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+              <div class="vermas">
+                  <span class="icomoon icon-show-more"></span>
+                  Mostrar más comentarios...
+              </div>
+          </div>
+        </div>
+      </div>
+
+        <p class="actions">
+          <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')">Regresar</a>
+        </p>
+    </section>
+    
   </article>
 </div>

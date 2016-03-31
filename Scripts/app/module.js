@@ -63,8 +63,6 @@ angular
         'incluso.program.FAQs'
     ])
     .run(function ($templateCache, $http, $rootScope) {
-
-
         
         $http.get('Templates/Public/Login.html', { cache: true });
         $http.get('Templates/Public/RecoverPassword.html', { cache: true });
@@ -101,8 +99,8 @@ angular
         $http.get('Templates/Chat/index.html', { cache: true });
 
         $http.get('Templates/Leaderboard/index.html', { cache: true });          
-        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: true });
+
         $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: true });          
         $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: true });  
@@ -115,12 +113,9 @@ angular
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html', { cache: true });          
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustos.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/Suena.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: true });
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: true });
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html', { cache: true });
         $http.get('Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: true });          
@@ -130,7 +125,6 @@ angular
         $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporte.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html', { cache: true });
-        $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: true });  
 
@@ -315,9 +309,14 @@ angular
        $routeProvider.when('/AlbumIncluso', {
             templateUrl: 'Templates/Programa/AlbumIncluso.html',
             controller: 'AlbumInclusoController'
-       });       
+       });
+
+        $routeProvider.when('/Chat', {
+            templateUrl: 'Templates/Chat/index.html',
+            controller: 'programaChatController'
+        });
        
-        $routeProvider.when('/Chat', { 
+        $routeProvider.when('/Chat/:moodleid', {
             templateUrl: 'Templates/Chat/index.html',
             controller: 'programaChatController'
         });
@@ -1217,5 +1216,58 @@ angular
             CancelUserNotificationWeeklyInterval: _cancelUserNotificationWeeklyInterval
         };
         
+    }])
+    .factory("SignalRFactory", ['$location', function ($location) {
+        var isSignalRChatAlreadySetUp = false,
+            _callbackWhenReceivedChat,
+            connSignalR;
+
+        var _setCallBackChat = function (callbackReference) {
+            _callbackWhenReceivedChat = callbackReference;
+        }
+
+        var _startChatConnection = function (callbackWhenReceivedChat) {
+            console.log(callbackWhenReceivedChat);
+            _callbackWhenReceivedChat = callbackWhenReceivedChat;
+            if (!isSignalRChatAlreadySetUp) {
+
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+
+                connSignalR = $.connection(SIGNALR_API_RESOURCE, "userId=" + currentUser.id);
+
+                connSignalR.received(function (data) {
+                    var currentMessages = JSON.parse(localStorage.getItem('userChat'));
+                    currentMessages.push(data);
+                    _setLocalStorageJsonItem('userChat', currentMessages);
+                    _callbackWhenReceivedChat();
+                });
+
+                connSignalR.error(function (error) {
+                    console.warn(error);
+                });
+
+            }
+
+
+            connSignalR.start().promise().done(function (data) {
+                isSignalRChatAlreadySetUp = true;
+                console.log("SignalR realtime service is successfully connected!!");
+            })
+            .fail(function () {
+                console.error("Error connecting to SignalR realtime service");
+            });
+        }
+
+        var _stopChatConnection = function () {
+            if (connSignalR) {
+                connSignalR.stop();
+            }
+        }
+
+        return {            
+            SetCallBackChat: _setCallBackChat,
+            StartChatConnection: _startChatConnection,
+            StopChatConnection: _stopChatConnection
+        };
     }]);
      
