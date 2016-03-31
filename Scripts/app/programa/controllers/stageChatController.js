@@ -275,7 +275,7 @@ angular
                     var _progress = moodleFactory.Services.RefreshProgress(_usercourse, _user);
                     _setLocalStorageJsonItem("usercourse", _progress.course);
                     var _stageProgress = _progress.course.stages[idEtapa - 1].stageProgress;
-                    _progressNotification(idEtapa, _stageProgress);
+                    _progressNotification();
                 }
                 
                 $scope.openModal_CloseChallenge = function (size) {

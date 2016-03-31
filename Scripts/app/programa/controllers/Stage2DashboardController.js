@@ -223,8 +223,8 @@ angular
 
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                _progressNotification($scope.idEtapa, $scope.stageProgress);
-
+                _progressNotification();
+                
             }
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes

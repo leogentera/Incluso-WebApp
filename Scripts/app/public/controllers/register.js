@@ -36,21 +36,6 @@ angular
                 }, 1000);
             }
 
-            var waitForCatalogsLoaded = setInterval(waitForCatalogsLoadedTimer, 1500);
-
-            function waitForCatalogsLoadedTimer() {
-
-                if (_catalogsLoaded != null) {
-                    $scope.$emit('HidePreloader');
-                    clearInterval(waitForCatalogsLoaded);
-                    $scope.genderItems = _getCatalogValuesBy("gender");
-                    $scope.countryItems = _getCatalogValuesBy("country");
-                    $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
-                    $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
-                    $scope.$apply();
-                }
-            }
-
             $scope.genderItems = _getCatalogValuesBy("gender");
             $scope.countryItems = _getCatalogValuesBy("country");
             $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
@@ -299,6 +284,7 @@ angular
                         moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function () {}, true);
                         moodleFactory.Services.GetAsyncForumDiscussions(85, token, function () {}, function () {}, true);
                         moodleFactory.Services.GetAsyncForumDiscussions(91, token, function () {}, function () {}, true);
+                        moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                         var courseModuleIds = [{"id": 1039, "userInfo": true}, {"id": 2012, "userInfo": false}, {"id": 2017,"userInfo": true },
                                                 {"id": 3302, "userInfo": false}, {"id": 3402, "userInfo": true}];
                         for (var i = 0; i < courseModuleIds.length; i++) {
@@ -445,6 +431,7 @@ angular
             function waitForCatalogsLoadedTimer() {
 
                 if (_catalogsLoaded != null) {
+                    $scope.$emit('HidePreloader');
                     clearInterval(waitForCatalogsLoaded);
                     $scope.genderItems = _getCatalogValuesBy("gender");
                     $scope.countryItems = _getCatalogValuesBy("country");

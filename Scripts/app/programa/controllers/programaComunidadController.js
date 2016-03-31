@@ -405,6 +405,9 @@ angular
                                 function(data){
                                     $scope.$emit('HidePreloader');
                                     var errorMessage = [window.atob(data.messageerror)];
+                                    if (data && data.statusCode) {
+                                        $scope.modelState.errorCode = data.statusCode;
+                                    }
                                     $scope.modelState.errorMessages = errorMessage;
                                     $scope.scrollToTop();
                                 }
@@ -436,18 +439,22 @@ angular
                             $scope.$emit('ShowPreloader');
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
-                                    
+
                                     refreshTopicData();
                                     updatePostCounter($scope.discussion.discussion);
                                     
                                     $scope.postTextValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
                                     communityBadgeReached();
-                                    refreshTopicData();                                            
+                                    refreshTopicData();
                                 },
                                 function(data){
                                     $scope.$emit('HidePreloader');
+
                                     var errorMessage = [window.atob(data.messageerror)];
+                                    if (data && data.statusCode) {
+                                        $scope.modelState.errorCode = data.statusCode;
+                                    }
                                     $scope.modelState.errorMessages = errorMessage;
                                     $scope.scrollToTop();
                                 }

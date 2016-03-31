@@ -2,16 +2,177 @@
 <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 101 88" style="enable-background:new 0 0 101 88;" xml:space="preserve">
+	 viewBox="-717 981 101 88" style="enable-background:new -717 981 101 88;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#C0D638;}
+	.st0{fill:none;stroke:#7B8A8E;stroke-width:0.6162;stroke-linecap:round;stroke-miterlimit:10;}
+	.st1{fill:#738389;}
+	.st2{fill:#808E96;}
+	.st3{fill:#91A5AD;}
+	.st4{fill:none;stroke:#91A5AD;stroke-width:0.6162;stroke-miterlimit:10;}
+	.st5{fill:#C0D638;}
+	.st6{fill:#7B8A8E;}
+	.st7{fill:#86959D;}
+	.st8{fill:#515D63;}
+	.st9{fill:#2C3437;}
+	.st10{fill:#8A9CA4;}
+	.st11{fill:url(#XMLID_4_);}
+	.st12{fill:url(#XMLID_5_);}
+	.st13{fill:none;stroke:#7B8A8E;stroke-width:0.6162;stroke-miterlimit:10;}
+	.st14{fill:none;stroke:#738389;stroke-width:0.6162;stroke-miterlimit:10;}
+	.st15{fill:url(#XMLID_6_);}
+	.st16{fill:url(#XMLID_7_);}
+	.st17{fill:url(#XMLID_8_);}
+	.st18{fill:#6F7E83;}
+	.st19{fill:none;stroke:#91A5AD;stroke-width:0.6162;stroke-linecap:round;stroke-miterlimit:10;}
 </style>
-<g id="XMLID_2_">
-	<path id="XMLID_80_" class="st0" d="M91.5,46.8h-2.8l-1.6,10.6l-0.4-0.5l-1.1-20.2v21.1l1.2,1.6l-0.7,5l-18-18l2.3-2v0l0.7-0.6l0,0
-		l1.6-1.4V41L71,39.7l0,0l-0.7-0.5v0l-2.3-1.8v-3.2l-6.5-3.1l0,0l0,0l0,0l-1-6.8l1.6-2.1V1l-1.1,20.2L60.3,22l-0.9-6L52.7,2.5l0,0
-		l0,0h-2.5h-2.5L41,16l-0.9,6l-0.8-0.9L38.3,1v21.1l1.6,2.1l-1,6.8l-6.5,3.1v3.2l-2.2,1.8l0,0l-0.7,0.5v0L27.9,41v1.4l1.6,1.4v0
-		l0.7,0.6l0,0l2.2,2v0L18.2,60.7l-3.7,3.7l-0.7-5l1.2-1.6V36.7l-1.1,20.2l-0.4,0.5l-1.6-10.6H9l-9.2,22.1l1.1,2l0,0l7.9,14.6
-		l6.8,1.1l7.1-1.1l3.7-3.7v-5.5l-4.6-4.6h0L25,75l1.3,1.3l0,0l0,0l4.7-4.7l12.6,0l6.7,5.9l0,0l0,0v0l6.7-6l12.5,0l4.8,4.8v5.5
-		l3.7,3.7l7.1,1.1l6.8-1.1l8.9-16.6L91.5,46.8z M20.3,70.3l-5.5-5.5l0,0l0,0L20.3,70.3L20.3,70.3z"/>
+<g id="XMLID_149_">
+	<g id="XMLID_248_">
+		<line id="XMLID_147_" class="st0" x1="-699.2" y1="1044.6" x2="-699.2" y2="1039.6"/>
+		<line id="XMLID_146_" class="st0" x1="-633.9" y1="1044.6" x2="-633.9" y2="1039.6"/>
+	</g>
+	<g id="XMLID_154_">
+		<g id="XMLID_159_">
+			<g id="XMLID_242_">
+				<polygon id="XMLID_145_" class="st1" points="-628.7,1042.2 -631,1039 -631,1017.9 -629.9,1038.1 -628.6,1039.5 				"/>
+				<polygon id="XMLID_144_" class="st1" points="-704.2,1042.2 -701.9,1039 -701.9,1017.9 -703,1038.1 -704.4,1039.5 				"/>
+				<g id="XMLID_243_">
+					<polygon id="XMLID_143_" class="st1" points="-656.8,1006.4 -654.5,1003.2 -654.5,982.1 -655.5,1002.3 -656.9,1003.7 					"/>
+					<polygon id="XMLID_142_" class="st1" points="-676.1,1006.4 -678.5,1003.2 -678.5,982.1 -677.4,1002.3 -676,1003.7 					"/>
+				</g>
+			</g>
+			<polygon id="XMLID_141_" class="st2" points="-648.6,1027.6 -648.6,1015.3 -655.1,1012.2 -657.2,997.1 -664,983.6 -666.5,983.6 
+				-668.9,983.6 -675.7,997.1 -677.9,1012.2 -684.3,1015.3 -684.3,1027.6 -702.4,1045.6 -690.5,1057.5 -684,1051 -675.1,1051 
+				-666.5,1058.7 -657.8,1051 -648.9,1051 -642.4,1057.5 -630.6,1045.6 			"/>
+			<polygon id="XMLID_140_" class="st3" points="-648.6,1018.5 -644.1,1022.2 -644.1,1023.6 -648.6,1027.6 			"/>
+			<polygon id="XMLID_139_" class="st3" points="-684.3,1018.5 -688.8,1022.2 -688.8,1023.6 -684.3,1027.6 			"/>
+			<polyline id="XMLID_138_" class="st4" points="-697.8,1052.9 -666.5,1021.6 -635.4,1052.7 			"/>
+			<polygon id="XMLID_137_" class="st5" points="-668.9,983.6 -668,985.3 -664.9,985.3 -664,983.6 			"/>
+			<polygon id="XMLID_136_" class="st6" points="-690.5,1057.5 -684,1051 -675.1,1051 -674.5,1049.1 -684.8,1049.1 -691.8,1056.2 
+							"/>
+			<polygon id="XMLID_135_" class="st6" points="-642.4,1057.5 -648.9,1051 -657.8,1051 -658.4,1049.1 -648.1,1049.1 -641.1,1056.2 
+							"/>
+			<polygon id="XMLID_134_" class="st7" points="-675.1,1014.2 -674.4,998.4 -668,985.3 -668.9,983.6 -675.7,997.1 -677.9,1012.2 
+							"/>
+			<polygon id="XMLID_133_" class="st7" points="-657.8,1014.2 -658.5,998.4 -664.9,985.3 -664,983.6 -657.2,997.1 -655.1,1012.2 
+							"/>
+			<polygon id="XMLID_132_" class="st8" points="-655.1,1012.2 -654.3,1015.1 -651.7,1016.2 -648.6,1015.3 			"/>
+			<polygon id="XMLID_131_" class="st8" points="-677.9,1012.2 -678.6,1015.1 -681.3,1016.2 -684.3,1015.3 			"/>
+			<polygon id="XMLID_130_" class="st9" points="-682.5,1015.8 -680.8,1014.8 -678.3,1013.9 -678.6,1015.1 -681.3,1016.2 			"/>
+			<polygon id="XMLID_129_" class="st9" points="-650.5,1015.8 -652.1,1014.8 -654.6,1013.9 -654.3,1015.1 -651.7,1016.2 			"/>
+			<polygon id="XMLID_128_" class="st1" points="-651.7,1016.2 -648.6,1027.6 -648.6,1015.3 			"/>
+			<polygon id="XMLID_127_" class="st1" points="-681.3,1016.2 -684.3,1027.6 -684.3,1015.3 			"/>
+			<polygon id="XMLID_126_" class="st10" points="-642.4,1057.5 -642.4,1063.1 -638.7,1066.8 -624.9,1066.8 -615.9,1050.1 
+				-625.2,1027.9 -627.9,1027.9 -630.6,1045.6 			"/>
+			<polygon id="XMLID_125_" class="st2" points="-625.2,1027.9 -625.2,1049.7 -638.7,1066.8 -631.7,1067.9 -624.9,1066.8 
+				-615.9,1050.1 			"/>
+			<polygon id="XMLID_124_" class="st1" points="-631.7,1067.9 -619.8,1050.1 -625.2,1027.9 -615.9,1050.1 -624.9,1066.8 			"/>
+			<polygon id="XMLID_123_" class="st5" points="-622.2,1057.5 -624.9,1063.8 -624.9,1066.8 -619.9,1057.5 			"/>
+			<linearGradient id="XMLID_4_" gradientUnits="userSpaceOnUse" x1="-630.9828" y1="1048.8711" x2="-615.9328" y2="1048.8711">
+				<stop  offset="0" style="stop-color:#256780"/>
+				<stop  offset="1" style="stop-color:#508091"/>
+			</linearGradient>
+			<polygon id="XMLID_122_" class="st11" points="-615.9,1050.1 -625.2,1049.7 -630.6,1045.6 -631,1046.1 -626,1050.7 -617,1052.1 
+							"/>
+			<polygon id="XMLID_121_" class="st10" points="-690.5,1057.5 -690.5,1063.1 -694.2,1066.8 -708.1,1066.8 -717,1050.1 
+				-707.8,1027.9 -705,1027.9 -702.4,1045.6 			"/>
+			<polygon id="XMLID_120_" class="st2" points="-707.8,1027.9 -707.8,1049.7 -694.2,1066.8 -701.3,1067.9 -708.1,1066.8 
+				-717,1050.1 			"/>
+			<polygon id="XMLID_119_" class="st1" points="-701.3,1067.9 -713.1,1050.1 -707.8,1027.9 -717,1050.1 -708.1,1066.8 			"/>
+			<polygon id="XMLID_118_" class="st5" points="-713,1057.5 -708.1,1066.8 -708.1,1063.8 -710.7,1057.5 			"/>
+			<linearGradient id="XMLID_5_" gradientUnits="userSpaceOnUse" x1="-717" y1="1048.8711" x2="-701.95" y2="1048.8711">
+				<stop  offset="0" style="stop-color:#256780"/>
+				<stop  offset="1" style="stop-color:#508091"/>
+			</linearGradient>
+			<polygon id="XMLID_117_" class="st12" points="-717,1050.1 -707.8,1049.7 -702.4,1045.6 -702,1046.1 -706.9,1050.7 
+				-715.9,1052.1 			"/>
+			<polygon id="XMLID_116_" class="st6" points="-702,1046.1 -684.3,1027.6 -702.4,1045.6 			"/>
+			<g id="XMLID_213_">
+				<polyline id="XMLID_115_" class="st13" points="-698,1049.8 -691.1,1043.2 -691.1,1040 -680.2,1029.8 				"/>
+				<polyline id="XMLID_114_" class="st13" points="-635,1049.8 -641.9,1043.2 -641.9,1040 -652.8,1029.8 				"/>
+			</g>
+			<g id="XMLID_210_">
+				<polyline id="XMLID_113_" class="st13" points="-676,1038.4 -678.6,1041.3 -678.6,1049.8 				"/>
+				<polyline id="XMLID_112_" class="st13" points="-656.9,1038.4 -654.3,1041.3 -654.3,1049.8 				"/>
+			</g>
+			<g id="XMLID_207_">
+				<polyline id="XMLID_111_" class="st14" points="-672.4,1011.4 -672.4,1001.4 -666.3,995.3 				"/>
+				<polyline id="XMLID_110_" class="st14" points="-660.5,1011.4 -660.5,1001.4 -666.6,995.3 				"/>
+			</g>
+			<polygon id="XMLID_83_" class="st3" points="-666.5,1006.3 -666.5,985.3 -664.9,985.3 -663.5,988.1 -663.5,1008.8 			"/>
+			<polygon id="XMLID_82_" class="st3" points="-666.5,1006.3 -666.5,985.3 -668,985.3 -669.4,988.1 -669.4,1008.8 			"/>
+			<g id="XMLID_201_">
+				<linearGradient id="XMLID_6_" gradientUnits="userSpaceOnUse" x1="-666.4617" y1="1004.636" x2="-666.4617" y2="991.6272">
+					<stop  offset="0" style="stop-color:#256780"/>
+					<stop  offset="1" style="stop-color:#508091"/>
+				</linearGradient>
+				<rect id="XMLID_1_" x="-668" y="989.7" class="st15" width="3.1" height="2.5"/>
+				<linearGradient id="XMLID_7_" gradientUnits="userSpaceOnUse" x1="-666.4617" y1="1004.636" x2="-666.4617" y2="991.6272">
+					<stop  offset="0" style="stop-color:#256780"/>
+					<stop  offset="1" style="stop-color:#508091"/>
+				</linearGradient>
+				<rect id="XMLID_79_" x="-668" y="993.5" class="st16" width="3.1" height="2.5"/>
+				<linearGradient id="XMLID_8_" gradientUnits="userSpaceOnUse" x1="-666.4617" y1="1004.636" x2="-666.4617" y2="991.6272">
+					<stop  offset="0" style="stop-color:#256780"/>
+					<stop  offset="1" style="stop-color:#508091"/>
+				</linearGradient>
+				<polygon id="XMLID_75_" class="st17" points="-664.9,1004.3 -666.5,1003.1 -668,1004.3 -668,997.2 -664.9,997.2 				"/>
+			</g>
+			<g id="XMLID_181_">
+				<g id="XMLID_109_">
+					<polygon class="st7" points="-670.6,1045.3 -680.9,1032 -674.8,1014.4 -666.5,1007.6 -658.1,1014.4 -652,1032 -662.3,1045.3 
+											"/>
+					<path class="st6" d="M-666.5,1008l8.1,6.6l6,17.4l-10.1,13.1h-4h-4l-10.1-13.1l6-17.4L-666.5,1008 M-666.5,1007.2l-8.6,7
+						l-6.2,17.9l10.5,13.6h4.3h4.3l10.5-13.6l-6.2-17.9L-666.5,1007.2L-666.5,1007.2z"/>
+				</g>
+				<polygon id="XMLID_108_" class="st1" points="-673.3,1025.2 -666.5,1015.1 -659.6,1025.2 -659.6,1033.1 -666.5,1045.1 
+					-673.3,1033.1 				"/>
+				<g id="XMLID_191_">
+					<polygon id="XMLID_107_" class="st18" points="-672,1035.5 -669.4,1027.9 -666.5,1025.2 -666.5,1039 -671.2,1036.9 					"/>
+					<polygon id="XMLID_106_" class="st18" points="-660.9,1035.5 -663.5,1027.9 -666.5,1025.2 -666.5,1039 -661.8,1036.9 					"/>
+				</g>
+				<polygon id="XMLID_105_" class="st6" points="-664.2,1028.4 -666.5,1026.1 -668.8,1028.4 -675.1,1051 -666.5,1058.7 
+					-657.8,1051 				"/>
+				<polygon id="XMLID_104_" class="st5" points="-659.6,1033.1 -659.6,1025.2 -657.5,1027.2 				"/>
+				<polygon id="XMLID_103_" class="st5" points="-673.3,1033.1 -673.3,1025.2 -675.5,1027.2 				"/>
+				<g id="XMLID_185_">
+					<polygon id="XMLID_102_" class="st10" points="-666.5,1058.7 -666.5,1026.1 -664.2,1028.4 -665.7,1058 					"/>
+					<polygon id="XMLID_101_" class="st10" points="-666.5,1058.7 -666.5,1026.1 -668.8,1028.4 -667.2,1058 					"/>
+				</g>
+				<polygon id="XMLID_100_" class="st10" points="-666.5,1007.2 -657.8,1014.2 -659.6,1025.2 -666.5,1015.1 -673.3,1025.2 
+					-675.1,1014.2 				"/>
+				<polygon id="XMLID_99_" class="st7" points="-664.3,1014.5 -666.5,1012.3 -668.6,1014.5 -666.5,1009.9 				"/>
+				<polygon id="XMLID_98_" class="st1" points="-675.1,1014.2 -666.5,1007.2 -657.8,1014.2 -657.9,1013 -666.5,1006 -675,1012.9 
+									"/>
+			</g>
+			<g id="XMLID_166_">
+				<g id="XMLID_174_">
+					<line id="XMLID_97_" class="st13" x1="-701.3" y1="1055.8" x2="-697.9" y2="1052.5"/>
+					<line id="XMLID_96_" class="st13" x1="-696.9" y1="1060.2" x2="-693.6" y2="1056.8"/>
+					<line id="XMLID_95_" class="st13" x1="-697.8" y1="1059.3" x2="-694.5" y2="1055.9"/>
+					<line id="XMLID_94_" class="st13" x1="-698.7" y1="1058.4" x2="-695.3" y2="1055.1"/>
+					<line id="XMLID_93_" class="st13" x1="-699.5" y1="1057.5" x2="-696.2" y2="1054.2"/>
+					<line id="XMLID_92_" class="st13" x1="-700.4" y1="1056.7" x2="-697.1" y2="1053.3"/>
+				</g>
+				<g id="XMLID_167_">
+					<line id="XMLID_91_" class="st13" x1="-631.6" y1="1055.8" x2="-634.9" y2="1052.5"/>
+					<line id="XMLID_90_" class="st13" x1="-636" y1="1060.2" x2="-639.3" y2="1056.8"/>
+					<line id="XMLID_89_" class="st13" x1="-635.1" y1="1059.3" x2="-638.4" y2="1055.9"/>
+					<line id="XMLID_84_" class="st13" x1="-634.2" y1="1058.4" x2="-637.6" y2="1055.1"/>
+					<line id="XMLID_78_" class="st13" x1="-633.3" y1="1057.5" x2="-636.7" y2="1054.2"/>
+					<line id="XMLID_77_" class="st13" x1="-632.5" y1="1056.7" x2="-635.8" y2="1053.3"/>
+				</g>
+			</g>
+			<polygon id="XMLID_76_" class="st2" points="-646.3,1020.3 -646.9,1023.1 -646.3,1025.6 -645.7,1025 -645.7,1020.9 			"/>
+			<polygon id="XMLID_74_" class="st2" points="-686.6,1020.3 -686,1023.1 -686.6,1025.6 -687.2,1025 -687.2,1020.9 			"/>
+		</g>
+		<g id="XMLID_155_">
+			<polygon id="XMLID_73_" class="st1" points="-663.5,1053.4 -660,1050.6 -663.5,1038.1 			"/>
+			<polygon id="XMLID_72_" class="st1" points="-669.4,1053.4 -672.9,1050.6 -669.4,1038.1 			"/>
+		</g>
+	</g>
+	<line id="XMLID_69_" class="st19" x1="-666.5" y1="1023.6" x2="-666.5" y2="1019.7"/>
+	<circle id="XMLID_68_" class="st3" cx="-666.5" cy="1021.6" r="0.7"/>
+	<polygon id="XMLID_67_" class="st3" points="-680.6,1031.9 -678.3,1031.9 -673.7,1040.8 	"/>
+	<polygon id="XMLID_64_" class="st3" points="-652.4,1031.9 -654.7,1031.9 -659.2,1040.8 	"/>
 </g>
 </svg>

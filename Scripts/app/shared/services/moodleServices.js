@@ -153,6 +153,15 @@
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
         }
 
+        var _getAsyncMultipleChallengeInfo = function(token, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("retoMultiplePartials" , API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh);
+            _getAsyncData("retoMultipleCompleted" , API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh);
+        }
+
+        var _putMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
+            _putAsyncData(key, data, API_RESOURCE.format('partialactivities/' + data.moduleid), successCallback, errorCallback, userCourseModel);
+        }
+
         var _postMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
             _postAsyncDataOffline(key, data, API_RESOURCE.format(url), successCallback, errorCallback, userCourseModel);
         }
@@ -465,13 +474,14 @@
 
                     successCallback();
                 }).error(function (data, status, headers, config) {
+                    data.statusCode = status;
                     _setLocalStorageJsonItem(key,data);
                     errorCallback(data);
                 });
             }
         };
         
-        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
+        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback, otherDataModel) {
             _getDeviceVersionAsync();
             
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -485,6 +495,7 @@
                                'Authorization': currentUser.token }
                 }
             });
+            dataModel = !otherDataModel ? dataModel : otherDataModel;
             _setLocalStorageJsonItem(key,dataModel);
 
             if(successCallback){
@@ -1434,7 +1445,9 @@
             GetServerDate: _getServerDate,
             ExecuteQueue: _executeQueue,
             PostAsyncAvatar: _postAsyncAvatar,
+            GetAsyncMultipleChallengeInfo: _getAsyncMultipleChallengeInfo,
             PostMultipleActivities: _postMultipleActivities,
+            PutMultipleActivities: _putMultipleActivities,
             PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
             DesactivateUser: _desactivateUser

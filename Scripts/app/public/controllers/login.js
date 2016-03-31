@@ -160,6 +160,8 @@ angular
 
             $scope.login = function (username, password) {
                 $scope.$emit('ShowPreloader');
+                $scope.userCredentialsModel.modelState.isValid = true;
+                $scope.userCredentialsModel.modelState.errorMessages = [];
                 $scope.validateConnection(function () {
                     loginConnectedCallback();
                 }, offlineCallback);
@@ -183,7 +185,6 @@ angular
 
             function loginConnectedCallback() {
                 // reflect loading state at UI
-                
                 
                 if(validateModel()) {
                     
@@ -243,7 +244,7 @@ angular
                         _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
 
                     }).error(function (data, status, headers, config) {
-
+                        $scope.userCredentialsModel.modelState.isValid = false;
                         var errorMessage = "";
                         if(data && data.messageerror) {
                             errorMessage = window.atob(data.messageerror);  
@@ -273,12 +274,16 @@ angular
                 //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
+                $scope.userCredentialsModel.modelState.isValid = true;
+                $scope.userCredentialsModel.modelState.errorMessages = [];
+
                 if (window.mobilecheck()) {
                     cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
                 }
             }
 
             function FacebookLoginSuccess(data) {
+                $scope.$emit('ShowPreloader');
                 var userFacebook = JSON.parse(data);
 
                 _loadDrupalResources();
@@ -290,7 +295,6 @@ angular
                 $scope.currentUserModel.userId = userFacebook.id;
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-
                 _setId(userFacebook.id);
 
                 //Run queue
@@ -298,8 +302,6 @@ angular
                     //Preparing for syncAll...
 
                     //succesful credentials
-                    
-                    
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
                             
                             //Came back from redirecting...                        
@@ -336,9 +338,10 @@ angular
             }
 
             function FacebookLoginFailure(data) {
-
                 $scope.$emit('HidePreloader');
+                $scope.userCredentialsModel.modelState.isValid = false;
                 var errorMessage = window.atob(data.messageerror);
+
                 $timeout(function () {
                     $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
                 }, 1000);
@@ -359,6 +362,7 @@ angular
                 moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function () {}, true);
                 moodleFactory.Services.GetAsyncForumDiscussions(85, token, function () {}, function () {}, true);
                 moodleFactory.Services.GetAsyncForumDiscussions(91, token, function () {}, function () {}, true);
+                moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                 var courseModuleIds = [{"id": 1039, "userInfo": true}, {"id": 2012, "userInfo": false}, {"id": 2017,"userInfo": true}, 
                                         {"id": 3302, "userInfo": false}, {"id": 3402, "userInfo": true}];
                 for (var i = 0; i < courseModuleIds.length; i++) {
