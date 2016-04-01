@@ -31,7 +31,7 @@ angular
             function getUserChatCallback() {
                 //Make the pop-up appear in Chat Icon.
                 console.log("POPs !!!");
-                localStorage.setItem("chatRead", "false"); //Turn-on chat pop-up.
+                localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "false"); //Turn-on chat pop-up.
             }
 
             function errorCallback() {
@@ -393,8 +393,6 @@ angular
 
                 if (_tryCloseStage($scope.idEtapa)) {
                     $scope.openModal_CloseStage();
-
-                    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
                     moodleFactory.Services.PostGeolocation(1);
                 }
 

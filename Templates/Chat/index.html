@@ -11,7 +11,7 @@
                 </div>
                 <a class="anchor-scroll floated" id="anchor-bottom"></a>
             </div>
-            <a class="btn btn-primary btn-lg btn-block" ng-click="finishActivity()" ng-disabled="isDisabled">CONTINUAR</a>
+            <a class="btn btn-primary btn-lg btn-block" ng-click="goToCloseScreen()" ng-disabled="isDisabled">CONTINUAR</a>
             <div class="typing-section col-xs-12">
                 <textarea class="col-xs-10" placeholder="Escribe tu mensaje aquí..." ng-model="currentMessage" ng-disabled="true"></textarea>
                 <a class="send-text icomoon icon-send-arrow" ng-click="sendMessage(); scrollToBottom();" ng-disabled="true"></a>

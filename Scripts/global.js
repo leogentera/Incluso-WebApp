@@ -1400,8 +1400,7 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("activityStatus");
     localStorage.removeItem("userId");
     localStorage.removeItem("avatarInfo");
-    //localStorage.removeItem("chatRead");
-    //localStorage.removeItem("chatAmountRead");
+    localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
     localStorage.removeItem("halloffame");

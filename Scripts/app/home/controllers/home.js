@@ -272,7 +272,7 @@ angular
             };
 
             $scope.showChatNotification = function () {
-                var chatRead = localStorage.getItem('chatRead');
+                var chatRead = localStorage.getItem('chatRead/' + localStorage.getItem("userId"));
 
                 if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {
                     return false;
@@ -369,9 +369,9 @@ angular
                 });
             };
 
-            $scope.getUserChat2 = function () {alert("MYSTERY");
+            $scope.getUserChat = function () {
                 $timeout(function () {                
-                    _setLocalStorageItem('chatRead', "false");
+                    _setLocalStorageItem('chatRead/' + localStorage.getItem("userId"), "false");
 
                     var chat = JSON.parse(localStorage.getItem('userChat'));
                     $scope.messages = chat;

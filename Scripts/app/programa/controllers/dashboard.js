@@ -402,7 +402,7 @@ angular
                     var messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
 
                     if (messages.length == 0) {
-                        localStorage.setItem("chatRead", "true");
+                        localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");
                     }
 
                     getUserStarsByPoints();

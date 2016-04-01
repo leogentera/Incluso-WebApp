@@ -58,7 +58,6 @@ angular
 
                 //Get Messages From Server.
                 moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
-                SignalRFactory.SetCallBackChat(getUserRefreshChatCallback);
 
                 if ($location.hash() == 'top') {
                     $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
@@ -74,7 +73,7 @@ angular
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
 
-                        localStorage.setItem("chatRead", "true");   //Turn-off Chat warning popup.
+                        localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");   //Turn-off Chat warning popup.
 
                         if ($location.hash() == 'top') {
                             $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
@@ -83,7 +82,7 @@ angular
                     }, 100);
                 }
 
-                $scope.finishActivity = function () {
+                $scope.goToCloseScreen = function () {
 
                     var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + currentUser.userId);
                     var zone = '/ZonaDeVuelo';
@@ -117,9 +116,6 @@ angular
                 function errorCallback() { }
             }
 
-            $scope.$on("$routeChangeStart", function (next, current) {
-                SignalRFactory.SetCallBackChat($scope.getUserChat);
-            });
 
             function getContentResources(activityIdentifierId) {
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {

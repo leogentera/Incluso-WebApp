@@ -224,8 +224,7 @@ angular
                 $scope.currentUserModel.token = data.token;
                 $scope.currentUserModel.userId = data.id;
 
-                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-                SignalRFactory.StartChatConnection($scope.getUserChat);
+                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);                
                 _setLocalStorageJsonItem("Credentials", {
                     username: $scope.registerModel.username,
                     password: $scope.registerModel.password,
