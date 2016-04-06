@@ -380,7 +380,7 @@ angular
                                         }
 
                                         var discussion = _.find(data.discussions, function (d) {
-                                            return d.name.toLowerCase().indexOf("comparte") > -1
+                                           return d.name.toLowerCase().indexOf("toma el reto") > -1 || d.name.toLowerCase().indexOf("comparte") > -1
                                         });
                                         var requestData = {
                                             "userid": $scope.user.id,
