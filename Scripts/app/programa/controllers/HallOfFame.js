@@ -63,6 +63,10 @@ hallOfFameModule
                 $scope.default = true;
                 getTop5("Ver Todo");
 
+                if (profile.profileimageurl) {
+                    profile.profileimageurl = profile.profileimageurl + "?rnd=" + new Date().getTime();
+                }
+                
                 var userStats = {
                     profileImageUrl: profile.profileimageurl,
                     alias: profile.alias,
@@ -73,6 +77,10 @@ hallOfFameModule
                         return (value !== undefined && value.status === "won")
                     }).length
                 };
+                
+                
+                 
+                
 
                 if (!userStats.stars) {
                     userStats.stars = 0;
