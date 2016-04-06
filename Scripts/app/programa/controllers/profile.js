@@ -1078,7 +1078,7 @@ angular
                     //socialNetworks
                     if ($scope.model.socialNetworks && $scope.model.socialNetworks.length > 0) {
                         for (i = 0; i < $scope.model.socialNetworks.length; i++) {
-                            if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined" || typeof $scope.model.socialNetworks[i].socialNetworkId === "undefined" || $scope.model.socialNetworks[i].socialNetworkId.trim().length == 0) {
+                            if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined" || ((typeof $scope.model.socialNetworks[i].socialNetworkId === "undefined" || $scope.model.socialNetworks[i].socialNetworkId.trim().length == 0) && $scope.model.socialNetworks[i].socialNetwork != "No tengo redes sociales")) {
                                 $scope.model.socialNetworks.splice(i, 1);
                                 i = i - 1;
                             }
