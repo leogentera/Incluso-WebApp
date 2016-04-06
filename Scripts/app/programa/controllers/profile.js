@@ -1068,7 +1068,7 @@ angular
                     //phones
                     if ($scope.model.phones && $scope.model.phones.length > 0) {
                         for (i = 0; i < $scope.model.phones.length; i++) {
-                            if (typeof $scope.model.phones[i].phone == "undefined" || typeof $scope.model.phones[i].phoneId == "undefined" || $scope.model.phones[i].phoneId.trim().length == 0) {
+                            if (typeof $scope.model.phones[i].phone == "undefined" || ((typeof $scope.model.phones[i].phoneId == "undefined" || $scope.model.phones[i].phoneId.trim().length == 0) && $scope.model.phones[i].phone != "No tengo teléfono")) {
                                 $scope.model.phones.splice(i, 1);
                                 i = i - 1;
                             }
