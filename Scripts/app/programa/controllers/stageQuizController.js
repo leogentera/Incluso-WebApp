@@ -136,8 +136,8 @@ angular
                 }
                 console.log("codedAnswers: " + codedAnswers);
 
-                var j;
-                for (var i = 0; i < userKeysContent.length; i++) {
+                var i, j;
+                for (i = 0; i < userKeysContent.length; i++) {
                     var setOfLabels = [];
                     var otherFound = false;
                     var numAnswers = activityObject.questions[i].answers.length;
@@ -179,7 +179,7 @@ angular
                         }
                     }
 
-                    if (!otherFound) {
+                    if (!otherFound) {//The question has "other" option empty.
                         otherAnswerQuiz[i].answers = [""];
                         codedAnswers[i].push(0);
                         activityObject.questions[i].userAnswer = userKeysContent[i].join("; ");
@@ -347,7 +347,7 @@ angular
                                 //Get questions Id's
                                 var objForOtherAnswer = getArrayForOther(activityObject);
                                 console.log("#### " + JSON.stringify(objForOtherAnswer));
-                                syncWithProfile(favoriteSports, artisticActivities, hobbies, social, emprendedor, objForOtherAnswer, activityObject);
+                                syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
                             }
 
                             loadModelVariables($scope.activityObject);
@@ -1045,13 +1045,13 @@ angular
                     //Update Others
                     for (i = 0; i < $scope.answers[4].length - 1; i++) {
                         if ($scope.answers[4][i]) {
-                            $scope.userprofile.others.push(others[i]);
+                            $scope.userprofile.emprendedor.push(others[i]);
                         }
                     }
 
                     var numOfOthers = $scope.answers[4].length;
                     if ($scope.answers[4][numOfOthers - 1] === 1) {
-                        $scope.userprofile.others.push($scope.OtroAnswers[4].answers[0]);
+                        $scope.userprofile.emprendedor.push($scope.OtroAnswers[4].answers[0]);
                     }
 
                 }

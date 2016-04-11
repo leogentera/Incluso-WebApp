@@ -179,7 +179,7 @@ angular
                     $scope.educationStatusList = _getCatalogValuesBy("educationStatus");
                     $scope.favoritSportsList = _getCatalogValuesBy("sports");
                     $scope.artisticActivitiesList = _getCatalogValuesBy("arts");
-                    $scope.hobbiesList = _getCatalogValuesBy("hobbiescatalog");
+                    $scope.cultureList = _getCatalogValuesBy("hobbiescatalog");
                     $scope.socialList = _getCatalogValuesBy("socialcatalog");
                     $scope.othersList = _getCatalogValuesBy("emprendedorcatalog");
                     $scope.habilitiesList = _getCatalogValuesBy("talentscatalog");
@@ -688,14 +688,14 @@ angular
 
                         $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                         $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
-                        $scope.hobbiesList = $scope.hobbiesList.concat($scope.model.hobbies);
+                        $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
                         $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
                         $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
                         $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
 
                         $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                         $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
-                        $scope.hobbiesList = deleteRepeatedEntries($scope.hobbiesList);
+                        $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
                         $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
                         $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
                         $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
@@ -769,14 +769,14 @@ angular
 
                             $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                             $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
-                            $scope.hobbiesList = $scope.hobbiesList.concat($scope.model.hobbies);
+                            $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
                             $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
                             $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
                             $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
 
                             $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                             $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
-                            $scope.hobbiesList = deleteRepeatedEntries($scope.hobbiesList);
+                            $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
                             $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
                             $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
                             $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
@@ -1905,7 +1905,7 @@ angular
                     $scope.model.socialNetworks.splice(index, 1);
                 };
 
-                // **************** Section for MIS GUSTOS **************************
+                // **************** Common for MIS GUSTOS & MIS CUALIDADES **************************
                 function canIErase(arr, index, quizStatus) {
                     if (quizStatus === 1) {//Quiz is Finished.
 
@@ -1932,6 +1932,7 @@ angular
                     }
                 }
 
+                // **************** Section for MIS GUSTOS **************************
                 $scope.addFavoriteSports = function () {
                     $scope.model.favoriteSports.push("");
                 };
@@ -1996,8 +1997,6 @@ angular
                         $scope.model.others.splice(index, 1);
                     }
                 };
-
-                // **************** End of Section for MIS GUSTOS **************************
 
                 // **************** Section for MIS CUALIDADES **************************
                 $scope.addTalents = function () {

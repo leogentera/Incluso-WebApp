@@ -676,7 +676,6 @@
                                                         <li ng-repeat="s in model.favoriteSports track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Deporte {{model.favoriteSports.indexOf(sn) + 1}}</span> -->
                                                                     <span>Deporte {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteFavoriteSports($index)">
@@ -713,7 +712,6 @@
                                                         <li ng-repeat="s in model.artisticActivities track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Actividad {{model.artisticActivities.indexOf(s) + 1}}</span> -->
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteArtisticActivities($index)">
@@ -749,7 +747,6 @@
                                                         <li ng-repeat="s in model.hobbies track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Hobbie {{model.hobbies.indexOf(s) + 1}}</span> -->
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteHobbies($index)">
@@ -760,7 +757,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.hobbies[$index]"
-                                                                            ng-options="item for item in hobbiesList"
+                                                                            ng-options="item for item in cultureList"
                                                                             ng-init=""
                                                                             ng-class="{'selected':  model.hobbies[$index].length != 0}">
                                                                         <option value="" ng-disabled="!!model.hobbies">
@@ -785,7 +782,6 @@
                                                         <li ng-repeat="s in model.social track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Hobbie {{model.hobbies.indexOf(s) + 1}}</span> -->
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteSocial($index)">
@@ -821,7 +817,6 @@
                                                         <li ng-repeat="s in model.others track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Hobbie {{model.hobbies.indexOf(s) + 1}}</span> -->
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteOthers($index)">
