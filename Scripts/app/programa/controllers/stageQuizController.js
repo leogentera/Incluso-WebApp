@@ -1140,7 +1140,7 @@ angular
                                     }
 
                                     numAnswered++;
-                                }
+                                } else {console.log("Question not answered" + index);}
                             }
 
                             //Unanswered questions should be equal to 0.
@@ -1366,11 +1366,8 @@ angular
             function addHeight(elem) {
                 var elemHeight = angular.element(elem).height();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-
-                if (containerHeight < 750) {
-                    angular.element(".owl-wrapper-outer").css('height', containerHeight + 100);
-                    angular.element(elem).css('height', elemHeight + 100);
-                }
+                angular.element(".owl-wrapper-outer").css('height', containerHeight + 100);
+                angular.element(elem).css('height', elemHeight + 100);
             }
 
             function removeHeight(elem) {
