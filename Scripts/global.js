@@ -59,7 +59,9 @@ var _catalogNames = ["sports",
     "playVideogames",
     "communityAccess",
     "citiesCatalog",
-    "gender"
+    "gender",
+    "socialcatalog",
+    "emprendedorcatalog"
 ];
 
 var _activityDependencies=[

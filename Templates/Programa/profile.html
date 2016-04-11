@@ -328,7 +328,7 @@
                                                         <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:model.showLikesAndPreferences">
                                                             <h4>Mis gustos</h4>
                                                             <div class="from-group">
-                                                                <label>Mis deportes preferidos</label>
+                                                                <label>Mis Deportes</label>
                                                                 <ul class="block-list">
                                                                     <li ng-repeat="s in model.favoriteSports">
                                                                         <p ng-bind="s"></p>
@@ -346,9 +346,27 @@
                                                             </div>
 
                                                             <div class="from-group">
-                                                                <label>Hobbies</label>
+                                                                <label>Actividades culturales</label>
                                                                 <ul class="block-list">
                                                                     <li ng-repeat="s in model.hobbies">
+                                                                        <p ng-bind="s"></p>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+
+                                                            <div class="from-group">
+                                                                <label>Actividades sociales</label>
+                                                                <ul class="block-list">
+                                                                    <li ng-repeat="s in model.social">
+                                                                        <p ng-bind="s"></p>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+
+                                                            <div class="from-group">
+                                                                <label>Otros</label>
+                                                                <ul class="block-list">
+                                                                    <li ng-repeat="s in model.others">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
@@ -358,7 +376,7 @@
                                                         <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:model.showAttributesAndQualities">
                                                             <h4>Mis cualidades</h4>
                                                             <div class="from-group">
-                                                                <label>Talentos</label>
+                                                                <label>Habilidades</label>
                                                                 <ul class="block-list">
                                                                     <li ng-repeat="s in model.talents">
                                                                         <p ng-bind="s"></p>
@@ -367,7 +385,7 @@
                                                             </div>
 
                                                             <div class="from-group">
-                                                                <label>Valores</label>
+                                                                <label>Destrezas sociales</label>
                                                                 <ul class="block-list">
                                                                     <li ng-repeat="s in model.values">
                                                                         <p ng-bind="s"></p>
@@ -376,7 +394,7 @@
                                                             </div>
 
                                                             <div class="from-group">
-                                                                <label>Habilidades</label>
+                                                                <label>Actitudes</label>
                                                                 <ul class="block-list">
                                                                     <li ng-repeat="s in model.habilities">
                                                                         <p ng-bind="s"></p>

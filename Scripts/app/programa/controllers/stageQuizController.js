@@ -48,6 +48,9 @@ angular
             $scope.userprofile.favoriteSports = [];
             $scope.userprofile.artisticActivities = [];
             $scope.userprofile.hobbies = [];
+            $scope.userprofile.social = [];
+            $scope.userprofile.emprendedor = [];
+            $scope.activityTitle = [];
 
             var talents = [];
             var values = [];
@@ -55,6 +58,8 @@ angular
             var favoriteSports = [];
             var artisticActivities = [];
             var hobbies = [];
+            var social = [];
+            var others = [];
 
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
                 "userid": 0,
@@ -115,142 +120,88 @@ angular
                     false);  //it was true
             }
 
-            function syncWithProfile(arr1, arr2, arr3, obj, activityObject) {
+            function syncWithProfile(userKeysContent, obj, activityObject) {
 
                 var otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + $scope.coursemoduleid));
+                var questionId;
 
                 if (otherAnswerQuiz === null) {//Create this object if it doesn't exists...
                     var otherAnswerQuiz = obj;
                 }
 
                 //Modify & save the new "answerQuiz/71" object.
-                var codedAnswers = [[], [], []];
+                var codedAnswers = [];
+                for (var i = 0; i < userKeysContent.length; i++) {
+                    codedAnswers.push([]);
+                }
+                console.log("codedAnswers: " + codedAnswers);
+
                 var j;
+                for (var i = 0; i < userKeysContent.length; i++) {
+                    var setOfLabels = [];
+                    var otherFound = false;
+                    var numAnswers = activityObject.questions[i].answers.length;
 
-                //  Check for arr1. ---------------------------------------------------------
-                var setOfLabels = [];
-                var otherFound = false;
-                var numAnswers = activityObject.questions[0].answers.length;
+                    for (j = 0; j < numAnswers; j++) {//Get the label for answers for each question.
+                        var label = activityObject.questions[i].answers[j].answer;
 
-                for (j = 0; j < numAnswers; j++) {//Get the labels of answers.
-                    var label = activityObject.questions[0].answers[j].answer;
-
-                    if (label != "Otro") {//Not including the "Otro" label.
-                        setOfLabels.push(label);
+                        if (label != "Otro") {//Not including the "Otro" label.
+                            setOfLabels.push(label);
+                        }
                     }
-                }
 
-                for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of arr1...
-                    if (arr1.indexOf(setOfLabels[j]) > -1) {
-                        codedAnswers[0].push(1);
-                    } else {
-                        codedAnswers[0].push(0);
+                    for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of userKeysContent[i]...
+                        if (userKeysContent[i].indexOf(setOfLabels[j]) > -1) {
+                            codedAnswers[i].push(1);  //Check the corresponding answer label.
+                        } else {
+                            codedAnswers[i].push(0); //Uncheck the answer label.
+                        }
                     }
-                }
 
-                for (j = 0; j < arr1.length; j++) {//Check if jth-talent is within setOfLabels...
-                    if (setOfLabels.indexOf(arr1[j]) == -1) {
-                        //It must be the string for the !Other" option...
-                        otherFound = true;
-                        otherAnswerQuiz[0].answers = [arr1[j]];
-                        codedAnswers[0].push(1);
-                        activityObject.questions[0].userAnswer = arr1.join("; ") + "; Otro";
-                        activityObject.questions[0].other = arr1[j];
-                        break;
+                    for (j = 0; j < userKeysContent[i].length; j++) {//Check if jth-user talent is within setOfLabels...
+                        if (setOfLabels.indexOf(userKeysContent[i][j]) == -1) {//...if not, then that answer must be the "other" option value.
+                            //It must be the string for the "Other" option...
+                            otherFound = true;
+                            questionId = activityObject.questions[i].id;
+
+                            //Update the "answers" key that corresponds to this question, as defined by questionId.
+                            for (var k = 0; k < otherAnswerQuiz.length; k++) {
+                                if (otherAnswerQuiz[k].questionid == +questionId) {
+                                    otherAnswerQuiz[k].answers = [userKeysContent[i][j]];console.log(otherAnswerQuiz[k].questionid + " : " +  questionId);
+                                }
+                            }
+
+                            //otherAnswerQuiz[i].answers = [userKeysContent[i][j]];
+                            codedAnswers[i].push(1);
+                            activityObject.questions[i].userAnswer = userKeysContent[i].join("; ") + "; Otro";
+                            activityObject.questions[i].other = userKeysContent[i][j];
+                            break;
+                        }
                     }
-                }
 
-                if (!otherFound) {
-                    otherAnswerQuiz[0].answers = [""];
-                    codedAnswers[0].push(0);
-                    activityObject.questions[0].userAnswer = arr1.join("; ");
-                    activityObject.questions[0].other = "";
-                }
-
-                //  Check for arr2.  ---------------------------------------------------------
-                var setOfLabels = [];
-                otherFound = false;
-                var numAnswers = activityObject.questions[1].answers.length;
-
-                for (j = 0; j < numAnswers; j++) {//Get the labels of answers.
-                    var label = activityObject.questions[1].answers[j].answer;
-
-                    if (label != "Otro") {//Not including the "Otro" label.
-                        setOfLabels.push(label);
+                    if (!otherFound) {
+                        otherAnswerQuiz[i].answers = [""];
+                        codedAnswers[i].push(0);
+                        activityObject.questions[i].userAnswer = userKeysContent[i].join("; ");
+                        activityObject.questions[i].other = "";
                     }
-                }
-
-                for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of arr2...
-                    if (arr2.indexOf(setOfLabels[j]) > -1) {
-                        codedAnswers[1].push(1);
-                    } else {
-                        codedAnswers[1].push(0);
-                    }
-                }
-
-                for (j = 0; j < arr2.length; j++) {//Check if jth-value is within setOfLabels...
-                    if (setOfLabels.indexOf(arr2[j]) == -1) {
-                        //It must be the string for the !Other" option...
-                        otherFound = true;
-                        otherAnswerQuiz[1].answers = [arr2[j]];
-                        codedAnswers[1].push(1);
-                        activityObject.questions[1].userAnswer = arr2.join("; ") + "; Otro";
-                        activityObject.questions[1].other = arr2[j];
-                        break;
-                    }
-                }
-
-                if (!otherFound) {
-                    otherAnswerQuiz[1].answers = [""];
-                    codedAnswers[1].push(0);
-                    activityObject.questions[1].userAnswer = arr2.join("; ");
-                    activityObject.questions[1].other = "";
-                }
-
-                //  Check for arr3.  ---------------------------------------------------------
-                var setOfLabels = [];
-                otherFound = false;
-                var numAnswers = activityObject.questions[2].answers.length;
-
-                for (j = 0; j < numAnswers; j++) {//Get the labels of answers.
-                    var label = activityObject.questions[2].answers[j].answer;
-
-                    if (label != "Otro") {//Not including the "Otro" label.
-                        setOfLabels.push(label);
-                    }
-                }
-
-                for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of arr3...
-                    if (arr3.indexOf(setOfLabels[j]) > -1) {
-                        codedAnswers[2].push(1);
-                    } else {
-                        codedAnswers[2].push(0);
-                    }
-                }
-
-                for (j = 0; j < arr3.length; j++) {//Check if jth-hability is within setOfLabels...
-                    if (setOfLabels.indexOf(arr3[j]) == -1) {
-                        //It must be the string for the !Other" option...
-                        otherFound = true;
-                        otherAnswerQuiz[2].answers = [arr3[j]];
-                        codedAnswers[2].push(1);
-                        activityObject.questions[2].userAnswer = arr3.join("; ") + "; Otro";
-                        activityObject.questions[2].other = arr3[j];
-                        break;
-                    }
-                }
-
-                if (!otherFound) {
-                    otherAnswerQuiz[2].answers = [""];
-                    codedAnswers[2].push(0);
-                    activityObject.questions[2].userAnswer = arr3.join("; ");
-                    activityObject.questions[2].other = "";
                 }
 
                 _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, codedAnswers);
                 _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.coursemoduleid, otherAnswerQuiz);
                 _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, activityObject);
                 $scope.activityObject = activityObject;
+            }
+
+            function getArrayForOther(activityObject) {
+                var obj = [];
+                for (var i = 0; i < activityObject.questions.length; i++) {
+                    if (activityObject.questions[i].questionType == "multichoice") {
+                        obj.push({"questionid" : +activityObject.questions[i].id, "answers" : []});
+                    }
+                }
+
+                return obj;
             }
 
             function getDataAsync() {
@@ -318,31 +269,37 @@ angular
 
                         //Load the arrays for 'Mis Cualidades' and 'Mis Gustos' from "Perfil/nnn".
                         if ($scope.activity_identifier === 1005 && activityObject !== null) { //Mis Cualidades.
-                            var talents = $scope.userprofile.talents;
-                            var values = $scope.userprofile.values;
-                            var habilities = $scope.userprofile.habilities;
+                            var keysToSync = ["talents", "values", "habilities"];
+                            var userKeysContent = [];
 
-                            var obj = [
-                                {"questionid": 16, "answers": []},
-                                {"questionid": 17, "answers": []},
-                                {"questionid": 18, "answers": []}
-                            ];
+                            //Get user items in keysToSync from Perfil/nnn.
+                            for (var i = 0; i < keysToSync.length; i++) {
+                                userKeysContent[i] = $scope.userprofile[keysToSync[i]];
+                            }
 
-                            syncWithProfile(talents, values, habilities, obj, activityObject);
+                            //Get questions Id's
+                            var objForOtherAnswer = getArrayForOther(activityObject);
+                            console.log("#### " + JSON.stringify(objForOtherAnswer));
+
+                            //Sync talents, values & habilities.
+                            syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
 
                         } else if ($scope.activity_identifier === 1006 && activityObject !== null) {//Mis Gustos.
+                            var keysToSync = ["favoriteSports", "artisticActivities", "hobbies", "social", "emprendedor"];
+                            var userKeysContent = [];
 
-                            var favoriteSports = $scope.userprofile.favoriteSports;
-                            var artisticActivities = $scope.userprofile.artisticActivities;
-                            var hobbies = $scope.userprofile.hobbies;
+                            //Get user items in keysToSync from Perfil/nnn.
+                            for (var i = 0; i < keysToSync.length; i++) {
+                                userKeysContent[i] = $scope.userprofile[keysToSync[i]];
+                            }
 
-                            var obj = [
-                                {"questionid": 43, "answers": []},
-                                {"questionid": 44, "answers": []},
-                                {"questionid": 45, "answers": []}
-                            ];
+                            //Get questions Id's
+                            var objForOtherAnswer = getArrayForOther(activityObject);
+                            console.log("## " + JSON.stringify(objForOtherAnswer));
+                            console.log("#### " + userKeysContent);
 
-                            syncWithProfile(favoriteSports, artisticActivities, hobbies, obj, activityObject);
+                            //syncWithProfile(favoriteSports, artisticActivities, hobbies, social, emprendedor, objForOtherAnswer, activityObject);
+                            syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
                         }
 
                         localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
@@ -351,50 +308,46 @@ angular
                             $scope.answers = localAnswers;
                         }
 
-                        if (activityObject == null) {// If activity does not exists in Local Storage...get it from Server.
-                            // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                            //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, loadModelVariables, errorCallback, true);
+                        if (activityObject == null) {
                             $location.path('/');
-
                         } else {//Both Questions and Answer SHOULD BE in Local Storage; Angular-bind the object in the respective HTML template
                             loadModelVariables($scope.activityObject);
                         }
 
                     } else {//The Quiz has not been finished yet.
-                        if (activityObject === null) {//If the questions are not in Local Storage, then...
-                            // ...bring the questions from the Service. The -1 is for making up a GET request without the userid; for example:
-                            // http://incluso.definityfirst.com/RestfulAPI/public/activity/150
-                            //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, loadModelVariables, errorCallback, true);
+                        if (activityObject === null) {
                             $location.path('/');
                         } else {//The questions were found in Local Storage.
 
                             //Load the arrays for 'Mis Cualidades' and 'Mis Gustos' from "Perfil/nnn".
                             if ($scope.activity_identifier === 1005 && activityObject !== null) { //Mis Cualidades.
-                                var talents = $scope.userprofile.talents;
-                                var values = $scope.userprofile.values;
-                                var habilities = $scope.userprofile.habilities;
+                                var keysToSync = ["talents", "values", "habilities"];
+                                var userKeysContent = [];
 
-                                var obj = [
-                                    {"questionid": 16, "answers": []},
-                                    {"questionid": 17, "answers": []},
-                                    {"questionid": 18, "answers": []}
-                                ];
+                                //Get user items in keysToSync from Perfil/nnn.
+                                for (var i = 0; i < keysToSync.length; i++) {
+                                    userKeysContent[i] = $scope.userprofile[keysToSync[i]];
+                                }
 
-                                syncWithProfile(talents, values, habilities, obj, activityObject);
+                                //Get questions Id's
+                                var objForOtherAnswer = getArrayForOther(activityObject);
+                                console.log("#### " + JSON.stringify(objForOtherAnswer));
+                                syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
 
                             } else if ($scope.activity_identifier === 1006 && activityObject !== null) {//Mis Gustos.
 
-                                var favoriteSports = $scope.userprofile.favoriteSports;
-                                var artisticActivities = $scope.userprofile.artisticActivities;
-                                var hobbies = $scope.userprofile.hobbies;
+                                var keysToSync = ["favoriteSports", "artisticActivities", "hobbies", "social", "emprendedor"];
+                                var userKeysContent = [];
 
-                                var obj = [
-                                    {"questionid": 43, "answers": []},
-                                    {"questionid": 44, "answers": []},
-                                    {"questionid": 45, "answers": []}
-                                ];
+                                //Get user items in keysToSync from Perfil/nnn.
+                                for (var i = 0; i < keysToSync.length; i++) {
+                                    userKeysContent[i] = $scope.userprofile[keysToSync[i]];
+                                }
 
-                                syncWithProfile(favoriteSports, artisticActivities, hobbies, obj, activityObject);
+                                //Get questions Id's
+                                var objForOtherAnswer = getArrayForOther(activityObject);
+                                console.log("#### " + JSON.stringify(objForOtherAnswer));
+                                syncWithProfile(favoriteSports, artisticActivities, hobbies, social, emprendedor, objForOtherAnswer, activityObject);
                             }
 
                             loadModelVariables($scope.activityObject);
@@ -436,6 +389,7 @@ angular
                     for (index = 0; index < numQuestions; index++) {
 
                         question = $scope.activityObject.questions[index];
+                        $scope.activityTitle[index] = $scope.activityObject.questions[index].title;
                         questionNumOfChoices = question.answers.length;
                         var hasOther = false;
 
@@ -519,6 +473,22 @@ angular
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
                             hobbies.push(answerLabel);
+                        }
+
+                        //Load array for Social
+                        question = $scope.activityObject.questions[3];  //First question
+                        questionNumOfChoices = question.answers.length;  //Number of choices
+                        for (i = 0; i < questionNumOfChoices; i++) {
+                            answerLabel = question.answers[i].answer;
+                            social.push(answerLabel);
+                        }
+
+                        //Load array for Others
+                        question = $scope.activityObject.questions[4];  //First question
+                        questionNumOfChoices = question.answers.length;  //Number of choices
+                        for (i = 0; i < questionNumOfChoices; i++) {
+                            answerLabel = question.answers[i].answer;
+                            others.push(answerLabel);
                         }
                     }
 
@@ -1021,6 +991,8 @@ angular
                     $scope.userprofile.favoriteSports = [];
                     $scope.userprofile.artisticActivities = [];
                     $scope.userprofile.hobbies = [];
+                    $scope.userprofile.social = [];
+                    $scope.userprofile.emprendedor = [];
 
                     //Update favoriteSports
                     for (i = 0; i < $scope.answers[0].length - 1; i++) {
@@ -1056,6 +1028,30 @@ angular
                     var numOfHobbies = $scope.answers[2].length;
                     if ($scope.answers[2][numOfHobbies - 1] === 1) {
                         $scope.userprofile.hobbies.push($scope.OtroAnswers[2].answers[0]);
+                    }
+
+                    //Update Social
+                    for (i = 0; i < $scope.answers[3].length - 1; i++) {
+                        if ($scope.answers[3][i]) {
+                            $scope.userprofile.social.push(social[i]);
+                        }
+                    }
+
+                    var numOfSocial = $scope.answers[3].length;
+                    if ($scope.answers[3][numOfSocial - 1] === 1) {
+                        $scope.userprofile.social.push($scope.OtroAnswers[3].answers[0]);
+                    }
+
+                    //Update Others
+                    for (i = 0; i < $scope.answers[4].length - 1; i++) {
+                        if ($scope.answers[4][i]) {
+                            $scope.userprofile.others.push(others[i]);
+                        }
+                    }
+
+                    var numOfOthers = $scope.answers[4].length;
+                    if ($scope.answers[4][numOfOthers - 1] === 1) {
+                        $scope.userprofile.others.push($scope.OtroAnswers[4].answers[0]);
                     }
 
                 }
