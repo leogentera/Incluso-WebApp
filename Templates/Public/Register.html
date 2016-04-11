@@ -443,7 +443,33 @@
                                 </div>
                             </div>
                         </div>
-
+    
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <div class="input-group input-group-lg theme-default">
+                                        <p class="input-group-addon" id="howIMetThisApp">
+                                            <span class="icomoon icon-help"></span>
+                                        </p>
+                                        <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                            <select ng-disabled="isRegistered"
+                                                ng-model="registerModel.metThisAppBy"
+                                                ng-init="registerModel.metThisAppBy == null"
+                                                ng-options="item for item in metThisAppByItems"
+                                                name="metThisAppBy"
+                                                class="form-control form-control-lg theme-default"
+                                                aria-describedby="howIMetThisApp"
+                                                data-show-placeholder="$scope.isRegistered" required
+                                                ng-class="{'selected': registerModel.metThisAppBy.length != 0}">
+                                                <option value="" ng-disabled="!!registerModel.metThisAppBy">Conocí esta app por:</option>
+                                            </select>
+                                            <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+                                        </p>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="checkbox checkbox-custom">
