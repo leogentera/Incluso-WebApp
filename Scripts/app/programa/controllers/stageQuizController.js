@@ -948,7 +948,7 @@ angular
                     $scope.userprofile.values = [];
                     $scope.userprofile.habilities = [];
 
-                    //Update Talents
+                    //Update Habilidades
                     for (i = 0; i < $scope.answers[0].length - 1; i++) {
                         if ($scope.answers[0][i]) {// The label is checked
                             $scope.userprofile.talents.push(talents[i]);
@@ -960,7 +960,7 @@ angular
                         $scope.userprofile.talents.push($scope.OtroAnswers[0].answers[0]);
                     }
 
-                    //Update Values
+                    //Update Destrezas Sociales
                     for (i = 0; i < $scope.answers[1].length - 1; i++) {
                         if ($scope.answers[1][i]) {
                             $scope.userprofile.values.push(values[i]);
@@ -972,7 +972,7 @@ angular
                         $scope.userprofile.values.push($scope.OtroAnswers[1].answers[0]);
                     }
 
-                    //Update Habilities
+                    //Update Actitudes
                     for (i = 0; i < $scope.answers[2].length - 1; i++) {
                         if ($scope.answers[2][i]) {
                             $scope.userprofile.habilities.push(habilities[i]);
