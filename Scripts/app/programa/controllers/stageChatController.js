@@ -66,7 +66,7 @@ angular
                 var treeActivity = getActivityByActivity_identifier(activityIdentifier, userCourse);
                 $scope.aaa = treeActivity;
                 $scope.activityPoints = treeActivity.points;
-                $scope.activityname = treeActivity.sectionname[0] + treeActivity.sectionname.substring(1);
+                $scope.activityname = treeActivity.sectionname[0] + treeActivity.sectionname.substring(1).toLowerCase();
 
                 $scope.goChat = function () {
                     localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");

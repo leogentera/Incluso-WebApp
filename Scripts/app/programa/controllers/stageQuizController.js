@@ -158,11 +158,11 @@ angular
                     }
 
                     for (j = 0; j < userKeysContent[i].length; j++) {//Check if jth-user talent is within setOfLabels...
-                        if (setOfLabels.indexOf(userKeysContent[i][j]) == -1) {//...if not, then that answer must be the "other" option value.
+                        if (setOfLabels.indexOf((userKeysContent[i][j]).replace(/\r/g, " ").trim()) == -1) {//...if not, then that answer must be the "other" option value.
                             //It must be the string for the "Other" option...
                             otherFound = true;
                             questionId = activityObject.questions[i].id;
-
+                            
                             //Update the "answers" key that corresponds to this question, as defined by questionId.
                             for (var k = 0; k < otherAnswerQuiz.length; k++) {
                                 if (otherAnswerQuiz[k].questionid == +questionId) {
