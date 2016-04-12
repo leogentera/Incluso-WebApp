@@ -134,7 +134,6 @@ angular
                 for (var i = 0; i < userKeysContent.length; i++) {
                     codedAnswers.push([]);
                 }
-                console.log("codedAnswers: " + codedAnswers);
 
                 var i, j;
                 for (i = 0; i < userKeysContent.length; i++) {
@@ -167,7 +166,7 @@ angular
                             //Update the "answers" key that corresponds to this question, as defined by questionId.
                             for (var k = 0; k < otherAnswerQuiz.length; k++) {
                                 if (otherAnswerQuiz[k].questionid == +questionId) {
-                                    otherAnswerQuiz[k].answers = [userKeysContent[i][j]];console.log(otherAnswerQuiz[k].questionid + " : " +  questionId);
+                                    otherAnswerQuiz[k].answers = [userKeysContent[i][j]];
                                 }
                             }
 
@@ -279,9 +278,6 @@ angular
 
                             //Get questions Id's
                             var objForOtherAnswer = getArrayForOther(activityObject);
-                            console.log("#### " + JSON.stringify(objForOtherAnswer));
-
-                            //Sync talents, values & habilities.
                             syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
 
                         } else if ($scope.activity_identifier === 1006 && activityObject !== null) {//Mis Gustos.
@@ -295,10 +291,6 @@ angular
 
                             //Get questions Id's
                             var objForOtherAnswer = getArrayForOther(activityObject);
-                            console.log("## " + JSON.stringify(objForOtherAnswer));
-                            console.log("#### " + userKeysContent);
-
-                            //syncWithProfile(favoriteSports, artisticActivities, hobbies, social, emprendedor, objForOtherAnswer, activityObject);
                             syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
                         }
 
@@ -331,7 +323,6 @@ angular
 
                                 //Get questions Id's
                                 var objForOtherAnswer = getArrayForOther(activityObject);
-                                console.log("#### " + JSON.stringify(objForOtherAnswer));
                                 syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
 
                             } else if ($scope.activity_identifier === 1006 && activityObject !== null) {//Mis Gustos.
@@ -346,7 +337,6 @@ angular
 
                                 //Get questions Id's
                                 var objForOtherAnswer = getArrayForOther(activityObject);
-                                console.log("#### " + JSON.stringify(objForOtherAnswer));
                                 syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
                             }
 
@@ -1140,7 +1130,7 @@ angular
                                     }
 
                                     numAnswered++;
-                                } else {console.log("Question not answered" + index);}
+                                }
                             }
 
                             //Unanswered questions should be equal to 0.
