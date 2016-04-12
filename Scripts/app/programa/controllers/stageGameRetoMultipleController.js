@@ -127,7 +127,7 @@ angular
                 };
                 _.each($scope.retoMultipleActivities, function(localActivity){
                   var activityName = localActivity.name.toLowerCase();
-                  if (activityName.indexOf("resultados") < 0) {
+                  if (activityName.indexOf("resultados") < 0 && activityName.indexOf("puntajes") < 0) {
                     var challengeType = _.find($scope.challengesStructure, function(c){ return c.name.toLowerCase().indexOf(activityName) >= 0 });
                     var activity = _.find($scope.partialActivities, function(p){ return p.subactivity.toLowerCase().indexOf(activityName) >= 0 });
                     var completedActivity = _.find($scope.completedActivities, function(c){ return c.subactivity.toLowerCase().indexOf(activityName) >= 0 });                      
