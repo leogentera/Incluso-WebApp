@@ -41,6 +41,7 @@ angular
             $scope.countryItems = _getCatalogValuesBy("country");
             $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
             $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
+            $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
             $scope.showPlaceHolder = true;
 
             $scope.registerModel = {
@@ -57,6 +58,7 @@ angular
                 confirmPassword: undefined,
                 secretQuestion: "",
                 secretAnswer: "",
+                metThisAppBy: "",
                 termsAndConditions: false,
                 modelState: {
                     isValid: null,
@@ -202,6 +204,9 @@ angular
                 if (!$scope.registerForm.secretAnswer.$valid) {
                     errors.push("Respuesta secreta inválida.");
                 }
+                if (!$scope.registerModel.metThisAppBy) {
+                    errors.push("Debe indicar cómo conoció esta app.")
+                }
                 if (!$scope.registerModel.termsAndConditions) {
                     errors.push("Debe aceptar los términos y condiciones.");
                 }
@@ -312,6 +317,7 @@ angular
                         country: $scope.registerModel.country,
                         secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
                         secretquestion: $scope.registerModel.secretQuestion,
+                        metThisAppBy: $scope.registerModel.metThisAppBy,
                         birthday: dpValue,
                         gender: $scope.registerModel.gender,
                         autologin: true
@@ -384,6 +390,7 @@ angular
                     $scope.countryItems = _getCatalogValuesBy("country");
                     $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
                     $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
+                    $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
                     $scope.$apply();
                 }
             }

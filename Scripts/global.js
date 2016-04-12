@@ -60,7 +60,10 @@ var _catalogNames = ["sports",
     "playVideogames",
     "communityAccess",
     "citiesCatalog",
-    "gender"
+    "gender",
+    "socialcatalog",
+    "emprendedorcatalog",
+    "metThisAppBy"
 ];
 
 var _activityDependencies=[
