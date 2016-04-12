@@ -166,7 +166,7 @@ angular
                             //Update the "answers" key that corresponds to this question, as defined by questionId.
                             for (var k = 0; k < otherAnswerQuiz.length; k++) {
                                 if (otherAnswerQuiz[k].questionid == +questionId) {
-                                    otherAnswerQuiz[k].answers = [userKeysContent[i][j]];console.log(otherAnswerQuiz[k].questionid + " : " +  questionId);
+                                    otherAnswerQuiz[k].answers = [userKeysContent[i][j]];
                                 }
                             }
 
