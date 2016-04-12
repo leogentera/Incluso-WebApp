@@ -1076,7 +1076,7 @@ angular
                     //phones
                     if ($scope.model.phones && $scope.model.phones.length > 0) {
                         for (i = 0; i < $scope.model.phones.length; i++) {
-                            if (typeof $scope.model.phones[i].phone == "undefined" || typeof $scope.model.phones[i].phoneId == "undefined" || $scope.model.phones[i].phoneId.trim().length == 0) {
+                            if (typeof $scope.model.phones[i].phone == "undefined" || ((typeof $scope.model.phones[i].phoneId == "undefined" || $scope.model.phones[i].phoneId.trim().length == 0) && $scope.model.phones[i].phone != "No tengo teléfono")) {
                                 $scope.model.phones.splice(i, 1);
                                 i = i - 1;
                             }
@@ -1086,7 +1086,7 @@ angular
                     //socialNetworks
                     if ($scope.model.socialNetworks && $scope.model.socialNetworks.length > 0) {
                         for (i = 0; i < $scope.model.socialNetworks.length; i++) {
-                            if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined" || typeof $scope.model.socialNetworks[i].socialNetworkId === "undefined" || $scope.model.socialNetworks[i].socialNetworkId.trim().length == 0) {
+                            if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined" || ((typeof $scope.model.socialNetworks[i].socialNetworkId === "undefined" || $scope.model.socialNetworks[i].socialNetworkId.trim().length == 0) && $scope.model.socialNetworks[i].socialNetwork != "No tengo redes sociales")) {
                                 $scope.model.socialNetworks.splice(i, 1);
                                 i = i - 1;
                             }
