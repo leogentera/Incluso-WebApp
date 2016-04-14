@@ -1,7 +1,10 @@
 //global variables and functions
-//var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-4/RestfulAPI/public/{0}"; //Azure Development environment
+//var API_RESOURCE = "http://definityincluso.cloudapp.net:82/testing/api/RestfulAPI/public/{0}" // Internal QA Development environment
+ var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-5/RestfulAPI/public/{0}"; //Azure Development environment
 var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
-var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
+var DRUPAL_CONTENT_RESOURCE = "http://definityincluso.cloudapp.net/drupal_proxy/proxy.php";
+var SIGNALR_API_RESOURCE = "http://signalrchat-incluso.azurewebsites.net/realtime/echo"; //Azure Development environment
+//var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
 //var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
 
@@ -57,7 +60,10 @@ var _catalogNames = ["sports",
     "playVideogames",
     "communityAccess",
     "citiesCatalog",
-    "gender"
+    "gender",
+    "socialcatalog",
+    "emprendedorcatalog",
+    "metThisAppBy"
 ];
 
 var _activityDependencies=[
@@ -269,7 +275,9 @@ var notificationTypes = {
     generalNotifications: 2,
     profileNotifications: 3,
     progressNotifications: 4,
-    globalProgressNotifications: 5
+    globalProgressNotifications: 5,
+    commentsNotifications: 6,
+    likesNotifications: 7
 };
 
 var allServicesCallback = function () {
@@ -587,20 +595,21 @@ var logStartActivityAction = function(activityId, timeStamp) {
             _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
             if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
-                var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
+                var key1 = "startedActivityCabinaDeSoporte/" + currentUser.id;
+                var key2 = "finishCabinaSoporte/" + currentUser.id;
+                if (localStorage.getItem(key1) == null && !treeActivity.status && localStorage.getItem(key2) == null) {
                     moodleFactory.Services.GetServerDate(function(date){
-                    _setLocalStorageJsonItem(key, {
+                    _setLocalStorageJsonItem(key1, {
                         datestarted: date.time,
                         coursemoduleid: treeActivity.coursemoduleid,
                         activity_identifier: treeActivity.activity_identifier
                     });
                     
-                    localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                    localStorage.removeItem(key2);
                     })                    
                 }
             }
-            
+
 
         }, function () {
             console.log('Error callback');
@@ -760,39 +769,40 @@ var _progressNotification = function(){
       
         for(i = 0; i < notifications.length; i++){
             var currentNotification = notifications[i];
-            
+          
              //{rangeId : 1, progressMin: 0, progressMax:0},
-             if (currentNotification.type == notificationTypes.globalProgressNotifications && currentNotification.globalprogress) {
+            if (currentNotification.type == notificationTypes.globalProgressNotifications && currentNotification.globalprogress) {
                  
                 var notificationRanges = _.findWhere(_globalProgressRanges, {rangeId: currentNotification.globalprogress} );
                 var notificationRegistrerDate = new Date(currentNotification.registerdate * 1000);
                 var notificationLastAccessDate = currentNotification.lastaccessdate ? new Date(currentNotification.lastaccessdate * 1000) : null;
                 var userRegisterDate = new Date(profile.timeCreated * 1000);
                 var userLastAccessDate  = new Date(profile.lastAccess * 1000);
-                
+            
                 if (currentNotification.status != "won" && 
                         ((notificationRanges.progressMax == 0 && currentNotification.registerdate == moment(userRegisterDate).format('DD-MM-YYYY')) || 
                             (moment(notificationRegistrerDate).format('DD-MM-YYYY') == moment(userRegisterDate).format('DD-MM-YYYY') &&
                                 moment(notificationLastAccessDate).format('DD-MM-YYYY') == moment(userLastAccessDate).format('DD-MM-YYYY') && 
                                 userCourse.globalProgress > notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
-
+              
                     var wonDate = new Date();
                     var dataModelNotification = {
-                        notificationid : String(currentNotification.id),
-                        userid: currentUser.id,
-                        wondate : wonDate
+                      notificationid : String(currentNotification.id),
+                      userid: currentUser.id,
+                      wondate : wonDate
                     };
-                  
+                    
                     notifications[i].wondate = wonDate;
                     notifications[i].status = "won";
                     localStorage.setItem("notifications", JSON.stringify(notifications));
-        
+          
                     moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
                         console.log("progress notification created" + currentNotification.name);
                     }, errorCallback, true);
-              }
-          }
-      }
+                    
+                }
+            }  
+        }
     }
 }
 
@@ -1361,6 +1371,14 @@ var logout = function ($scope, $location) {
                     })
             }
         ).success(function (data, status, headers, config) {
+                if ($scope.currentUser && $scope.currentUser.token) {
+                    var objectToken = {
+                        moodleAPI: API_RESOURCE.format(''),
+                        moodleToken: $scope.currentUser.token
+                    };
+
+                    cordova.exec(function () {}, function () {},"CallToAndroid", "logout", [objectToken]);
+            }
             }
         );
     }
@@ -1385,7 +1403,6 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("activityStatus");
     localStorage.removeItem("userId");
     localStorage.removeItem("avatarInfo");
-    localStorage.removeItem("chatRead");
     localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
@@ -1414,13 +1431,6 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("UserTalents");
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");
-
-    var existingInterval = localStorage.getItem('Interval');
-    if(existingInterval){
-        clearInterval(existingInterval);
-        localStorage.removeItem("Interval");
-    }
-
     $location.path('/');
 };
 
@@ -1527,7 +1537,7 @@ var _activityRoutes = [
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
 
-var _activitiesCabinaDeSoporte = [1002,2022,3501];
+var _activitiesCabinaDeSoporte = [1002, 2022, 3501];
 
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [
@@ -1700,7 +1710,7 @@ function _updateDeviceVersionCache () {
     if (window.mobilecheck()) {
         if (!FLAG_DEVICE_VERSION_RUNNING) {
             FLAG_DEVICE_VERSION_RUNNING = true;
-            //console.log("ejecutando device-version");
+            //ejecutando device-version
             cordova.exec(function(data) {
                 deviceVersion.localVersion = data.currentVersion;
                 deviceVersion.remoteVersion = data.latestVersion;
@@ -1765,9 +1775,15 @@ var _loadDrupalResources = function() {
     _loadedDrupalResources = false;
     _loadedDrupalResourcesWithErrors = false;
     
-    for (var prop in drupalFactory.NodeRelation) {
-        drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
-    }
+    //for (var prop in drupalFactory.NodeRelation) {
+    //    drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
+    //}
+    drupalFactory.Services.GetDrupalContent(function(){
+            _loadedDrupalResources = true;
+        }, function(){
+            _loadedDrupalResources = false;
+            _loadedDrupalResourcesWithErrors = true;
+        }, true);
     
     function successDrupalResourcesCallback() {
         propCounter++;

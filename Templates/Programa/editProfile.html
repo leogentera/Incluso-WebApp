@@ -676,7 +676,6 @@
                                                         <li ng-repeat="s in model.favoriteSports track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Deporte {{model.favoriteSports.indexOf(sn) + 1}}</span> -->
                                                                     <span>Deporte {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteFavoriteSports($index)">
@@ -713,7 +712,6 @@
                                                         <li ng-repeat="s in model.artisticActivities track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Actividad {{model.artisticActivities.indexOf(s) + 1}}</span> -->
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteArtisticActivities($index)">
@@ -729,7 +727,7 @@
                                                                             ng-class="{'selected': model.artisticActivities[$index].length != 0}">
                                                                         <option value=""
                                                                                 ng-disabled="!!model.artisticActivities">
-                                                                            Actividades
+                                                                            Actividad
                                                                         </option>
                                                                     </select>
                                                                     <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -744,13 +742,12 @@
                                                 </section>
 
                                                 <section>
-                                                    <h4>Hobbies</h4>
+                                                    <h4>Actividades culturales</h4>
                                                     <ul class="block-list">
                                                         <li ng-repeat="s in model.hobbies track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Hobbie {{model.hobbies.indexOf(s) + 1}}</span> -->
-                                                                    <span>Hobbie {{$index + 1}}</span>
+                                                                    <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteHobbies($index)">
                                                                         <span class="icomoon icon-cross"></span>
@@ -760,11 +757,11 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.hobbies[$index]"
-                                                                            ng-options="item for item in hobbiesList"
+                                                                            ng-options="item for item in cultureList"
                                                                             ng-init=""
                                                                             ng-class="{'selected':  model.hobbies[$index].length != 0}">
                                                                         <option value="" ng-disabled="!!model.hobbies">
-                                                                            Hobbies
+                                                                            Actividad
                                                                         </option>
                                                                     </select>
                                                                     <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -775,7 +772,77 @@
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
                                                             ng-click="addHobbies()">
-                                                        <span class="icomoon icon-plus"></span>Agregar hobbie...
+                                                        <span class="icomoon icon-plus"></span>Agregar actividad...
+                                                    </button>
+                                                </section>
+
+                                                <section>
+                                                    <h4>Actividades sociales</h4>
+                                                    <ul class="block-list">
+                                                        <li ng-repeat="s in model.social track by $index">
+                                                            <div class="form-group theme-form">
+                                                                <h5>
+                                                                    <span>Actividad {{$index + 1}}</span>
+                                                                    <button class="btn btn-circle" type="button"
+                                                                            ng-click="deleteSocial($index)">
+                                                                        <span class="icomoon icon-cross"></span>
+                                                                    </button>
+                                                                </h5>
+
+                                                                <div class="form-group-control custom-caret-wrapper">
+                                                                    <select class="form-control form-control-lg theme-form"
+                                                                            ng-model="model.social[$index]"
+                                                                            ng-options="item for item in socialList"
+                                                                            ng-init=""
+                                                                            ng-class="{'selected':  model.social[$index].length != 0}">
+                                                                        <option value="" ng-disabled="!!model.social">
+                                                                            Actividad
+                                                                        </option>
+                                                                    </select>
+                                                                    <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <button type="button" class="btn btn-lg btn-block btn-add"
+                                                            ng-click="addSocial()">
+                                                        <span class="icomoon icon-plus"></span>Agregar actividad...
+                                                    </button>
+                                                </section>
+
+                                                <section>
+                                                    <h4>Otros</h4>
+                                                    <ul class="block-list">
+                                                        <li ng-repeat="s in model.others track by $index">
+                                                            <div class="form-group theme-form">
+                                                                <h5>
+                                                                    <span>Actividad {{$index + 1}}</span>
+                                                                    <button class="btn btn-circle" type="button"
+                                                                            ng-click="deleteOthers($index)">
+                                                                        <span class="icomoon icon-cross"></span>
+                                                                    </button>
+                                                                </h5>
+
+                                                                <div class="form-group-control custom-caret-wrapper">
+                                                                    <select class="form-control form-control-lg theme-form"
+                                                                            ng-model="model.others[$index]"
+                                                                            ng-options="item for item in othersList"
+                                                                            ng-init=""
+                                                                            ng-class="{'selected':  model.others[$index].length != 0}">
+                                                                        <option value="" ng-disabled="!!model.others">
+                                                                            Actividad
+                                                                        </option>
+                                                                    </select>
+                                                                    <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <button type="button" class="btn btn-lg btn-block btn-add"
+                                                            ng-click="addOthers()">
+                                                        <span class="icomoon icon-plus"></span>Agregar actividad...
                                                     </button>
                                                 </section>
 
@@ -828,13 +895,12 @@
                                             <fieldset class="my-profile-form">
                                                 <h5>Mis cualidades</h5>
                                                 <section>
-                                                    <h4>Talentos</h4>
+                                                    <h4>Habilidades</h4>
                                                     <ul class="block-list">
                                                         <li ng-repeat="s in model.talents track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Talento {{model.talents.indexOf(s) + 1}}</span> -->
-                                                                    <span>Talento {{$index + 1}}</span>
+                                                                    <span>Habilidad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteTalents($index)">
                                                                         <span class="icomoon icon-cross"></span>
@@ -844,83 +910,10 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.talents[$index]"
-                                                                            ng-options="item for item in talentsList"
+                                                                            ng-options="item for item in habilitiesList"
                                                                             ng-init=""
                                                                             ng-class="{'selected': model.talents[$index].length != 0}">
                                                                         <option value="" ng-disabled="!!model.talents">
-                                                                            Talentos
-                                                                        </option>
-                                                                    </select>
-                                                                    <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                                                </div>
-
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addTalents()">
-                                                        <span class="icomoon icon-plus"></span>Agregar talento...
-                                                    </button>
-                                                </section>
-
-                                                <section>
-                                                    <h4>Valores</h4>
-                                                    <ul class="block-list">
-                                                        <li ng-repeat="s in model.values track by $index">
-                                                            <div class="form-group theme-form">
-                                                                <h5>
-                                                                    <!-- <span>Valor {{model.values.indexOf(s) + 1}}</span>  -->
-                                                                    <span>Valor {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteValue($index)">
-                                                                        <span class="icomoon icon-cross"></span>
-                                                                    </button>
-                                                                </h5>
-
-                                                                <div class="form-group-control custom-caret-wrapper">
-                                                                    <select class="form-control form-control-lg theme-form"
-                                                                            ng-model="model.values[$index]"
-                                                                            ng-options="item for item in valuesList"
-                                                                            ng-init=""
-                                                                            ng-class="{'selected': model.values[$index].length != 0}">
-                                                                        <option value="" ng-disabled="!!model.values">
-                                                                            Valores
-                                                                        </option>
-                                                                    </select>
-                                                                    <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                                                </div>
-
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addValue()">
-                                                        <span class="icomoon icon-plus"></span>Agregar valor...
-                                                    </button>
-                                                </section>
-
-                                                <section>
-                                                    <h4>Habilidades</h4>
-                                                    <ul class="block-list">
-                                                        <li ng-repeat="s in model.habilities track by $index">
-                                                            <div class="form-group theme-form">
-                                                                <h5>
-                                                                    <!-- <span>Habilidad {{model.habilities.indexOf(s) + 1}}</span> -->
-                                                                    <span>Habilidad {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteHabilitie($index)">
-                                                                        <span class="icomoon icon-cross"></span>
-                                                                    </button>
-                                                                </h5>
-
-                                                                <div class="form-group-control custom-caret-wrapper">
-                                                                    <select class="form-control form-control-lg theme-form"
-                                                                            ng-model="model.habilities[$index]"
-                                                                            ng-options="item for item in habilitiesList"
-                                                                            ng-init=""
-                                                                            ng-class="{'selected':  model.habilities[$index].length != 0}">
-                                                                        <option value=""
-                                                                                ng-disabled="!!model.habilities">
                                                                             Habilidades
                                                                         </option>
                                                                     </select>
@@ -931,8 +924,79 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addHabilitie()">
+                                                            ng-click="addTalents()">
                                                         <span class="icomoon icon-plus"></span>Agregar habilidad...
+                                                    </button>
+                                                </section>
+
+                                                <section>
+                                                    <h4>Destrezas sociales</h4>
+                                                    <ul class="block-list">
+                                                        <li ng-repeat="s in model.values track by $index">
+                                                            <div class="form-group theme-form">
+                                                                <h5>
+                                                                    <span>Destreza {{$index + 1}}</span>
+                                                                    <button class="btn btn-circle" type="button"
+                                                                            ng-click="deleteValue($index)">
+                                                                        <span class="icomoon icon-cross"></span>
+                                                                    </button>
+                                                                </h5>
+
+                                                                <div class="form-group-control custom-caret-wrapper">
+                                                                    <select class="form-control form-control-lg theme-form"
+                                                                            ng-model="model.values[$index]"
+                                                                            ng-options="item for item in destrezasList"
+                                                                            ng-init=""
+                                                                            ng-class="{'selected': model.values[$index].length != 0}">
+                                                                        <option value="" ng-disabled="!!model.values">
+                                                                            Destrezas
+                                                                        </option>
+                                                                    </select>
+                                                                    <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <button type="button" class="btn btn-lg btn-block btn-add"
+                                                            ng-click="addValue()">
+                                                        <span class="icomoon icon-plus"></span>Agregar destreza...
+                                                    </button>
+                                                </section>
+
+                                                <section>
+                                                    <h4>Actitudes</h4>
+                                                    <ul class="block-list">
+                                                        <li ng-repeat="s in model.habilities track by $index">
+                                                            <div class="form-group theme-form">
+                                                                <h5>
+                                                                    <span>Actitud {{$index + 1}}</span>
+                                                                    <button class="btn btn-circle" type="button"
+                                                                            ng-click="deleteHabilitie($index)">
+                                                                        <span class="icomoon icon-cross"></span>
+                                                                    </button>
+                                                                </h5>
+
+                                                                <div class="form-group-control custom-caret-wrapper">
+                                                                    <select class="form-control form-control-lg theme-form"
+                                                                            ng-model="model.habilities[$index]"
+                                                                            ng-options="item for item in actitudesList"
+                                                                            ng-init=""
+                                                                            ng-class="{'selected':  model.habilities[$index].length != 0}">
+                                                                        <option value=""
+                                                                                ng-disabled="!!model.habilities">
+                                                                            Actitudes
+                                                                        </option>
+                                                                    </select>
+                                                                    <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <button type="button" class="btn btn-lg btn-block btn-add"
+                                                            ng-click="addHabilitie()">
+                                                        <span class="icomoon icon-plus"></span>Agregar actitud...
                                                     </button>
                                                 </section>
 

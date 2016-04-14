@@ -20,6 +20,132 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus(); //Copies last version of activity blocked status into model variable
+
+            // ---- Update Chat Status -----------------------------------------------
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
+            }
+
+            function getUserChatCallback() {
+                //Make the pop-up appear in Chat Icon.
+                console.log("POPs !!!");
+                localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "false"); //Turn-on chat pop-up.
+            }
+
+            function errorCallback() {
+            }
+
+            var fireService = false;
+            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+            if ($scope.messages && $scope.messages.length ==  0) {
+                fireService = true;
+            }
+
+            if (!$rootScope.activityBlocked["1002"].disabled && fireService) { //disabled = false for Cabina de Soporte in Stage 1.
+                console.log("******************************************* FIRING CHAT SERVICE STAGE 1");
+                //Put Call to Remote Service.
+                $scope.validateConnection(function () {
+
+                    var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
+                    var profile = JSON.parse(localStorage.getItem('Perfil/' + currentUser.userId));
+
+                    if (!profile.strengths[0]) {
+                        profile.strengths[0] = "---";
+                    }
+
+                    if (!profile.strengths[1]) {
+                        profile.strengths[1] = "---";
+                    }
+
+                    if (!profile.strengths[2]) {
+                        profile.strengths[2] = "---";
+                    }
+
+                    if (currentUser.gender == "Masculino") {
+                        var l1 = profile.strengths.indexOf("Linguistica");
+                        var l2 = profile.strengths.indexOf("Lingüística");
+                        var m1 = profile.strengths.indexOf("Matematica");
+                        var m2 = profile.strengths.indexOf("Matemática");
+
+                        if (l1 > -1) {
+                            profile.strengths[l1] = "Lingüístico"
+                        }
+
+                        if (l2 > -1) {
+                            profile.strengths[l2] = "Lingüístico"
+                        }
+
+                        if (m1 > -1) {
+                            profile.strengths[m1] = "Matemático"
+                        }
+
+                        if (m2 > -1) {
+                            profile.strengths[m2] = "Matemático"
+                        }
+
+                        if (currentUser.shield == "Linguistica") {
+                            currentUser.shield = "Lingüístico";
+                        }
+
+                        if (currentUser.shield == "Matematica") {
+                            currentUser.shield = "Matemático";
+                        }
+                    }
+
+                    if (currentUser.gender == "Femenino") {
+                        var l1 = profile.strengths.indexOf("Linguistica");
+                        var m1 = profile.strengths.indexOf("Matematica");
+
+                        if (l1 > -1) {
+                            profile.strengths[l1] = "Lingüística";
+                        }
+
+                        if (m1 > -1) {
+                            profile.strengths[m1] = "Matemática";
+                        }
+
+                        if (currentUser.shield == "Linguistica") {
+                            currentUser.shield = "Lingüística";
+                        }
+
+                        if (currentUser.shield == "Matematica") {
+                            currentUser.shield = "Matemática";
+                        }
+                    }
+
+                    if (currentUser.shield == "") {
+                        currentUser.shield = "--";
+                    }
+
+                    var messageText = "Hola " + currentUser.firstname + ",\n\n Durante tu primer aventura te enfrentaste ";
+                    messageText += "a retos que te llevaron a encontrar tus fortalezas, a conocer más de tí, descubriste lo valioso ";
+                    messageText += "de contar con sueños de ser, tener y hacer. Sabemos que eres " + profile.strengths[0] + ", " + profile.strengths[1] + ", " + profile.strengths[2] + " y te ";
+                    messageText += "distingues en la comunidad como " + currentUser.shield + ".\n\n";
+                    messageText += "¡Hoy estas más cerca de la meta para poder lograrlo!\n\n";
+                    messageText += "Compartiste tus gustos y cualidades, eso que te hace diferente a los demás ";
+                    messageText += "capitanes y hallaste que en lo divertido también hay algo nuevo que descubrir.";
+                    messageText += "Capitán estás a punto de terminar la zona de vuelo.\n\n";
+                    messageText += "¡Sigue adelante!";
+
+                    var newMessage = {
+                        "messagetext": messageText,
+                        "sendAsCouch": true
+                    };
+
+                    // time out to avoid android lag on fully hiding keyboard
+                    $timeout(function () {
+                        $scope.messages.push(newMessage);
+                        _setLocalStorageItem('userChat', JSON.stringify($scope.messages)); //Save to LS.
+
+                        moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                    }, 1000);
+
+                }, offlineCallback);
+            } else { console.log("Message has been written BEFORE for Stage 1 OR activity is Blocked");}
+            // --------------------------------------------------------------------------------------
+
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
@@ -223,7 +349,7 @@ angular
                 var url = _.filter(_activityRoutes, function (x) {
                     return x.id == activity.activity_identifier
                 })[0].url;
-
+                console.log(url);
                 //Store an Index of the chosen menu item.
                 _setLocalStorageJsonItem("owlIndex", parentIndex);
 
@@ -267,8 +393,6 @@ angular
 
                 if (_tryCloseStage($scope.idEtapa)) {
                     $scope.openModal_CloseStage();
-
-                    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
                     moodleFactory.Services.PostGeolocation(1);
                 }
 

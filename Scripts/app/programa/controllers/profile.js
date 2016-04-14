@@ -146,20 +146,24 @@ angular
                         errorMessages: []
                     };
 
-                    //Get status of Quiz "Mis Cualidades"
-                    var activity71 = moodleFactory.Services.GetCacheJson("activity/71");
-                    if (activity71 !== null) {
-                        $scope.status71 = parseInt(activity71.status, 10);
-                    } else {
-                        $scope.status71 = -1;
-                    }
-
                     //Get status of Quiz "Mis Gustos"
-                    var activity70 = moodleFactory.Services.GetCacheJson("activity/70");
-                    if (activity70 !== null) {
-                        $scope.status70 = parseInt(activity70.status, 10);
+                    var activity70 = localStorage.getItem("activity/70");
+
+                    if (activity70 !== null && activity70 !== undefined) {
+                        var obj = JSON.parse(activity70);
+                        $scope.status70 = parseInt(obj.status, 10);
                     } else {
                         $scope.status70 = -1;
+                    }
+
+                    //Get status of Quiz "Mis Cualidades"
+                    var activity71 = localStorage.getItem("activity/71");
+
+                    if (activity71 !== null && activity71 !== undefined) {
+                        var obj = JSON.parse(activity71);
+                        $scope.status71 = parseInt(obj.status, 10);
+                    } else {
+                        $scope.status71 = -1;
                     }
 
                     $rootScope.pageName = "Mi perfil";
@@ -175,10 +179,12 @@ angular
                     $scope.educationStatusList = _getCatalogValuesBy("educationStatus");
                     $scope.favoritSportsList = _getCatalogValuesBy("sports");
                     $scope.artisticActivitiesList = _getCatalogValuesBy("arts");
-                    $scope.hobbiesList = _getCatalogValuesBy("hobbiescatalog");
-                    $scope.talentsList = _getCatalogValuesBy("talentscatalog");
-                    $scope.valuesList = _getCatalogValuesBy("valuescatalog");
-                    $scope.habilitiesList = _getCatalogValuesBy("habilitiescatalog");
+                    $scope.cultureList = _getCatalogValuesBy("hobbiescatalog");
+                    $scope.socialList = _getCatalogValuesBy("socialcatalog");
+                    $scope.othersList = _getCatalogValuesBy("emprendedorcatalog");
+                    $scope.habilitiesList = _getCatalogValuesBy("talentscatalog");
+                    $scope.destrezasList = _getCatalogValuesBy("valuescatalog");
+                    $scope.actitudesList = _getCatalogValuesBy("habilitiescatalog");
                     $scope.iLiveWithList = _getCatalogValuesBy("relativeOrTutor");
                     $scope.mainActivityList = _getCatalogValuesBy("activity");
                     $scope.levelList = _getCatalogValuesBy("studiesLevel");
@@ -557,8 +563,6 @@ angular
 
                                 $scope.$emit('scrollTop');
                                 $scope.$emit('HidePreloader');
-                                //console.log(data); console.log(JSON.stringify(data));
-                                //var resultData = data;
 
                                 if (data.success == true) {//If the
 
@@ -666,6 +670,8 @@ angular
                         $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
                         $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
                         $scope.model.hobbies = orderCatalog($scope.model.hobbies);
+                        $scope.model.social = orderCatalog($scope.model.social);
+                        $scope.model.others = orderCatalog($scope.model.emprendedor);
 
                         $scope.genderItems = orderCatalog($scope.genderItems);
                         $scope.countryItems = orderCatalog($scope.countryItems);
@@ -682,17 +688,17 @@ angular
 
                         $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                         $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
-                        $scope.hobbiesList = $scope.hobbiesList.concat($scope.model.hobbies);
-                        $scope.talentsList = $scope.talentsList.concat($scope.model.talents);
-                        $scope.valuesList = $scope.valuesList.concat($scope.model.values);
-                        $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.habilities);
+                        $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                        $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
+                        $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
+                        $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
 
                         $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                         $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
-                        $scope.hobbiesList = deleteRepeatedEntries($scope.hobbiesList);
-                        $scope.talentsList = deleteRepeatedEntries($scope.talentsList);
-                        $scope.valuesList = deleteRepeatedEntries($scope.valuesList);
+                        $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
                         $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
+                        $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
+                        $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
 
                         $timeout(function () {
                             $scope.$emit('HidePreloader');
@@ -745,6 +751,8 @@ angular
                             $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
                             $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
                             $scope.model.hobbies = orderCatalog($scope.model.hobbies);
+                            $scope.model.social = orderCatalog($scope.model.social);
+                            $scope.model.others = orderCatalog($scope.model.emprendedor);
 
                             $scope.genderItems = orderCatalog($scope.genderItems);
                             $scope.countryItems = orderCatalog($scope.countryItems);
@@ -761,17 +769,17 @@ angular
 
                             $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                             $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
-                            $scope.hobbiesList = $scope.hobbiesList.concat($scope.model.hobbies);
-                            $scope.talentsList = $scope.talentsList.concat($scope.model.talents);
-                            $scope.valuesList = $scope.valuesList.concat($scope.model.values);
-                            $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.habilities);
+                            $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                            $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
+                            $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
+                            $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
 
                             $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                             $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
-                            $scope.hobbiesList = deleteRepeatedEntries($scope.hobbiesList);
-                            $scope.talentsList = deleteRepeatedEntries($scope.talentsList);
-                            $scope.valuesList = deleteRepeatedEntries($scope.valuesList);
+                            $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
                             $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
+                            $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
+                            $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
 
                         }, function () {
                             $scope.model= {
@@ -1615,7 +1623,7 @@ angular
                                 sectionName = "Mi personalidad";
                                 sectionId = "3001";
                                 break;
-                            case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
+                            case "3002":  // "Llenar Socioeconomicos"; points to assign: 400
                                 sectionName = "Socioeconómicos";
                                 sectionId = "3002";
                                 break;
@@ -1818,6 +1826,14 @@ angular
                         return item.trim().length > 0 && $scope.model.hobbies.indexOf(item) == pos;
                     });
 
+                    $scope.model.social = $scope.model.social.filter(function (item, pos) {
+                        return item.trim().length > 0 && $scope.model.social.indexOf(item) == pos;
+                    });
+
+                    $scope.model.others = $scope.model.others.filter(function (item, pos) {
+                        return item.trim().length > 0 && $scope.model.others.indexOf(item) == pos;
+                    });
+
                     $scope.model.talents = $scope.model.talents.filter(function (item, pos) {
                         return item.trim().length > 0 && $scope.model.talents.indexOf(item) == pos;
                     });
@@ -1889,7 +1905,7 @@ angular
                     $scope.model.socialNetworks.splice(index, 1);
                 };
 
-                // **************** Section for MIS GUSTOS **************************
+                // **************** Common for MIS GUSTOS & MIS CUALIDADES **************************
                 function canIErase(arr, index, quizStatus) {
                     if (quizStatus === 1) {//Quiz is Finished.
 
@@ -1916,6 +1932,7 @@ angular
                     }
                 }
 
+                // **************** Section for MIS GUSTOS **************************
                 $scope.addFavoriteSports = function () {
                     $scope.model.favoriteSports.push("");
                 };
@@ -1955,7 +1972,31 @@ angular
                     }
                 };
 
-                // **************** End of Section for MIS GUSTOS **************************
+                $scope.addSocial = function () {
+                    $scope.model.social.push("");
+                };
+
+                $scope.deleteSocial = function (index) {
+
+                    var canI = canIErase($scope.model.social, index, $scope.status70);
+
+                    if (canI) {
+                        $scope.model.social.splice(index, 1);
+                    }
+                };
+
+                $scope.addOthers = function () {
+                    $scope.model.others.push("");
+                };
+
+                $scope.deleteOthers = function (index) {
+
+                    var canI = canIErase($scope.model.others, index, $scope.status70);
+
+                    if (canI) {
+                        $scope.model.others.splice(index, 1);
+                    }
+                };
 
                 // **************** Section for MIS CUALIDADES **************************
                 $scope.addTalents = function () {

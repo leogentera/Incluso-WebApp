@@ -1,20 +1,21 @@
 <div class="incluso-app chat">
-	<article class="starway">
-		<section class="component">
-			<div class="msg-container" id="chatMessages">
-				<div class="{{msge.messagesenderid == senderId ? 'msg sent' : 'msg received'}}" ng-repeat="msge in messages">
-					<div class="msg-icn icomoon"></div>
-					<div class="text">
-                        <span>{{msge.messagetext}}</span>
-						<span class="date">{{msge.messagedate | date:'fullDate'}} {{msge.messagedate | date:'mediumTime'}}</span>
-					</div>
-				</div>
-				<a class="anchor-scroll floated" id="anchor-bottom"></a>
-			</div>
-			<div class="typing-section col-xs-12">
-				<textarea class="col-xs-10" placeholder="Escribe tu mensaje aquí..." ng-model="currentMessage"></textarea>
-				<a class="send-text icomoon icon-send-arrow" ng-click="sendMessage(); scrollToBottom();"></a>
-			</div>
-		</section>
-	</article>
+    <article class="starway">
+        <section class="component">
+            <div class="msg-container" id="chatMessages">
+                <div class="{{msge.messagesenderid == senderId ? 'msg sent' : 'msg received'}}" ng-repeat="msge in messages">
+                    <div class="msg-icn icomoon"></div>
+                    <div class="text">
+                        <span ng-bind-html="msge.messagetext" style="white-space: pre-line;"></span>
+                        <span class="date">{{msge.messagedate | date:'fullDate'}} {{msge.messagedate | date:'mediumTime'}}</span>
+                    </div>
+                </div>
+                <a class="anchor-scroll floated" id="anchor-bottom"></a>
+            </div>
+            <a class="btn btn-primary btn-lg btn-block" ng-click="goToCloseScreen()" ng-disabled="isDisabled">CONTINUAR</a>
+            <div class="typing-section col-xs-12">
+                <textarea class="col-xs-10" placeholder="Escribe tu mensaje aquí..." ng-model="currentMessage" ng-disabled="true"></textarea>
+                <a class="send-text icomoon icon-send-arrow" ng-click="sendMessage(); scrollToBottom();" ng-disabled="true"></a>
+            </div>
+        </section>
+    </article>
 </div>
