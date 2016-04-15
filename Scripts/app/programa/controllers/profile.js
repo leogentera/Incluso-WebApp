@@ -671,7 +671,7 @@ angular
                         $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
                         $scope.model.hobbies = orderCatalog($scope.model.hobbies);
                         $scope.model.social = orderCatalog($scope.model.social);
-                        $scope.model.others = orderCatalog($scope.model.emprendedor);
+                        $scope.model.emprendedor = orderCatalog($scope.model.emprendedor);
 
                         $scope.genderItems = orderCatalog($scope.genderItems);
                         $scope.countryItems = orderCatalog($scope.countryItems);
@@ -752,7 +752,7 @@ angular
                             $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
                             $scope.model.hobbies = orderCatalog($scope.model.hobbies);
                             $scope.model.social = orderCatalog($scope.model.social);
-                            $scope.model.others = orderCatalog($scope.model.emprendedor);
+                            $scope.model.emprendedor = orderCatalog($scope.model.emprendedor);
 
                             $scope.genderItems = orderCatalog($scope.genderItems);
                             $scope.countryItems = orderCatalog($scope.countryItems);
@@ -1830,8 +1830,8 @@ angular
                         return item.trim().length > 0 && $scope.model.social.indexOf(item) == pos;
                     });
 
-                    $scope.model.others = $scope.model.others.filter(function (item, pos) {
-                        return item.trim().length > 0 && $scope.model.others.indexOf(item) == pos;
+                    $scope.model.emprendedor = $scope.model.emprendedor.filter(function (item, pos) {
+                        return item.trim().length > 0 && $scope.model.emprendedor.indexOf(item) == pos;
                     });
 
                     $scope.model.talents = $scope.model.talents.filter(function (item, pos) {
@@ -1986,15 +1986,15 @@ angular
                 };
 
                 $scope.addOthers = function () {
-                    $scope.model.others.push("");
+                    $scope.model.emprendedor.push("");
                 };
 
                 $scope.deleteOthers = function (index) {
 
-                    var canI = canIErase($scope.model.others, index, $scope.status70);
+                    var canI = canIErase($scope.model.emprendedor, index, $scope.status70);
 
                     if (canI) {
-                        $scope.model.others.splice(index, 1);
+                        $scope.model.emprendedor.splice(index, 1);
                     }
                 };
 

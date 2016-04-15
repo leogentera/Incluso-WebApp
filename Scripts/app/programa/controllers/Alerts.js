@@ -123,7 +123,7 @@ angular
                 
                 var seen_date_now = new Date();
                 for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
-                    if (userNotifications[indexNotification].id == notificationId) {
+                    if (userNotifications[indexNotification].usernotificationid == notificationId) {
                         userNotifications[indexNotification].seen_date = seen_date_now;
                     }else{
                         
@@ -140,7 +140,6 @@ angular
             
             var _readNotification = function (currentUserId, currentNotificationId) {
                 var seen_date_now = new Date();
-            
                 var data = {                    
                     notificationid: currentNotificationId,
                     seen_date: seen_date_now                    

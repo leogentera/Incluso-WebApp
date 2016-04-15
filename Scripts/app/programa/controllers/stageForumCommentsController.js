@@ -241,7 +241,7 @@ angular
                     if (forumData.totalExtraPoints < 11) {
                          _.each(historicalDiscussions.discussions, function(elem, index, list) {
                             if (parseInt(elem.total) > 0) {
-                                extraPointsCounter += (parseInt(elem.total) - 2);
+                                extraPointsCounter += (parseInt(elem.total) - 1);
                             }
                         });
                          
