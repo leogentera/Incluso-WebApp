@@ -3,22 +3,21 @@
         <div class="alert-message" ng-click="hideWarning()">
             <div class="icomoon icon-warning"></div>
             <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
-            <p ng-bind="warningMessage"></p>
+            <p>{{warningMessage}}</p>
         </div>
     </div>
 
     <article class="blueprint evaluation">
         <div class="pages">
             <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
+                <section id="title">
+                    <div class="subtitle">{{activityname}}</div>
+                    <div class="txt-renglon">{{activityTitle}}</div>
+                </section>
 
                 <data-owl-carousel class="owl-carousel">
                     <div owl-carousel-item="" ng-repeat="question in activityObject.questions track by $index"
                          class="item">
-
-                        <section id="title">
-                            <div class="subtitle">{{activityname}}</div>
-                            <div class="txt-renglon" ng-show="activityname == 'Mis cualidades' || activityname == 'Mis gustos'">{{activityTitle[$index]}}</div>
-                        </section>
 
                         <!--   -----------------------   BINARY TYPE QUESTION   --------------------                 -->
                         <div ng-show="questionTypeCode[$index] == 'binary'" id="{{'binary' + $index}}">

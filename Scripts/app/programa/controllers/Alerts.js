@@ -98,19 +98,6 @@ angular
                     break;
                 }
             }
-
-            $scope.setNotificationClass = function (notification) {
-                switch (notification.type) {
-                    case notificationTypes.commentsNotifications:
-                        return "icomoon icon-comment pull-left no-padding green-aqua";                        
-                    case notificationTypes.likesNotifications:
-                        return "icomoon icon-like pull-left no-padding pink";
-                        break;
-                    default:
-                        return "icomoon icon-antena pull-left no-padding pink";
-                        break;
-                }
-            }
             
             $scope.$emit('HidePreloader');
             
@@ -147,7 +134,6 @@ angular
                 };
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
-                    cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
                 }, function () {
                 },true);
             };        

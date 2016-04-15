@@ -53,15 +53,7 @@ angular
               $scope.retoMultipleActivities = [];
               if ($scope.retosMultipleChallenge) {
                 retoMultipleArray = $scope.retosMultipleChallenge.activities;
-
-                
-                _.each($scope.retosMultipleChallenge.activities, function(x, i){
-                   if(x.activityname.toLowerCase().indexOf("resultados")>=0){
-                        $scope.retosMultipleChallenge.activities.splice(i, 1);
-                     }
-                });
-                
-               for(var i = 0; i < $scope.retosMultipleChallenge.activities.length; i++){
+                for(i = 0; i < $scope.retosMultipleChallenge.activities.length; i++){
                   var activity = moodleFactory.Services.GetCacheJson("activity/" + $scope.retosMultipleChallenge.activities[i].coursemoduleid);
                   if (activity) {
                     $scope.retoMultipleActivities.push(activity);
@@ -74,10 +66,9 @@ angular
                   if ($scope.retoMultipleActivities.length > 0) {
                     assignCourseModuleId(false, $scope.retosMultipleChallenge.activities[i]);
                   }
-                
-               }
+                }
               }
-            };
+            }
 
             var assignCourseModuleId = function(asyncRequest, data){
               $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = 
@@ -116,13 +107,26 @@ angular
 
             var createRequest = function(){
               if (!$routeParams.retry) {
+               
+               var activitiesToRemove = [];
+               
+               _.each($scope.retoMultipleActivities, function(a, i){
+                   if(a.name.toLowerCase().indexOf("resultados")>=0 || a.name.toLowerCase().indexOf("puntajes")>=0){
+                        activitiesToRemove.push(i);
+                     }
+                });
+               
+                _.each(activitiesToRemove, function(a, i){
+                   $scope.retoMultipleActivities.splice(i, 1);
+                });
+                
                 $scope.challengesStructure = [{"name":"Naturalista", "type":"1"},{"name":"Lingüística", "type":"1"},{"name":"Corporal", "type":"2"},{"name":"Espacial", "type":"2"},{"name":"Musical", "type":"2"},{"name":"Matemática", "type":"2"},{"name":"Intrapersonal", "type":"3"},{"name":"Interpersonal", "type":"3"}];
                 var request = {
                   "userId": "" + $scope.user.id,
                   "alias": $scope.user.username,
                   "actividad": "Reto múltiple",
                   "pathImagen": "",
-                  "actividadTerminada": ($scope.completedActivities.length == ($scope.retoMultipleActivities.length - 1) ? "Si" : "No"),
+                  "actividadTerminada": ($scope.completedActivities.length == $scope.retoMultipleActivities.length ? "Si" : "No"),
                   "subactividades": []
                 };
                 _.each($scope.retoMultipleActivities, function(localActivity){

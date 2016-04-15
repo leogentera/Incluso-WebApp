@@ -1,0 +1,259 @@
+<div class="incluso-app step-dashboard" id="site-wrapper">        
+        <article>
+            <section class="component video-gallery">
+                <div class="panel panel-video">
+                    <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+                        <h3>
+                            <span class="icomoon icon-video-file"></span>
+                            <span>Zona de Vuelo</span>
+                            <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
+                            <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
+                        </h3>
+                    </div>
+                    <div class="panel-body" collapse="isCollapsed">
+                        <div class="video-player">
+                            <div class="stage">
+                                <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-zona-de-vuelo.mp4')">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </a>
+                                <figure class="poster">
+                                    <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </section>
+
+            <section class="component showcase-carousel pages">
+                <h3>Retos</h3>
+                <div id="carousel-example-generic2" class="carousel">
+                    <div id="owl-demo2" class="owl-carousel">
+                        <div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">
+                            <!-- <img ng-src="{{retosIconos[reto.sectionname]}}" />
+                            <div class="subtitle centered text-uppercase" ng-bind="reto.sectionname"></div>
+                            <div class="txt-renglon challenge-description" ng-bind="reto.activityintro"></div> -->
+
+                            <figure class="item-image">
+                                <img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
+                            </figure>
+                            <h4 class="item-title" ng-bind="reto.sectionname"></h4>
+                            <p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p>
+
+                            <div class="page-number">
+                                <p class="text-center">
+                                    <span>{{model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
+                                    <span>/</span>
+                                    <span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
+                                </p>                    
+                            </div>                               
+                        </div>
+                    </div>
+
+                    <a class="control back" href="#" id="prev">
+                        <span class="icomoon icon-arrow-bold-left"></span>
+                    </a>
+                    <a class="control next" href="#" id="next">
+                        <span class="icomoon icon-arrow-bold-right"></span>
+                    </a>                    
+                </div>
+
+<!--                 <div class="page-number">
+                    <p class="text-center">
+<<<<<<< HEAD
+                        <span>{{model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
+=======
+                        <span id="index">1</span>
+>>>>>>> origin/1.1
+                        <span>/</span>
+                        <span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
+                    </p>                    
+                </div>    -->                                             
+            </section>
+
+            <section class="parts activities">
+                <div id="owl-demo" class="owl-carousel">
+                    <div ng-repeat="challenge in model.stages[idEtapa].challenges">
+                      <div ng-class="canStartActivity(activity.coursemoduleid)?'part':'part disabled'" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
+                          <i class="icomoon icon-checked-join" ng-show="activity.status == 1"></i>
+                          <i class="icomoon icon-gauge" ng-show="activity.status == 0"></i>
+
+                          <span ng-bind="activity.activityname"></span>
+                          <span>
+                              <i class="icomoon icon-star fl-right"></i>
+                              <i class="icomoon icon-play fl-right"></i>
+                          </span>
+                      </div>
+                    </div>
+                </div>
+                <!-- <div>
+                  <img src="assets/images/img-consoles.png">
+                </div> -->
+            </section>
+
+            <section class="progreso">
+                <div class="spinner">
+                    <span ng-bind="puntosObtenidos"></span>
+                    <!-- <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png"> --> <img src="" alt="">
+
+                    <div class="circle"></div>
+                    <div class="text">{{stageProgress}}%</div>
+                </div>
+                <div>
+                    <p class="title">Mi avance</p>
+                    <p>en la zona</p>
+                </div>
+            </section>
+
+            <section class="hangar-bay">
+                <div id="ship">
+                    <!-- <img src="assets/images/img-ship-01.png"/> -->
+                </div>
+            </section>
+
+            <script type="text/ng-template" id="ClosingStage.html">
+                <div class="modal-robot robot-lg closing-stage-modal user-help">
+                    <img src="assets/images/img-robot-sm.svg">
+                    <div class="modal-header">
+                        <button class="icon icon-close" ng-click="cancel()">
+                            <span class="icomoon icon-cross"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="subtitle">Cierre zona de vuelo</h3>
+
+                        <p class="txt-renglon centered">
+                            ¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda,
+                            los sueños son el motor principal
+                            de tu nave
+                        </p>
+
+                        <p class="txt-renglon centered">
+                            ¡Ahora tu aventura ya tiene un rumbo!
+                        </p>
+                    </div>
+                </div>
+            </script>
+        </article>
+
+        <script type="text/ng-template" id="OpeningStageModal.html">
+            <div class="modal-robot robot-lg closing-stage-modal user-help">
+                <img src="assets/images/img-robot-lg.svg">
+
+                <div class="modal-header">
+                    <button class="icon icon-close" ng-click="cancel()">
+                        <span class="icomoon icon-cross"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="subtitle text-center">Introducción Zona de Vuelo</h3>
+                    <p class="txt-renglon centered">
+                        Hemos tenido una falla en el sistema y perdimos algunas piezas, la nave esta averiada.
+                        Haremos una parada en la zona de vuelo, recupera las piezas necesarias para echar a andar
+                        la nave y continuar el viaje. ¡Buena suerte!
+                    </p>
+                </div>
+            </div>
+        </script>
+        <script type="text/ng-template" id="ClosingChallengeModal.html">
+            <div class="modal-robot robot-lg closing-stage-modal user-help" >
+                <img src="assets/images/img-robot-lg.svg">
+                <div class="modal-header">
+                    <button class="icon icon-close" ng-click="cancel()">
+                        <span class="icomoon icon-cross"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                    <p class="txt-renglon centered">{{actualMessage.message}}</p>
+                </div>
+            </div>
+        </script>
+      
+
+        <script type="text/ng-template" id="CabinaSoporteMsj.html">
+            <div class="modal-robot robot-sm closing-stage-modal user-help">
+                <img src="assets/images/img-robot-sm.svg">
+
+                <div class="modal-header">
+                    <button class="icon icon-close" ng-click="cancel()">
+                        <span class="icomoon icon-cross"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="subtitle text-center">Cabina de Soporte</h3>
+                    <p class="txt-renglon centered">
+                      Has iniciado esta actividad. En breve recibirás instrucciones de la torre de control.
+                    </p>
+                </div>
+            </div>
+        </script>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        function myController($scope) {
+            $scope.challengeName = "MIS RETOS";
+        }
+
+        setTimeout(function () {
+            var hits = 1;
+
+                //Carrusel de retos
+                var owl2 = $("#owl-demo2");
+
+                owl2.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback1
+                });
+
+                //Carrusel de Actividades
+                var owl = $("#owl-demo");
+
+                owl.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback2
+                });
+
+                function callback1(event) {
+                    var item = this.currentItem;
+                    owl.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
+                }
+
+                function callback2(event) {
+                    var item = this.currentItem;
+                    owl2.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
+                }
+
+                $("#next").click(function (ev) {
+                    owl.trigger('owl.next');
+                    ev.preventDefault();
+
+                });
+
+                $("#prev").click(function (ev) {
+                    owl.trigger('owl.prev');
+                    ev.preventDefault();
+                });
+            }, 1000);
+    });
+</script>

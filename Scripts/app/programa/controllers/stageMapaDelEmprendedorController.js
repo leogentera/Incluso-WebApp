@@ -39,6 +39,7 @@ angular
             $scope.user = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.mapaDeEmprendedorActivities = moodleFactory.Services.GetCacheJson("mapaDeEmprendedorActivities");
+            $scope.mapaDeEmprendedorAnswers = moodleFactory.Services.GetCacheJson("mapaDeEmprendedorAnswers/" + $scope.user.id);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
             var subactivitiesCompleted = [];
@@ -46,6 +47,11 @@ angular
             $scope.isInstalled = false;
 
             if(!$routeParams.retry) {
+                for(var key in localStorage){  
+                    if(key.indexOf("mapaDeEmprendedorAnswers") > -1 && key.indexOf($scope.user.id) < 0){
+                        localStorage.removeItem(key);  
+                    }
+                }
                 try {
                   cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
                 }
@@ -78,9 +84,26 @@ angular
             function assignCourseModuleId(asyncRequest, data){
                 $scope.mapaDeEmprendedorActivities[$scope.mapaDeEmprendedorActivities.length - 1]["coursemoduleid"] = 
                     ( asyncRequest ? _.find(mapaDeEmprendedorActivity.activities, function(r){ return r.activityname == data.name }).coursemoduleid : data.coursemoduleid);
+                if (!$scope.mapaDeEmprendedorAnswers || $scope.mapaDeEmprendedorAnswers.length < $scope.mapaDeEmprendedorActivities.length) {
+                    $scope.mapaDeEmprendedorAnswers = (!$scope.mapaDeEmprendedorAnswers ? [] : $scope.mapaDeEmprendedorAnswers );
+                    getUserData($scope.mapaDeEmprendedorActivities[$scope.mapaDeEmprendedorActivities.length - 1]["coursemoduleid"]);
+                }
+                else{
                     $scope.$emit('HidePreloader');
+                }
                 _setLocalStorageJsonItem("mapaDeEmprendedorActivities", $scope.mapaDeEmprendedorActivities);
 
+            }
+
+            function getUserData(activityId) {
+                moodleFactory.Services.GetAsyncActivity(activityId + "?userid=" + $scope.user.id, currentUser.token, function(data){
+                    $scope.mapaDeEmprendedorAnswers.push(data);
+                    $scope.mapaDeEmprendedorAnswers[$scope.mapaDeEmprendedorAnswers.length-1]["coursemoduleid"] = activityId;
+                    if ($scope.mapaDeEmprendedorAnswers.length == $scope.mapaDeEmprendedorActivities.length) {
+                        _setLocalStorageJsonItem("mapaDeEmprendedorAnswers/" + $scope.user.id, $scope.mapaDeEmprendedorAnswers);
+                        $scope.$emit('HidePreloader');
+                    };
+                });
             }
 
             function createRequest(){
@@ -109,8 +132,8 @@ angular
                         "relacion": [],
                         "formaEntrega": []
                     }
-                    for(var j=0; j < $scope.mapaDeEmprendedorActivities.length; j++){
-                        var activityAnswers = $scope.mapaDeEmprendedorActivities[j];
+                    for(var j=0; j < $scope.mapaDeEmprendedorAnswers.length; j++){
+                        var activityAnswers = $scope.mapaDeEmprendedorAnswers[j];
                         if (activityAnswers.questions && activityAnswers.coursemoduleid == activity.coursemoduleid) {
                             _.each(activityAnswers.questions, function(q){
                                 for (var key in proyecto) {
@@ -141,7 +164,7 @@ angular
                     successGame(
                         {"gustaActividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"formaEntrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"1"},{"recursos":["rcs","sds"],"propuesta":"2propuesta","relacion":["rlc2"],"clientes":"papa","personas":["PRSNS","mama"],"formaEntrega":["NTRG","sdas"],"actividades":["NSWR","act2"],"necesidades":"nccsds","proyecto":"definity","proyectoId":"2"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"3"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"4"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"5"}],"fechaFin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividadCompleta":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fechaInicio":"10\/07\/2015 12:22:52","duracion":"4"}
                     );
-               }
+                }
             }
 
             function successGame(data){
@@ -170,7 +193,7 @@ angular
                                 var question = _.find(activity.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)[0].slice(0, -1)) > -1 });
                                 if(question){
                                     question.userAnswer = getAnswer(answer, true);
-                                    var activityCache = _.find($scope.mapaDeEmprendedorActivities, function(a){ return a.coursemoduleid == proyectoId; });
+                                    var activityCache = _.find($scope.mapaDeEmprendedorAnswers, function(a){ return a.coursemoduleid == proyectoId; });
                                     if(activityCache){
                                         if(activityCache.questions && activityCache.questions.length == activity.questions.length){
                                             var questionCache = _.find(activityCache.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)[0].slice(0, -1)) > -1 });
@@ -186,11 +209,11 @@ angular
                                 }
                             });
                             quizzesRequests.push(logEntry);
-                            _setLocalStorageJsonItem("activity/" + logEntry.coursemoduleid , activity);
+                            _setLocalStorageJsonItem("activity/" + logEntry.coursemoduleid + "?userid=" + logEntry.userid, activity);
                         }
                     }
                 }
-                _setLocalStorageJsonItem("mapaDeEmprendedorActivities", $scope.mapaDeEmprendedorActivities);
+                _setLocalStorageJsonItem("mapaDeEmprendedorAnswers/" + $scope.user.id, $scope.mapaDeEmprendedorAnswers);
                 var quizzesAnswered = _.countBy($scope.mapaDeEmprendedorActivities, function(a){
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function(q){
@@ -201,6 +224,7 @@ angular
                 });
 
                 $scope.IsComplete = $scope.mapaDeEmprendedorActivities &&
+                                    $scope.mapaDeEmprendedorAnswers &&
                                     quizzesAnswered.completed &&
                                     quizzesAnswered.completed >= $scope.mapaDeEmprendedorActivities.length;
 
