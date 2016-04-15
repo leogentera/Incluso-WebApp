@@ -107,13 +107,26 @@ angular
 
             var createRequest = function(){
               if (!$routeParams.retry) {
+               
+               var activitiesToRemove = [];
+               
+               _.each($scope.retoMultipleActivities, function(a, i){
+                   if(a.name.toLowerCase().indexOf("resultados")>=0 || a.name.toLowerCase().indexOf("puntajes")>=0){
+                        activitiesToRemove.push(i);
+                     }
+                });
+               
+                _.each(activitiesToRemove, function(a, i){
+                   $scope.retoMultipleActivities.splice(i, 1);
+                });
+                
                 $scope.challengesStructure = [{"name":"Naturalista", "type":"1"},{"name":"Lingüística", "type":"1"},{"name":"Corporal", "type":"2"},{"name":"Espacial", "type":"2"},{"name":"Musical", "type":"2"},{"name":"Matemática", "type":"2"},{"name":"Intrapersonal", "type":"3"},{"name":"Interpersonal", "type":"3"}];
                 var request = {
                   "userId": "" + $scope.user.id,
                   "alias": $scope.user.username,
                   "actividad": "Reto múltiple",
                   "pathImagen": "",
-                  "actividadTerminada": ($scope.completedActivities.length == ($scope.retoMultipleActivities.length - 1) ? "Si" : "No"),
+                  "actividadTerminada": ($scope.completedActivities.length == $scope.retoMultipleActivities.length ? "Si" : "No"),
                   "subactividades": []
                 };
                 _.each($scope.retoMultipleActivities, function(localActivity){
