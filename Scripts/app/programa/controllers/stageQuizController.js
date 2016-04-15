@@ -314,10 +314,10 @@ angular
                             owlIndex = 0;
                             break;
                         case 3601:  //
-                            owlIndex = 1;
+                            owlIndex = 5;
                             break;
                         default:
-                            owlIndex = 5;
+                            owlIndex = 0;
                             break;
                     }
                 }
