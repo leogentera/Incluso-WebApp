@@ -264,7 +264,64 @@ angular
                 //Making up path to redirect user to the proper dashboard
                 var stageNameFromURL = $location.path().split("/")[1];
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
+
+                if (!userCurrentStage) {
+                    if ($scope.activity_identifier > 1000 && $scope.activity_identifier < 2000) {
+                        userCurrentStage = 1;
+                    }
+
+                    if ($scope.activity_identifier > 2000 && $scope.activity_identifier < 3000) {
+                        userCurrentStage = 2;
+                    }
+
+                    if ($scope.activity_identifier > 3000) {
+                        userCurrentStage = 3;
+                    }
+                }
+
                 var owlIndex = localStorage.getItem("owlIndex");
+                if (!owlIndex) {
+
+                    switch ($scope.activity_identifier) {
+                        case 1001:  //
+                            owlIndex = 0;
+                            break;
+                        case 1005:  //
+                            owlIndex = 3;
+                            break;
+                        case 1006:  //
+                            owlIndex = 3;
+                            break;
+                        case 1007:  //
+                            owlIndex = 3;
+                            break;
+                        case 1009:  //
+                            owlIndex = 5;
+                            break;
+                        case 2001:  //
+                            owlIndex = 0;
+                            break;
+                        case 2009:  //
+                            owlIndex = 2;
+                            break;
+                        case 2025:  //
+                            owlIndex = 4;
+                            break;
+                        case 2023:  //
+                            owlIndex = 6;
+                            break;
+                        case 3101:  //
+                            owlIndex = 0;
+                            break;
+                        case 3601:  //
+                            owlIndex = 1;
+                            break;
+                        default:
+                            owlIndex = 5;
+                            break;
+                    }
+                }
+
                 destinationPath = "/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + owlIndex;
 
                 var childActivity = null;
