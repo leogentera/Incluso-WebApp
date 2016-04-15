@@ -250,9 +250,15 @@
                                                             </div>
 
                                                             <div class="from-group">
+                                                                <label>Interior</label>
+                                                                <p ng-bind="model.address.num_int"></p>
+                                                            </div>
+
+                                                            <div class="from-group">
                                                                 <label>Colonia</label>
                                                                 <p ng-bind="model.address.colony"></p>
                                                             </div>
+
                                                         </div>
 
                                                         <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showPhones">
