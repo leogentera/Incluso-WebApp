@@ -220,8 +220,8 @@ angular
             var checkForumProgress = function(callback){
                 
                 var historicalDiscussions = getForumExtraPointsCounter($scope.currentDiscussionsIds);
-                var historicalDiscussionsFinished = _.filter(historicalDiscussions.discussions, function(hd){ return hd.total >= 1; });
-
+                var historicalDiscussionsFinished = _.filter(historicalDiscussions.discussions, function(hd){ return hd.total >= 2; });
+                
                 var isActivityFinished = (historicalDiscussionsFinished.length === $scope.currentDiscussionsIds.length);
                 var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
                                             

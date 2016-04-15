@@ -30,12 +30,19 @@ angular
             $scope.user = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.mapaDeVidaActivities = moodleFactory.Services.GetCacheJson("mapaDeVidaActivities");
+            $scope.mapaDeVidaAnswers = moodleFactory.Services.GetCacheJson("mapaDeVidaAnswers/" + $scope.user.id);
             $scope.stars = 0;
             $scope.isInstalled = false;
             $scope.pathImagenFicha = "";
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             var activitiesPosted = 0;
             var activitiesAtLeastOne = 0;
+
+            for (var key in localStorage) {
+                if (key.indexOf("mapaDeVidaAnswers") > -1 && key.indexOf($scope.user.id) < 0) {
+                    localStorage.removeItem(key);
+                }
+            }
 
             if (!$routeParams.retry) {
                 try {
@@ -77,8 +84,25 @@ angular
                     ( asyncRequest ? _.find(mapaDeVidaActivity.activities, function (r) {
                         return r.activityname == data.name
                     }).coursemoduleid : data.coursemoduleid);
+                if (!$scope.mapaDeVidaAnswers || $scope.mapaDeVidaAnswers.length < $scope.mapaDeVidaActivities.length) {
+                    $scope.mapaDeVidaAnswers = (!$scope.mapaDeVidaAnswers ? [] : $scope.mapaDeVidaAnswers );
+                    getUserData($scope.mapaDeVidaActivities[$scope.mapaDeVidaActivities.length - 1]["coursemoduleid"]);
+                }
+                else {
                     $scope.$emit('HidePreloader');
+                }
                 _setLocalStorageJsonItem("mapaDeVidaActivities", $scope.mapaDeVidaActivities);
+            }
+
+            function getUserData(activityId) {
+                moodleFactory.Services.GetAsyncActivity(activityId + "?userid=" + $scope.user.id, currentUser.token, function (data) {
+                    $scope.mapaDeVidaAnswers.push(data);
+                    $scope.mapaDeVidaAnswers[$scope.mapaDeVidaAnswers.length - 1]["coursemoduleid"] = activityId;
+                    if ($scope.mapaDeVidaAnswers.length == $scope.mapaDeVidaActivities.length) {
+                        _setLocalStorageJsonItem("mapaDeVidaAnswers/" + $scope.user.id, $scope.mapaDeVidaAnswers);
+                        $scope.$emit('HidePreloader');
+                    }
+                });
             }
 
             function createRequest() {
@@ -108,7 +132,7 @@ angular
 
                     _.each(activity.questions, function (q, j) {
                         var respuesta = {"preguntaId": "" + (j + 1), "respuesta": ""};
-                        var activityAnswer = _.find($scope.mapaDeVidaActivities, function (a) {
+                        var activityAnswer = _.find($scope.mapaDeVidaAnswers, function (a) {
                             return a.coursemoduleid == activity.coursemoduleid
                         });
                         if (activityAnswer.questions) {
@@ -182,7 +206,7 @@ angular
                             }]
                         }
                     );
-               }
+                }
             };
 
             function successGame(data) {
@@ -208,7 +232,7 @@ angular
                         var activity = _.find($scope.mapaDeVidaActivities, function (a) {
                             return a.coursemoduleid == dimensionId;
                         });
-                        var activityCache = _.find($scope.mapaDeVidaActivities, function (a) {
+                        var activityCache = _.find($scope.mapaDeVidaAnswers, function (a) {
                             return a.coursemoduleid == dimensionId;
                         });
                         for (var j = 0; j < dimension.respuestas.length; j++) {
@@ -245,7 +269,7 @@ angular
                         _setLocalStorageJsonItem("activity/" + dimensionId + "?userid=" + logEntry.userid, activity);
                     }
                 }
-                _setLocalStorageJsonItem("mapaDeVidaActivities" , $scope.mapaDeVidaActivities);
+                _setLocalStorageJsonItem("mapaDeVidaAnswers/" + $scope.user.id, $scope.mapaDeVidaAnswers);
                 var quizzesAnswered = _.countBy($scope.mapaDeVidaActivities, function (a) {
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function (q) {

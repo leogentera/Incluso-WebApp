@@ -10,8 +10,7 @@ angular
         '$http',
         '$filter',
         '$modal',
-        '$timeout',
-        function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal, $timeout) {
+        function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal) {
             
             $rootScope.OAUTH_ENABLED = false;
             
@@ -56,49 +55,13 @@ angular
 
                     if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
-
-                        if (activityId == "chat") {//The user pressed the Chat icon on Top bar.
-
-                            var currentStage = parseInt(localStorage.getItem("currentStage")); //Last Stage attained by the user.
-                            var pref;
-                            switch (currentStage) {
-                                case 1:
-                                    activityId = "1002";
-                                    pref = "/ZonaDeVuelo/";
-                                    break;
-                                case 2:
-                                    activityId = "2022";
-                                    pref = "/ZonaDeNavegacion/";
-                                    break;
-                                case 3:
-                                    activityId = "3501";
-                                    pref = "/ZonaDeAterrizaje/";
-                                    break;
-                                default:
-                                    activityId = "1002";  //For a new user.
-                                    pref = "/ZonaDeNavegacion/";
-                            }
-
-                            url = pref + "CabinaDeSoporte/" + activityId;
-
-                            //Check if CabinaDeSoporte activity is blocked...
-                            if ($rootScope.activityBlocked[activityId].disabled) {
-                                console.log("### BLOCKED " + activityId);
-                                activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
-                            } else {
-                                console.log("### NOT BLOCKED " + activityId);
-                            }
-                        }
-
                         logStartActivityAction(activityId, timeStamp);
                     }
 
                     $location.path(url);
 
-                    if (sideToggle == "sideToggle") {
+                    if (sideToggle == "sideToggle")
                         $rootScope.sidebar = !$rootScope.sidebar;
-                    }
-
                 }
 
             };
@@ -201,7 +164,7 @@ angular
                 }
 
             };
-            $scope.mySS = "1022";
+
             $scope.toolbarOptionActive = function (path) {
 
                 if (path.constructor === Array) {
@@ -216,16 +179,13 @@ angular
                             classdisable = "active disabled";
                         }
                     }
-
                     return classdisable;
 
                 } else {
-                    if ($location.path().substr(0, path.length) === path) {
+                    if ($location.path().substr(0, path.length) === path)
                         return "active disabled";
-                    } else {
+                    else
                         return "";
-                    }
-
                 }
             };
 
@@ -272,14 +232,23 @@ angular
             };
 
             $scope.showChatNotification = function () {
-                var chatRead = localStorage.getItem('chatRead/' + localStorage.getItem("userId"));
-
-                if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {
+                var readChatNotification = localStorage.getItem('chatRead');
+                if ($scope.pageName == 'Chat' || readChatNotification == "true" || readChatNotification == undefined) {
                     return false;
                 } else {
+                    var userChat = JSON.parse(localStorage.getItem('userChat'));
+                    if (userChat && userChat.length >= 1) {
+                        var userId = localStorage.getItem('userId');
 
-                    if (chatRead == "false") {
-                        return true;
+                        var lastMessage = _.max(userChat, function (chat) {
+                            return chat.messagedate;
+                        });
+
+                        if (lastMessage.messagesenderid != userId) {
+                            return true;
+                        }
+                    } else {
+                        return false;
                     }
                 }
             };
@@ -291,7 +260,6 @@ angular
                 }
                 $rootScope.activityBlocked = _activityBlocked;
             };
-
             $scope.resetActivityBlockedStatus();
 
             $scope.leftVisible = false;
@@ -351,7 +319,7 @@ angular
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
-            };
+            }
 
 
             /* checks if user has internet connection */
@@ -368,23 +336,4 @@ angular
                     offlineCallback();
                 });
             };
-
-            $scope.getUserChat = function () {
-                $timeout(function () {                
-                    _setLocalStorageItem('chatRead/' + localStorage.getItem("userId"), "false");
-
-                    var chat = JSON.parse(localStorage.getItem('userChat'));
-                    $scope.messages = chat;
-                
-                    var userId = localStorage.getItem("userId");
-                        
-                    var chatAmount = _.countBy(chat,function(messages){                                
-                        return messages.messagesenderid != userId;
-                    });
-                                                        
-                    _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                    $scope.showChatNotification();
-
-                }, 100);                        
-            }
         } ]);

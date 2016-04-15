@@ -1,0 +1,401 @@
+<div class="incluso-app">
+    <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
+        <div class="alert-message" ng-click="hideWarning()">
+            <div class="icomoon icon-warning"></div>
+            <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
+            <p>{{::warningMessage}}</p>
+        </div>
+    </div>
+
+
+    <article class="blueprint evaluation">
+        <div class="pages">
+            <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
+                <section id="title">
+                    <div class="subtitle">{{::activityname}}</div>
+                    <div class="txt-renglon">{{::activityTitle}}</div>
+                </section>
+                <data-owl-carousel class="owl-carousel">
+                    <div owl-carousel-item="" ng-repeat="question in activityObject.questions track by $index" class="item">
+
+                        <!--   -----------------------   BINARY TYPE QUESTION   ------------------------------              -->
+                        <div ng-show="questionTypeCode[$index] == 'binary'" id="{{'binary' + $index}}">
+                            <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
+                            <section class="form txt-renglon txt-bigger part list">
+                                <div class="tnf">
+                                    <input id="{{'true' + $index}}" type="radio" name="{{'binary' + $index}}"
+                                           ng-model="answers[$index]"
+                                           value="0"
+                                           ng-disabled="setReadOnly"/>
+                                    <label for="{{'true' + $index}}">{{::question.answers[0].answer}}</label>
+
+                                    <input id="{{'fols' + $index}}" type="radio" name="{{'binary' + $index}}"
+                                           ng-model="answers[$index]"
+                                           value="1"
+                                           ng-disabled="setReadOnly"/>
+                                    <label for="{{'fols' + $index}}">{{::question.answers[1].answer}}</label>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!--   -----------------------   MULTICHOICE TYPE QUESTION   ------------------------------              -->
+                        <div ng-show="questionTypeCode[$index] == 'multichoice'" id="{{'multichoice' + $index}}">
+                            <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
+                            <section class="form txt-renglon txt-bigger part list"
+                                     id="{{'multichoiceSection' + $index}}">
+                                <div ng-repeat="answerObject in question.answers track by $index">
+
+                                    <div ng-show="answerObject.answer != 'Otro'">
+                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
+                                               value="1" name="{{'multichoice' + $parent.$index + $index}}"
+                                               ng-true-value="1" ng-false-value="0"
+                                               ng-click="updateOtherField($parent.$index, $index, answerObject.answer)"
+                                               ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
+                                        <label for="{{'multichoice' + $parent.$index + $index}}">{{::answerObject.answer}}</label>
+                                    </div>
+                                    <div ng-show="answerObject.answer == 'Otro'">
+                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
+                                               value="1" name="{{'multichoice' + $parent.$index + $index}}"
+                                               ng-true-value="1" ng-false-value="0"
+                                               ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
+                                        <label for="{{'multichoice' + $parent.$index + $index}}">{{::answerObject.answer}}</label>
+
+                                        <div class="form-group theme-form" ng-show="answers[$parent.$index][$index]">
+                                            <div class="add">
+                                                <span class="icomoon icon-edit"></span>
+                                                <textarea class="form-control form-control-lg theme-form" row="2"
+                                                          id="{{'other' + $parent.$index + $index}}"
+                                                          name="{{'other' + $parent.$index + $index}}"
+                                                          placeholder="{{placeholder[$parent.$index]}}"
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
+                                                          ng-model="OtroAnswers[position[$parent.$index]].answers[0]">
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
+                        </div>
+
+                        <!--   -----------------------   SIMPLECHOICE TYPE QUESTION   ------------------------------              -->
+                        <div ng-show="questionTypeCode[$index] == 'simplechoice'" id="{{'simplechoice' + $index}}">
+                            <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
+                            <section class="form txt-renglon txt-bigger part list">
+                                <div ng-repeat="answerObject in question.answers track by $index">
+                                    <input id="{{'simplechoice' + $parent.$index + $index}}" type="radio"
+                                           value="{{$index}}" name="{{'simplechoice' + $parent.$index + $index}}"
+                                           ng-model="answers[$parent.$index]" ng-disabled="setReadOnly"/>
+                                    <label for="{{'simplechoice' + $parent.$index + $index}}">{{::answerObject.answer}}</label>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!--   -----------------------   ESSAY TYPE QUESTION   ------------------------------              -->
+                        <div ng-show="questionTypeCode[$index] == 'essay'" id="{{'essay' + $index}}">
+                            <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
+                            <ul class="block-list clearfix">
+                                <li ng-repeat="ability in answers[$index] track by $index">
+                                    <section class="form txt-renglon part list clearfix">
+                                        <div class="form-group theme-form">
+
+                                            <div class="clearfix">
+                                                <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
+                                                <a class="btn btn-circle pull-right"
+                                                   ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)"
+                                                   ng-show="activity_status >= 0">
+                                                    <span class="icomoon icon-cross white"></span>
+                                                </a>
+                                            </div>
+                                            <div class="add">
+                                                <span class="icomoon icon-edit"></span>
+                                                <textarea id="{{'essay' + $parent.$index + $index}}"
+                                                          class="form-control form-control-lg theme-form" row="2"
+                                                          name="{{'essay' + $parent.$index + $index}}"
+                                                          placeholder="{{placeholder[$parent.$index]}}"
+                                                          ng-model="answers[$parent.$index][$index]"
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
+                                                          ng-readonly="setReadOnly">
+                                                </textarea>
+                                            </div>
+
+                                        </div>
+                                    </section>
+                                </li>
+                            </ul>
+                            <div class="txt-renglon">
+                                <a href="" class="btn btn-lg btn-block btn-add"
+                                   ng-click="addAbility('essay' + $index, $index)"
+                                   ng-hide="setReadOnly">
+                                    <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
+                                </a>
+                            </div>
+                        </div>
+
+                        <!--   -----------------------   SHORTANSWER TYPE QUESTION   ------------------------------              -->
+                        <div ng-show="questionTypeCode[$index] == 'shortanswer'" id="{{'shortanswer' + $index}}">
+                            <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
+                            <ul class="block-list clearfix">
+                                <li ng-repeat="ability in answers[$index] track by $index">
+                                    <section class="form txt-renglon part list clearfix">
+                                        <div class="form-group theme-form">
+
+                                            <div class="clearfix">
+                                                <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
+                                                <a class="btn btn-circle pull-right"
+                                                   ng-click="deletePerson('shortanswer' + $parent.$index, $parent.$index, $index)"
+                                                   ng-show="activity_status >= 0">
+                                                    <span class="icomoon icon-cross white"></span>
+                                                </a>
+                                            </div>
+                                            <div class="add">
+                                                <span class="icomoon icon-edit"></span>
+                                                <textarea id="{{'textarea' + $parent.$index}}"
+                                                          class="form-control form-control-lg theme-form" row="2"
+                                                          name="{{'txtAbierto' + $index}}"
+                                                          placeholder="{{placeholder[$parent.$index]}}"
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
+                                                          ng-model="answers[$parent.$index][$index]"
+                                                          ng-readonly="setReadOnly">
+                                                </textarea>
+                                            </div>
+
+                                        </div>
+                                    </section>
+                                </li>
+                            </ul>
+                            <div class="txt-renglon">
+                                <a href="" class="btn btn-lg btn-block btn-add"
+                                   ng-click="addPerson('shortanswer' + $index, $index)"
+                                   ng-hide="setReadOnly">
+                                    <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </data-owl-carousel>
+
+                <section id="controls" class="controls">
+                    <div class="paginate">
+                        <a href="#" id="prev">
+                            <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
+                        </a>
+                        <a href="#" id="next">
+                            <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
+                        </a>
+
+                        <div class="centered">
+                            <span id="index" class="txt-bigger">1</span>
+                            <span id="totalPages" class="white txt-bigger">/{{::maxPages}}</span>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary btn-lg btn-cnt"
+                       id="save"
+                       ng-show="answerIndex == maxPages && (quizIsEditable == true || activity_status == 0)"
+                       ng-click="validateQuiz()">GUARDAR</a>
+
+                    <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
+                </section>
+            </div>
+
+            <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
+                <div id="finalized">
+                    <section class="header-title">
+                        <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
+                        <div class="subtitle centered min-pad ">{{::activityname}}</div>
+                        <div class="txt-renglon centered txt-bigger min-pad ">¡Bien hecho!</div>
+                    </section>
+                    <section class="centered txt-bigger" ng-show="activityname != 'Exploración final'">
+                        <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
+                    </section>
+
+
+                    <! -- ONLY FOR FINAL EXPLORATIONS --->
+                    <section class="txt-renglon pill" ng-show="activityname == 'Exploración final'">
+                        <div class="pull-left">Mi puntuación</div>
+                        <div class="pull-right green-pill"><span>{{::score}}</span><span class="white">/100</span>
+                        </div>
+                    </section>
+
+
+                    <section class="question-parts" ng-show="activityname == 'Exploración final'">
+                        <div ng-repeat="question in activityObject.questions track by $index">
+
+
+                            <!--   -----------------------   BINARY TYPE QUESTION   ------------------------------              -->
+                            <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'binary'">
+                                <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
+                                        {{questionText[$index]}}
+                                        <span class="pull-right icomoon icon-arrow" ng-show="!question$index.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up" ng-show="question$index.isCollapsed"></span>
+                                    </div>
+                                    <div id="{{'results' + $index}}" class="panel-body" collapse="!question$index.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$index][0]}"
+                                                ng-show="!questionIsCorrect[$index] || questionIsCorrect[$index] && !chosenByUserAndWrong[$index][0]">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="chosenByUserAndWrong[$index][0]"></span>
+                                                {{::question.answers[0].answer}}
+                                            </li>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$index][1]}"
+                                                ng-show="!questionIsCorrect[$index] || questionIsCorrect[$index] && chosenByUserAndWrong[$index][1]">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="chosenByUserAndWrong[$index][1]"></span>
+                                                {{::question.answers[1].answer}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--   -----------------------   SIMPLECHOICE TYPE QUESTION   ------------------------------              -->
+                            <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'simplechoice'">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
+                                        {{questionText[$index]}}
+                                        <span class="pull-right icomoon icon-arrow" ng-show="!question$index.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up" ng-show="question$index.isCollapsed"></span>
+                                    </div>
+                                    <div id="{{'results' + $index}}" class="panel-body" collapse="!question$index.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$parent.$index][$index]}"
+                                                ng-show="!questionIsCorrect[$parent.$index] || questionIsCorrect[$parent.$index] && $index == correctIndex[$parent.$index]"
+                                                ng-repeat="answerObject in question.answers track by $index">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="chosenByUserAndWrong[$parent.$index][$index]"></span>
+                                                {{::answerObject.answer}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--   -----------------------   MULTICHOICE TYPE QUESTION   ------------------------------              -->
+                            <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'multichoice'">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
+                                        {{questionText[$index]}}
+                                        <span class="pull-right icomoon icon-arrow" ng-show="!question$index.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up" ng-show="question$index.isCollapsed"></span>
+                                    </div>
+                                    <div id="{{'results' + $index}}" class="panel-body" collapse="!question$index.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$parent.$index][$index]}"
+                                                ng-repeat="answerObject in question.answers track by $index">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="false"></span>
+                                                {{::answerObject.answer}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--   -----------------------   SHORTANSWER TYPE QUESTION   ------------------------------              -->
+                            <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'shortanswer'">
+                                <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
+                                        {{questionText[$index]}}
+                                        <span class="pull-right icomoon icon-arrow" ng-show="!question$index.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up" ng-show="question$index.isCollapsed"></span>
+                                    </div>
+                                    <div id="{{'results' + $index}}" class="panel-body" collapse="!question$index.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$parent.$index][$index]}"
+                                                ng-show="answerIsCorrect[$index][0]">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="false"></span>
+                                                {{::question.userAnswer}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                    <! -- END OF SECTION FOR FINAL EXPLORATIONS --->
+
+
+                    <section class="txt-renglon pill" ng-show="activityPoints > 0">
+                        <div class="pull-left">Estrellas ganadas:</div>
+                        <div class="pull-right sm-pill">
+                            <span class="pull-left">{{::activityPoints}}</span>
+                            <span class="icomoon icon-star pull-right"></span>
+                        </div>
+                    </section>
+                    <section class="txt-renglon centered form">
+                        <div ng-show="activity_status == 0">
+                            ¿Que opinas de ésta actividad?
+                            <section class="txt-renglon txt-bigger clearfix">
+                                <div class="opinion">
+                                    <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                                    <label for="like">Me gusta</label>
+                                </div>
+                                <div class="opinion">
+                                    <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                                    <label for="dislike">No me gusta</label>
+                                </div>
+                            </section>
+                        </div>
+                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </article>
+    <!-- initial message -->
+    <script type="text/ng-template" id="openingStageModal.html">
+        <div class="modal-robot robot-lg closing-stage-modal user-help">
+            <img src="assets/images/img-robot-lg.svg">
+
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">Mis gustos</h3>
+
+                <p class="txt-renglon centered">
+                    {{::message}}
+                </p>
+            </div>
+        </div>
+
+    </script>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        var owl = $(".owl-carousel");
+
+        owl.on('translated.owl.carousel', function(event) {
+        });
+
+        $("#next").click(function (evt) {
+            owl.trigger('owl.next');
+            evt.preventDefault();
+        });
+
+        $("#prev").click(function (evt) {
+            owl.trigger('owl.prev');
+            evt.preventDefault();
+        });
+    });
+
+</script>
+
+<script src="../../Scripts/classie.js "></script>
+<script src="../../Scripts/selectFx.js "></script>
+<script>
+    (function () {
+        [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
+            new SelectFx(el);
+        });
+    })();
+
+</script>
