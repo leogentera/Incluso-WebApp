@@ -201,7 +201,7 @@ angular
                 }
 
             };
-            $scope.mySS = "1022";
+            
             $scope.toolbarOptionActive = function (path) {
 
                 if (path.constructor === Array) {

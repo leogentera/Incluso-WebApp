@@ -116,6 +116,13 @@ angular
 
             var createRequest = function(){
               if (!$routeParams.retry) {
+               
+               var filteredActivities = _.filter($scope.retoMultipleActivities,function(e){
+                  return (e.name.toLowerCase() != "resultados" && e.name.toLowerCase() != "puntajes");
+               });
+               
+               $scope.retoMultipleActivities = filteredActivities;
+                                             
                 $scope.challengesStructure = [{"name":"Naturalista", "type":"1"},{"name":"Lingüística", "type":"1"},{"name":"Corporal", "type":"2"},{"name":"Espacial", "type":"2"},{"name":"Musical", "type":"2"},{"name":"Matemática", "type":"2"},{"name":"Intrapersonal", "type":"3"},{"name":"Interpersonal", "type":"3"}];
                 var request = {
                   "userId": "" + $scope.user.id,

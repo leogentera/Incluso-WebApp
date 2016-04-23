@@ -162,7 +162,7 @@ angular
                             //It must be the string for the "Other" option...
                             otherFound = true;
                             questionId = activityObject.questions[i].id;
-                            
+
                             //Update the "answers" key that corresponds to this question, as defined by questionId.
                             for (var k = 0; k < otherAnswerQuiz.length; k++) {
                                 if (otherAnswerQuiz[k].questionid == +questionId) {
@@ -196,7 +196,7 @@ angular
                 var obj = [];
                 for (var i = 0; i < activityObject.questions.length; i++) {
                     if (activityObject.questions[i].questionType == "multichoice") {
-                        obj.push({"questionid" : +activityObject.questions[i].id, "answers" : []});
+                        obj.push({"questionid": +activityObject.questions[i].id, "answers": []});
                     }
                 }
 
@@ -213,8 +213,58 @@ angular
 
                 //Making up path to redirect user to the proper dashboard
                 var stageNameFromURL = $location.path().split("/")[1];
-                var userCurrentStage = localStorage.getItem("userCurrentStage");
-                var owlIndex = localStorage.getItem("owlIndex");
+                var userCurrentStage;
+                var owlIndex;
+
+                if ($scope.activity_identifier > 1000 && $scope.activity_identifier < 2000) {
+                    userCurrentStage = 1;
+                }
+                if ($scope.activity_identifier > 2000 && $scope.activity_identifier < 3000) {
+                    userCurrentStage = 2;
+                }
+                if ($scope.activity_identifier > 3000) {
+                    userCurrentStage = 3;
+                }
+
+                switch ($scope.activity_identifier) {
+                    case 1001:  //Expl. Inicial
+                        owlIndex = 0;
+                        break;
+                    case 1005:  //Mis Cualidades
+                        owlIndex = 3;
+                        break;
+                    case 1006:  //Mis Gustos
+                        owlIndex = 3;
+                        break;
+                    case 1007:  //Sueña
+                        owlIndex = 3;
+                        break;
+                    case 1009:  //Expl. Final
+                        owlIndex = 5;
+                        break;
+                    case 2001:  //Expl. Inicial
+                        owlIndex = 0;
+                        break;
+                    case 2009:  //Tus Ideas
+                        owlIndex = 2;
+                        break;
+                    case 2025:  //1, 3 y 5
+                        owlIndex = 4;
+                        break;
+                    case 2023:  //Expl. Final
+                        owlIndex = 6;
+                        break;
+                    case 3101:  //Expl. Inicial
+                        owlIndex = 0;
+                        break;
+                    case 3601:  //Expl. Final
+                        owlIndex = 5;
+                        break;
+                    default:
+                        owlIndex = 0;
+                        break;
+                }
+
                 destinationPath = "/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + owlIndex;
 
                 var childActivity = null;
@@ -496,11 +546,6 @@ angular
             }
 
 
-            function errorCallback() {
-                $scope.$emit('HidePreloader');
-            }
-
-
             //#######################################  SECTION FOR DATA-BINDING FUNCTIONS ##################################
             $scope.updateOtherField = function (index, otherIndex, checkLabel) {
 
@@ -697,7 +742,6 @@ angular
 
                         break;
 
-
                     case "shortanswer":
                         if ($scope.answers[questionIndex] === undefined) {
                             $scope.answers[questionIndex] = []; //Adding room for first answer
@@ -746,7 +790,6 @@ angular
                     default:
                         break;
                 }
-
             }
 
 
@@ -806,7 +849,6 @@ angular
                     activityModel.answersResult.dateStart = activityModel.startingTime;
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
                     activityModel.answersResult.others = $scope.OtroAnswers;
-
                     $scope.activityObject.status = 1;
 
                     //Section for Updating the "userAnswer" key on each question object for the Quiz.
@@ -877,7 +919,6 @@ angular
                                 break;
                         }
                     }
-
 
                     // Write Updated objects to Local Storage for later recovery.
                     if ($scope.childActivity) {
@@ -973,7 +1014,6 @@ angular
                     if ($scope.answers[2][numOfHabilities - 1] === 1) {
                         $scope.userprofile.habilities.push($scope.OtroAnswers[2].answers[0]);
                     }
-
                 }
 
                 if ($scope.activity_identifier === 1006) {//Mis Gustos - Etapa 1 -  CourseModuleId = 70
@@ -1043,7 +1083,6 @@ angular
                     if ($scope.answers[4][numOfOthers - 1] === 1) {
                         $scope.userprofile.emprendedor.push($scope.OtroAnswers[4].answers[0]);
                     }
-
                 }
 
                 if ($scope.activity_identifier === 1005 || $scope.activity_identifier === 1006) {
@@ -1083,7 +1122,6 @@ angular
 
                     $location.path(destinationPath);
                 }
-
             }
 
 
@@ -1224,7 +1262,6 @@ angular
                         default:
                             break;
                     }
-
                 }
 
                 if (numAnswered == numQuestions) {//The Quiz questions are all completed.
