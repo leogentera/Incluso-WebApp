@@ -98,6 +98,19 @@ angular
                     break;
                 }
             }
+
+            $scope.setNotificationClass = function (notification) {
+                switch (notification.type) {
+                    case notificationTypes.commentsNotifications:
+                        return "icomoon icon-comment pull-left no-padding green-aqua";                        
+                    case notificationTypes.likesNotifications:
+                        return "icomoon icon-like pull-left no-padding pink";
+                        break;
+                    default:
+                        return "icomoon icon-antena pull-left no-padding pink";
+                        break;
+                }
+            }
             
             $scope.$emit('HidePreloader');
             
@@ -110,7 +123,7 @@ angular
                 
                 var seen_date_now = new Date();
                 for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
-                    if (userNotifications[indexNotification].id == notificationId) {
+                    if (userNotifications[indexNotification].usernotificationid == notificationId) {
                         userNotifications[indexNotification].seen_date = seen_date_now;
                     }else{
                         
@@ -127,13 +140,13 @@ angular
             
             var _readNotification = function (currentUserId, currentNotificationId) {
                 var seen_date_now = new Date();
-            
                 var data = {                    
                     notificationid: currentNotificationId,
                     seen_date: seen_date_now                    
                 };
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
+                    cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
                 }, function () {
                 },true);
             };        

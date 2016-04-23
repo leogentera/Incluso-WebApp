@@ -1,5 +1,5 @@
 angular
-    .module('incluso.programa.chatcontroller', [])
+    .module('incluso.programa.chatcontroller', ['ngSanitize'])
     .controller('programaChatController', [
         '$q',
         '$scope',
@@ -10,218 +10,130 @@ angular
         '$http',
         '$anchorScroll',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {            
-            $scope.$emit('ShowPreloader'); 
-            
+        'SignalRFactory',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, SignalRFactory) {
+            $scope.$emit('ShowPreloader');
+            var _pageLoaded = true;
             $scope.validateConnection(initController, offlineCallback);
-            
+
             function offlineCallback() {
-                $timeout(function() { $location.path("/Offline"); }, 1000);
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
             }
-            
+
             function initController() {
-                
-                console.log("initController");
+                console.log("*************  CHAT  *****************");
+                _timeout = $timeout;
+                _httpFactory = $http;
+                $rootScope.showFooter = false;
+                $rootScope.showFooterRocks = false;
+                $rootScope.showStage1Footer = false;
+                $rootScope.showStage2Footer = false;
+                $rootScope.showStage3Footer = false;
 
-            _timeout = $timeout;
-            _httpFactory = $http;
-            var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
-            _setLocalStorageItem('chatRead', "true");
-            var userId = localStorage.getItem('userId');
-            var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
-            var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + userId));
-            var userCurrentStage = localStorage.getItem("currentStage");            
-            var messagesToRead = userCurrentStage * 2;
-            $scope.senderId = userId;
-            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            $scope.currentMessage = "";
-            $scope.setToolbar($location.$$path,"Cabina de Soporte");
-            $rootScope.showFooter = false; 
-            $rootScope.showFooterRocks = false;
-            $rootScope.showStage1Footer = false;
-            $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false; 
-            var interval = -1;
-            moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                
-            if ($location.hash() == 'top') {                
-            $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
-                $anchorScroll();
-            } 
-            else 
-            {                  
-                console.log("setInterval, 60000");
-                interval = setInterval(getMessages,60000);                                    
-            }
+                var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
+                var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + currentUser.userId));
+                var userCurrentStage = localStorage.getItem("currentStage");
+                var messagesToRead = userCurrentStage * 2;
+                $scope.senderId = currentUser.userId;
+                $scope.currentMessage = "";
+                $scope.setToolbar($location.$$path, "Cabina de Soporte");
 
+                $scope.isDisabled = true;
+                var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
 
-            $(".typing-section textarea").keypress(function() {
-                $(".typing-section textarea").focus();
-            });
+                if ($routeParams.moodleid) {
+                    var activityIdentifier = parseInt($routeParams.moodleid); //Call this View with a moodleid parameter
+                    getContentResources(activityIdentifier);
+                    var treeActivity = getActivityByActivity_identifier(activityIdentifier, _usercourse);  //Get activity object
+                    console.log("Activity / Coursemodule Id / Status : " + activityIdentifier + "/" + treeActivity.coursemoduleid + "/" + treeActivity.status);
 
+                    $scope.resetActivityBlockedStatus(); //Copies last version of activity blocked status into model variable
 
-            function getUserRefreshChatCallback() {
-                
-            $scope.$emit('HidePreloader'); //hide preloader
-                $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-                validateCabinaDeSoporte();
-
-                setTimeout(function() {
-                    $anchorScroll();
-                }, 1000);                
-            }
-
-
-            function validateCabinaDeSoporte(){                
-                 
-                var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + userId);
-                var zone = '/ZonaDeVuelo';                                                            
-
-                if(userCurrentStage == 2){
-                    zone = '/ZonaDeNavegacion';                                    
-                } 
-                else if (userCurrentStage == 3){
-                    zone = '/ZonaDeAterrizaje';                                    
-                }
-                if(!finishCabinaSoporte){
-                    if(_startedActivityCabinaDeSoporte) {
-                    var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);    
-
-                        if (!currentActivity.status) {
-                            var dateStarted = new Date(_startedActivityCabinaDeSoporte.datestarted * 1000);
-                            
-                            var latestMessages =  _.filter($scope.messages, function(msg) {
-                                return (new Date(msg.messagedate)) > dateStarted;
-                            });
-                            
-                            var latestCoachAndSenderMessages = 0;
-                            for(var m = 0; m < latestMessages.length; m++) {
-                                var message = latestMessages[m];
-                                
-                                if(message.messagesenderid == $scope.senderId) {
-                                    var nextMessage = (m + 1) < latestMessages.length ? latestMessages[m + 1] : null;
-                                    
-                                    if(nextMessage && nextMessage.messagesenderid != $scope.senderId) {
-                                        latestCoachAndSenderMessages++;
-                                    }
-                                }
-                            }
-
-                            if (latestCoachAndSenderMessages >= 2) {
-                                clearInterval(interval);
-                                localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
-                                _setLocalStorageItem("finishCabinaSoporte/" + userId, _startedActivityCabinaDeSoporte.activity_identifier);
-                                $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
-                            }
-                        }   
-                    }                
-                }
-                else{                    
-                    $location.path(zone +'/CabinaDeSoporte/' + finishCabinaSoporte);
-                }
-            }            
-
-            function getMessages() {                
-                    
-                $scope.validateConnection(function() {
-                    
-                    var existingInterval = localStorage.getItem('Interval');
-                    if($location.$$path != "/Chat"){
-                        //Necesitamos volver a poner en marcha el refresh de notificaciones del chat
-                        if(!existingInterval){       
-                            clearInterval(interval);
-                            interval = setInterval(getUserChat,180000);          
-                            _setLocalStorageItem('Interval', interval);
-                        }                    
-                    } else {
-                        //Si ya existe un intervalo hay que borrarlo                    
-                       if(existingInterval) {
-                           clearInterval(parseInt(existingInterval));
-                           ClearLocalStorage("Interval");
-                       }                
-
-                        moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                                                                                            
+                    if (!$rootScope.activityBlocked[activityIdentifier].disabled && treeActivity.status === 0) { //disabled = false for Cabina de Soporte in Stage 1.
+                        $scope.isDisabled = false;  //Button "CONTINUAR" will be available.
                     }
-                    
-                }, function() {});
-                    
-            }   
-            
-            $scope.back = function () {
-                var userCurrentStage = localStorage.getItem("currentStage");              
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4');
-            };
+                }
 
-            $scope.sendMessage = function() {
-                    
-                $scope.validateConnection(function() {
-                    
-                    if($scope.currentMessage.trim() != "") {                    
-                        triggerAndroidKeyboardHide();
-     
-                        var newMessage = {
-                        messagetext: $scope.currentMessage,
-                        messagesenderid: $scope.senderId,                    
-                        messagedate: new Date()
-                        };
-                    
-                        /* time out to avoid android lag on fully hiding keyboard */
-                        $timeout(function() {
-                            $scope.messages.push(newMessage);
-                            $scope.currentMessage = "";
-                            var newMessages = JSON.stringify($scope.messages);                
-                            _setLocalStorageItem('userChat',newMessages);
+                //Get Messages From Server.
+                moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
+
+                if ($location.hash() == 'top') {
+                    $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
+                    $anchorScroll();
+                }
+
+                $(".typing-section textarea").keypress(function () {
+                    $(".typing-section textarea").focus();
+                });
+
+                function getUserRefreshChatCallback() {
+                    $timeout(function () {
+                        $scope.$emit('HidePreloader'); //hide preloader
+                        $scope.messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
+
+                        localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");   //Turn-off Chat warning popup.
+
+                        if ($location.hash() == 'top') {
+                            $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
                             $anchorScroll();
-                            
-                            moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
-                        }, 1000);
-                    }                
-                    
-                    
-                }, offlineCallback);        
-            };
-            
-            function getUserChat() {     
-                       
-                $scope.validateConnection(function() {
-                    
-                    moodleFactory.Services.GetUserChat(_getItem("userId"), currentUser.token, function() {
-                        
-                        var chat = JSON.parse(localStorage.getItem('userChat'));
-                        var userId = localStorage.getItem("userId");
-                        var messagesFlow = [];
-                        var messagesInterchange = 0;
-                        var messagesToRead = _getItem("currentStage") * 2;
-                        
-                        var chatAmount = _.countBy(chat,function(messages){
-                                messagesFlow.push(messages.messagesenderid != userId);
-                                return messages.messagesenderid != userId;
-                            });
-                                                        
-                        if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                            _setLocalStorageItem('chatRead',"false");
                         }
-    
-                        _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                        
-                    }, errorCallback, true);                
-                    
-                    
-                }, function() {});
-                           
-                                   
-            }
-            
-            function getUserChatCallback() {                
-            }
-            
-            function errorCallback() {   
+                    }, 100);
+                }
+
+                $scope.goToCloseScreen = function () {
+
+                    var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + currentUser.userId);
+                    var zone = '/ZonaDeVuelo';
+
+                    if (userCurrentStage == 2) {
+                        zone = '/ZonaDeNavegacion';
+                    }
+
+                    if (userCurrentStage == 3) {
+                        zone = '/ZonaDeAterrizaje';
+                    }
+
+                    if (!finishCabinaSoporte) {
+                        console.log("_startedActivityCabinaDeSoporte = " + _startedActivityCabinaDeSoporte);
+                        if (_startedActivityCabinaDeSoporte) {
+                            var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);
+
+                            if (!currentActivity.status) {//The activity has not been finished.
+                                console.log("...Finishing Cabina de Soporte");
+                                localStorage.removeItem("startedActivityCabinaDeSoporte/" + currentUser.userId);
+                                _setLocalStorageItem("finishCabinaSoporte/" + currentUser.userId, _startedActivityCabinaDeSoporte.activity_identifier);
+                                $location.path(zone + '/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
+                            }
+                        }
+                    } else {
+                        console.log("ELSE");
+                        $location.path(zone + '/CabinaDeSoporte/' + finishCabinaSoporte);
+                    }
+                };
+
+                function errorCallback() { }
             }
 
-            function triggerAndroidKeyboardHide() {
-                angular.element('#chatMessages').trigger('tap');
-                $anchorScroll();
+
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    _loadedResources = true;
+                    $scope.setToolbar($location.$$path, data.node.tool_bar_title);
+                    $scope.title = data.node.chat_title;
+                    $scope.welcome = data.node.chat_welcome;
+                    $scope.description = data.node.chat_instructions;
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
+
+                }, function () {
+                    _loadedResources = true;
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
+                }, false);
             }
-                
-        }
         }
     ]);

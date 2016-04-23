@@ -12,7 +12,8 @@ angular
         '$anchorScroll',
         '$modal',
         'IntervalFactory',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
+        'SignalRFactory',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory, SignalRFactory) {
             _timeout = $timeout;
             _httpFactory = $http;
             $scope.scrollToTop();
@@ -59,42 +60,8 @@ angular
 
             function loadQuizesAssets(userId, userToken) {
                 $scope.$emit('ShowPreloader');
-
-                var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
-                var i;
-                var parentActivity;
-                var childActivity = null;
-
-                for (i = 0; i < quizIdentifiers.length; i++) {
-
-                    parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
-
-                    if (parentActivity != null) {
-
-                        if (parentActivity.activities) {//The activity HAS a "child" activity.
-                            childActivity = parentActivity.activities[0];
-                            $scope.coursemoduleid = childActivity.coursemoduleid;
-                            $scope.activityname = childActivity.activityname;
-                            $scope.activity_status = childActivity.status;
-
-                        } else {//The activity has no "child" activity
-                            $scope.coursemoduleid = parentActivity.coursemoduleid;
-                            $scope.activityname = parentActivity.activityname;
-                            $scope.activity_status = parentActivity.status;
-                        }
-
-                        if ($scope.activity_status === 1) {//If the activity is currently finished.
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, function() {}, function() {}, true);
-
-                        } else {//The activity HAS NOT BEEN FINISHED.
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, userToken, function() {}, function() {}, true);
-                        }
-
-                    } else {
-                        $location.path('/');
                     }
-                }
-            }
 
             $scope.loadCredentials = function () {
 
@@ -209,6 +176,12 @@ angular
                         _setId(data.id);
 
                         _loadDrupalResources();
+                                                                        
+                        $timeout(
+                            function () {
+                                loginCordova();
+                            }, 1000);
+
                         $rootScope.OAUTH_ENABLED = false;
 
                         //Run queue
@@ -224,7 +197,7 @@ angular
 
                                     //Load Quizzes assets
                                     loadQuizesAssets(data.id, data.token);
-                                    GetExternalAppData();
+                                    //GetExternalAppData();
 
                                     $timeout(
                                     function () {
@@ -269,6 +242,22 @@ angular
                 $scope.validateConnection(loginWithFacebookConnectedCallback, offlineCallback);
             };
 
+            
+            function loginCordova() {
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                if (currentUser && currentUser.token) {
+                    var objectToken = {
+                        moodleAPI: API_RESOURCE.format(''),
+                        moodleToken: currentUser.token
+                    };
+                
+                    cordova.exec(function () {
+                        console.log("success");
+                        }, function () {
+                            },"CallToAndroid", "login", [objectToken]);
+                 }
+            }
+            
             function loginWithFacebookConnectedCallback() {
                 $scope.$emit('ShowPreloader');
                 //$location.path('/ProgramaDashboard');                
@@ -294,7 +283,8 @@ angular
                 $scope.currentUserModel.token = userFacebook.token;
                 $scope.currentUserModel.userId = userFacebook.id;
 
-                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);                
+
                 _setId(userFacebook.id);
 
                 //Run queue
@@ -314,7 +304,7 @@ angular
 
                             //Load Quizzes assets
                             loadQuizesAssets(userFacebook.id, userFacebook.token);
-                            GetExternalAppData();
+                            //GetExternalAppData();
 
                             $timeout(
                                 function () {
@@ -355,7 +345,7 @@ angular
                     $scope.$emit('HidePreloader');
                 }, 1);
             }
-
+            /*
             var GetExternalAppData = function () {
                 var user = $scope.currentUserModel.userId;
                 var token = $scope.currentUserModel.token;
@@ -381,7 +371,8 @@ angular
                     }
                 }
             };
-            
+            */
+                        
             
             if(localStorage.getItem("offlineConnection") == "offline") {
                 $timeout(function(){

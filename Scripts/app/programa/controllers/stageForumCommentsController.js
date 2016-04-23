@@ -220,8 +220,8 @@ angular
             var checkForumProgress = function(callback){
                 
                 var historicalDiscussions = getForumExtraPointsCounter($scope.currentDiscussionsIds);
-                var historicalDiscussionsFinished = _.filter(historicalDiscussions.discussions, function(hd){ return hd.total >= 2; });
-                
+                var historicalDiscussionsFinished = _.filter(historicalDiscussions.discussions, function(hd){ return hd.total >= 1; });
+
                 var isActivityFinished = (historicalDiscussionsFinished.length === $scope.currentDiscussionsIds.length);
                 var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
                                             
@@ -241,7 +241,7 @@ angular
                     if (forumData.totalExtraPoints < 11) {
                          _.each(historicalDiscussions.discussions, function(elem, index, list) {
                             if (parseInt(elem.total) > 0) {
-                                extraPointsCounter += (parseInt(elem.total) - 2);
+                                extraPointsCounter += (parseInt(elem.total) - 1);
                             }
                         });
                          
