@@ -77,7 +77,7 @@ angular
                 
                }
               }
-            };
+            }
 
             var assignCourseModuleId = function(asyncRequest, data){
               $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = 
@@ -129,7 +129,7 @@ angular
                   "alias": $scope.user.username,
                   "actividad": "Reto múltiple",
                   "pathImagen": "",
-                  "actividadTerminada": ($scope.completedActivities.length == ($scope.retoMultipleActivities.length) ? "Si" : "No"),
+                  "actividadTerminada": ($scope.completedActivities.length == $scope.retoMultipleActivities.length ? "Si" : "No"),
                   "subactividades": []
                 };
                 _.each($scope.retoMultipleActivities, function(localActivity){
