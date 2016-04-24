@@ -1387,28 +1387,28 @@ angular
                                         if (!arraysAreEqual($scope.model.studies, originalProfile.studies)) {
                                             edited = true;
                                         }
-                                        if ($scope.model.country !== originalProfile.country) {
+                                        if ($scope.model.address.country !== originalProfile.address.country) {
                                             edited = true;
                                         }
-                                        if ($scope.model.city !== originalProfile.city) {
+                                        if ($scope.model.address.city !== originalProfile.address.city) {
                                             edited = true;
                                         }
-                                        if ($scope.model.town !== originalProfile.town) {
+                                        if ($scope.model.address.town !== originalProfile.address.town) {
                                             edited = true;
                                         }
-                                        if ($scope.model.postalCode !== originalProfile.postalCode) {
+                                        if ($scope.model.address.postalCode !== originalProfile.address.postalCode) {
                                             edited = true;
                                         }
-                                        if ($scope.model.street !== originalProfile.street) {
+                                        if ($scope.model.address.street !== originalProfile.address.street) {
                                             edited = true;
                                         }
-                                        if ($scope.model.num_ext !== originalProfile.num_ext) {
+                                        if ($scope.model.address.num_ext !== originalProfile.address.num_ext) {
                                             edited = true;
                                         }
-                                        if ($scope.model.num_int !== originalProfile.num_int) {
+                                        if ($scope.model.address.num_int !== originalProfile.address.num_int) {
                                             edited = true;
                                         }
-                                        if ($scope.model.colony !== originalProfile.colony) {
+                                        if ($scope.model.address.colony !== originalProfile.address.colony) {
                                             edited = true;
                                         }
                                         if (!arraysAreEqual($scope.model.phones, originalProfile.phones)) {
@@ -1551,12 +1551,12 @@ angular
                             }
                         }
 
-                        console.log("Mis Cualidades: " + quizMisCualidades);
+
                         var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         // :::::::::: If "Mis Cualidades" section has been modified, make check.
                         if (quizMisCualidades) {
-                            console.log("Mis Cualidades Edited!!");
+
                             var parentActivity = getActivityByActivity_identifier(1005);
                             var activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
 
@@ -1664,9 +1664,9 @@ angular
                         }
 
                         //If:::::::::: "Mis Gustos" section has been modified, save.
-                        console.log("Mis Gustos: " + quizMisGustos);
+
                         if (quizMisGustos) {
-                            console.log("Mis Gustos Edited!!");
+
                             var parentActivity = getActivityByActivity_identifier(1006);
                             var activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
 
@@ -1935,13 +1935,6 @@ angular
                                 $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 0});
                             }
                         } else { //The subsection has been previously completed.
-
-                            /* This does not seem necessary...
-                             if (!showResultsPage && activity.activity_identifier == $scope.origin) {
-                             showResultsPage = true;
-                             }
-                             */
-
                             $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 1});
                         }
                     }

@@ -1371,7 +1371,7 @@
                                         }
                                     });
                                 }
-                                if (queue.data.data.hasfilecontent) {
+                                if (queue.data && queue.data.data && queue.data.data.hasfilecontent) {
                                     encodeImageWithUri(queue.data.data.imageuri, queue.data.data.datatype, function(b64){
                                         console.log('imageencodedsuccessfully')
                                         queue.data.data.filecontent = b64;
