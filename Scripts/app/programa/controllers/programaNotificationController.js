@@ -20,24 +20,72 @@ angular
             $rootScope.showStage3Footer = false;
             $scope.posts = new Array();
             $scope.showAllCommentsByPost = new Array();
-                                                
-            var userNotifications = JSON.parse(localStorage.getItem("notifications"));
-                                
-            $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });
+            $scope.notification = [];
             
-            if ($scope.notification && $scope.notification.postid) {
-                //request al servicio de post;
-                var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-                moodleFactory.Services.GetAsyncDiscussionDetail($scope.notification.postid,currentUser.token,function(data){
-                    var posts = data.posts;
-                    posts.forEach(initializeCommentsData);
-                    },function(data){},true );                
+            var userNotifications = JSON.parse(localStorage.getItem("notifications"));
+            $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
+            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");
+            var userId = _getItem("userId");
+                        
+            function initialLoading(){
+                $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });
+                getPost();                
             }
+            
+            function getPost() {
+                if (!$scope.notification) {
+                    getUserNotifications($scope.usercourse.courseid);
+                    return;
+                }
+                
+                if ($scope.notification && $scope.notification.postid) {
+                   moodleFactory.Services.GetAsyncDiscussionDetail($scope.notification.postid, $scope.user.token,function(data){
+                        var posts = data.posts;
+                        posts.forEach(initializeCommentsData);
+                    },function(data){},true );
+                }
+            }
+            
+            function getUserNotifications(courseid) {
+                
+                
+                moodleFactory.Services.GetUserNotification(userId, courseid, $scope.user.token, function () {
+                    var userNotifications = JSON.parse(localStorage.getItem("notifications"));
+                    $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });
+                    _readNotification(userId, $routeParams.id, userNotifications);
+                    getPost();
+                }, function(){}, true);
+            }
+            
+            initialLoading();
             
             $scope.showPreviousComments = function(postId) {
             
                 $scope.showAllCommentsByPost['id' + postId] = 1000000;
             };
+            
+            var _readNotification = function (currentUserId, currentNotificationId, userNotifications) {
+                
+                var seen_date_now = new Date();
+                for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
+                    if (userNotifications[indexNotification].usernotificationid == currentNotificationId) {
+                        userNotifications[indexNotification].seen_date = seen_date_now;
+                    }
+                }
+                
+                _setLocalStorageJsonItem("notifications", userNotifications);
+                
+                var data = {                    
+                    notificationid: currentNotificationId,
+                    seen_date: seen_date_now                    
+                };
+            
+                moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
+                    cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
+                }, function () {
+                },true);
+            };
+            
             
             
             var initializeCommentsData = function(element, index, array){
