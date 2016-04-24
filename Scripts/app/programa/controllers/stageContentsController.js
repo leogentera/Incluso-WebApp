@@ -466,7 +466,7 @@ angular
                                     profile.hasRequiredApps = true;
                                     moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,
                                     function (data) {},
-                                    function (data) {});
+                                    function (data) {},true);
                                 }
                                 $modalInstance.dismiss('cancel');
                             };
