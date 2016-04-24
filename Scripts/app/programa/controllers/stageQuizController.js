@@ -245,10 +245,10 @@ angular
                     case 2001:  //Expl. Inicial
                         owlIndex = 0;
                         break;
-                    case 2009:  //Tus Ideas
+                    case 2007:  //Tus Ideas
                         owlIndex = 2;
                         break;
-                    case 2025:  //1, 3 y 5
+                    case 2016:  //1, 3 y 5
                         owlIndex = 4;
                         break;
                     case 2023:  //Expl. Final
