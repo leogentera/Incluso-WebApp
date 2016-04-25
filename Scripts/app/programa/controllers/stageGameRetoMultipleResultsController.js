@@ -74,7 +74,7 @@ angular
                     for (i = 0; i < $scope.aFortalecer.length; i++) {
 
                         switch ($scope.aFortalecer[i].name) {
-                            case "Linguística":
+                            case "Lingüística":
                                 $scope.aFortalecer[i].description = $scope.contentResources.mul_cha_res_intel_content[7].safe_value;
                                 break;
                             case "Matemática":
