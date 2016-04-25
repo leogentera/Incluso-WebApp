@@ -1356,7 +1356,7 @@ angular
 
                         for (i = 0; i < $scope.logOfSections.length; i++) {
                             //If the user just visited some previously finished activity...
-                            if ($scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 && $scope.logOfSections[i].points == 0 && $scope.logOfSections[i].status == 1) {
+                            if ($scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 && $scope.logOfSections[i].points == 0) {
                                 //Recover original Profile data from LS...
                                 var originalProfile = JSON.parse(localStorage.getItem("originalProfile/" + $scope.userId));
 
@@ -1421,7 +1421,7 @@ angular
                                             edited = true;
                                         }
 
-                                        if (edited) {
+                                        if (edited && $scope.logOfSections[i].status == 1) {
                                             $scope.logOfSections[i].visited = true;
                                             showResultsPage = true;
                                             edited = false;
@@ -1466,7 +1466,7 @@ angular
                                             edited = true;
                                         }
 
-                                        if (edited) {
+                                        if (edited && $scope.logOfSections[i].status == 1) {
                                             $scope.logOfSections[i].visited = true;
                                             showResultsPage = true;
                                             edited = false;
@@ -1505,7 +1505,7 @@ angular
                                             edited = true;
                                         }
 
-                                        if (edited) {
+                                        if (edited && $scope.logOfSections[i].status == 1) {
                                             $scope.logOfSections[i].visited = true;
                                             showResultsPage = true;
                                             edited = false;
@@ -1538,7 +1538,7 @@ angular
                                             edited = true;
                                         }
 
-                                        if (edited) {
+                                        if (edited && $scope.logOfSections[i].status == 1) {
                                             $scope.logOfSections[i].visited = true;
                                             showResultsPage = true;
                                             edited = false;
@@ -1551,11 +1551,10 @@ angular
                             }
                         }
 
-
                         var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        // :::::::::: If "Mis Cualidades" section has been modified, make check.
-                        if (quizMisCualidades) {
+
+                        if (quizMisCualidades) {// :::::::::: If "Mis Cualidades" section has been modified, make check.
 
                             var parentActivity = getActivityByActivity_identifier(1005);
                             var activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
@@ -1663,9 +1662,7 @@ angular
                             }
                         }
 
-                        //If:::::::::: "Mis Gustos" section has been modified, save.
-
-                        if (quizMisGustos) {
+                        if (quizMisGustos) {//If:::::::::: "Mis Gustos" section has been modified, save.
 
                             var parentActivity = getActivityByActivity_identifier(1006);
                             var activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
@@ -1847,7 +1844,6 @@ angular
                     var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     $scope.userCourse = usercourse;
-                    /**/
                     var sectionName, sectionId;
                     showResultsPage = true; //Show page 12 for Final Results.
 
