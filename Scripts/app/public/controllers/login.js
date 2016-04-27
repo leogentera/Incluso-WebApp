@@ -34,6 +34,8 @@ angular
                 }
             };
 
+            $scope.currentVersion = getcurrentVersion();
+            
             $scope.currentUserModel = {
                 token: "",
                 userId: ""
@@ -150,6 +152,8 @@ angular
                 }, offlineCallback);
             };
 
+            
+            
             function loginConnectedCallback() {
                 // reflect loading state at UI
                 

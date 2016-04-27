@@ -868,6 +868,7 @@
                     courseid: activities[0].courseid,
                     firsttime: activities[0].firsttime,
                     max_resources: activities[0].max_resources,
+                    contentResources: activities[0].resources_required,
                     globalProgress: 0,
                     stages: _.filter(activities, function (a) {
                         return a.parentsection == activities[0].section && a.section != activities[0].section && a.activity_type == 'ActivityManager'
@@ -1371,7 +1372,7 @@
                                         }
                                     });
                                 }
-                                if (queue.data.data.hasfilecontent) {
+                                if (queue.data && queue.data.data && queue.data.data.hasfilecontent) {
                                     encodeImageWithUri(queue.data.data.imageuri, queue.data.data.datatype, function(b64){
                                         console.log('imageencodedsuccessfully')
                                         queue.data.data.filecontent = b64;
