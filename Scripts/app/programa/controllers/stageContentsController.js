@@ -222,7 +222,7 @@ angular
                   starsMandatory += 50;               
                 }
                 }
-                    if ($scope.statusObligatorios >= 5 && $scope.fuenteDeEnergia.status == 0) {
+                    if ($scope.statusObligatorios >= $scope.fuenteDeEnergia.resources_required && $scope.fuenteDeEnergia.status == 0) {
                         $scope.currentPage = 2;
               }               
               } 
@@ -267,7 +267,7 @@ angular
                                     if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                         $scope.statusObligatorios += 1;
                     starsMandatory += 50;    
-                                        if ($scope.statusObligatorios >= 5 && !$scope.fuenteDeEnergia.status) {
+                                        if ($scope.statusObligatorios >= $scope.fuenteDeEnergia.resources_required && !$scope.fuenteDeEnergia.status) {
                                             assingStars(true, $scope.fuenteDeEnergia.coursemoduleid, $scope.fuenteDeEnergia.points);
                       $scope.navigateToPage(2);
                     }                  
