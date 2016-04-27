@@ -1848,6 +1848,16 @@ function encodeImageWithUri(imageUri, datatype, callback) {
     img.src = imageUri;
 }
 
+function getcurrentVersion() {  
+    var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+    var localVersion = "V-TEST";
+    if (deviceVersion && deviceVersion.localVersion) {
+      localVersion = deviceVersion.localVersion;
+    }
+    return localVersion;
+}
+
+
 /* Waits until page is loaded */
 $(document).ready(function(){
     setTimeout(function() {
