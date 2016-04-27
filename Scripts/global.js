@@ -1,6 +1,4 @@
 //global variables and functions
-
-
 var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
 //var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
 var DRUPAL_API_RESOURCE = "http://InclusoDrup.cloudapp.net/incluso-drupal/rest/node/{0}"; 
@@ -1845,6 +1843,16 @@ function encodeImageWithUri(imageUri, datatype, callback) {
     };
     img.src = imageUri;
 }
+
+function getcurrentVersion() {  
+    var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+    var localVersion = "V-TEST";
+    if (deviceVersion && deviceVersion.localVersion) {
+      localVersion = deviceVersion.localVersion;
+    }
+    return localVersion;
+}
+
 
 /* Waits until page is loaded */
 $(document).ready(function(){
