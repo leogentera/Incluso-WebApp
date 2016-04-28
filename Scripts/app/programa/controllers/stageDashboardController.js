@@ -254,7 +254,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: false, //$scope.animationsEnabled,
                     templateUrl: 'OpeningStageModal.html',
-                    controller: 'OpeningStageController',
+                    controller: 'OpeningStage1',
                     size: size,
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
@@ -473,16 +473,32 @@ angular
 
     $scope.actualMessage = challengeMessage;
 
+}).controller('OpeningStage1', function ($scope, $modalInstance) {//To show Opening Stage Robot
+    drupalFactory.Services.GetContent("3000", function (data, key) {
+
+        if (data.node != null) {
+            $scope.title = data.node.titulo_bienvenida_robot;
+            $scope.message = data.node.robot_stage_welcome;
+        }
+    }, function () {}, false);
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
 }).controller('closingStageController', function ($scope, $modalInstance, $location) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
         $location.path('/ProgramaDashboard');  //Redirect to dashboard inicio.
     };
 
-    $scope.robotMessages = {
-        title: "Cierre Zona de Vuelo",
-        message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
-    };
+    drupalFactory.Services.GetContent("3000", function (data, key) {
+
+        if (data.node != null) {
+            $scope.title = data.node.titulo_cierre_robot;
+            $scope.message = data.node.robot_stage_close;
+        }
+    }, function () {}, false);
 
     $scope.navigateToDashboard = function () {
         $modalInstance.dismiss('cancel');
