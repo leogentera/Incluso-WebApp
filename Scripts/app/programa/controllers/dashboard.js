@@ -1,5 +1,5 @@
 angular
-    .module('incluso.programa.dashboard', [])
+    .module('incluso.programa.dashboard', ['ngSanitize'])
     .controller('programaDashboardController', [
         '$q',
         '$scope',
@@ -125,7 +125,7 @@ angular
             $scope.navigateToStage = function () {
                 //Check if first time with course
                 if ($scope.usercourse.firsttime) { // 1 (true) : it is first time; 0 : it is not firsttime
-                    $scope.openModal();
+                    $scope.openModal();console.log("Modal!!");
                     //Update firsttime value
                     $scope.updateProgramFirstTime();
                 }
@@ -434,11 +434,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'programWelcome.html',
-                    controller: function ($scope, $modalInstance) {
-                        $scope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
-                        };
-                    },
+                    controller: 'WelcomeAboard',
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
@@ -462,7 +458,6 @@ angular
 
             }
 
-
             $scope.openTermsModal = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
@@ -484,4 +479,19 @@ angular
         }])
     .controller('videoCollapsiblePanelController', function ($scope) {
         $scope.isCollapsed = false;
+    })
+    .controller('WelcomeAboard', function ($scope, $modalInstance) {//To show Inclubot from CONTINUAR MISION button
+        drupalFactory.Services.GetContent("robot-inclubot", function (data, key) {
+
+            if (data.node != null) {
+                $scope.title = data.node.titulo;
+                $scope.message = data.node.mensaje;
+            }
+        }, function () {}, false);
+
+        $scope.cancel = function () {
+            $scope.$emit('ShowPreloader');
+            $modalInstance.dismiss('cancel');
+        };
+
     });

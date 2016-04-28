@@ -147,11 +147,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'programWelcome.html',
-                    controller: function ($scope, $modalInstance) {
-                        $scope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
-                        };
-                    },
+                    controller: 'WelcomeAboardFromMenu',
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
@@ -387,4 +383,17 @@ angular
 
                 }, 100);                        
             }
-        } ]);
+        } ]).controller('WelcomeAboardFromMenu', function ($scope, $modalInstance) {//To show Inclubot from MENU.
+    drupalFactory.Services.GetContent("robot-inclubot", function (data, key) {
+
+        if (data.node != null) {
+            $scope.title = data.node.titulo;
+            $scope.message = data.node.mensaje;
+        }
+    }, function () {}, false);
+
+    $scope.cancel = function () {
+        $scope.$emit('ShowPreloader');
+        $modalInstance.dismiss('cancel');
+    };
+});
