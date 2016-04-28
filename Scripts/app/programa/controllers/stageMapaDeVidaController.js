@@ -305,52 +305,32 @@ angular
                     }, 1000);
                 }
             }
-
-            encodeImageUri = function (imageUri, callback) {
-                var c = document.createElement('canvas');
-                var ctx = c.getContext("2d");
-                var img = new Image();
-
-                img.onload = function () {
-                    c.width = this.width;
-                    c.height = this.height;
-                    ctx.drawImage(img, 0, 0);
-
-                    if (typeof callback === 'function') {
-                        var dataURL = c.toDataURL("image/jpg");
-                        callback(dataURL.slice(22, dataURL.length));
-                    }
-
-                };
-
-                img.src = imageUri;
-            };
             
-            //encodeImageUri = function (imageUri, callback) {
-            //    cordova.exec(function (data) {
-            //            callback(data);
-            //        }, function () {
-            //            console.log("Image couldnt be retrieved from cordova");
-            //            var c = document.createElement('canvas');
-            //            var ctx = c.getContext("2d");
-            //            var img = new Image();
-            //
-            //            img.onload = function () {
-            //                c.width = this.width;
-            //                c.height = this.height;
-            //                ctx.drawImage(img, 0, 0);
-            //
-            //                if (typeof callback === 'function') {
-            //                    var dataURL = c.toDataURL("image/jpg");
-            //                    callback(dataURL.slice(22, dataURL.length));
-            //                }
-            //
-            //            };
-            //
-            //            img.src = imageUri;
-            //        }, "CallToAndroid", " getImage", [imageUri]);
-            //    
-            //};
+            encodeImageUri = function (imageUri, callback) {
+                cordova.exec(function (data) {
+                        callback(data);
+                    }, function () {
+                        console.log("Image couldnt be retrieved from cordova");
+                        var c = document.createElement('canvas');
+                        var ctx = c.getContext("2d");
+                        var img = new Image();
+        
+                        img.onload = function () {
+                            c.width = this.width;
+                            c.height = this.height;
+                            ctx.drawImage(img, 0, 0);
+        
+                            if (typeof callback === 'function') {
+                                var dataURL = c.toDataURL("image/jpg");
+                                callback(dataURL.slice(22, dataURL.length));
+                            }
+        
+                        };
+        
+                        img.src = imageUri;
+                    }, "CallToAndroid", " getImage", [imageUri]);
+                
+            };
 
             $scope.saveQuiz = function (activity, quiz, userCourseUpdated, parentStatus) {
                 var results = {
