@@ -29,7 +29,7 @@ angular
                         
             function initialLoading(){
                 $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });
-                getPost();                
+                getPost();
             }
             
             function getPost() {
@@ -47,8 +47,7 @@ angular
             }
             
             function getUserNotifications(courseid) {
-                
-                
+
                 moodleFactory.Services.GetUserNotification(userId, courseid, $scope.user.token, function () {
                     var userNotifications = JSON.parse(localStorage.getItem("notifications"));
                     $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });

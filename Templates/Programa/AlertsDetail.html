@@ -41,7 +41,9 @@
                 </div>
               </div>
             </div>              
-            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> <span ng-hide="p.likes < 2" >jóvenes les</span><span ng-hide="p.likes >= 2" >joven le</span>  gusta esto
+            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes.length || 0}}</span>
+              <span ng-hide="p.likes.count < 2" >jóvenes les</span>
+              <span ng-hide="p.likes.count >= 2" >joven le</span>  gusta esto
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
