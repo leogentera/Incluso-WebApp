@@ -189,7 +189,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: false,//$scope.animationsEnabled,
                     templateUrl: 'OpeningStageModal.html',
-                    controller: 'OpeningStageController',
+                    controller: 'OpeningStage2',
                     size: size,
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
@@ -402,16 +402,32 @@ angular
 
         $scope.actualMessage = challengeMessage;
 
+    }).controller('OpeningStage2', function ($scope, $modalInstance) {//To show Opening Stage Robot
+        drupalFactory.Services.GetContent("2000", function (data, key) {
+
+            if (data.node != null) {
+                $scope.title = data.node.titulo_bienvenida_robot;
+                $scope.message = data.node.robot_stage_welcome;
+            }
+        }, function () {}, false);
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+
     })
     .controller('closingStageTwoController', function ($scope, $modalInstance, $location) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
 
-        $scope.robotMessages = {
-            title: "Zona de Navegación",
-            message: "¡Muy bien! Has reunido los elementos necesarios para salir de la lluvia de asteroides. Recuerda, creer en ti y en todo lo que puedes lograr, te llevará a avanzar en el camino que has elegido ¡Adelante!"
-        };
+        drupalFactory.Services.GetContent("2000", function (data, key) {
+
+            if (data.node != null) {
+                $scope.title = data.node.titulo_cierre_robot;
+                $scope.message = data.node.robot_stage_close;
+            }
+        }, function () {}, false);
 
         $scope.navigateToDashboard = function () {
             $modalInstance.dismiss('cancel');

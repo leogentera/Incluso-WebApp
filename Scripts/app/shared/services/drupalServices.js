@@ -68,7 +68,8 @@
         "systemRequirements": 98,
         "fuenteDeEnergiaRequirements": 99,
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
-        "BadgeForumRobot": 101 /*General - Robot al ganar el badge de foros*/
+        "BadgeForumRobot": 101, /*General - Robot al ganar el badge de foros*/
+        "robot-inclubot" : 56 /*Dashboard Programa - Robot Inclubot*/
     };
     
 

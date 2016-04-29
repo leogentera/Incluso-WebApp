@@ -118,12 +118,8 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">Introducci&oacute;n Zona de Vuelo</h3>
-                <p class="txt-renglon centered">
-                    Hemos tenido una falla en el sistema y perdimos algunas piezas, la nave est&aacute; averiada.
-                    Haremos una parada en la zona de vuelo, recupera las piezas necesarias para echar a andar
-                    la nave y continuar el viaje. ¡Buena suerte!
-                </p>
+                <h3 class="subtitle text-center">{{::title}}</h3>
+                <p class="txt-renglon centered">{{::message}}</p>
             </div>
         </div>
     </script>
@@ -152,8 +148,8 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">{{::robotMessages.title}}</h3>
-                <p class="txt-renglon centered">{{::robotMessages.message}}</p>
+                <h3 class="subtitle text-center">{{::title}}</h3>
+                <p class="txt-renglon centered">{{::message}}</p>
             </div>
             <a class="btn btn-primary btn-lg btn-cnt" id="continuar" style="margin-bottom: 30px;" ng-click="navigateToDashboard()">CONTINUAR</a>
         </div>
