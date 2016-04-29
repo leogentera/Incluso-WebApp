@@ -3336,3 +3336,79 @@
 
 }
 
+/***********************************************************************
+        
+/***********************************************************************
+ $img-thumbnail
+ Description: CSS to represent look of thubmnail images in any place
+************************************************************************/
+.app {
+    .incluso-app {
+        &.content-page-theme{
+            article {     
+                .box-dark {
+                    margin-bottom: 2px;
+                    padding: 1em;
+                    background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+                    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+                    background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                    background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                    background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                    background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );               
+                    -webkit-border-top-left-radius: 5px;
+                    -webkit-border-top-right-radius: 5px;
+                    -moz-border-radius-topleft: 5px;
+                    -moz-border-radius-topright: 5px;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                }   
+                .list-group {
+                    padding: 0px 1em;
+                    background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+                    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+                    background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                    background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                    background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                    background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );               
+                    -webkit-border-bottom-right-radius: 5px;
+                    -webkit-border-bottom-left-radius: 5px;
+                    -moz-border-radius-bottomright: 5px;
+                    -moz-border-radius-bottomleft: 5px;
+                    border-bottom-right-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    .list-item {
+                        width: 100%;
+                        margin: 0px; 
+                        padding: .7em 0px;
+                        border-bottom: 2px solid RGBA(160, 160, 160, 0.15);
+                        background: transparent;
+                        &:last-child {
+                            border: 0px none;
+                        }
+                        figure {
+                            display: inline-flex;
+                            width: 4em;
+                            margin: 0px;
+                        }
+                        .icon-like {
+                            font-size: inherit;
+                        }
+                    }
+                }
+                .img-sm {
+                    img {
+                        width: 100%;        
+                    }
+                }
+                .component {
+                    padding-top: 5vw; 
+                }
+                .actions {
+                    padding-top: 1em;
+                }
+            }
+        }
+    }
+}
