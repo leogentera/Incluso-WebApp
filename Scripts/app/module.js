@@ -24,6 +24,7 @@ angular
         'incluso.programa.profile',
         'incluso.program.systemRequirements',
         'incluso.programa.notificationcontroller',
+        'incluso.programa.notificationlikescontroller',
         'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
@@ -77,6 +78,7 @@ angular
         $http.get('Templates/Juegos/Avatar.html', { cache: true });
         $http.get('Templates/Programa/Alerts.html', { cache: true });
         $http.get('Templates/Programa/AlertsDetail.html', { cache: true });
+        $http.get('Templates/Programa/NotificationLikesByPost.html', { cache: true });
         $http.get('Templates/Programa/MyInterests.html', { cache: true });
         $http.get('Templates/Programa/MyStrengths.html', { cache: true });
         $http.get('Templates/Programa/HallOfFame.html', { cache: true });
@@ -301,15 +303,20 @@ angular
             controller: 'programaNotificationController'
         });
             
-       $routeProvider.when('/SharingExperience', { 
+        $routeProvider.when('/NotificationLikesByPost/:id', {
+            templateUrl: function(params){ return 'Templates/Programa/NotificationLikesByPost.html?id=' + params.id; },
+            controller: 'programaNotificationLikesController'
+        });
+        
+        $routeProvider.when('/SharingExperience', { 
             templateUrl: 'Templates/Programa/sharingexperience.html',
             controller: 'sharingExperienceController'
         });  
 
-       $routeProvider.when('/AlbumIncluso', {
+        $routeProvider.when('/AlbumIncluso', {
             templateUrl: 'Templates/Programa/AlbumIncluso.html',
             controller: 'AlbumInclusoController'
-       });
+        });
 
         $routeProvider.when('/Chat', {
             templateUrl: 'Templates/Chat/index.html',
