@@ -53,13 +53,12 @@ angular
               $scope.retoMultipleActivities = [];
               if ($scope.retosMultipleChallenge) {
                 retoMultipleArray = $scope.retosMultipleChallenge.activities;
-
                 
-                _.each($scope.retosMultipleChallenge.activities, function(x, i){
-                   if(x.activityname.toLowerCase().indexOf("resultados")>=0){
-                        $scope.retosMultipleChallenge.activities.splice(i, 1);
-                     }
-                });
+                var filteredActivities = _.filter($scope.retosMultipleChallenge.activities,function(e){
+                  return (e.activityname.toLowerCase() != "resultados" && e.activityname.toLowerCase() != "puntajes");
+               });
+               
+               $scope.retosMultipleChallenge.activities = filteredActivities;
                 
                for(var i = 0; i < $scope.retosMultipleChallenge.activities.length; i++){
                   var activity = moodleFactory.Services.GetCacheJson("activity/" + $scope.retosMultipleChallenge.activities[i].coursemoduleid);

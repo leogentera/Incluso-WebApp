@@ -125,17 +125,19 @@ angular
                 for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
                     if (userNotifications[indexNotification].usernotificationid == notificationId) {
                         userNotifications[indexNotification].seen_date = seen_date_now;
-                    }else{
-                        
-                    }                    
+                    }
                 }
                 
                 
                 _setLocalStorageJsonItem("notifications", userNotifications);
                 _readNotification(userId,notificationId);
 
-                $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');            
+                
             
+            }
+            
+            var readNotificationCallBack = function(){
+                
             }
             
             var _readNotification = function (currentUserId, currentNotificationId) {
@@ -145,10 +147,23 @@ angular
                     seen_date: seen_date_now                    
                 };
             
-                moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
-                    cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
-                }, function () {
-                },true);
-            };        
+                moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function(){
+                        if (window.mobilecheck()) {
+                            cordova.exec(function () {
+                                    console.log("$scope.navigateTo inside cordova method");
+                                    $scope.navigateTo('/AlertsDetail/' + currentNotificationId, 'null');
+                                }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
+                        }else{
+                            console.log("$scope.navigateTo");
+                            $scope.navigateTo('/AlertsDetail/' + currentNotificationId, 'null');
+                        }
+                    }
+                , function () {},true);
+            };
+            
+            
+            
+            
+            
         }
 ]);
