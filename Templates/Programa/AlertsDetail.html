@@ -41,7 +41,7 @@
                 </div>
               </div>
             </div>              
-            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes.length || 0}}</span>
+            <div class="popularity" ng-show="p.likes != 0" >A <span class="green"><a class="green" ng-click="navigateTo('/NotificationLikesByPost/'+ notification.postid )">{{p.likes.length || 0}}</a></span>
               <span ng-hide="p.likes.count < 2" >jóvenes les</span>
               <span ng-hide="p.likes.count >= 2" >joven le</span>  gusta esto
             </div>
