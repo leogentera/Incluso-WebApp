@@ -1,54 +1,15 @@
 <div class="incluso-app content-page-theme">
     <article class="starway">  
-	    <div class="component">  	
-	    	
-	    	<h3 class="box-dark item-title">Usuarios que les gusta tu publicación</h3>   
-	    	<ul class="list-group green-lantern-theme">
+	    <div class="component">
+	    	<h3 class="box-dark item-title">Usuarios que les gusta tu publicación</h3>
+	    	<ul class="list-group green-lantern-theme" ng-repeat="user in likes">
 	    		<li class="list-item">
 	    			<figure class="img-sm">
-	    				<img src="assets/avatar/default-1.png" alt="Avatar" />
-    				</figure>
-    				<div class="pull-left">
-    					<span>Ana Mendoza</span>
-    				</div>
+						<img ng-src="{{user.picture_post_author != '' ? user.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate : 'assets/avatar/default-2.png'}}"/>
+					</figure>
+    				<div class="pull-left"><span>{{user.username}}</span></div>
     				<span class="icomoon icon-like pull-left no-padding pink"></span>
 	    		</li>
-	    		<li class="list-item">	    		
-                    <figure class="img-sm">
-                        <img src="assets/avatar/default-1.png" alt="Avatar" />
-                    </figure>                
-                    <div class="pull-left">
-                    	<span>Carlos Echeverría</span>
-                    </div>
-                    <span class="icomoon icon-like pull-left no-padding pink">
-                </li>
-	    		<li class="list-item">
-	    			<figure class="img-sm">
-                        <img src="assets/avatar/default-1.png" alt="Avatar" />
-                    </figure>               
-                    <div class="pull-left">
-                    	<span class="">Mayela Gzz.</span>
-                	</div>
-    				<span class="icomoon icon-like pull-left no-padding pink"></span>
-                </li>
-	    		<li class="list-item">
-	    			<figure class="img-sm">
-                        <img src="assets/avatar/default-1.png" alt="Avatar" />
-                    </figure>      
-                    <div class="pull-left">         
-                    	</span>Gabriela Cavazos</span>
-                    </div>
-    				<span class="icomoon icon-like pull-left no-padding pink"></span>
-    			</li>
-	    		<li class="list-item">
-	    			<figure class="img-sm">
-                        <img src="assets/avatar/default-1.png" alt="Avatar" />
-                    </figure>
-                    <div class="pull-left">
-                    	<span>Rogelio Mendoza</span>
-                    </div>
-    				<span class="icomoon icon-like pull-left no-padding pink"></span>
-    			</li>
     		</ul> 	
 	    </div>
 	    <p class="actions component">

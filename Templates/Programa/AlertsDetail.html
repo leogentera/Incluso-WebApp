@@ -10,7 +10,7 @@
         <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')">Regresar</a>
       </p>
     </section>
-    <section class="wall" ng-show="notification.postid != null">
+    <section class="wall txt-renglon" ng-show="notification.postid != null">
       <div id="item{{$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
         <div class="part post">
           <div class="author">
@@ -19,7 +19,7 @@
             <div>
               <a class="user-alias" ng-click="navigateTo('Perfil/' + p.post_autor_id)">{{::p.post_author}} </a>
               <span>publicó:</span>
-              <div>{{::p.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
+              <div>{{::p.created * 1000 | date: "dd MMMM yyyy"}}</div>
             </div>
           </div>
           <div class="block">
@@ -32,16 +32,22 @@
                 <div class="achievement-badge">
                   <figure>
                     <a ng-if="p.attachment.length > 1">
-                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"/>
                     </a>
                     <a ng-if="p.attachment.length == 1" href="{{::p.attachment[0].fileurl + '?token=' + userToken}}">
-                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}" />
                     </a>
                   </figure>
                 </div>
               </div>
             </div>              
-            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> <span ng-hide="p.likes < 2" >jóvenes les</span><span ng-hide="p.likes >= 2" >joven le</span>  gusta esto
+            <div class="popularity" ng-show="p.likes != 0" >A
+              <span class="green">
+                <a class="green" ng-click="navigateTo('/NotificationLikesByPost/'+ notification.postid )">{{p.likes[0].username || ''}}</a>
+              </span>
+              <span ng-hide="p.likes.length  < 2" > y {{p.likes.length}} jóvenes más les </span>
+              <span ng-hide="p.likes.length  != 2" >y otro joven más le </span>
+              <span ng-hide="p.likes.length  != 1" >le </span> gusta esto
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
