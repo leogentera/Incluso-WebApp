@@ -25,6 +25,7 @@ angular
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
             $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");
+            $scope.userToken = $scope.user.token != '' ? $scope.user.token : "";
             var userId = _getItem("userId");
                         
             function initialLoading(){

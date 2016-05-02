@@ -19,7 +19,7 @@
             <div>
               <a class="user-alias" ng-click="navigateTo('Perfil/' + p.post_autor_id)">{{::p.post_author}} </a>
               <span>publicó:</span>
-              <div>{{::p.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
+              <div>{{::p.created * 1000 | date: "dd MMMM yyyy"}}</div>
             </div>
           </div>
           <div class="block">
@@ -32,10 +32,10 @@
                 <div class="achievement-badge">
                   <figure>
                     <a ng-if="p.attachment.length > 1">
-                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"/>
                     </a>
                     <a ng-if="p.attachment.length == 1" href="{{::p.attachment[0].fileurl + '?token=' + userToken}}">
-                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}" />
                     </a>
                   </figure>
                 </div>
