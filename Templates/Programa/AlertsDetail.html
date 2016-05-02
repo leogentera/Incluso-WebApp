@@ -10,7 +10,7 @@
         <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')">Regresar</a>
       </p>
     </section>
-    <section class="wall" ng-show="notification.postid != null">
+    <section class="wall txt-renglon" ng-show="notification.postid != null">
       <div id="item{{$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
         <div class="part post">
           <div class="author">
