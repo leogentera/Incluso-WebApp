@@ -21,6 +21,7 @@ angular
             $scope.posts = new Array();
             $scope.showAllCommentsByPost = new Array();
             $scope.notification = [];
+            $scope.usersLikedCount = "";
             
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
             $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -95,6 +96,13 @@ angular
                 }
                 
                 var existingPost = false;
+                
+                //var userLiked = element.likes.length;                
+                //if (userliked == 1) {
+                //    $scope.usersLiked = element.likes[0].username;
+                //}else if (userLiked > 1) {
+                //    $scope.userLiked = element.likes[0].username + "" + element.likes.length - 1
+                //}
                 
                 for(p = 0; p < $scope.posts.length; p++){
                     if ($scope.posts[p].post_id === element.post_id) {
