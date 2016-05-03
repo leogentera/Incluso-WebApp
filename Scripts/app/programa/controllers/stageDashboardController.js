@@ -1,5 +1,5 @@
 angular
-    .module('incluso.stage.dashboardcontroller', [])
+    .module('incluso.stage.dashboardcontroller', ['ngSanitize'])
     .controller('stageDashboardController', [
         '$q',
         '$scope',
@@ -35,17 +35,21 @@ angular
             }
 
             function errorCallback() {
+                localStorage.setItem("notSendAgain1/" + localStorage.getItem("userId"), "false");   //Restore value.
             }
 
             var fireService = false;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            if ($scope.messages && $scope.messages.length ==  0) {
+            if ($scope.messages && $scope.messages.length == 0) {
                 fireService = true;
             }
 
-            if (!$rootScope.activityBlocked["1002"].disabled && fireService) { //disabled = false for Cabina de Soporte in Stage 1.
-                console.log("******************************************* FIRING CHAT SERVICE STAGE 1");
-                //Put Call to Remote Service.
+            var notSendAgain1 = localStorage.getItem("notSendAgain1/" + localStorage.getItem("userId"));
+
+            if (!$rootScope.activityBlocked["1002"].disabled && fireService && notSendAgain1 == "false") { //disabled = false for Cabina de Soporte in Stage 1.
+                //FIRING CHAT SERVICE STAGE 1
+                //  Put Call to Remote Service.
+
                 $scope.validateConnection(function () {
 
                     var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
@@ -126,7 +130,7 @@ angular
                     messageText += "¡Hoy estas más cerca de la meta para poder lograrlo!\n\n";
                     messageText += "Compartiste tus gustos y cualidades, eso que te hace diferente a los demás ";
                     messageText += "capitanes y hallaste que en lo divertido también hay algo nuevo que descubrir.";
-                    messageText += "Capitán estás a punto de terminar la zona de vuelo.\n\n";
+                    messageText += " Capitán estás a punto de terminar la zona de vuelo.\n\n";
                     messageText += "¡Sigue adelante!";
 
                     var newMessage = {
@@ -138,7 +142,7 @@ angular
                     $timeout(function () {
                         $scope.messages.push(newMessage);
                         _setLocalStorageItem('userChat', JSON.stringify($scope.messages)); //Save to LS.
-
+                        localStorage.setItem("notSendAgain1/" + localStorage.getItem("userId"), "true");   //Not repeat petition.
                         moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
                     }, 1000);
 
