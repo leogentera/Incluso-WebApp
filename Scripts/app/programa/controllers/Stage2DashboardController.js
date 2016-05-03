@@ -1,5 +1,5 @@
 angular
-    .module('incluso.stage.dashboardcontroller2', [])
+    .module('incluso.stage.dashboardcontroller2', ['ngSanitize'])
     .controller('stage2DashboardController', [
         '$q',
         '$scope',
@@ -34,17 +34,20 @@ angular
             }
 
             function errorCallback() {
+                localStorage.setItem("notSendAgain2/" + localStorage.getItem("userId"), "false");   //Restore value.
             }
 
             var fireService = false;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            if ($scope.messages && $scope.messages.length ==  1) {
+            if ($scope.messages && $scope.messages.length == 1) {
                 fireService = true;
             }
 
-            if (!$rootScope.activityBlocked["2022"].disabled && fireService) { //disabled = false for Cabina de Soporte in Stage 1.
-                console.log("******************************************* FIRING CHAT SERVICE STAGE 2");
-                //Put Call to Remote Service.
+            var notSendAgain2 = localStorage.getItem("notSendAgain2/" + localStorage.getItem("userId"));
+
+            if (!$rootScope.activityBlocked["2022"].disabled && fireService && notSendAgain2 == "false") { //disabled = false for Cabina de Soporte in Stage 1.
+                // FIRING CHAT SERVICE STAGE 2
+                //  Put Call to Remote Service.
                 $scope.validateConnection(function () {
                     var currentUser = JSON.parse(localStorage.getItem('CurrentUser')); //Get chat conversations.
                     var messageText = "Hola " + currentUser.firstname + ",\n\n";
@@ -72,7 +75,7 @@ angular
                     $timeout(function () {
                         $scope.messages.push(newMessage);
                         _setLocalStorageItem('userChat', JSON.stringify($scope.messages));
-
+                        localStorage.setItem("notSendAgain2/" + localStorage.getItem("userId"), "true");   //Not repeat petition.
                         moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
                     }, 1000);
 
