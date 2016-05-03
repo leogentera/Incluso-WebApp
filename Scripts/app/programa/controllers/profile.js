@@ -2423,7 +2423,7 @@ angular
 
                 $scope.avatar = function () {
                     //the next fields should match the integration document shared with the game app
-                    if (!$scope.avatarInfo[0]) {
+                    if (!$scope.avatarInfo && !$scope.avatarInfo[0]) {
                         setEmptyAvatar();
                     }
                     var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Ling��stica' : $scope.model.shield));

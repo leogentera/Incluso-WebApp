@@ -222,6 +222,8 @@ angular
                                 leaderboard[lb].profileimageurl = niceImageUrl;
                             });
                         }
+                        
+                       
 
                         $scope.course.leaderboard = leaderboard;
                         
@@ -317,6 +319,8 @@ angular
                                     break;
                                 }
                             }
+                            
+                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){}, function () {}, true);
                             
                         }
 
