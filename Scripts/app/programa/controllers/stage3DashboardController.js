@@ -1,5 +1,5 @@
 angular
-    .module('incluso.stage.dashboardcontroller3', [])
+    .module('incluso.stage.dashboardcontroller3', ['ngSanitize'])
     .controller('stage3DashboardController', [
         '$q',
         '$scope',
@@ -34,16 +34,19 @@ angular
             }
 
             function errorCallback() {
+                localStorage.setItem("notSendAgain3/" + localStorage.getItem("userId"), "false");   //Restore value.
             }
 
             var fireService = false;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            if ($scope.messages && $scope.messages.length ==  2) {
+            if ($scope.messages && $scope.messages.length == 2) {
                 fireService = true;
             }
 
-            if (!$rootScope.activityBlocked["3501"].disabled && fireService) { //disabled = false for Cabina de Soporte in Stage 1.
-                console.log("******************************************* FIRING CHAT SERVICE STAGE 3");
+            var notSendAgain3 = localStorage.getItem("notSendAgain3/" + localStorage.getItem("userId"));
+
+            if (!$rootScope.activityBlocked["3501"].disabled && fireService && notSendAgain3 == "false") { //disabled = false for Cabina de Soporte in Stage 1.
+                // FIRING CHAT SERVICE STAGE 3
                 //Put Call to Remote Service.
                 $scope.validateConnection(function () {
                     var currentUser = JSON.parse(localStorage.getItem('CurrentUser')); //Get chat conversations.
@@ -72,7 +75,7 @@ angular
                     $timeout(function () {
                         $scope.messages.push(newMessage);
                         _setLocalStorageItem('userChat', JSON.stringify($scope.messages));
-
+                        localStorage.setItem("notSendAgain3/" + localStorage.getItem("userId"), "true");   //Not repeat petition.
                         moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
                     }, 1000);
 
