@@ -131,13 +131,8 @@ angular
                 
                 _setLocalStorageJsonItem("notifications", userNotifications);
                 _readNotification(userId,notificationId);
-
-                
+                $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');
             
-            }
-            
-            var readNotificationCallBack = function(){
-                
             }
             
             var _readNotification = function (currentUserId, currentNotificationId) {
@@ -148,15 +143,9 @@ angular
                 };
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function(){
-                        if (window.mobilecheck()) {
-                            cordova.exec(function () {
-                                    console.log("$scope.navigateTo inside cordova method");
-                                    $scope.navigateTo('/AlertsDetail/' + currentNotificationId, 'null');
-                                }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
-                        }else{
-                            console.log("$scope.navigateTo");
-                            $scope.navigateTo('/AlertsDetail/' + currentNotificationId, 'null');
-                        }
+                    cordova.exec(function () {
+                        console.log("$scope.navigateTo inside cordova method");
+                        }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
                     }
                 , function () {},true);
             };
