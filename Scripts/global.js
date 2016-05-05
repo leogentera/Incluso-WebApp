@@ -1381,8 +1381,14 @@ var logout = function ($scope, $location) {
     
     }, function(){});
 
-    //Deleting objects from Quizes
-    ClearLocalStorage("answersQuiz/");
+   clearLocalStorage($location);
+};
+
+
+
+var clearLocalStorage = function(location){
+  
+  ClearLocalStorage("answersQuiz/");
     ClearLocalStorage("otherAnswerQuiz/");
     ClearLocalStorage("activityObject/");
     ClearLocalStorage("owlIndex");
@@ -1427,8 +1433,15 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("UserTalents");
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");
-    $location.path('/');
-};
+    
+    if (location) {
+        location.path('/');
+    }
+
+}
+
+
+
 
 function ClearLocalStorage(startsWith) {
     var myLength = startsWith.length;
