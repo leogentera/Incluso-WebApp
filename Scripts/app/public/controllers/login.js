@@ -233,6 +233,7 @@ angular
                         $scope.$emit('HidePreloader');
                         $scope.$emit('scrollTop');
                         $scope.isLogginIn = false;
+                        clearLocalStorage();
                     });
                 } else {
                     $timeout(function(){
