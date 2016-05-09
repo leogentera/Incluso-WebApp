@@ -286,6 +286,11 @@ angular
                         $scope.activity_status = parentActivity.status;
                     }
 
+                    //Adaptation for the "Sueña" activity
+                    if ($scope.activityname == "Sueña") {
+                        $scope.activityname = "Mi sueño es:";
+                    }
+
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                     var otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + $scope.coursemoduleid));
