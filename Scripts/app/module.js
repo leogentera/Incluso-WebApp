@@ -32,6 +32,7 @@ angular
         'incluso.programa.album',        
         'incluso.programa.sharingExperience',
         'incluso.stage.dashboardcontroller',
+        'incluso.programa.feedbackcontroller',
         
         // TODO: Should be just one controller for all stage dashboards, will merge soon
         'incluso.stage.dashboardcontroller2',
@@ -128,7 +129,8 @@ angular
         $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporte.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html', { cache: true });
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: true });
+        $http.get('Templates/ZonaDeVuelo/Feedback.html', { cache: true });
 
         ///////// Stage 2 //////////
         $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:true});
@@ -472,6 +474,12 @@ angular
             controller: 'stageChatController'
         });
 
+        $routeProvider.when('/ZonaDeVuelo/Feedback', {
+            templateUrl: 'Templates/ZonaDeVuelo/Feedback.html',
+            controller: 'programafeedbackcontroller'
+            
+        });
+        
         $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporteCierre', {
             templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html',
             controller: 'stageMessageController'
@@ -493,6 +501,7 @@ angular
             controller: 'programaEndController'
         });
 
+        
         //Stage 2 - Zona de navegacion
         //TODO Change zona de vuelo route to dashboard, there's a typo and refactor dashboard controller, the typo is there too
         $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId/:challenge', {
