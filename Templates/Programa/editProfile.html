@@ -260,7 +260,7 @@
                                                                 <h5>
                                                                     <span>Estudio {{model.studies.indexOf(s) + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteStudy($index)">
+                                                                            ng-click="deleteItem('studies', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -294,7 +294,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addStudy()">
+                                                            ng-click="addObject('studies')">
                                                         <span class="icomoon icon-plus"></span>Agregar nuevo estudio...
                                                     </button>
                                                 </section>
@@ -450,7 +450,7 @@
                                                                 <h5>
                                                                     <span>Teléfono {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deletePhone($index)">
+                                                                            ng-click="deleteItem('phones', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -478,7 +478,7 @@
                                                     </ul>
 
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addPhone()">
+                                                            ng-click="addObject('phones')">
                                                         <span class="icomoon icon-plus"></span>Agregar número...
                                                     </button>
                                                 </section>
@@ -492,7 +492,7 @@
                                                                     <!-- <span>Red Social {{model.socialNetworks.indexOf(sn) + 1}}</span> -->
                                                                     <span>Red Social {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteSocialNetwork($index)">
+                                                                            ng-click="deleteItem('socialNetworks', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -520,7 +520,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addSocialNetwork()">
+                                                            ng-click="addObject('socialNetworks')">
                                                         <span class="icomoon icon-plus"></span>Agregar nueva red...
                                                     </button>
                                                 </section>
@@ -582,7 +582,7 @@
                                                                     <!-- <span>Familiar Compartamos {{model.familiaCompartamos.indexOf(fc) + 1}}</span>  -->
                                                                     <span>Familiar Compartamos {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteFamiliaCompartamos($index)">
+                                                                            ng-click="deleteItem('familiaCompartamos', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -616,7 +616,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addFamiliaCompartamos()">
+                                                            ng-click="addObject('familiaCompartamos')">
                                                         <span class="icomoon icon-plus"></span>Agregar familiar...
                                                     </button>
                                                 </section>
@@ -678,7 +678,7 @@
                                                                 <h5>
                                                                     <span>Deporte {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteFavoriteSports($index)">
+                                                                            ng-click="removeItem70('favoriteSports', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -686,6 +686,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.favoriteSports[$index]"
+                                                                            ng-change="lookForNinguno('favoriteSports')"
                                                                             ng-options="item for item in favoritSportsList"
                                                                             ng-init=""
                                                                             ng-class="{'selected': model.favoriteSports[$index].length !== 0 }">
@@ -701,7 +702,8 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addFavoriteSports()">
+                                                            ng-click="addItem('favoriteSports')"
+                                                            ng-disabled="disabled.favoriteSports">
                                                         <span class="icomoon icon-plus"></span>Agregar deporte...
                                                     </button>
                                                 </section>
@@ -714,7 +716,7 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteArtisticActivities($index)">
+                                                                            ng-click="removeItem70('artisticActivities', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -722,6 +724,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.artisticActivities[$index]"
+                                                                            ng-change="lookForNinguno('artisticActivities')"
                                                                             ng-options="item for item in artisticActivitiesList"
                                                                             ng-init=""
                                                                             ng-class="{'selected': model.artisticActivities[$index].length != 0}">
@@ -736,7 +739,8 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addArtisticActivities()">
+                                                            ng-click="addItem('artisticActivities')"
+                                                            ng-disabled="disabled.artisticActivities">
                                                         <span class="icomoon icon-plus"></span>Agregar actividad...
                                                     </button>
                                                 </section>
@@ -749,7 +753,7 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteHobbies($index)">
+                                                                            ng-click="removeItem70('hobbies', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -757,6 +761,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.hobbies[$index]"
+                                                                            ng-change="lookForNinguno('hobbies')"
                                                                             ng-options="item for item in cultureList"
                                                                             ng-init=""
                                                                             ng-class="{'selected':  model.hobbies[$index].length != 0}">
@@ -771,7 +776,8 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addHobbies()">
+                                                            ng-click="addItem('hobbies')"
+                                                            ng-disabled="disabled.hobbies">
                                                         <span class="icomoon icon-plus"></span>Agregar actividad...
                                                     </button>
                                                 </section>
@@ -784,7 +790,7 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteSocial($index)">
+                                                                            ng-click="removeItem70('social', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -792,6 +798,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.social[$index]"
+                                                                            ng-change="lookForNinguno('social')"
                                                                             ng-options="item for item in socialList"
                                                                             ng-init=""
                                                                             ng-class="{'selected':  model.social[$index].length != 0}">
@@ -806,7 +813,8 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addSocial()">
+                                                            ng-click="addItem('social')"
+                                                            ng-disabled="disabled.social">
                                                         <span class="icomoon icon-plus"></span>Agregar actividad...
                                                     </button>
                                                 </section>
@@ -819,7 +827,7 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteOthers($index)">
+                                                                            ng-click="removeItem70('emprendedor', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -827,6 +835,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.emprendedor[$index]"
+                                                                            ng-change="lookForNinguno('emprendedor')"
                                                                             ng-options="item for item in othersList"
                                                                             ng-init=""
                                                                             ng-class="{'selected':  model.emprendedor[$index].length != 0}">
@@ -841,7 +850,8 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addOthers()">
+                                                            ng-click="addItem('emprendedor')"
+                                                            ng-disabled="disabled.emprendedor">
                                                         <span class="icomoon icon-plus"></span>Agregar actividad...
                                                     </button>
                                                 </section>
@@ -902,7 +912,7 @@
                                                                 <h5>
                                                                     <span>Habilidad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteTalents($index)">
+                                                                            ng-click="removeItem71('talents', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -910,6 +920,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.talents[$index]"
+                                                                            ng-change="lookForNinguno('talents')"
                                                                             ng-options="item for item in habilitiesList"
                                                                             ng-init=""
                                                                             ng-class="{'selected': model.talents[$index].length != 0}">
@@ -924,7 +935,8 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addTalents()">
+                                                            ng-click="addItem('talents')"
+                                                            ng-disabled="disabled.talents">
                                                         <span class="icomoon icon-plus"></span>Agregar habilidad...
                                                     </button>
                                                 </section>
@@ -937,7 +949,7 @@
                                                                 <h5>
                                                                     <span>Destreza {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteValue($index)">
+                                                                            ng-click="removeItem71('values', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -945,6 +957,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.values[$index]"
+                                                                            ng-change="lookForNinguno('values')"
                                                                             ng-options="item for item in destrezasList"
                                                                             ng-init=""
                                                                             ng-class="{'selected': model.values[$index].length != 0}">
@@ -959,7 +972,8 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addValue()">
+                                                            ng-click="addItem('values')"
+                                                            ng-disabled="disabled.values">
                                                         <span class="icomoon icon-plus"></span>Agregar destreza...
                                                     </button>
                                                 </section>
@@ -972,7 +986,7 @@
                                                                 <h5>
                                                                     <span>Actitud {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteHabilitie($index)">
+                                                                            ng-click="removeItem71('habilities', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -980,6 +994,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.habilities[$index]"
+                                                                            ng-change="lookForNinguno('habilities')"
                                                                             ng-options="item for item in actitudesList"
                                                                             ng-init=""
                                                                             ng-class="{'selected':  model.habilities[$index].length != 0}">
@@ -995,7 +1010,8 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addHabilitie()">
+                                                            ng-click="addItem('habilities')"
+                                                            ng-disabled="disabled.habilities">
                                                         <span class="icomoon icon-plus"></span>Agregar actitud...
                                                     </button>
                                                 </section>
@@ -1059,7 +1075,7 @@
                                                                 <h5>
                                                                     <span>Personaje {{model.inspirationalCharacters.indexOf(p) + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteInspirationalCharacter($index)">
+                                                                            ng-click="deleteItem('inspirationalCharacters', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1089,7 +1105,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addInspirationalCharacter()">
+                                                            ng-click="addObject('inspirationalCharacters')">
                                                         <span class="icomoon icon-plus"></span>Agregar personaje...
                                                     </button>
 
@@ -1173,7 +1189,7 @@
                                                                 <h5>
                                                                     <span>Mi actividad principal {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteMainActivity($index)">
+                                                                            ng-click="deleteItem('mainActivity', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1190,7 +1206,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addMainActivity()">
+                                                            ng-click="addItem('mainActivity')">
                                                         <span class="icomoon icon-plus"></span>Agregar actividad
                                                         principal...
                                                     </button>
@@ -1334,7 +1350,7 @@
                                                                 <h5>
                                                                     <span>Ingreso {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteMoneyIncome($index)">
+                                                                            ng-click="deleteItem('moneyIncome', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1355,7 +1371,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addMoneyIncome()">
+                                                            ng-click="addItem('moneyIncome')">
                                                         <span class="icomoon icon-plus"></span>Agregar ingreso...
                                                     </button>
                                                 </section>
@@ -1453,7 +1469,7 @@
                                                                 <h5>
                                                                     <span>Dispositivo {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteKnownDevice($index)">
+                                                                            ng-click="deleteItem('knownDevices', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1474,7 +1490,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addKnownDevice()">
+                                                            ng-click="addItem('knownDevices')">
                                                         <span class="icomoon icon-plus"></span>Agregar dispositivo...
                                                     </button>
                                                 </section>
@@ -1487,7 +1503,7 @@
                                                                 <h5>
                                                                     <span>Dispositivo {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteOwnDevice($index)">
+                                                                            ng-click="deleteItem('ownDevices', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1508,7 +1524,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addOwnDevice()">
+                                                            ng-click="addItem('ownDevices')">
                                                         <span class="icomoon icon-plus"></span>Agregar dispositivo...
                                                     </button>
                                                 </section>
@@ -1521,7 +1537,7 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deletePhoneUsage($index)">
+                                                                            ng-click="deleteItem('phoneUsage', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1542,7 +1558,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addPhoneUsage()">
+                                                            ng-click="addItem('phoneUsage')">
                                                         <span class="icomoon icon-plus"></span>Agregar actividad...
                                                     </button>
                                                 </section>
@@ -1656,7 +1672,7 @@
                                                                 <h5>
                                                                     <span>Videojuego {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteKindOfVideoGame($index)">
+                                                                            ng-click="deleteItem('kindOfVideogames', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1678,7 +1694,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addKindOfVideoGame()">
+                                                            ng-click="addItem('kindOfVideogames')">
                                                         <span class="icomoon icon-plus"></span>Agregar videojuego...
                                                     </button>
                                                 </section>
@@ -1690,7 +1706,7 @@
                                                                 <h5>
                                                                     <span>Juego {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteFavoriteGame($index)">
+                                                                            ng-click="deleteItem('favoriteGames', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1702,7 +1718,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addFavoriteGame()">
+                                                            ng-click="addItem('favoriteGames')">
                                                         <span class="icomoon icon-plus"></span>Agregar juego...
                                                     </button>
                                                 </section>
