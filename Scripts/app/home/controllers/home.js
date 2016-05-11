@@ -267,18 +267,6 @@ angular
                 }
             };
 
-            $scope.showChatNotification = function () {
-                var chatRead = localStorage.getItem('chatRead/' + localStorage.getItem("userId"));
-
-                if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {
-                    return false;
-                } else {
-
-                    if (chatRead == "false") {
-                        return true;
-                    }
-                }
-            };
 
             //Load activity block status into binding model
             $scope.resetActivityBlockedStatus = function () {
@@ -365,24 +353,7 @@ angular
                 });
             };
 
-            $scope.getUserChat = function () {
-                $timeout(function () {                
-                    _setLocalStorageItem('chatRead/' + localStorage.getItem("userId"), "false");
-
-                    var chat = JSON.parse(localStorage.getItem('userChat'));
-                    $scope.messages = chat;
-                
-                    var userId = localStorage.getItem("userId");
-                        
-                    var chatAmount = _.countBy(chat,function(messages){                                
-                        return messages.messagesenderid != userId;
-                    });
-                                                        
-                    _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                    $scope.showChatNotification();
-
-                }, 100);                        
-            }
+            
         } ]).controller('WelcomeAboardFromMenu', function ($scope, $modalInstance) {//To show Inclubot from MENU.
     drupalFactory.Services.GetContent("robot-inclubot", function (data, key) {
 

@@ -25,7 +25,6 @@ angular
         'incluso.program.systemRequirements',
         'incluso.programa.notificationcontroller',
         'incluso.programa.notificationlikescontroller',
-        'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
         'incluso.programa.reconocimiento',
@@ -49,7 +48,6 @@ angular
         'incluso.stage.tueligesController',
         'incluso.stage.quizcontroller',
         'incluso.stage.mapadevidaController',
-        'incluso.stage.chatcontroller',
         'incluso.stage.multiplicatudineroController',
         'incluso.stage.mapadelemprendedorController',
         'incluso.program.alerts',        
@@ -98,8 +96,7 @@ angular
 
         $http.get('Templates/Juegos/Game.html', { cache: true });        
         $http.get('Templates/NotificationDetails.html', { cache: true });  
-        $http.get('Templates/Programa/Dashboard.html', { cache: true });  
-        $http.get('Templates/Chat/index.html', { cache: true });
+        $http.get('Templates/Programa/Dashboard.html', { cache: true });
 
         $http.get('Templates/Leaderboard/index.html', { cache: true });          
         $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: true });
@@ -121,16 +118,10 @@ angular
         $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html', { cache: true });
         $http.get('Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: true });          
-        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporte.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: true });
-        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporte.html', { cache: true });
-        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html', { cache: true });
-        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporte.html', { cache: true });
-        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html', { cache: true });
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: true });
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: true });
-        $http.get('Templates/ZonaDeVuelo/Feedback.html', { cache: true });
+        $http.get('Templates/ZonaDeVuelo/Retroalimentacion.html', { cache: true });
 
         ///////// Stage 2 //////////
         $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:true});
@@ -320,15 +311,6 @@ angular
             controller: 'AlbumInclusoController'
         });
 
-        $routeProvider.when('/Chat', {
-            templateUrl: 'Templates/Chat/index.html',
-            controller: 'programaChatController'
-        });
-       
-        $routeProvider.when('/Chat/:moodleid', {
-            templateUrl: 'Templates/Chat/index.html',
-            controller: 'programaChatController'
-        });
             
         $routeProvider.when('/Leaderboard', { 
             templateUrl: 'Templates/Leaderboard/index.html',
@@ -469,21 +451,13 @@ angular
             controller: 'stageMessageController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporte/:moodleid', { 
-            templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporte.html',
-            controller: 'stageChatController'
-        });
 
-        $routeProvider.when('/ZonaDeVuelo/Feedback', {
-            templateUrl: 'Templates/ZonaDeVuelo/Feedback.html',
+        $routeProvider.when('/ZonaDeVuelo/Retroalimentacion', {
+            templateUrl: 'Templates/ZonaDeVuelo/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
             
         });
         
-        $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporteCierre', {
-            templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html',
-            controller: 'stageMessageController'
-        });
     
         $routeProvider.when('/ZonaDeVuelo/ExploracionFinal/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
@@ -600,26 +574,6 @@ angular
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
-        });
-
-        $routeProvider.when('/ZonaDeNavegacion/CabinaDeSoporte/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/CabinaDeSoporte.html',
-            controller: 'stageChatController'
-        });
-
-        $routeProvider.when('/ZonaDeNavegacion/CabinaDeSoporteCierre', {
-            templateUrl: 'Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html',
-            controller: 'stageMessageController'
-        });
-
-        $routeProvider.when('/ZonaDeAterrizaje/CabinaDeSoporte/:moodleid', {
-            templateUrl: 'Templates/ZonaDeAterrizaje/CabinaDeSoporte.html',
-            controller: 'stageChatController'
-        });
-
-        $routeProvider.when('/ZonaDeAterrizaje/CabinaDeSoporteCierre', {
-            templateUrl: 'Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html',
-            controller: 'stageMessageController'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionFinal/:activityIdentifier', {
@@ -1232,58 +1186,5 @@ angular
             CancelUserNotificationWeeklyInterval: _cancelUserNotificationWeeklyInterval
         };
         
-    }])
-    .factory("SignalRFactory", ['$location', function ($location) {
-        var isSignalRChatAlreadySetUp = false,
-            _callbackWhenReceivedChat,
-            connSignalR;
-
-        var _setCallBackChat = function (callbackReference) {
-            _callbackWhenReceivedChat = callbackReference;
-        }
-
-        var _startChatConnection = function (callbackWhenReceivedChat) {
-            console.log(callbackWhenReceivedChat);
-            _callbackWhenReceivedChat = callbackWhenReceivedChat;
-            if (!isSignalRChatAlreadySetUp) {
-
-                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-
-                connSignalR = $.connection(SIGNALR_API_RESOURCE, "userId=" + currentUser.id);
-
-                connSignalR.received(function (data) {
-                    var currentMessages = JSON.parse(localStorage.getItem('userChat'));
-                    currentMessages.push(data);
-                    _setLocalStorageJsonItem('userChat', currentMessages);
-                    _callbackWhenReceivedChat();
-                });
-
-                connSignalR.error(function (error) {
-                    console.warn(error);
-                });
-
-            }
-
-
-            connSignalR.start().promise().done(function (data) {
-                isSignalRChatAlreadySetUp = true;
-                console.log("SignalR realtime service is successfully connected!!");
-            })
-            .fail(function () {
-                console.error("Error connecting to SignalR realtime service");
-            });
-        }
-
-        var _stopChatConnection = function () {
-            if (connSignalR) {
-                connSignalR.stop();
-            }
-        }
-
-        return {            
-            SetCallBackChat: _setCallBackChat,
-            StartChatConnection: _startChatConnection,
-            StopChatConnection: _stopChatConnection
-        };
     }]);
      
