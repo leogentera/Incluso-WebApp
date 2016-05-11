@@ -27,60 +27,14 @@ angular
                 }, 1000);
             }
 
-            function getUserChatCallback() {
-                //Make the pop-up appear in Chat Icon.
-                console.log("POPs !!!");
-                localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "false"); //Turn-on chat pop-up.
-            }
-
             function errorCallback() {
                 localStorage.setItem("notSendAgain2/" + localStorage.getItem("userId"), "false");   //Restore value.
             }
 
             var fireService = false;
-            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            if ($scope.messages && $scope.messages.length == 1) {
-                fireService = true;
-            }
 
             var notSendAgain2 = localStorage.getItem("notSendAgain2/" + localStorage.getItem("userId"));
-
-            if (!$rootScope.activityBlocked["2022"].disabled && fireService && notSendAgain2 == "false") { //disabled = false for Cabina de Soporte in Stage 1.
-                // FIRING CHAT SERVICE STAGE 2
-                //  Put Call to Remote Service.
-                $scope.validateConnection(function () {
-                    var currentUser = JSON.parse(localStorage.getItem('CurrentUser')); //Get chat conversations.
-                    var messageText = "Hola " + currentUser.firstname + ",\n\n";
-                    messageText += "En tu segunda aventura has logrado salir ";
-                    messageText += "de la lluvia de asteroides, ";
-                    messageText += "probablemente los retos fueron mayores ";
-                    messageText += "y por ello aprendiste que las mejores ";
-                    messageText += "decisiones te llevarán por rumbos ";
-                    messageText += "positivos; que existen ideas escondidas ";
-                    messageText += "dentro de ti que pueden impulsarte para ";
-                    messageText += "conquistar tus planes a corto, mediano y ";
-                    messageText += "largo plazo, siempre y cuando ";
-                    messageText += "mantengas un equilibrio en tu mapa de ";
-                    messageText += "vida.\n\n";
-                    messageText += "Capitán estás a punto de terminar la ";
-                    messageText += "zona de navegación\n\n";
-                    messageText += "¡Sigue adelante!";
-
-                    var newMessage = {
-                        "messagetext": messageText,
-                        "sendAsCouch": true
-                    };
-
-                    /* time out to avoid android lag on fully hiding keyboard */
-                    $timeout(function () {
-                        $scope.messages.push(newMessage);
-                        _setLocalStorageItem('userChat', JSON.stringify($scope.messages));
-                        localStorage.setItem("notSendAgain2/" + localStorage.getItem("userId"), "true");   //Not repeat petition.
-                        moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
-                    }, 1000);
-
-                }, offlineCallback);
-            } else { console.log("Message has been written BEFORE for Stage 2");}
+       
             // --------------------------------------------------------------------------------------
 
             $scope.setToolbar($location.$$path, "");
@@ -257,7 +211,6 @@ angular
 
                 var challengeCompletedId = _closeChallenge($scope.idEtapa);
 
-                _coachNotification($scope.idEtapa);
 
                 //Exclude initial and final challenges from showing modal robot
                 var challengeExploracionInicial = 154;

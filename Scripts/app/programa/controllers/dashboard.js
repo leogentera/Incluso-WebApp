@@ -406,28 +406,7 @@ angular
             function getUserNotifications(courseid) {
                 var courseId = courseid;
                 var userId = _getItem("userId");
-                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {
-                    getUserChat();
-                }, errorCallback, true);
-            }
-
-            function getUserChat(callback) {
-                //Get Messages From Server.
-                moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
-                    if (callback) {
-                        callback();
-                    }
-
-                    var messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
-
-                    if (messages.length == 0) {
-                        localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");
-                    }
-
-                    getUserStarsByPoints();
-                    getUserLikes();
-
-                }, errorCallback, true);
+                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {}, errorCallback, true);
             }
 
             function getUserLikes() {
