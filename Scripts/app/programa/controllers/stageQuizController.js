@@ -51,6 +51,7 @@ angular
             $scope.userprofile.social = [];
             $scope.userprofile.emprendedor = [];
             $scope.activityTitle = [];
+            $scope.profileDisabled = [];
 
             var talents = [];
             var values = [];
@@ -210,6 +211,7 @@ angular
                 // Quizes with Child activity: 2007, 2016.
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);
+                var i;
 
                 //Making up path to redirect user to the proper dashboard
                 var stageNameFromURL = $location.path().split("/")[1];
@@ -230,7 +232,7 @@ angular
                     case 1001:  //Expl. Inicial
                         owlIndex = 0;
                         break;
-                    case 1005:  //Mis Cualidades
+                    case 1005:  //Mis Habilidades
                         owlIndex = 3;
                         break;
                     case 1006:  //Mis Gustos
@@ -305,7 +307,7 @@ angular
 
                     if (activityObject !== null) {
                         //Change format of 'answers' key from Object to Array.
-                        for (var i = 0; i < activityObject.questions.length; i++) {
+                        for (i = 0; i < activityObject.questions.length; i++) {
                             var newAnswer = [];
                             for (var key in activityObject.questions[i].answers) {
                                 if (activityObject.questions[i].answers.hasOwnProperty(key)) {
@@ -321,13 +323,13 @@ angular
 
                     if ($scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
 
-                        //Load the arrays for 'Mis Cualidades' and 'Mis Gustos' from "Perfil/nnn".
-                        if ($scope.activity_identifier === 1005 && activityObject !== null) { //Mis Cualidades.
+                        //Load the arrays for 'Mis Habilidades' and 'Mis Gustos' from "Perfil/nnn".
+                        if ($scope.activity_identifier === 1005 && activityObject !== null) { //Mis Habilidades.
                             var keysToSync = ["talents", "values", "habilities"];
                             var userKeysContent = [];
 
                             //Get user items in keysToSync from Perfil/nnn.
-                            for (var i = 0; i < keysToSync.length; i++) {
+                            for (i = 0; i < keysToSync.length; i++) {
                                 userKeysContent[i] = $scope.userprofile[keysToSync[i]];
                             }
 
@@ -340,7 +342,7 @@ angular
                             var userKeysContent = [];
 
                             //Get user items in keysToSync from Perfil/nnn.
-                            for (var i = 0; i < keysToSync.length; i++) {
+                            for (i = 0; i < keysToSync.length; i++) {
                                 userKeysContent[i] = $scope.userprofile[keysToSync[i]];
                             }
 
@@ -366,13 +368,13 @@ angular
                             $location.path('/');
                         } else {//The questions were found in Local Storage.
 
-                            //Load the arrays for 'Mis Cualidades' and 'Mis Gustos' from "Perfil/nnn".
-                            if ($scope.activity_identifier === 1005 && activityObject !== null) { //Mis Cualidades.
+                            //Load the arrays for 'Mis Habilidades' and 'Mis Gustos' from "Perfil/nnn".
+                            if ($scope.activity_identifier === 1005 && activityObject !== null) { //Mis Habilidades.
                                 var keysToSync = ["talents", "values", "habilities"];
                                 var userKeysContent = [];
 
                                 //Get user items in keysToSync from Perfil/nnn.
-                                for (var i = 0; i < keysToSync.length; i++) {
+                                for (i = 0; i < keysToSync.length; i++) {
                                     userKeysContent[i] = $scope.userprofile[keysToSync[i]];
                                 }
 
@@ -386,7 +388,7 @@ angular
                                 var userKeysContent = [];
 
                                 //Get user items in keysToSync from Perfil/nnn.
-                                for (var i = 0; i < keysToSync.length; i++) {
+                                for (i = 0; i < keysToSync.length; i++) {
                                     userKeysContent[i] = $scope.userprofile[keysToSync[i]];
                                 }
 
@@ -464,7 +466,7 @@ angular
                         $scope.OtroAnswers = [];
                     }
 
-                    //Load the arrays for 'Mis Cualidades' and 'Mis Gustos'.
+                    //Load the arrays for 'Mis Habilidades' and 'Mis Gustos'.
                     var answerLabel;
 
                     if ($scope.activity_identifier === 1005) {
@@ -552,7 +554,7 @@ angular
 
 
             //#######################################  SECTION FOR DATA-BINDING FUNCTIONS ##################################
-            $scope.updateOtherField = function (index, otherIndex, checkLabel) {
+            $scope.updateOtherField = function (index, checkboxIndex, checkLabel) {
 
                 var multichoiceIndex = $scope.position[index];
 
@@ -581,21 +583,44 @@ angular
 
                 $scope.activityObject.questions[index].userAnswer = userAnswerString;
 
-                //-------------
-
                 // The checkbox for 'Other' is clicked.
-                if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {//The "Otro" checkbox has been checked.
+                if (checkLabel === "Otro" && $scope.answers[index][checkboxIndex]) {//The "Otro" checkbox has been checked.
                     addHeight($("multichoice" + index)); //Add room for the TextArea
                 }
 
-                if (checkLabel === "Otro" && !$scope.answers[index][otherIndex]) {//The "Otro" checkbox has been unchecked.
+                if (checkLabel === "Otro" && !$scope.answers[index][checkboxIndex]) {//The "Otro" checkbox has been unchecked.
 
                     $scope.activityObject.questions[index].other = "";  //First, do "other=''" for the respective questions object.
                     var indexOfOtro = $scope.activityObject.questions[index].userAnswer.indexOf("; Otro"); //Second, remove "Otro" value from the "userAnswer" for the respective questions object.
                     $scope.activityObject.questions[index].userAnswer = $scope.activityObject.questions[index].userAnswer.substring(0, indexOfOtro);
                     $scope.OtroAnswers[multichoiceIndex].answers[0] = ""; //Third, delete user answer from the OtroAnswers object.
-
                     removeHeight($("multichoice" + index)); //Finally, adjust the size of the UI.
+                }
+
+                //This section is only for "Mis Habilidades" and "Mis Gustos"
+                if (checkLabel === "Ninguno" && $scope.answers[index][checkboxIndex]) {//The "Ninguno" checkbox has been checked.
+
+                    $scope.profileDisabled[multichoiceIndex] = true; //Disable all checkboxes
+
+                    if ($scope.answers[index][numOptions - 1]) {
+                        removeHeight($("multichoice" + index)); //Finally, adjust the size of the UI.
+                    }
+
+                    //Uncheck all answers, except "Ninguno"
+                    for (k = 0; k < numOptions; k++) {
+                        if (k != numOptions - 2) {//The "Ninguno" checkbox
+                            $scope.answers[index][k] = 0;
+                        }
+                    }
+
+                    //Update answer objects
+                    $scope.activityObject.questions[index].other = "";  //First, do "other=''" for the respective questions object.
+                    $scope.activityObject.questions[index].userAnswer = "Ninguno"; //Second, make "Ninguno" the only value.
+                    $scope.OtroAnswers[multichoiceIndex].answers[0] = ""; //Third, delete user answer from the OtroAnswers object.
+                }
+
+                if (checkLabel === "Ninguno" && !$scope.answers[index][checkboxIndex]) {//The "Ninguno" checkbox has been checked.
+                    $scope.profileDisabled[multichoiceIndex] = false; //Remove disabling
                 }
 
             };
@@ -646,6 +671,13 @@ angular
                         otherObjectItem.answers = [""];
                         $scope.OtroAnswers.push(otherObjectItem);
                     }
+
+                    if (question.userAnswer == "Ninguno") {
+                        $scope.profileDisabled.push(true);  //Disable questions with "Ninguno" checked.
+                    } else {
+                        $scope.profileDisabled.push(false);
+                    }
+
                 }
 
                 if (questionType == "multichoice" && questionNumOfChoices > 2 && !hasOther) {
@@ -978,7 +1010,7 @@ angular
 
                 var i;
 
-                if ($scope.activity_identifier === 1005) {//Mis Cualidades - Etapa 1 - CourseModuleId = 71
+                if ($scope.activity_identifier === 1005) {//Mis Habilidades - Etapa 1 - CourseModuleId = 71
 
                     $scope.userprofile.talents = [];
                     $scope.userprofile.values = [];

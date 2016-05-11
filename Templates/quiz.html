@@ -50,18 +50,24 @@
                                 <div ng-repeat="answerObject in question.answers track by $index">
 
                                     <div ng-show="answerObject.answer != 'Otro'">
-                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
+                                        <input id="{{'multichoice' + $parent.$index + $index}}"
+                                               type="checkbox"
                                                name="{{'multichoice' + $parent.$index + $index}}"
-                                               ng-true-value="1" ng-false-value="0"
+                                               ng-true-value="1"
+                                               ng-false-value="0"
                                                ng-click="updateOtherField($parent.$index, $index, answerObject.answer)"
-                                               ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
+                                               ng-model="answers[$parent.$index][$index]"
+                                               ng-disabled="setReadOnly || (profileDisabled[position[$parent.$index]] && answerObject.answer != 'Ninguno')"/>
                                         <label for="{{'multichoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
                                     </div>
                                     <div ng-show="answerObject.answer == 'Otro'">
-                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
+                                        <input id="{{'multichoice' + $parent.$index + $index}}"
+                                               type="checkbox"
                                                name="{{'multichoice' + $parent.$index + $index}}"
-                                               ng-true-value="1" ng-false-value="0"
-                                               ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
+                                               ng-true-value="1"
+                                               ng-false-value="0"
+                                               ng-model="answers[$parent.$index][$index]"
+                                               ng-disabled="setReadOnly"/>
                                         <label for="{{'multichoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
 
                                         <div class="form-group theme-form" ng-show="answers[$parent.$index][$index]">
