@@ -1,6 +1,6 @@
 <div class="modal-open">
    <div class="pages feedback-modal">     
-      <div class="page">
+      <div class="page show">
         <div class="user-help-modal feedback">
           <div class="modal-robot robot-sm user-help">
             <div class="icon-img">
@@ -19,8 +19,9 @@
           </div>
         </div>
       </div>
+   </div>
       <!-- activity closing  -->
-      <div class="page blueprint evaluation show">
+     <div class="page blueprint evaluation hidden">
         <div id="finalized">
             <section class="header-title">                
                 <div class="txt-renglon centered txt-bigger min-pad ">{{::closingContent.closing_message}}</div>
@@ -52,6 +53,6 @@
                 <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{::closingContent.finish_button}}</a>
             </section>
           </div>
-      </div>    
-    </div>
+      </div>   
+    </div> 
 </div>

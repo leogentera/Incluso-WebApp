@@ -202,6 +202,7 @@ angular
                 "Conócete": "assets/images/challenges/stage-1/img-conocete.svg",
                 "Mis sueños": "assets/images/challenges/stage-1/img-mis-suenos.svg",
                 "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
+                "Retroalimentación": "assets/images/challenges/stage-1/img-challenge-feedback.svg",
                 "Exploración final": "assets/images/challenges/stage-1/img-evaluacion-final.svg"
             };
 
@@ -211,6 +212,7 @@ angular
                 "Conócete": "Juega y descubre tus inteligencias",
                 "Mis sueños": "Cada sueño en su lugar",
                 "Cabina de soporte": "Contacta a tu coach",
+                "Retroalimentación" : "Retroalimentaciónsssssssssss",
                 "Exploración final": "Explora qué tanto descubriste en la Zona de Vuelo"
             };
 
