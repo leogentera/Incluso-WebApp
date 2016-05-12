@@ -1183,11 +1183,11 @@ section.part.inbloq{
         .closing-stage-modal,
         .dashboard-programa {
             &.in {
-                position: relative;
+                position: initial;
                 height: 100vh;
             }
         }
-        .chat {
+        .chat, .feedback {
             width: 90%;
             margin: 0px auto;
             .robot-sm{
@@ -1195,6 +1195,19 @@ section.part.inbloq{
                 img {
                     left: 43vw;
                     margin-top: 0px;
+                }
+                .icon-img {
+                    position: absolute;
+                    top: 4vh;
+                    left: 43vw;
+                    width: 16vw;
+                    background: #000;
+                    img {
+                        position: initial;
+                        width: 12vw;
+                        margin: 0 2vw 0 3vw;
+                        display: block;
+                    }
                 }
                 .modal-body {
                     padding: 5vh 4vw;

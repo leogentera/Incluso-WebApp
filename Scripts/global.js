@@ -594,23 +594,6 @@ var logStartActivityAction = function(activityId, timeStamp) {
             var triggerActivity = 1;
             _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
-            if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
-                var key1 = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                var key2 = "finishCabinaSoporte/" + currentUser.id;
-                if (localStorage.getItem(key1) == null && !treeActivity.status && localStorage.getItem(key2) == null) {
-                    moodleFactory.Services.GetServerDate(function(date){
-                    _setLocalStorageJsonItem(key1, {
-                        datestarted: date.time,
-                        coursemoduleid: treeActivity.coursemoduleid,
-                        activity_identifier: treeActivity.activity_identifier
-                    });
-                    
-                    localStorage.removeItem(key2);
-                    })                    
-                }
-            }
-
-
         }, function () {
             console.log('Error callback');
         });
@@ -657,69 +640,6 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     }
 };
 
-
-var _coachNotification = function (stageIndex) {
-
-    var notifications = JSON.parse(localStorage.getItem("notifications"));
-    
-    var userId = localStorage.getItem('userId');
-        
-    var stageId = stageIndex + 1;
-            
-    var notificationCoach = _.find(notifications, function (notif) {
-        if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3 && notif.activityidnumber.substring(0,1) == stageId) {
-            return notif;
-        }
-    });
-
-    if (notificationCoach && notificationCoach.status == "pending") {      
-        var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
-
-                        
-        var notificationId = notificationCoach.id;
-        if ((activity)) {
-            var chatUser = JSON.parse(localStorage.getItem("userChat"));
-            if (chatUser && chatUser.length > 0) {
-                var lastChat = _.max(chatUser, function (chat) {
-                    if (chat.messagesenderid == userId) {
-                        return chat.messagedate;
-                    }
-                });
-
-                //'minutes'- 'days'
-                var daysOfNoChat = notificationCoach.days;
-                var lastDateChat = moment(new Date(lastChat.messagedate)).add(daysOfNoChat, 'days');
-
-                var today = new Date();
-                if (lastDateChat < today) {
-                    //Create chat notification
-                    //moodleFactory.services.createNotification(userId,notificationId, function(){},function(){});
-                    var wonDate = new Date();
-                    var dataModelNotification = {
-                        notificationid : notificationId,
-                        userid: userId,
-                        wondate: wonDate
-                      };
-                                                             
-                    for (var i = 0; i< notifications.length; i++) {
-                      if (notifications[i].id == notificationId) {
-                          notifications[i].wondate = wonDate;
-                          notifications[i].status = "won";
-                      }
-                    }
-                    localStorage.setItem("notifications",JSON.stringify(notifications));
-            
-                    moodleFactory.Services.PostUserNotifications( dataModelNotification, function(){
-                        console.log("create notification successful");
-                      }, errorCallback,true);
-                    
-                } else {
-                    return false;
-                }
-            }
-        }
-    }
-};
 
 
 function updateUserStarsUsingExternalActivity(activity_identifier) {
@@ -1403,8 +1323,7 @@ var clearLocalStorage = function(location){
     localStorage.removeItem("stage");
     localStorage.removeItem("usercourse");
     localStorage.removeItem("currentStage");
-    localStorage.removeItem("notifications");
-    localStorage.removeItem("userChat");
+    localStorage.removeItem("notifications");    
     localStorage.removeItem("leaderboard");
     localStorage.removeItem("activityStatus");
     localStorage.removeItem("userId");
@@ -1518,7 +1437,7 @@ var _activityRoutes = [
     {id: 1005, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
     {id: 1007, name: '', url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
     {id: 1008, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/1008'},
-    {id: 1002, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/1002'},
+    {id: 1002, name: '', url: '/ZonaDeVuelo/Retroalimentacion'},
     {id: 1009, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
     {id: 2001, name: '', url: '/ZonaDeNavegacion/ExploracionInicial/2001'},
     {id: 2004, name: '', url: '/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/2004'},
@@ -1530,8 +1449,7 @@ var _activityRoutes = [
     {id: 2015, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/2015'},
     {id: 2016, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/13y5/2016'},
     {id: 2017, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/2017'},
-    {id: 2026, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/2026'},
-    {id: 2022, name: '', url: '/ZonaDeNavegacion/CabinaDeSoporte/2022'},
+    {id: 2026, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/2026'},    
     {id: 2023, name: '', url: '/ZonaDeNavegacion/ExploracionFinal/2023'},
     {id: 3101, name: '', url: '/ZonaDeAterrizaje/ExploracionInicial/3101'},
     {id: 3201, name: '', url: '/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201'},
@@ -1541,7 +1459,6 @@ var _activityRoutes = [
     {id: 3401, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/3401'},
     {id: 3402, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
     {id: 3404, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/3404'},
-    {id: 3501, name: '', url: '/ZonaDeAterrizaje/CabinaDeSoporte/3501'},
     {id: 3601, name: '', url: '/ZonaDeAterrizaje/ExploracionFinal/3601'},
     {id: 50000, name: 'Comunidad General', url: '/Community/50000'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
@@ -1550,17 +1467,15 @@ var _activityRoutes = [
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
 
-var _activitiesCabinaDeSoporte = [1002, 2022, 3501];
-
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [
     1001,
     1101,
     1049,
-     1020,
-     1039,
-     1010,
-     1021,
+    1020,
+    1039,
+    1010,
+    1021,
     1006,
     1005,
     1007,

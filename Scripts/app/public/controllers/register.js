@@ -12,8 +12,7 @@ angular
         '$anchorScroll',
         '$modal',
         'IntervalFactory',
-        'SignalRFactory',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory, SignalRFactory) {
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
 
             _timeout = $timeout;
             _httpFactory = $http;
