@@ -406,7 +406,10 @@ angular
             function getUserNotifications(courseid) {
                 var courseId = courseid;
                 var userId = _getItem("userId");
-                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {}, errorCallback, true);
+                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {
+                        getUserStarsByPoints();
+                        getUserLikes();
+                }, errorCallback, true);
             }
 
             function getUserLikes() {
