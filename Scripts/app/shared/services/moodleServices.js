@@ -485,13 +485,13 @@
             });
         };
         
-        var _postAsyncCatalogs = function (key, data, url, successCb, errorCb) {
+        var _postAsyncCatalogs = function (key, data, url, successCb, errorCb) {console.log("Catalog!");
             _getDeviceVersionAsync();
-            
+            var currentTime = new Date().getTime();
             _httpFactory({
                 method: 'POST',
                 url: url,
-                data: data,
+                data: data, timeout: 2500,
                 headers: { 'Content-Type': 'application/json' }
             }).success(function (data, status, headers, config) {
 
@@ -506,9 +506,14 @@
                 }
                 
             }).error(function (data, status, headers, config) {
-
+                var finalTime = new Date().getTime();
+                var timeOutRobot = false;
+                if (finalTime - currentTime > 2500) {
+                    console.log(" TIME OUT!!!! " + (finalTime - currentTime));
+                    timeOutRobot = true;
+                }
                 if (typeof errorCb === "function") {
-                    errorCb();
+                    errorCb(timeOutRobot);
                 }else {
                     errorCallback();
                 }
@@ -517,9 +522,10 @@
 
         var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback, needUpdatePostCounter, addToQueue) {
             _getDeviceVersionAsync();
-            
+            var currentTime = new Date().getTime();
             var discussionid = data.discussionid;
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+
             if (addToQueue) {
                 addRequestToQueue(key, {
                     type: "httpRequest",
@@ -531,15 +537,18 @@
                                'Authorization': currentUser.token }
                     }
                 });
+
                 _setLocalStorageJsonItem(key, data);
+
                 if (successCallback) {
                     successCallback();
                 }
-            }else{
+
+            } else {
                 _httpFactory({
                     method: 'POST',
                     url: url,
-                    data: data,
+                    data: data, timeout: 25,
                     headers: { 'Content-Type': 'application/json',
                                'Authorization': currentUser.token },
                 }).success(function (data, status, headers, config) {
@@ -554,9 +563,15 @@
 
                     successCallback();
                 }).error(function (data, status, headers, config) {
-                    data.statusCode = status;
-                    _setLocalStorageJsonItem(key,data);
-                    errorCallback(data);
+                    //data.statusCode = status;
+                    var finalTime = new Date().getTime();
+                    var timeOutRobot = false;
+                    if (finalTime - currentTime > 25) {
+                        timeOutRobot = true;
+                    }
+
+                    //_setLocalStorageJsonItem(key,data);
+                    errorCallback(timeOutRobot);
                 });
             }
         };
