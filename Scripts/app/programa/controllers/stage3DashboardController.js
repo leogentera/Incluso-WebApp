@@ -25,10 +25,6 @@ angular
                 $timeout(function () {
                     $location.path("/Offline");
                 }, 1000);
-            }        
-
-            function errorCallback() {
-                localStorage.setItem("notSendAgain3/" + localStorage.getItem("userId"), "false");   //Restore value.
             }
                     
             $scope.setToolbar($location.$$path, "");

@@ -28,11 +28,6 @@ angular
                 }, 1000);
             }
 
-            function errorCallback() {
-                localStorage.setItem("notSendAgain1/" + localStorage.getItem("userId"), "false");   //Restore value.
-            }
-
-
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
