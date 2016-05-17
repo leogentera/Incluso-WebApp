@@ -246,6 +246,14 @@ angular
                                 'downloadLink': topuser.profileimageurl
                             };
                         }
+
+
+                        images[images.length] = {
+                            'path': "assets/avatar",
+                            'name': "avatar_" + $scope.user.userId + ".png",
+                            'downloadLink': $scope.user.profileimageurl
+                        };
+
                         
                         saveLocalImages(images);
                         
