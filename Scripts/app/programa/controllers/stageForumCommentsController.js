@@ -417,14 +417,14 @@ angular
 
                         moodleFactory.Services.PostAsyncForumPost('new_post', dataObject,
                             function () {//Success
-                                $scope.textToPost = '';
                                 $scope.textToPost = null;
                                 $scope.collapseForumButtomsTrigger('isTextCollapsed');
                                 checkForumExtraPoints();
                                 checkForumProgress(refreshTopicData);
                             },
 
-                            function (data) {//Error
+                            function (timeOutRobot) {//Error
+                                $scope.textToPost = null;
                                 $scope.collapseForumButtomsTrigger('isTextCollapsed');
                                 $scope.$emit('HidePreloader');
                                 /*
@@ -435,11 +435,11 @@ angular
                                 $scope.modelState.errorMessages = errorMessage;
                                 */
 
-                                if (data === true) {//alert("Timeout data = " + data);
+                                if (timeOutRobot === true) {//alert("Timeout data = " + data);
                                     //Show timeout robot
-                                    $timeout(function(){
+                                    //$timeout(function(){
                                         $scope.openModal();
-                                    }, 500);
+                                    //}, 500);
                                 }
 
                             }, null, true);
@@ -471,6 +471,7 @@ angular
                                     //Show timeout robot
                                     $scope.openModal();
                                 }
+
                             }, null, true);
                     }, offlineCallback);
 

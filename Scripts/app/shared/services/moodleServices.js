@@ -525,6 +525,7 @@
             var currentTime = new Date().getTime();
             var discussionid = data.discussionid;
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            var timeOutRobot = false;
 
             if (addToQueue) {
                 addRequestToQueue(key, {
@@ -548,9 +549,9 @@
                 _httpFactory({
                     method: 'POST',
                     url: url,
-                    data: data, timeout: 25,
+                    data: data, timeout: 5,
                     headers: { 'Content-Type': 'application/json',
-                               'Authorization': currentUser.token },
+                               'Authorization': currentUser.token }
                 }).success(function (data, status, headers, config) {
 
                     if (key != null) {
@@ -565,8 +566,8 @@
                 }).error(function (data, status, headers, config) {
                     //data.statusCode = status;
                     var finalTime = new Date().getTime();
-                    var timeOutRobot = false;
-                    if (finalTime - currentTime > 25) {
+
+                    if (finalTime - currentTime > 5) {
                         timeOutRobot = true;
                     }
 
