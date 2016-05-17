@@ -27,14 +27,6 @@ angular
                 }, 1000);
             }
 
-            function errorCallback() {
-                localStorage.setItem("notSendAgain2/" + localStorage.getItem("userId"), "false");   //Restore value.
-            }
-
-            var fireService = false;
-
-            var notSendAgain2 = localStorage.getItem("notSendAgain2/" + localStorage.getItem("userId"));
-       
             // --------------------------------------------------------------------------------------
 
             $scope.setToolbar($location.$$path, "");

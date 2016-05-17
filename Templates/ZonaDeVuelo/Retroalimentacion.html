@@ -1,6 +1,6 @@
 <div class="modal-open">
    <div class="pages feedback-modal">     
-      <div class="page">
+      <div class="page show">
         <div class="user-help-modal feedback">
           <div class="modal-robot robot-sm user-help">
             <div class="icon-img">
@@ -9,18 +9,18 @@
             <div class="modal-body">                
                 <h3 class="subtitle text-center">Retroalimentación<br/>Zona de vuelo</h3>
                 <div>
-                    <p class="txt-renglon centered">Hola <b>Leonardo</b> estás por terminar con las actividades de la Zona de Vuelo</p>
-                    <p class="txt-renglon centered">¡Has obtenido la Inteligencia <b>Musical!</b> sigue avanzando para alcanzar las diferentes zonas de esta aventura.</p>
+                    <p class="txt-renglon centered">{{messageProfile.ProfileMessage}}</p>
                     <div class="txt-renglon">
-                        <button type="button" ng-click="" class="btn btn-primary btn-lg btn-cnt">Continuar</button>    
+                        <button type="button" ng-click="ToDashboard()" class="btn btn-primary btn-lg btn-cnt">Continuar</button>    
                     </div>
                 </div> 
             </div>
           </div>
         </div>
       </div>
+   </div>
       <!-- activity closing  -->
-      <div class="page blueprint evaluation show">
+     <div class="page blueprint evaluation hidden">
         <div id="finalized">
             <section class="header-title">                
                 <div class="txt-renglon centered txt-bigger min-pad ">{{::closingContent.closing_message}}</div>
@@ -52,6 +52,6 @@
                 <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{::closingContent.finish_button}}</a>
             </section>
           </div>
-      </div>    
-    </div>
+      </div>   
+    </div> 
 </div>

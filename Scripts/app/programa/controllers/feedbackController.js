@@ -16,12 +16,53 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+            
+            $scope.messageProfile = "";
+            $scope.user = "";
+            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            if ($scope.currentUser) {
+                $scope.user = $scope.currentUser.alias;    
+            }
+            
+            var perfilIncluso = [
+                {
+                    IdProfile: 1,
+                    ProfileName: "Deportista",
+                    ProfileMessage: "Hola " + $scope.user + " Felicidades, haz obtenido el perfil deportista"},
+                {
+                    IdProfile: 2,
+                    ProfileName: "Artístico",
+                    ProfileMessage: "Hola " + $scope.user + " Felicidades, haz obtenido el perfil artístico"},
+                {
+                    IdProfile: 3,
+                    ProfileName: "Social",
+                    ProfileMessage: "Hola " + $scope.user + " Felicidades, haz obtenido el perfil social"},
+                {
+                    IdProfile: 4,
+                    ProfileName: "Intelectual",
+                    ProfileMessage: "Hola " + $scope.user + " Felicidades, haz obtenido el perfil intelectual"}
+            ];
                 
             function initialLoading() {
-                
+                // $scope.showRobot();    
                 $scope.$emit('HidePreloader');
+                
+                var random = getRandom(perfilIncluso.length +1);
+                $scope.messageProfile = _.findWhere(perfilIncluso, {IdProfile: random});
             }
-
-            initialLoading();
+            
+            function getRandom(amount) {
+                return Math.floor(Math.random() * (amount - 1) + 1 );
+            }
+            
+            
+            $scope.ToDashboard = function(){
+                
+                $location.path('/ZonaDeVuelo/Dashboard/1/5');
+                
+            };
+            
+        initialLoading();
         
-        }]);
+        }
+    ]);

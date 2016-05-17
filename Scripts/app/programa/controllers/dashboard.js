@@ -20,22 +20,7 @@ angular
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-            var notSendAgain1 = localStorage.getItem("notSendAgain1/" + localStorage.getItem("userId")); //Used for Chat
-            var notSendAgain2 = localStorage.getItem("notSendAgain2/" + localStorage.getItem("userId")); //Used for Chat
-            var notSendAgain3 = localStorage.getItem("notSendAgain3/" + localStorage.getItem("userId")); //Used for Chat
-
-            if (!notSendAgain1) {//Initialization
-                localStorage.setItem("notSendAgain1/" + localStorage.getItem("userId"), "false");
-            }
-
-            if (!notSendAgain2) {//Initialization
-                localStorage.setItem("notSendAgain2/" + localStorage.getItem("userId"), "false");
-            }
-
-            if (!notSendAgain3) {//Initialization
-                localStorage.setItem("notSendAgain3/" + localStorage.getItem("userId"), "false");
-            }
-
+            
             var activity_identifier = "0000";
             var currentUserProfile = getCurrentUserProfile();
             
@@ -260,6 +245,7 @@ angular
                                 'name': "avatar_" + topuser.userId + ".png",
                                 'downloadLink': topuser.profileimageurl
                             };
+
                         }
 
                         images[images.length] = {
@@ -267,7 +253,6 @@ angular
                         'name': "avatar_" + $scope.user.userId + ".png",
                         'downloadLink': $scope.user.profileimageurl
                          };
-
                         
                         saveLocalImages(images);
                         
