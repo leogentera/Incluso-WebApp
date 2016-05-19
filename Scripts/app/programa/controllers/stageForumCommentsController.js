@@ -1,5 +1,5 @@
 angular
-    .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants'])
+    .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants', 'ngSanitize'])
     .controller('stageForumCommentsController', [
         '$q',
         '$scope',
@@ -30,7 +30,7 @@ angular
 
                 _httpFactory = $http;
                 _timeout = $timeout;
-                $rootScope.pageName = "Estación: Conócete"
+                $rootScope.pageName = "Estación: Conócete";
                 $rootScope.navbarBlue = true;
                 $rootScope.showToolbar = true;
 
@@ -397,7 +397,7 @@ angular
 
                 //Time Out Message modal
                 $scope.openModal = function (size) {
-                    var modalInstance = $modal.open({
+                    var modalInstance2 = $modal.open({
                         animation: $scope.animationsEnabled,
                         templateUrl: 'timeOutForum.html',
                         controller: 'timeOutForum',
@@ -435,11 +435,9 @@ angular
                                 $scope.modelState.errorMessages = errorMessage;
                                 */
 
-                                if (timeOutRobot === true) {//alert("Timeout data = " + data);
+                                if (timeOutRobot === true) {
                                     //Show timeout robot
-                                    //$timeout(function(){
-                                        $scope.openModal();
-                                    //}, 500);
+                                    $scope.openModal();
                                 }
 
                             }, null, true);
@@ -558,7 +556,7 @@ angular
                         if (data != null) {
                             $scope.$apply(function () {
                                 $scope.attachmentToPost = data;
-                            })
+                            });
                             $scope.$apply($scope.collapseForumButtomsTrigger('isAttachmentCollapsed'));
                         } else {
                         }
@@ -643,7 +641,6 @@ angular
                     if (_loadedResources && _pageLoaded) {
                         $scope.$emit('HidePreloader')
                     }
-                    ;
                 }
 
                 var initializeCommentsData = function (element, index, array) {
@@ -673,6 +670,7 @@ angular
                 var refreshTopicData = function () {
                     moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
                 };
+
                 var refreshRepliesToPost = function (parentId) {
                     //moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
                     moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, Number(parentId) + 1, postPager.to, 0, "default", getPostsDataCallback, null, true);
@@ -707,7 +705,6 @@ angular
                 }
 
                 $scope.showPreviousComments = function (postId) {
-
                     $scope.showAllCommentsByPost['id' + postId] = 1000000;
                 };
 
@@ -718,7 +715,6 @@ angular
                     $scope.validateConnection(function () {
 
                         showMoreCounter++;
-
                         $scope.$emit('ShowPreloader');
                         moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, "default", getPostsDataCallback, null, true);
 
@@ -765,7 +761,8 @@ angular
                         created: post.created,
                         message: post.message,
                         attachment: post.attachment
-                    }
+                    };
+
                     localStorage.setItem("galleryDetail", JSON.stringify(obj));
                     $scope.navigateTo("/GalleryDetail");
                 };
@@ -786,7 +783,6 @@ angular
                 }
 
                 function errorCallback(data) {
-
                     $scope.$emit('scrollTop');
                 }
 

@@ -125,7 +125,7 @@ angular
             $scope.navigateToStage = function () {
                 //Check if first time with course
                 if ($scope.usercourse.firsttime) { // 1 (true) : it is first time; 0 : it is not firsttime
-                    $scope.openModal();console.log("Modal!!");
+                    $scope.openModal();
                     //Update firsttime value
                     $scope.updateProgramFirstTime();
                 }
