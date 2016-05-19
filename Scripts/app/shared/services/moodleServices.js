@@ -509,11 +509,11 @@
         
         var _postAsyncCatalogs = function (key, data, url, successCb, errorCb) {console.log("Catalog!");
             _getDeviceVersionAsync();
-            var currentTime = new Date().getTime();
+
             _httpFactory({
                 method: 'POST',
                 url: url,
-                data: data, timeout: 2500,
+                data: data,
                 headers: { 'Content-Type': 'application/json' }
             }).success(function (data, status, headers, config) {
 
@@ -528,14 +528,9 @@
                 }
                 
             }).error(function (data, status, headers, config) {
-                var finalTime = new Date().getTime();
-                var timeOutRobot = false;
-                if (finalTime - currentTime > 2500) {
-                    console.log(" TIME OUT!!!! " + (finalTime - currentTime));
-                    timeOutRobot = true;
-                }
+
                 if (typeof errorCb === "function") {
-                    errorCb(timeOutRobot);
+                    errorCb();
                 }else {
                     errorCallback();
                 }
@@ -571,29 +566,29 @@
                 _httpFactory({
                     method: 'POST',
                     url: url,
-                    data: data, timeout: 5,
+                    data: data, timeout: 60000,
                     headers: { 'Content-Type': 'application/json',
                                'Authorization': currentUser.token }
-                }).success(function (data, status, headers, config) {
+                }).success(function (data, status, headers, config) {console.log("Within Success");
 
                     if (key != null) {
                         _setLocalStorageJsonItem(key,data);
                     }
 
-                    if(needUpdatePostCounter == true){
+                    if(needUpdatePostCounter == true) {
                         updatePostCounter(discussionid);
-                    }else{}
+                    }
 
                     successCallback();
                 }).error(function (data, status, headers, config) {
                     //data.statusCode = status;
                     var finalTime = new Date().getTime();
+                    console.log("Within Failure " + (finalTime - currentTime));
 
-                    if (finalTime - currentTime > 5) {
+                    if (finalTime - currentTime > 60000) {
                         timeOutRobot = true;
                     }
 
-                    //_setLocalStorageJsonItem(key,data);
                     errorCallback(timeOutRobot);
                 });
             }
