@@ -270,6 +270,8 @@ var _activityDependenciesLegacy = [
     }
 ];
 
+var quizesArray = [150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249];
+
 var notificationTypes = {    
     activityNotifications: 1,
     generalNotifications: 2,
@@ -1307,6 +1309,28 @@ var logout = function ($scope, $location) {
 
    clearLocalStorage($location);
 };
+
+
+//var fillProfileByActivity = function(){
+//        
+//    
+//  
+//};
+
+
+var getProfileCatalogs = function(){
+    
+    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+    if (currentUser) {
+      moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){        
+        console.log(data);
+        },function(data){
+          console.log(data);
+          },true);    
+    }    
+};
+
+
 
 
 
