@@ -423,21 +423,17 @@ angular
                                 checkForumProgress(refreshTopicData);
                             },
 
-                            function (timeOutRobot) {//Error
+                            function (obj) {//Error
                                 $scope.textToPost = null;
                                 $scope.collapseForumButtomsTrigger('isTextCollapsed');
                                 $scope.$emit('HidePreloader');
-                                /*
-                                var errorMessage = [window.atob(data.messageerror)];
-                                if (data && data.statusCode) {
-                                    $scope.modelState.errorCode = data.statusCode;
-                                }
-                                $scope.modelState.errorMessages = errorMessage;
-                                */
 
-                                if (timeOutRobot === true) {
-                                    //Show timeout robot
+                                if (obj.statusCode == 408) {//Request Timeout
                                     $scope.openModal();
+                                } else {//A different Error happened
+                                    var errorMessage = [obj.messageerror];
+                                    $scope.modelState.errorCode = obj.statusCode;
+                                    $scope.modelState.errorMessages = errorMessage;
                                 }
 
                             }, null, true);
@@ -460,14 +456,17 @@ angular
                                 checkForumExtraPoints();
                                 checkForumProgress(refreshTopicData);
                             },
-                            function (timeOutRobot) {//Error
+                            function (obj) {//Error
                                 $scope.linkToPost = null;
                                 $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                                 $scope.$emit('HidePreloader');
 
-                                if (timeOutRobot === true) {
-                                    //Show timeout robot
+                                if (obj.statusCode == 408) {//Request Timeout
                                     $scope.openModal();
+                                } else {//A different Error happened
+                                    var errorMessage = [obj.messageerror];
+                                    $scope.modelState.errorCode = obj.statusCode;
+                                    $scope.modelState.errorMessages = errorMessage;
                                 }
 
                             }, null, true);
@@ -489,14 +488,17 @@ angular
                                 checkForumExtraPoints();
                                 checkForumProgress(refreshTopicData);
                             },
-                            function (timeOutRobot) {//Error
+                            function (obj) {//Error
                                 $scope.videoToPost = null;
                                 $scope.collapseForumButtomsTrigger('isVideoCollapsed');
                                 $scope.$emit('HidePreloader');
 
-                                if (timeOutRobot === true) {
-                                    //Show timeout robot
+                                if (obj.statusCode == 408) {//Request Timeout
                                     $scope.openModal();
+                                } else {//A different Error happened
+                                    var errorMessage = [obj.messageerror];
+                                    $scope.modelState.errorCode = obj.statusCode;
+                                    $scope.modelState.errorMessages = errorMessage;
                                 }
                             }, null, true);
 
@@ -596,14 +598,17 @@ angular
                                 checkForumExtraPoints();
                                 checkForumProgress(refreshTopicData);
                             },
-                            function (timeOutRobot) {//Error
+                            function (obj) {//Error
                                 $scope.attachmentToPost = null;
                                 $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                                 $scope.$emit('HidePreloader');
 
-                                if (timeOutRobot === true) {
-                                    //Show timeout robot
+                                if (obj.statusCode == 408) {//Request Timeout
                                     $scope.openModal();
+                                } else {//A different Error happened
+                                    var errorMessage = [obj.messageerror];
+                                    $scope.modelState.errorCode = obj.statusCode;
+                                    $scope.modelState.errorMessages = errorMessage;
                                 }
 
                             }, null, true);
@@ -821,13 +826,14 @@ angular
 
     var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
     $scope.actualMessage = robotMessage;
-}).controller('timeOutForum', function ($scope, $modalInstance) {//TimeOut Robot
+}).controller('timeOutForum', function ($scope, $modalInstance, $route, $location) {//TimeOut Robot
     $scope.title = "FORO";
     $scope.message = "Time Out - Try Later";
 
     $scope.cancel = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
+        $route.reload();
     };
 
 });

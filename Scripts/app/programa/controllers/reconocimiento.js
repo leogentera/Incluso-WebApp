@@ -231,13 +231,12 @@ angular
                         $scope.shareToCommunityOpen = true;
                         $scope.$emit('HidePreloader');
                     },
-                    function (timeOutRobot) {//Error
+                    function (obj) {//Error
                         $scope.communityModalOpen = true;
                         $scope.shareToCommunityOpen = false;
                         $scope.$emit('HidePreloader');
 
-                        if (timeOutRobot === true) {
-                            //Show timeout robot
+                        if (obj.statusCode == 408) {//Request Timeout
                             $scope.openModal();
                         }
 

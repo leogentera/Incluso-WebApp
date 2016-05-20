@@ -143,11 +143,10 @@ angular
                                 $scope.$emit('HidePreloader');
                                 $location.path("/Community/50000");
                             },
-                            function (timeOutRobot) {//Error
+                            function (obj) {//Error
                                 $scope.$emit('HidePreloader');
 
-                                if (timeOutRobot === true) {
-                                    //Show timeout robot
+                                if (obj.statusCode == 408) {//Request Timeout
                                     $scope.openModal();
                                 }
                             });

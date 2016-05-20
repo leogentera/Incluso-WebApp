@@ -350,25 +350,24 @@ angular
                                                     }, 500);
                                                 },
 
-                                                function(timeOutRobot){//Error
+                                                function(obj){//Error
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
                                                         $scope.showSharedAlbum = false;
                                                         $scope.$emit('HidePreloader');
 
-                                                        if (timeOutRobot === true) {
-                                                            //Show timeout robot
+                                                        //Revert previous request action.
+                                                        if (prevCurrentDiscussionIds === null) {
+                                                            localStorage.removeItem("currentDiscussionIds");
+                                                        } else {
+                                                            localStorage.setItem("currentDiscussionIds", prevCurrentDiscussionIds);
+                                                        }
+
+                                                        if (obj.statusCode == 408) {//Request Timeout
                                                             $scope.openModal();
 
-                                                            //Revert previous request action.
-                                                            if (prevCurrentDiscussionIds === null) {
-                                                                localStorage.removeItem("currentDiscussionIds");
-                                                            } else {
-                                                                localStorage.setItem("currentDiscussionIds", prevCurrentDiscussionIds);
-                                                            }
-
-                                                        } else {
+                                                        } else {//A different Error happened
                                                             $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
                                                         }
 

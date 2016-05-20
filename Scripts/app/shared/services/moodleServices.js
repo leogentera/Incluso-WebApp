@@ -520,7 +520,6 @@
             var currentTime = new Date().getTime();
             var discussionid = data.discussionid;
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-            var timeOutRobot = false;
 
             if (addToQueue) {
                 addRequestToQueue(key, {
@@ -544,7 +543,8 @@
                 _httpFactory({
                     method: 'POST',
                     url: url,
-                    data: data, timeout: 60000,
+                    data: data,
+                    timeout: 60000,
                     headers: { 'Content-Type': 'application/json',
                                'Authorization': currentUser.token }
                 }).success(function (data, status, headers, config) {console.log("Within Success");
@@ -559,15 +559,29 @@
 
                     successCallback();
                 }).error(function (data, status, headers, config) {
-                    //data.statusCode = status;
                     var finalTime = new Date().getTime();
-                    console.log("Within Failure " + (finalTime - currentTime));
+                    var obj = {};
+                    console.log("Within Failure " + (finalTime - currentTime) + " " + data + " " + status);
 
-                    if (finalTime - currentTime > 60000) {
-                        timeOutRobot = true;
+                    if (data) {
+                        if (data.messageerror) {
+                            obj.messageerror = data.messageerror;
+                            obj.statusCode = status;
+                        } else {
+                            obj.messageerror = "Undefined Server Error";
+                            obj.statusCode = status;
+                        }
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = 500;
                     }
 
-                    errorCallback(timeOutRobot);
+                    if (finalTime - currentTime > 60000) {
+                        obj.statusCode = 408;
+                        obj.messageerror = "Request Timeout";
+                    }
+
+                    errorCallback(obj);
                 });
             }
         };
