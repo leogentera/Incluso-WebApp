@@ -841,14 +841,13 @@ angular
                         $scope.showSharedAlbum = true;
                         $scope.$emit('HidePreloader');
                     },
-                    function (timeOutRobot) {//Error
+                    function (obj) {//Error
                         $scope.sharedAlbumMessage = null;
                         $scope.isShareCollapsed = false;
                         $scope.showSharedAlbum = false;
                         $scope.$emit('HidePreloader');
 
-                        if (timeOutRobot === true) {
-                            //Show timeout robot
+                        if (obj.statusCode == 408) {//Request Timeout
                             $scope.openModal();
                         }
 
