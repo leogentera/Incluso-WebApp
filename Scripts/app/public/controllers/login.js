@@ -61,8 +61,8 @@ angular
 
             function loadQuizesAssets(userId, userToken) {
                 $scope.$emit('ShowPreloader');
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, function() {}, function() {}, true);
-                    }
+                moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, quizesArray, userToken, function() {}, function() {}, true);
+            }
 
             $scope.loadCredentials = function () {
 

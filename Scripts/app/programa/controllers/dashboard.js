@@ -406,7 +406,7 @@ angular
 
             function getUserLikes() {
                 moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
-                    
+                    getProfileCatalogs();
                     
                 },function(){},true);
             }

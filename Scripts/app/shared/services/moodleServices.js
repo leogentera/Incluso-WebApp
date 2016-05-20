@@ -40,6 +40,11 @@
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
         
+        var _getProfileCatalogs = function(token,successCallback,errorCallback, forceRefresh){
+            _getAsyncData("profileCatalogs", API_RESOURCE.format('feedbackprofile'),token,successCallback, errorCallback, forceRefresh);
+                
+        };
+        
         var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
         };
@@ -71,11 +76,9 @@
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityQuizInfo = function (activityId, userId, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh) {
             if (userId != -1) {
-                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
-            } else {
-                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
+                _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh);
             }
         };
         
@@ -215,7 +218,7 @@
             }
         };
 
-        var _getAsyncData2 = function (key, url, userId, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh) {
 
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
@@ -231,10 +234,11 @@
                     moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                     _httpFactory({
                         method: 'POST',
-                        data: {"userid": userId, "activities":[150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249]},
+                        data: {"userid": userId, "activities": activitiesArray},
                         url: url,
                         headers: { 'Content-Type': 'application/json' , 'Authorization': token}
                     }).success(function (data, status, headers, config) {
+                        var answersProfile = [];
                         var proc = setInterval(function() {//Get & save each activity object.
                             if (data.length > 0) {
                                 var activity = data.shift();
@@ -256,7 +260,25 @@
                                             activity.data[0].questions[i].answers = newAnswer;
                                         }
                                     }
-
+                                    
+                                    for (var i = 0 ; i < activity.data[0].questions.length; i++) {
+                                        var question = activity.data[0].questions[i];
+                                        if (question.answers) {
+                                            Object.keys(question.answers).forEach(function(key){
+                                                
+                                                if (question.answers[key].profileid != 1) {
+                                                    var answerProfileObject = {
+                                                        "answer" : question.answers[key].id,
+                                                        "profileid": question.answers[key].profileid
+                                                    };
+    
+                                                    answersProfile.push(answerProfileObject);
+                                                }
+                                            });
+                                        }
+                                    }
+                                    _setLocalStorageJsonItem("answersProfile",answersProfile);
+                                    
                                     _setLocalStorageJsonItem(keyName, activity.data[0]);
                                 }
 
@@ -1555,7 +1577,8 @@
             PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
             DesactivateUser: _desactivateUser,
-            GetAsyncDiscussionDetail: _getAsyncDiscussionDetail
+            GetAsyncDiscussionDetail: _getAsyncDiscussionDetail,
+            GetProfileCatalogs: _getProfileCatalogs
         };
     })();
 }).call(this);

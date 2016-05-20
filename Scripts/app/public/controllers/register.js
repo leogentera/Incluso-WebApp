@@ -244,7 +244,7 @@ angular
                     var course = moodleFactory.Services.GetCacheJson("course");
                     moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
                         //Get Moodle Assets
-                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, function() {}, function() {}, true);
+                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, quizesArray, data.token, function() {}, function() {}, true);
 
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         if (currentUser && currentUser.token) {
