@@ -572,7 +572,7 @@ angular
     $scope.title = "MAPA DE VIDA";
     $scope.message = "Time Out - Try Later";
 
-    $scope.cancel = function () {
+    $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };

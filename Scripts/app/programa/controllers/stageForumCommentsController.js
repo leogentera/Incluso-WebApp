@@ -830,7 +830,7 @@ angular
     $scope.title = "FORO";
     $scope.message = "Time Out - Try Later";
 
-    $scope.cancel = function () {
+    $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
         $route.reload();

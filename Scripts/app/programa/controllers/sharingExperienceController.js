@@ -178,7 +178,7 @@ angular
     $scope.title = "SHARING EXPERIENCE";
     $scope.message = "Time Out - Try Later";
 
-    $scope.cancel = function () {
+    $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };

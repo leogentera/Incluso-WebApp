@@ -953,7 +953,7 @@ angular
     $scope.title = "ÁLBUM INCLUSO";
     $scope.message = "Time Out - Try Later";
 
-    $scope.cancel = function () {
+    $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };
