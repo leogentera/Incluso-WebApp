@@ -15,6 +15,8 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
             _timeout = $timeout;
             _httpFactory = $http;
+            _isCellphone = false;
+            cordova.exec(function () {_isCellphone=true}, function () {},"CallToAndroid", "isCellphone", []);
             $scope.scrollToTop();
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
