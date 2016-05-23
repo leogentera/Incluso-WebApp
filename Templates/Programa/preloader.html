@@ -1,5 +1,18 @@
 <div class="app-preloader" id="spinner" ng-show="loading" ng-init="loaderRandom()">
     <div>
+        <div class="spinner-svg incluso hide">
+            <div>
+                <img src="assets/images/spinners/incluso/img-light.svg" alt="..." class="spinner-complement rotating-10s light" />
+                <img src="assets/images/spinners/incluso/img-logo-gentera.png" alt="..."/>
+            </div>
+            <div class="loading-bar">
+                <div class="fill-bar"></div>
+            </div>
+            <div class="label-progress">
+                <span>0</span><span>%</span>
+            </div>
+        </div>
+
         <div class="spinner-svg {{spinnerShow!=0 ? 'hide' : 'show'}}">
             <div class="vibration">
                 <img src="assets/images/spinners/spaceship/img-spaceship.svg" alt="..."/>

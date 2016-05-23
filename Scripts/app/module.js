@@ -128,6 +128,7 @@ angular
         $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: true });
         $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html', { cache: true });
         $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: true });
+        $http.get('Templates/ZonaDeNavegacion/Retroalimentacion.html', { cache: true });
 
         ///////// Stage 3 //////////
         $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: true });
@@ -452,7 +453,7 @@ angular
         });
     
 
-        $routeProvider.when('/ZonaDeVuelo/Retroalimentacion', {
+        $routeProvider.when('/ZonaDeVuelo/Retroalimentacion/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
             
@@ -574,6 +575,11 @@ angular
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
+        });
+        
+        $routeProvider.when('/ZonaDeNavegacion/Retroalimentacion/:activityId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Retroalimentacion.html',
+            controller: 'programafeedbackcontroller'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionFinal/:activityIdentifier', {

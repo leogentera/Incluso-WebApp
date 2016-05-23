@@ -11,20 +11,5 @@
         <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()" ng-bind="contentResources.multiply_download_button"></a>
         <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="isInstalled" ng-click="downloadGame()" ng-bind="contentResources.multiply_start_button"></a>
         <div role="button" class="txt-renglon centered" ng-click="back()" ng-bind="contentResources.multiply_cancel_button"></div>
-        <!--  Robot for Time Out -->
-        <script type="text/ng-template" id="timeOutMapaDeVida.html">
-            <div class="modal-robot robot-lg user-help">
-                <img src="assets/images/img-robot-lg.svg" alt="robot"/>
-                <div class="modal-header">
-                    <button class="icon icon-close" ng-click="cancel()">
-                        <span class="icomoon icon-cross"></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h3 class="subtitle centered" ng-bind="title"></h3>
-                    <p class="centered" ng-bind-html="message"></p>
-                </div>
-            </div>
-        </script>
     </article>
 </div>
