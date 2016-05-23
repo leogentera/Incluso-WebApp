@@ -1311,11 +1311,13 @@ var logout = function ($scope, $location) {
 };
 
 
-//var fillProfileByActivity = function(){
-//        
-//    
-//  
-//};
+var fillProfilePoints = function(pointsByProfile){
+
+    var profilePoints = localStorage.getItem("profilePoints");  
+    if (!profilePoints) {
+        localStorage.setItem('profilePoints',JSON.stringify(pointsByProfile));
+    }
+}
 
 
 var getProfileCatalogs = function(){

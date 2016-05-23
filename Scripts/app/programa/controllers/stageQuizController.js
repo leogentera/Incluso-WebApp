@@ -563,10 +563,13 @@ angular
                 var userAnswerString = "";
                 var k;
                 var longUserAnswerString;
+                var profileId = [];
+                //var longProfileId;
 
                 for (k = 0; k < numOptions; k++) {
                     if ($scope.answers[index][k] == 1) {
                         userAnswerString += $scope.activityObject.questions[index].answers[k].answer;
+                        profileId.push(parseInt($scope.activityObject.questions[index].answers[k].profileid));
                     }
 
                     if (k < numOptions - 1 && $scope.answers[index][k] == 1) {
@@ -576,12 +579,13 @@ angular
 
                 userAnswerString = userAnswerString.trim();
                 longUserAnswerString = userAnswerString.length;
-
+                
                 if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
                     userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
-                }
+                }            
 
                 $scope.activityObject.questions[index].userAnswer = userAnswerString;
+                $scope.activityObject.questions[index].profileid = profileId;
 
                 // The checkbox for 'Other' is clicked.
                 if (checkLabel === "Otro" && $scope.answers[index][checkboxIndex]) {//The "Otro" checkbox has been checked.
@@ -616,6 +620,7 @@ angular
                     //Update answer objects
                     $scope.activityObject.questions[index].other = "";  //First, do "other=''" for the respective questions object.
                     $scope.activityObject.questions[index].userAnswer = "Ninguno"; //Second, make "Ninguno" the only value.
+                    $scope.activityObject.questions[index].profileid = 0;
                     $scope.OtroAnswers[multichoiceIndex].answers[0] = ""; //Third, delete user answer from the OtroAnswers object.
                 }
 
@@ -896,10 +901,12 @@ angular
 
                             case "binary":
                                 $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
+                                $scope.activityObject.questions[qIndex].profileid = parseInt($scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].profileid);
                                 break;
 
                             case "simplechoice":
                                 $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
+                                $scope.activityObject.questions[qIndex].profileid = parseInt($scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].profileid);
                                 break;
 
                             case "multichoice":
@@ -928,6 +935,7 @@ angular
                                 }
 
                                 $scope.activityObject.questions[qIndex].userAnswer = userAnswerString;
+                                $scope.activityObject.questions[qIndex].profileid = 0;
                                 break;
 
                             case "essay":
@@ -950,12 +958,16 @@ angular
                                 }
 
                                 $scope.activityObject.questions[qIndex].userAnswer = userAnswerString;
+                                $scope.activityObject.questions[qIndex].profileid = 0;
                                 break;
 
                             default:
                                 break;
-                        }
+                        }                        
                     }
+                    
+                    //get profile points from the quiestion's answers.
+                    calculateProfilePoints($scope.activityObject.questions);
 
                     // Write Updated objects to Local Storage for later recovery.
                     if ($scope.childActivity) {
@@ -1005,6 +1017,25 @@ angular
 
             };
 
+        
+
+            function calculateProfilePoints(questions){
+                var profilePoints = [];
+                for(var i = 0; i < questions.length; i++){
+                    var profileId = questions[i].profileid;
+                    if (profileId.length > 0) {
+                        for(var j=0; j < profileId.length; j++){
+                            profilePoints.push(profileId[j]);
+                        }
+                    }else{
+                        profilePoints.push(profileId);
+                    }
+                };                
+                
+                var pointsByProfile = _.countBy(profilePoints, _.identity);
+                fillProfilePoints(pointsByProfile);
+                
+            }
 
             function updateProfile() {
 

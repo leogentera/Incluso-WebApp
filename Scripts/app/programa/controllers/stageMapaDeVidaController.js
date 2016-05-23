@@ -414,17 +414,16 @@ angular
                                                         }, 500);
                                                     }, 500);
                                                 },
-                                                function (timeOutRobot) {//Error
+                                                function (obj) {//Error
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
                                                         $scope.showSharedAlbum = false;
                                                         $scope.$emit('HidePreloader');
 
-                                                        if (timeOutRobot === true) {
-                                                            //Show timeout robot
+                                                        if (obj.statusCode == 408) {//Request Timeout
                                                             $scope.openModal();
-                                                        } else {
+                                                        } else {//A different Error happened
                                                             $location.path('/ZonaDeNavegacion/Dashboard/2/4');
                                                         }
 
