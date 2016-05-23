@@ -1810,6 +1810,15 @@ function getcurrentVersion() {
 }
 
 
+var progressBar = {
+    set: function (val) {
+        var bar = $(".app-preloader .incluso");
+        val = val < 0 ?  0 : val > 100 ? 100 : val;
+        bar.find(".fill-bar").width(val + "%");
+        bar.find(".label-progress span:first-child").text(val);
+    }
+}
+
 /* Waits until page is loaded */
 $(document).ready(function(){
     setTimeout(function() {
