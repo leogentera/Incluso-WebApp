@@ -1311,9 +1311,9 @@ var logout = function ($scope, $location) {
 
 
 var fillProfilePoints = function(pointsByProfile){
-
+    
     var profilePoints = localStorage.getItem("profilePoints");  
-    if (!profilePoints) {
+    if (!profilePoints && pointsByProfile.length > 0) {
         localStorage.setItem('profilePoints',JSON.stringify(pointsByProfile));
     }
 }
@@ -1474,7 +1474,8 @@ var _activityRoutes = [
     {id: 2015, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/2015'},
     {id: 2016, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/13y5/2016'},
     {id: 2017, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/2017'},
-    {id: 2026, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/2026'},    
+    {id: 2026, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/2026'},
+    {id: 2022, name: '', url: '/ZonaDeNavegacion/Retroalimentacion/2022'},
     {id: 2023, name: '', url: '/ZonaDeNavegacion/ExploracionFinal/2023'},
     {id: 3101, name: '', url: '/ZonaDeAterrizaje/ExploracionInicial/3101'},
     {id: 3201, name: '', url: '/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201'},
