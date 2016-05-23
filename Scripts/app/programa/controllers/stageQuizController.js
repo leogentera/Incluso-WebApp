@@ -1022,16 +1022,18 @@ angular
             function calculateProfilePoints(questions){
                 var profilePoints = [];
                 for(var i = 0; i < questions.length; i++){
-                    var profileId = questions[i].profileid;
-                    if (profileId.length > 0) {
-                        for(var j=0; j < profileId.length; j++){
-                            profilePoints.push(profileId[j]);
+                    if (questions[i].profileid) {
+                        var profileId = questions[i].profileid;
+                        if (profileId.length > 0) {
+                            for(var j=0; j < profileId.length; j++){
+                                profilePoints.push(profileId[j]);
+                            }
+                        }else{
+                            profilePoints.push(profileId);
                         }
-                    }else{
-                        profilePoints.push(profileId);
                     }
                 };                
-                
+                debugger;
                 var pointsByProfile = _.countBy(profilePoints, _.identity);
                 fillProfilePoints(pointsByProfile);
                 
