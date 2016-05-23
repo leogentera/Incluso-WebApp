@@ -175,7 +175,21 @@
     }
 
     &.incluso {
-        width: 80vw;
+        display: flex !important;
+        width: 100%;
+        margin: initial;
+        position: relative;
+        background-attachment: fixed;
+        background-image:url('@{url-images}/spinners/incluso/bg-incluso.png');
+        background-position: center;
+        background-size: cover;
+        
+        > div {
+            width: 80vw;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+        }
 
         .loading-bar {
             width: 70vw;
@@ -202,7 +216,7 @@
             margin-top: 4vw;
             font-size: 2em;
             font-weight: 600;
-            
+
             span:first-child {
                 display: inline-block;
                 text-align: center;
