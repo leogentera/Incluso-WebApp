@@ -1718,36 +1718,6 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
     _forceUpdateConnectionStatus(sucessIsOnlineCallback, errorIsOnlineCallback);
 };
 
-/* loads drupal resources (content) */
-var _loadedDrupalResources = false;
-var _loadedDrupalResourcesWithErrors = false;
-var _loadDrupalResources = function() {
-    _loadedDrupalResources = false;
-    var propCounter = 0;
-    _loadedDrupalResources = false;
-    _loadedDrupalResourcesWithErrors = false;
-    
-    //for (var prop in drupalFactory.NodeRelation) {
-    //    drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
-    //}
-    drupalFactory.Services.GetDrupalContent(function(){
-            _loadedDrupalResources = true;
-        }, function(){
-            _loadedDrupalResources = false;
-            _loadedDrupalResourcesWithErrors = true;
-        }, true);
-    
-    function successDrupalResourcesCallback() {
-        propCounter++;
-        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
-    }
-    
-    function errorDrupalResourcesCallback() {
-        propCounter++;
-        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
-        _loadedDrupalResourcesWithErrors = true;
-    }
-}
 
 /* params:
    images - array of objects { path, name, downloadLink }

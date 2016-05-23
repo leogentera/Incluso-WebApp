@@ -138,7 +138,6 @@
             _putAsyncData(null, data, API_RESOURCE.format('notification/') + userId, successCallback, errorCallback);
         };
 
-
         var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
 
             _putAsyncStars("Perfil/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
@@ -229,9 +228,9 @@
             }
             else if (forceRefresh){
                 if (token) {
-                    _getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
-                    _getAsyncForumDiscussions(91, token, function () {}, function () {}, true);
-                    moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
+                    //_getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
+                    //_getAsyncForumDiscussions(91, token, function () {}, function () {}, true);
+                    //moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                     _httpFactory({
                         method: 'POST',
                         data: {"userid": userId, "activities": activitiesArray},
@@ -448,7 +447,7 @@
                 url: url,
                 headers: { 'Content-Type': 'application/json',
                             'Authorization': currentUser.token }
-            }).success(function (data, status, headers, config) {
+            }).success(function (data, status, headers, config) {console.log("SUCCESS COURSE");
                 createTree(data);
                 successCallback();
             }).error(function (data, status, headers, config) {
@@ -569,7 +568,11 @@
                     timeout: 60000,
                     headers: { 'Content-Type': 'application/json',
                                'Authorization': currentUser.token }
-                }).success(function (data, status, headers, config) {console.log("Within Success");
+                }).success(function (data, status, headers, config) {
+                    console.log("Within Success");
+                    console.log(headers('Content-Length'));
+                    console.log(headers());
+                    console.log(data);
 
                     if (key != null) {
                         _setLocalStorageJsonItem(key,data);

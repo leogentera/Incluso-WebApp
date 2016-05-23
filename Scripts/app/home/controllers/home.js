@@ -14,6 +14,31 @@ angular
         function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal, $timeout) {
             
             $rootScope.OAUTH_ENABLED = false;
+            $rootScope.loadedItem = 0;
+            $rootScope.totalLoads = 16;
+            $rootScope.loaderForLogin = false;
+
+            function myLoop (inf, up) {
+                var a = up - inf;
+
+                setTimeout(function () {
+
+                    inf += 1;console.log(inf);
+                    if (inf < up) {
+                        myLoop(inf, up);
+                    }
+                }, 10)
+            }
+
+            $scope.incLoadedItem = function() {
+                var infValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
+                $rootScope.loadedItem++;
+                var upperValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
+                var percentInc = $rootScope.loadedItem/$rootScope.totalLoads;
+
+                console.log("Calling myLoop with " + infValue + " - " + upperValue);
+                myLoop(infValue, upperValue);
+            };
             
             // To handle page reloads
             _httpFactory = $http;
@@ -25,11 +50,19 @@ angular
             }
 
             $scope.loaderRandom = function () {
-                $scope.spinnerShow = Math.floor((Math.random() * 4));
-                setInterval(function () { 
-                    if(!$("#spinner").is(':visible'))
-                         $scope.spinnerShow = Math.floor((Math.random() * 4));
-                }, 200);
+                if ($rootScope.loaderForLogin) {//Show Login Preloader
+                    $scope.spinnerShow = 1;
+                    setInterval(function () {
+                        if(!$("#spinner").is(':visible'))
+                            $scope.spinnerShow = 1;
+                    }, 200);
+                } else {
+                    $scope.spinnerShow = Math.floor((Math.random() * 4));
+                    setInterval(function () {
+                        if(!$("#spinner").is(':visible'))
+                            $scope.spinnerShow = Math.floor((Math.random() * 4));
+                    }, 200);
+                }
             };
 
             var classdisable;
