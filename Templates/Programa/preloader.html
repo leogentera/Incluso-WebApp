@@ -1,6 +1,6 @@
 <div class="app-preloader" id="spinner" ng-show="loading" ng-init="loaderRandom()">
     <div>
-        <div class="spinner-svg incluso hide">
+        <div class="spinner-svg incluso {{spinnerShow == 10 ? 'show' : 'hide'}}">
             <div>
                 <img src="assets/images/spinners/incluso/img-light.svg" alt="..." class="spinner-complement rotating-10s light" />
                 <img src="assets/images/spinners/incluso/img-logo-gentera.png" alt="..."/>

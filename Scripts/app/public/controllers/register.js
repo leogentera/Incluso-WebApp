@@ -165,6 +165,9 @@ angular
                 $rootScope.totalLoads = 14;
 
                 if (validateModel()) {
+                    $rootScope.loaderForLogin = true;
+                    progressBar.set(0);
+                    $scope.loaderRandom();
                     $scope.$emit('ShowPreloader');
                     registerUser();
                 } else {

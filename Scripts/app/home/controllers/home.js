@@ -17,17 +17,18 @@ angular
             $rootScope.loadedItem = 0;
             $rootScope.totalLoads = 16;
             $rootScope.loaderForLogin = false;
+            progressBar.set(0);
 
-            function myLoop (inf, up) {
-                var a = up - inf;
-
+            function myLoop (inf, up) {//To fill the interval between download chunks.
                 setTimeout(function () {
 
-                    inf += 1;console.log(inf);
+                    inf++;
+                    progressBar.set(inf);
+
                     if (inf < up) {
                         myLoop(inf, up);
                     }
-                }, 10)
+                }, 10);
             }
 
             $scope.incLoadedItem = function() {
@@ -51,10 +52,10 @@ angular
 
             $scope.loaderRandom = function () {
                 if ($rootScope.loaderForLogin) {//Show Login Preloader
-                    $scope.spinnerShow = 1;
+                    $scope.spinnerShow = 10;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
-                            $scope.spinnerShow = 1;
+                            $scope.spinnerShow = 10;
                     }, 200);
                 } else {
                     $scope.spinnerShow = Math.floor((Math.random() * 4));

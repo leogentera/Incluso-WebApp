@@ -138,8 +138,9 @@ angular
             };
 
             $scope.login = function () {
-                $rootScope.loaderForLogin = true;
-                $scope.loaderRandom();
+                $rootScope.loaderForLogin = true; //For Login Preloader
+                progressBar.set(0); //For Login Preloader
+                $scope.loaderRandom(); //For Login Preloader
                 $scope.$emit('ShowPreloader');
                 $scope.userCredentialsModel.modelState.isValid = true;
                 $scope.userCredentialsModel.modelState.errorMessages = [];
@@ -317,6 +318,9 @@ angular
             }
 
             function FacebookLoginSuccess(data) {
+                $rootScope.loaderForLogin = true; //For Login Preloader
+                progressBar.set(0); //For Login Preloader
+                $scope.loaderRandom(); //For Login Preloader
                 $scope.$emit('ShowPreloader');
                 var userFacebook = JSON.parse(data);
 

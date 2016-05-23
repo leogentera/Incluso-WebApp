@@ -1786,10 +1786,20 @@ var progressBar = {
     set: function (val) {
         var bar = $(".app-preloader .incluso");
         val = val < 0 ?  0 : val > 100 ? 100 : val;
-        bar.find(".fill-bar").width(val + "%");
-        bar.find(".label-progress span:first-child").text(val);
+
+        var currentWidth = bar.find(".label-progress span:first-child").text();
+
+        if (val == 0) {
+            bar.find(".fill-bar").width(val + "%");
+            bar.find(".label-progress span:first-child").text(val);
+        }
+
+        if (val > parseInt(currentWidth, 10)) {console.log(val + "currentWidth: " + currentWidth);
+            bar.find(".fill-bar").width(val + "%");
+            bar.find(".label-progress span:first-child").text(val);
+        }
     }
-}
+};
 
 /* Waits until page is loaded */
 $(document).ready(function(){

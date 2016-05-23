@@ -280,7 +280,10 @@ angular
 
                             _pageLoaded = true;
                             if (_loadedResources && _pageLoaded) {
-                                $scope.$emit('HidePreloader');
+                                $timeout(function(){
+                                    //progressBar.set(0);
+                                    $scope.$emit('HidePreloader');
+                                }, 1000);
                             }
 
                             if (!profile.termsAndConditions) {
