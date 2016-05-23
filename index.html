@@ -94,6 +94,25 @@
                         </div>
                     </script>
 
+
+                    <!--  Robot for Time Out -->
+                    <script type="text/ng-template" id="timeOutModal.html">
+                        <div class="modal-robot robot-sm user-help modal-timeout">
+                            <div class="icon-img">
+                                <img src="assets/images/svg/icon-time-expired.svg" alt="Logo" />
+                            </div>
+                            <div class="modal-body">                
+                                <h3 class="subtitle centered" ng-bind="title"></h3>
+                                <div>
+                                    <p class="centered" ng-bind-html="message"></p>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="txt-renglon">
+                            <button type="button" ng-click="ToDashboard()" class="btn btn-primary btn-lg btn-cnt">Aceptar</button>    
+                        </div>
+                    </script>
+
                     <div tabindex="-1" id="offlineModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
                         <div class="modal-dialog">
                             <div class="modal-content">
