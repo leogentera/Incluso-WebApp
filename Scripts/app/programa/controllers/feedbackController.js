@@ -17,11 +17,25 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
             
+            $scope.location = "";
             $scope.messageProfile = "";
             $scope.user = "";
             $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             if ($scope.currentUser) {
-                $scope.user = $scope.currentUser.alias;    
+                $scope.user = $scope.currentUser.alias;
+            }
+            
+            
+            var currentStage = JSON.parse(localStorage.getItem("currentStage"));
+            switch (currentStage) {
+                case 1:
+                    $scope.location = '/ZonaDeVuelo/Dashboard/1/5';
+                    $rootScope.showStage1Footer = true;
+                    break;
+                case 2:
+                    $scope.location = 'ZonaDeNavegacion/Dashboard/1/5';
+                    $rootScope.showStage2Footer = true;
+                    break;
             }
             
             var perfilIncluso = [
@@ -57,9 +71,7 @@ angular
             
             
             $scope.ToDashboard = function(){
-                
-                $location.path('/ZonaDeVuelo/Dashboard/1/5');
-                
+                $location.path($scope.location);
             };
             
         initialLoading();
