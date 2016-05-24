@@ -1311,13 +1311,30 @@ var logout = function ($scope, $location) {
 };
 
 
-var fillProfilePoints = function(pointsByProfile){
+var fillProfilePoints = function(pointsToAdd, activityType){
+    var profilePoints = localStorage.getItem("profilePoints");
+    var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
     
-    var profilePoints = localStorage.getItem("profilePoints");  
-    if (!profilePoints && pointsByProfile.length > 0) {
-        localStorage.setItem('profilePoints',JSON.stringify(pointsByProfile));
+    //set profilePoints for the first time
+    if (!profilePoints) {
+      profilePoints = profileCatalogs.profiles;
+      for(var i= 0; i < profilePoints.length; i++){
+          profilePoints[i].points = 0;
+      }
     }
+    
+    for(var i = 0; i < pointsToAdd.length; i++){
+          var profileIdToAdd = pointsToAdd[i].profileId;
+          var points = pointsToAdd[i].points;
+          for(var j = 0; j < profilePoints.length; j++){
+              if (profilePoints[j].id == profileIdToAdd) {
+                profilePoints[j].points += points;
+              }
+          }
+    }
+    localStorage.setItem("profilePoints",JSON.stringify(profilePoints));
 }
+
 
 
 var getProfileCatalogs = function(){
