@@ -278,10 +278,13 @@ angular
                                 });
                             }, 1);
 
+                            moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
+                                $scope.incLoadedItem(); //16
+                            }, function () {}, true);
+
                             _pageLoaded = true;
-                            if (_loadedResources && _pageLoaded) {
+                            if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
                                 $timeout(function(){
-                                    //progressBar.set(0);
                                     $scope.$emit('HidePreloader');
                                 }, 1000);
                             }
@@ -311,12 +314,6 @@ angular
                                     break;
                                 }
                             }
-                            
-                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
-                                 $scope.incLoadedItem(); //16
-                                 $rootScope.loaderForLogin = false;
-                                 $rootScope.loadedItem = 0;
-                             }, function () {}, true);
                         }
 
                     }, errorCallback, true);

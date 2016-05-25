@@ -162,7 +162,7 @@ angular
                 //Register.
                 localStorage.removeItem("Credentials");
 
-                $rootScope.totalLoads = 14;
+                $rootScope.totalLoads = 16;
 
                 if (validateModel()) {
                     $rootScope.loaderForLogin = true;
