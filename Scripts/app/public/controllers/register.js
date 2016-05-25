@@ -162,7 +162,12 @@ angular
                 //Register.
                 localStorage.removeItem("Credentials");
 
+                $rootScope.totalLoads = 14;
+
                 if (validateModel()) {
+                    $rootScope.loaderForLogin = true;
+                    progressBar.set(0);
+                    $scope.loaderRandom();
                     $scope.$emit('ShowPreloader');
                     registerUser();
                 } else {
@@ -219,8 +224,69 @@ angular
                 return (errors.length === 0);
             }
 
+            var registerUser = function () {
+
+                $http({
+                    method: 'POST',
+                    url: API_RESOURCE.format("user"),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    data: $.param({
+                        username: $scope.registerModel.username.toString().toLowerCase(),
+                        firstname: $scope.registerModel.firstname,
+                        lastname: $scope.registerModel.lastname,
+                        mothername: $scope.registerModel.mothername,
+                        password: $scope.registerModel.password,
+                        email: $scope.registerModel.email,
+                        city: $scope.registerModel.city,
+                        country: $scope.registerModel.country,
+                        secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
+                        secretquestion: $scope.registerModel.secretQuestion,
+                        metThisAppBy: $scope.registerModel.metThisAppBy,
+                        birthday: dpValue,
+                        gender: $scope.registerModel.gender,
+                        autologin: true
+                    })
+                }).success(function (data, status, headers, config) {//Successfully register and logged in.
+                    $scope.incLoadedItem(); //1
+                    $scope.isRegistered = true;
+                    $scope.registerModel.modelState.isValid = true;
+                    $scope.$emit('scrollTop');
+                    $scope.autologin(data);
+
+                }).error(function (data, status, headers, config) {
+                    var errorMessage;
+
+                    if ((data != null && data.messageerror != null)) {
+                        errorMessage = window.atob(data.messageerror);
+                    } else {
+                        errorMessage = "Problema con la red; asegúrate de tener Internet e intenta de nuevo.";
+                    }
+
+                    $scope.registerModel.modelState.errorMessages = [errorMessage];
+                    $scope.$emit('HidePreloader');
+                    $scope.$emit('scrollTop');
+                });
+            };
+
             $scope.autologin = function (data) {
-                _loadDrupalResources();
+                //_loadDrupalResources();
+
+                /* loads drupal resources (content) */
+                _loadedDrupalResources = false;
+                _loadedDrupalResourcesWithErrors = false;
+                _loadedDrupalResources = false;
+                _loadedDrupalResources = false;
+                _loadedDrupalResourcesWithErrors = false;
+
+                drupalFactory.Services.GetDrupalContent(function () {
+                    _loadedDrupalResources = true;
+                    $scope.incLoadedItem(); //2
+                }, function () {
+                    _loadedDrupalResources = false;
+                    _loadedDrupalResourcesWithErrors = true;
+                }, true);
+                /*  */
+
                 $rootScope.OAUTH_ENABLED = false;
                 
                 //save token for further requests and autologin
@@ -234,17 +300,33 @@ angular
                     password: $scope.registerModel.password,
                     rememberCredentials: true
                 });
-                _setId(data.id);
 
-                
+                _setId(data.id);
                 
                 moodleFactory.Services.PostGeolocation(-1);
 
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
+                    $scope.incLoadedItem(); //3
                     var course = moodleFactory.Services.GetCacheJson("course");
                     moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
                         //Get Moodle Assets
-                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, quizesArray, data.token, function() {}, function() {}, true);
+                        $scope.incLoadedItem(); //4
+
+                        moodleFactory.Services.GetAsyncForumDiscussions(85, data.token, function () {
+                            $scope.incLoadedItem(); //5
+                        }, function () {}, true);
+
+                        moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
+                            $scope.incLoadedItem(); //6
+                        }, function () {}, true);
+
+                        moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
+                            $scope.incLoadedItem(); //7 y 8
+                        }, function(){}, true);
+
+                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, quizesArray, data.token, function() {
+                            $scope.incLoadedItem(); //9
+                        }, function() {}, true);
 
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         if (currentUser && currentUser.token) {
@@ -281,11 +363,6 @@ angular
                 }, true);
             };
 
-            function change(time) {
-                var r = time.match(/^\s*([0-9]+)\s*-\s*([0-9]+)\s*-\s*([0-9]+)(.*)$/);
-                return r[2] + "-" + r[3] + "-" + r[1] + r[4];
-            }
-
             $scope.datePickerClick = function () {
                 if (window.mobilecheck()) {
                     cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);
@@ -298,49 +375,6 @@ angular
 
             function FailureDatePicker(data) {
             }
-
-            var registerUser = function () {
-
-                $http({
-                    method: 'POST',
-                    url: API_RESOURCE.format("user"),
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    data: $.param({
-                        username: $scope.registerModel.username.toString().toLowerCase(),
-                        firstname: $scope.registerModel.firstname,
-                        lastname: $scope.registerModel.lastname,
-                        mothername: $scope.registerModel.mothername,
-                        password: $scope.registerModel.password,
-                        email: $scope.registerModel.email,
-                        city: $scope.registerModel.city,
-                        country: $scope.registerModel.country,
-                        secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
-                        secretquestion: $scope.registerModel.secretQuestion,
-                        metThisAppBy: $scope.registerModel.metThisAppBy,
-                        birthday: dpValue,
-                        gender: $scope.registerModel.gender,
-                        autologin: true
-                    })
-                }).success(function (data, status, headers, config) {//Successfully register and logged in.
-                    $scope.isRegistered = true;
-                    $scope.registerModel.modelState.isValid = true;
-                    $scope.$emit('scrollTop');
-                    $scope.autologin(data);
-
-                }).error(function (data, status, headers, config) {
-                    var errorMessage;
-
-                    if ((data != null && data.messageerror != null)) {
-                        errorMessage = window.atob(data.messageerror);
-                    } else {
-                        errorMessage = "Problema con la red; asegúrate de tener Internet e intenta de nuevo.";
-                    }
-
-                    $scope.registerModel.modelState.errorMessages = [errorMessage];
-                    $scope.$emit('HidePreloader');
-                    $scope.$emit('scrollTop');
-                });
-            };
 
             function calculate_age() {
                 var birth_day = dpValue.substring(0, 2);

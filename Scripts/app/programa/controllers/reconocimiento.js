@@ -203,7 +203,7 @@ angular
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'timeOutReconocimiento.html',
+                    templateUrl: 'timeOutModal.html',
                     controller: 'timeOutReconocimiento',
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'

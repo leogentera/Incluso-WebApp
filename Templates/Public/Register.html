@@ -208,7 +208,7 @@
                                         <p class="input-group-addon" id="genderAddOn">
                                             <span class="icomoon icon-dna"></span>
                                         </p>
-                                        <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                        <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <select ng-model="registerModel.gender" name="gender"
                                                     ng-options="item for item in genderItems"
                                                     ng-init="registerModel.gender == null"
@@ -218,7 +218,7 @@
                                                 <option value="" ng-disabled="!!registerModel.gender">Género</option>
                                             </select>
                                             <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
                                         <p class="input-group-addon" id="countryAddOn">
                                             <span class="icomoon icon-earth"></span>
                                         </p>
-                                        <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                        <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <select ng-model="registerModel.country" name="country"
                                                     ng-options="item for item in countryItems"
                                                     ng-init="registerModel.country == null"
@@ -241,7 +241,7 @@
                                                 <option value="" ng-disabled="!!registerModel.country">País</option>
                                             </select>
                                             <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -254,7 +254,7 @@
                                         <p class="input-group-addon" id="cityAddOn">
                                             <span class="icomoon icon-map"></span>
                                         </p>
-                                        <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                        <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <select ng-model="registerModel.city" name="city"
                                                     ng-options="item for item in cityItems"
                                                     ng-init="registerModel.city == null"
@@ -264,7 +264,7 @@
                                                 <option value="" ng-disabled="!!registerModel.city">Estado</option>
                                             </select>
                                             <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -403,7 +403,7 @@
                                         <p class="input-group-addon" id="securityQuestionAddOn">
                                             <span class="icomoon icon-help"></span>
                                         </p>
-                                        <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                        <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <select ng-disabled="isRegistered"
                                                     ng-model="registerModel.secretQuestion"
                                                     ng-init="registerModel.secretQuestion == null"
@@ -418,7 +418,7 @@
                                                 </option>
                                             </select>
                                             <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -451,7 +451,7 @@
                                         <p class="input-group-addon" id="howIMetThisApp">
                                             <span class="icomoon icon-help"></span>
                                         </p>
-                                        <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                        <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <select ng-disabled="isRegistered"
                                                 ng-model="registerModel.metThisAppBy"
                                                 ng-init="registerModel.metThisAppBy == null"
@@ -464,7 +464,7 @@
                                                 <option value="" ng-disabled="!!registerModel.metThisAppBy">Conocí esta app por:</option>
                                             </select>
                                             <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                        </p>
+                                        </div>
                                     </div>                                    
                                 </div>
                             </div>

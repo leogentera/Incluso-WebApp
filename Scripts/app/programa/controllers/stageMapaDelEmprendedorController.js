@@ -266,7 +266,7 @@ angular
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'timeOutMapaDelEmprendedor.html',
+                    templateUrl: 'timeOutModal.html',
                     controller: 'timeOutMapaDelEmprendedor',
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
@@ -461,7 +461,7 @@ angular
     $scope.title = "MAPA DEL EMPRENDEDOR";
     $scope.message = "Time Out - Try Later";
 
-    $scope.cancel = function () {
+    $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };

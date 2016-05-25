@@ -207,8 +207,6 @@ angular
                                 leaderboard[lb].profileimageurl = niceImageUrl;
                             });
                         }
-                        
-                       
 
                         $scope.course.leaderboard = leaderboard;
                         
@@ -234,9 +232,11 @@ angular
                     _setLocalStorageItem("currentStage", $scope.currentStage);
 
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
+                        $scope.incLoadedItem(); //11
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         currentUserProfile = getCurrentUserProfile();
                         var images = [];
+
                         for(var i = 0; i < $scope.course.leaderboard.length; i++) {
                             var topuser = $scope.course.leaderboard[i];
                             
@@ -245,7 +245,6 @@ angular
                                 'name': "avatar_" + topuser.userId + ".png",
                                 'downloadLink': topuser.profileimageurl
                             };
-
                         }
 
                         images[images.length] = {
@@ -255,8 +254,6 @@ angular
                          };
                         
                         saveLocalImages(images);
-                        
-                        
                         var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                         
                         if(profile) {
@@ -266,7 +263,7 @@ angular
                         }
                         
                         function profileCallback() {
-                            
+                            $scope.incLoadedItem(); //14
                             var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                             $timeout(function(){
                                 $scope.user.profileimageurl = profile != null ? profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
@@ -283,7 +280,10 @@ angular
 
                             _pageLoaded = true;
                             if (_loadedResources && _pageLoaded) {
-                                $scope.$emit('HidePreloader')
+                                $timeout(function(){
+                                    //progressBar.set(0);
+                                    $scope.$emit('HidePreloader');
+                                }, 1000);
                             }
 
                             if (!profile.termsAndConditions) {
@@ -312,8 +312,11 @@ angular
                                 }
                             }
                             
-                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){}, function () {}, true);
-                            
+                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
+                                 $scope.incLoadedItem(); //16
+                                 $rootScope.loaderForLogin = false;
+                                 $rootScope.loadedItem = 0;
+                             }, function () {}, true);
                         }
 
                     }, errorCallback, true);
@@ -398,28 +401,42 @@ angular
             function getUserNotifications(courseid) {
                 var courseId = courseid;
                 var userId = _getItem("userId");
-                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {
-                        getUserStarsByPoints();
-                        getUserLikes();
-                }, errorCallback, true);
-            }
 
-            function getUserLikes() {
-                moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
-                    getProfileCatalogs();
-                    
-                },function(){},true);
+                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {
+                    $scope.incLoadedItem(); //10
+                    getUserStarsByPoints();
+                    getUserLikes();
+                }, errorCallback, true);
             }
             
             function getUserStarsByPoints() {
 
                 moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token, function (dataStars) {
+                    $scope.incLoadedItem(); //12
                     if (dataStars.length > 0) {
                         localStorage.setItem("userStars", JSON.stringify(dataStars));
                     }
                 }, function () {
                     $scope.activitiesCompleted = [];
                 }, true);
+            }
+
+            function getUserLikes() {
+                moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
+                    $scope.incLoadedItem(); //13
+                    //getProfileCatalogs();
+
+                    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    if (currentUser) {
+                        moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){
+                            $scope.incLoadedItem(); //15
+                            console.log(data);
+                        },function(data){
+                            console.log(data);
+                        },true);
+                    }
+
+                },function(){},true);
             }
 
             //Open Welcome Message modal
