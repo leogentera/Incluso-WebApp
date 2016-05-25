@@ -209,9 +209,13 @@
                                             <span class="icomoon icon-dna"></span>
                                         </p>
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                            <label class="form-control form-control-lg theme-default"
+                                            ng-class="{'placeholder': registerModel.gender == ''}"
+                                            ng-show="mobilecheck()">{{registerModel.gender || 'Género'}}</label>
                                             <select ng-model="registerModel.gender" name="gender"
                                                     ng-options="item for item in genderItems"
                                                     ng-init="registerModel.gender == null"
+                                                    ng-show="!mobilecheck()"
                                                     class="form-control form-control-lg theme-default"
                                                     aria-describedby="genderAddOn" required
                                                     ng-class="{'selected': registerModel.gender.length != 0}">
@@ -232,9 +236,13 @@
                                             <span class="icomoon icon-earth"></span>
                                         </p>
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                            <label class="form-control form-control-lg theme-default"
+                                            ng-class="{'placeholder': registerModel.countryr == ''}"
+                                            ng-show="mobilecheck()">{{registerModel.country || 'País'}}</label>
                                             <select ng-model="registerModel.country" name="country"
                                                     ng-options="item for item in countryItems"
                                                     ng-init="registerModel.country == null"
+                                                    ng-show="!mobilecheck()"
                                                     class="form-control form-control-lg theme-default"
                                                     aria-describedby="countryAddOn" required
                                                     ng-class="{'selected': registerModel.country.length != 0}">
@@ -255,9 +263,13 @@
                                             <span class="icomoon icon-map"></span>
                                         </p>
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                            <label class="form-control form-control-lg theme-default"
+                                            ng-class="{'placeholder': registerModel.city == ''}"
+                                            ng-show="mobilecheck()">{{registerModel.city || 'Estado'}}</label>
                                             <select ng-model="registerModel.city" name="city"
                                                     ng-options="item for item in cityItems"
                                                     ng-init="registerModel.city == null"
+                                                    ng-show="!mobilecheck()"
                                                     class="form-control form-control-lg theme-default"
                                                     aria-describedby="cityAddOn" required
                                                     ng-class="{'selected': registerModel.city.length != 0}">
@@ -404,10 +416,14 @@
                                             <span class="icomoon icon-help"></span>
                                         </p>
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                            <label class="form-control form-control-lg theme-default"
+                                            ng-class="{'placeholder': registerModel.secretQuestion == ''}"
+                                            ng-show="mobilecheck()">{{registerModel.secretQuestion || 'Pregunta de seguridad'}}</label>
                                             <select ng-disabled="isRegistered"
                                                     ng-model="registerModel.secretQuestion"
                                                     ng-init="registerModel.secretQuestion == null"
                                                     ng-options="item for item in securityquestionItems"
+                                                    ng-show="!mobilecheck()"
                                                     name="securityQuestion"
                                                     class="form-control form-control-lg theme-default"
                                                     aria-describedby="securityQuestionAddOn"
@@ -452,10 +468,14 @@
                                             <span class="icomoon icon-help"></span>
                                         </p>
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                                            <label class="form-control form-control-lg theme-default"
+                                            ng-class="{'placeholder': registerModel.metThisAppBy == ''}"
+                                            ng-show="mobilecheck()">{{registerModel.metThisAppBy || 'Conocí esta app por:'}}</label>
                                             <select ng-disabled="isRegistered"
                                                 ng-model="registerModel.metThisAppBy"
                                                 ng-init="registerModel.metThisAppBy == null"
                                                 ng-options="item for item in metThisAppByItems"
+                                                ng-show="!mobilecheck()"
                                                 name="metThisAppBy"
                                                 class="form-control form-control-lg theme-default"
                                                 aria-describedby="howIMetThisApp"
