@@ -1787,14 +1787,14 @@ var progressBar = {
         var bar = $(".app-preloader .incluso");
         val = val < 0 ?  0 : val > 100 ? 100 : val;
 
-        var currentWidth = bar.find(".label-progress span:first-child").text();
+        var labelWidth = parseInt(bar.find(".label-progress span:first-child").text(), 10);
 
-        if (val == 0) {
+        if (val == 0) {//This is for being able to reset the style of the bar.
             bar.find(".fill-bar").width(val + "%");
             bar.find(".label-progress span:first-child").text(val);
         }
 
-        if (val > parseInt(currentWidth, 10)) {console.log(val + "currentWidth: " + currentWidth);
+        if (val > labelWidth) {//Update percentage
             bar.find(".fill-bar").width(val + "%");
             bar.find(".label-progress span:first-child").text(val);
         }
