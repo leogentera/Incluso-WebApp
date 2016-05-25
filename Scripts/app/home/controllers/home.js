@@ -57,14 +57,14 @@ angular
                 $scope.loading = false;
             }
 
-            $scope.loaderRandom = function () {console.log("FROM LOGIN");
+            $scope.loaderRandom = function () {
                 if ($rootScope.loaderForLogin) {//Show Login Preloader
                     $scope.spinnerShow = 0;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
                             $scope.spinnerShow = 0;
                     }, 200);
-                } else {console.log("Not in LOGIN");
+                } else {//Pick another preloader
                     $scope.spinnerShow = Math.floor(Math.random() * 4) + 1;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
