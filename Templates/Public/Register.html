@@ -211,6 +211,7 @@
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <label class="form-control form-control-lg theme-default"
                                             ng-class="{'placeholder': registerModel.gender == ''}"
+                                            ng-click="selectClick(genderItems, 'gender')"
                                             ng-show="mobilecheck()">{{registerModel.gender || 'Género'}}</label>
                                             <select ng-model="registerModel.gender" name="gender"
                                                     ng-options="item for item in genderItems"
@@ -238,6 +239,7 @@
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <label class="form-control form-control-lg theme-default"
                                             ng-class="{'placeholder': registerModel.countryr == ''}"
+                                            ng-click="selectClick(countryItems, 'country')"
                                             ng-show="mobilecheck()">{{registerModel.country || 'País'}}</label>
                                             <select ng-model="registerModel.country" name="country"
                                                     ng-options="item for item in countryItems"
@@ -265,6 +267,7 @@
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <label class="form-control form-control-lg theme-default"
                                             ng-class="{'placeholder': registerModel.city == ''}"
+                                            ng-click="selectClick(cityItems, 'city')"
                                             ng-show="mobilecheck()">{{registerModel.city || 'Estado'}}</label>
                                             <select ng-model="registerModel.city" name="city"
                                                     ng-options="item for item in cityItems"
@@ -418,6 +421,7 @@
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <label class="form-control form-control-lg theme-default"
                                             ng-class="{'placeholder': registerModel.secretQuestion == ''}"
+                                            ng-click="selectClick(securityquestionItems, 'securityQuestion')"
                                             ng-show="mobilecheck()">{{registerModel.secretQuestion || 'Pregunta de seguridad'}}</label>
                                             <select ng-disabled="isRegistered"
                                                     ng-model="registerModel.secretQuestion"
@@ -470,6 +474,7 @@
                                         <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <label class="form-control form-control-lg theme-default"
                                             ng-class="{'placeholder': registerModel.metThisAppBy == ''}"
+                                            ng-click="selectClick(metThisAppByItems, 'metThisAppBy')"
                                             ng-show="mobilecheck()">{{registerModel.metThisAppBy || 'Conocí esta app por:'}}</label>
                                             <select ng-disabled="isRegistered"
                                                 ng-model="registerModel.metThisAppBy"
