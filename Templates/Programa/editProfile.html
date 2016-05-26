@@ -1936,12 +1936,6 @@
                                 <section class="centered txt-bigger ">
                                     <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
                                 </section>
-                                <!--
-                                <div ng-repeat="section in completedSections track by $index">
-
-                                   <div class="subtitle txt-renglon centered min-pad">{{section.title}}</div>
-                                </div>
-                                -->
 
                                 <section class="txt-renglon pill activityPoints" ng-if="sum > 0">
                                     <!--div class="pull-left">{{closingContent.earned_stars}}</div> -->
@@ -1953,7 +1947,7 @@
                                     </div>
                                 </section>
 
-                                <section class="txt-renglon centered form ">
+                                <section class="txt-renglon centered form" ng-if="sum > 0">
                                     <!--p>{{closingContent.activity_rating_label}}</p-->
                                     <p>¿Qué opinas de ésta actividad?</p>
 
