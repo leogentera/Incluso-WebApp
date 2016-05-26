@@ -326,7 +326,8 @@ angular
                                             "filecontent": "",
                                             "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.jpg',
                                             "picture_post_author": $scope.user.profileimageurlsmall,
-                                            "iscountable":0
+                                            "iscountable":0,
+                                            "isgamepost": 1
                                         };
 
                                         function postToForum(){
