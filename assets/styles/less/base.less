@@ -35,17 +35,18 @@ body {
     height: inherit;
     font-size: 4vw;
     background-color: #000;
+
     &.modal-open {
         overflow: hidden;
-        position:fixed;
-        x-index: 1;
+        position: fixed;
+        z-index: 1;
     }
 }
-    /****************************************************************************
+/****************************************************************************
      $menu 
      Description: CSS rules to make the off canvas without javascript.
      very important!!!
-    ****************************************************************************/   
+    ****************************************************************************/
 
 #site-wrapper {
     position: relative;
@@ -55,9 +56,10 @@ body {
     background-color: #040203;
 }
 
-.show-nav #site-menu{
+.show-nav #site-menu {
     left: 0px;
 }
+
 #site-menu {
     width: 100%;
     height: 100%;
@@ -68,27 +70,28 @@ body {
     background-repeat: no-repeat;
     background-size: 100% auto;
     .gradient-sky();
-    overflow-y: auto; 
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
 .incluso-app .sidebar-left {
     display: block;
     width: 85vw;
-    pointer-events: all;   
-
+    pointer-events: all;
     // Temporarily disabled for dev testing. DO NOT DELETE. Will be re-stablished
     // a.disabled,
     // a[disabled] {
     //     pointer-events: none;
     // }
-    .navbar { 
+    .navbar {
         ul {
             background-color: rgba(0,0,0, 0.2);
+
             .icomoon {
                 line-height: 12vw;
             }
-            li{
+
+            li {
                 width: auto;
             }
         }
@@ -98,48 +101,70 @@ body {
 .incluso-app .sidebar-left .navbar-assets {
     width: auto;
 }
-.transition (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; -webkit-transition: @value; -moz-transition: @value; -ms-transition: @value; -o-transition: @value; transition: @value; }
-.transform (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; transform:@value; -ms-transform:@value; -webkit-transform:@value; -o-transform:@value; -moz-transform:@value; }
-@menu-width: 85vw;
-.sidebar-left-in .app {
-    height: auto;
-    .transform(translate3d(@menu-width, 0, 0)); 
+
+.transition (@value1,@value2: X,...) {
+    @value: ~ `"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+    -webkit-transition: @value;
+    -moz-transition: @value;
+    -ms-transition: @value;
+    -o-transition: @value;
+    transition: @value;
 }
 
-.ease { 
-    -webkit-transition: 300ms ease all; 
-    transition: 300ms ease all; 
+.transform (@value1,@value2: X,...) {
+    @value: ~ `"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+    transform: @value;
+    -ms-transform: @value;
+    -webkit-transform: @value;
+    -o-transform: @value;
+    -moz-transform: @value;
+}
+
+@menu-width: 85vw;
+
+.sidebar-left-in .app {
+    height: auto;
+    .transform(translate3d(@menu-width, 0, 0));
+}
+
+.ease {
+    -webkit-transition: 300ms ease all;
+    -moz-transition: 300ms ease all;
+    -o-transition: 300ms ease all;
+    transition: 300ms ease all;
 }
 
 .incluso-app {
-
     /****************************************************************************
      $incluso-app 
      Description: CSS rules for basic namespace wrapper.
      very important!!!
-    ****************************************************************************/   
-    padding:0; margin:0 auto;
+    ****************************************************************************/
+    padding: 0;
+    margin: 0 auto;
     max-width: 100vw;
     font-family: Play, Sans-serif, Arial;
-    a{
-        &:hover{
+
+    a {
+        &:hover {
             text-decoration: none;
         }
-        &:focus{
+
+        &:focus {
             text-decoration: none;
         }
     }
-    video {  
-       width:100%; 
-       height:auto; 
+
+    video {
+        width: 100%;
+        height: auto;
     }
-    ol{
+
+    ol {
         list-style: outside none decimal-leading-zero;
         padding-left: 7vw;
     }
-    /***************************************************************************/  
-
-
+    /***************************************************************************/
     /****************************************************************************
      $container-fluid
      Description: CSS overrides for bootstrap's container-fluid class
@@ -148,15 +173,14 @@ body {
         padding-left: 3vw;
         padding-right: 3vw;
     }
+
     .unit-px {
         .container-fluid {
             padding-right: 15px;
             padding-left: 15px;
         }
     }
-    /***************************************************************************/ 
-
-
+    /***************************************************************************/
     /****************************************************************************
      $row
      Description: CSS overrides for bootstrap's row class
@@ -165,111 +189,116 @@ body {
         margin-left: -3vw;
         margin-right: -3vw;
     }
+
     .unit-px {
         .row {
             margin-right: -15px;
             margin-left: -15px;
         }
     }
-    /***************************************************************************/    
-
-
+    /***************************************************************************/
     /****************************************************************************
      $col
      Description: CSS overrides for bootstrap's column series of classes
     ****************************************************************************/
-    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, 
-    .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, 
-    .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, 
-    .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, 
-    .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, 
-    .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, 
-    .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, 
-    .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, 
-    .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, 
-    .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, 
-    .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, 
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1,
+    .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2,
+    .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3,
+    .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4,
+    .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5,
+    .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6,
+    .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7,
+    .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8,
+    .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9,
+    .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10,
+    .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11,
     .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
         padding-left: 3vw;
         padding-right: 3vw;
     }
+
     .unit-px {
-        .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, 
-        .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, 
-        .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, 
-        .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, 
-        .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, 
-        .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, 
-        .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, 
-        .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, 
-        .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, 
-        .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, 
-        .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, 
+        .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1,
+        .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2,
+        .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3,
+        .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4,
+        .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5,
+        .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6,
+        .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7,
+        .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8,
+        .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9,
+        .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10,
+        .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11,
         .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
             padding-right: 15px;
             padding-left: 15px;
-        }        
+        }
     }
-    /***************************************************************************/     
-
-
+    /***************************************************************************/
     /****************************************************************************
      $anchor-scroll
      Description: CSS rules for a re-usable anchor element to scroll to it.
-    ****************************************************************************/ 
+    ****************************************************************************/
     .anchor-scroll {
-        display:block;
-        visibility:hidden;
-        width:0;
-        height:0;
-        padding:0;
-        margin:0;
+        display: block;
+        visibility: hidden;
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
 
         &.floated {
             float: left;
         }
-    }    
-    /***************************************************************************/ 
-
-
+    }
+    /***************************************************************************/
     /****************************************************************************
      $nav-tabs
      Description: CSS rules for menu.
-    ****************************************************************************/     
-    .nav-tabs{border: 0;}
-    .nav-tabs.nav-justified{
+    ****************************************************************************/
+    .nav-tabs {
+        border: 0;
+    }
+
+    .nav-tabs.nav-justified {
         display: flex;
-        justify-content:space-between;
-        &>li {
+        justify-content: space-between;
+
+        & > li {
             display: inline-flex;
         }
     }
-    .nav-tabs.nav-justified > .active > a, 
-    .nav-tabs.nav-justified > .active > a:hover, 
+
+    .nav-tabs.nav-justified > .active > a,
+    .nav-tabs.nav-justified > .active > a:hover,
     .nav-tabs.nav-justified > .active > a:focus,
-    .nav-tabs > li > a, 
-    .nav-tabs > li.active > a, 
-    .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    .nav-tabs > li > a,
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
         background-color: transparent;
-        border:0;
+        border: 0;
         padding: 0;
     }
-    #site-menu .nav > li{
+
+    #site-menu .nav > li {
         border-bottom: 2px solid rgba(255, 255, 255, 0.28);
         display: block;
         margin-right: 7vw;
         position: relative;
         padding: 1vw 0;
+
         .submenu {
             li {
-                font-size: 6vw;               
+                font-size: 6vw;
             }
         }
+
         & > span {
             padding: 5vw 1vw;
             z-index: 10;
         }
-        & > a{
+
+        & > a {
             color: white;
             display: block;
             font-size: 6vw;
@@ -277,47 +306,55 @@ body {
             position: relative;
             width: 100%;
 
-            &:focus, &:hover{
+            &:focus, &:hover {
                 background-color: rgba(255, 255, 255, 0.28);
             }
+
             & > .icomoon {
                 margin-right: 1vw;
+
                 &.icon-asterodis {
                     img {
                         height: 6vw;
                         width: 6vw;
                     }
                 }
-            }  
+            }
+
             & > .glyphicon {
                 margin-right: 1vw;
-            } 
+            }
         }
 
-        &.separate { 
+        &.separate {
             height: 9vh;
         }
-        a.menu-blue{
+
+        a.menu-blue {
             color: @clr-bluemenu;
-            
+
             + .submenu {
                 li:first-child {
                     color: @clr-bluemenu;
                 }
             }
         }
-        a.menu-green{
+
+        a.menu-green {
             color: @clr-greenmenu;
+
             span {
                 span.path1 {
                     margin-left: -2vw;
-                } 
+                }
+
                 span.path3 {
                     margin-left: -2vw;
+
                     &::before {
                         float: left;
                     }
-                }   
+                }
             }
 
             + .submenu {
@@ -326,47 +363,55 @@ body {
                 }
             }
         }
-        a.menu-pink{
+
+        a.menu-pink {
             color: @clr-pinkmenu;
+
             span {
                 span.path3 {
                     margin-left: -6vw;
+
                     &::before {
-                        
                     }
-                }    
+                }
             }
+
             + .submenu {
                 li:first-child {
                     color: @clr-pinkmenu;
                 }
             }
         }
-        a.menu-yellow{
+
+        a.menu-yellow {
             color: #C0D638;
         }
-        .submenu{
+
+        .submenu {
             border-top: 2px solid rgba(255, 255, 255, 0.28);
             display: none;
             padding: 6vw 0 6vw 6vw;
+
             li {
-                margin: 1vh 0px; 
+                margin: 1vh 0px;
             }
-            a{
+
+            a {
                 color: white;
                 line-height: 20px;
 
-                &.disabled {opacity: 0.3;}
+                &.disabled {
+                    opacity: 0.3;
+                }
             }
-            ul{
+
+            ul {
                 list-style: none;
-                padding:3vw 0;
+                padding: 3vw 0;
             }
         }
     }
-    /***************************************************************************/ 
-    
-
+    /***************************************************************************/
     /****************************************************************************
      $btn
      Description: CSS override to bootstrap's btn class.
@@ -381,15 +426,16 @@ body {
             outline: none;
         }
     }
-    .btn-cnt{
-        width:80%;
-        margin:0 10%;
+
+    .btn-cnt {
+        width: 80%;
+        margin: 0 10%;
         text-transform: uppercase;
     }
 
     .btn-primary {
         .gradient-btn-primary();
-        color:@clr-white;
+        color: @clr-white;
 
         &:active {
             background: none darken(@clr-btn-primary-base, 15%);
@@ -397,9 +443,10 @@ body {
             outline: none;
         }
     }
+
     .btn-facebook {
         .gradient-btn-facebook();
-        color:@clr-white;
+        color: @clr-white;
 
         &:active {
             background: none darken(@clr-btn-facebook-base, 15%);
@@ -412,9 +459,10 @@ body {
             font-size: 28px;
         }
     }
+
     .btn-default.btn-transparent {
         background: transparent;
-        color:@clr-white;
+        color: @clr-white;
         font-size: 4.2vw;
 
         &:active {
@@ -422,12 +470,15 @@ body {
             text-decoration: underline;
         }
     }
+
     a.btn-transparent:hover {
         text-decoration: underline;
     }
+
     .btn-uppercase {
         text-transform: uppercase;
     }
+
     .btn-link {
         display: block;
         padding: 1.8vw 0px;
@@ -437,9 +488,11 @@ body {
         letter-spacing: 0.06em;
         text-align: center;
     }
+
     .btn-link:hover, .btn-link:focus {
         text-decoration: none;
     }
+
     .btn-add {
         border-style: solid;
         border-color: @clr-blueTurquoise;
@@ -448,6 +501,7 @@ body {
         color: @clr-blueTurquoise;
         text-align: left;
     }
+
     .btn-circle {
         width: 6vw;
         height: 6vw;
@@ -463,6 +517,7 @@ body {
             text-align: center;
         }
     }
+
     .btn-lg, .btn-group-lg > .btn {
         padding-top: 4vw;
         padding-bottom: 4vw;
@@ -470,24 +525,25 @@ body {
         letter-spacing: 0.1em;
         line-height: 5vw;
     }
+
     .btn-xl {
-        height:auto;
-        padding:6vw 0;
+        height: auto;
+        padding: 6vw 0;
         font-size: 5.8vw;
         line-height: 6vw;
     }
+
     .btn-lg {
-        height:auto;
-        padding:4vw 0;
+        height: auto;
+        padding: 4vw 0;
         font-size: 4.8vw;
         line-height: 5vw;
     }
+
     .btn-block {
         margin: 0px;
     }
     /***************************************************************************/
-
-
     /****************************************************************************
      $btn-icon-aside
      Description: CSS to represent a button with an icon aside
@@ -506,33 +562,35 @@ body {
             position: absolute;
             top: -1vw;
             width: 12vw;
-            height: 12vw;            
+            height: 12vw;
             border: medium none;
-            .border-radius(6em); 
+            .border-radius(6em);
             background-color: @clr-gray-platinum;
             text-align: center;
         }
+
         .icomoon {
             display: block;
             width: 10vw;
             height: 10vw;
             margin: 1vw auto;
-            .border-radius(6em); 
+            .border-radius(6em);
             background-color: @clr-green;
             color: @clr-blue;
             font-size: 6.6vw;
             line-height: 10.8vw;
             text-align: center;
         }
-        &>span {
+
+        & > span {
             display: block;
             height: inherit;
-            overflow: hidden;            
+            overflow: hidden;
             color: @clr-white;
             font-size: 3.8vw;
             font-weight: 700;
             line-height: 10vw;
-            text-align: center;          
+            text-align: center;
         }
 
         &.left {
@@ -540,19 +598,23 @@ body {
             padding: 0 2vw 0 12vw;
             margin-left: 8vw;
             text-align: left;
+
             .btn-icon {
                 left: -1vw;
             }
         }
+
         &.right {
             float: right;
             padding: 0 12vw 0 2vw;
             margin-right: 8vw;
             text-align: left;
+
             .btn-icon {
-                right: 0;                        
+                right: 0;
             }
         }
+
         &.active {
             .btn-icon {
                 .icomoon {
@@ -562,18 +624,17 @@ body {
             }
         }
     }
-    /***************************************************************************/ 
-
-
+    /***************************************************************************/
     /****************************************************************************
      $btn-back-to-top
      Description: CSS to represent a back-to-top button
     ****************************************************************************/
     .btn-back-to-top {
         color: @clr-green;
-        /*font-size: 16px;*/  font-size: 3.3vw;
+        /*font-size: 16px;*/ font-size: 3.3vw;
         font-weight: bold;
         text-align: center;
+
         span {
             display: block;
             /*padding: 6px 0 0;*/ padding: 1vw 0px 0px;
@@ -581,9 +642,7 @@ body {
             text-transform: uppercase;
         }
     }
-    /***************************************************************************/ 
-
-
+    /***************************************************************************/
     /****************************************************************************
      $button-group 
      Description: CSS overrides to bootstrap's input-group class.
@@ -596,16 +655,17 @@ body {
             display: table;
             content: " ";
         }
+
         &:after {
             clear: both;
-        }        
-
+        }
         /* 2 buttons layout */
         .btn {
             display: inline-block;
             float: left;
             width: 80%;
-            height: 55px; height: auto;
+            height: 55px;
+            height: auto;
             margin-top: 0;
 
             &:first-child {
@@ -618,25 +678,26 @@ body {
                 line-height: 1;
             }
         }
-
         /* 3 buttons layout */
         &.page-controls {
             .btn {
                 display: inline-block;
-                float:left;
+                float: left;
                 height: auto;
                 margin-top: 0;
 
                 &.control {
                     width: 15%;
-                    
+
                     &.left {
                         margin-right: 5%;
                     }
+
                     &.right {
                         margin-left: 5%;
-                    }                    
+                    }
                 }
+
                 &.action {
                     width: 60%;
                     margin: 0;
@@ -649,9 +710,7 @@ body {
             }
         }
     }
-    /***************************************************************************/ 
-
-
+    /***************************************************************************/
     /****************************************************************************
      $form-control
      Description: CSS overrides to bootstrap's form-control class.
@@ -661,49 +720,51 @@ body {
         .border-radius-reset();
         .box-shadow-reset();
         .clr-white(border-color, 0.3);
-        color:@clr-white;
+        color: @clr-white;
         line-height: 1.42857143;
         font-weight: 700;
 
         &:focus {
             border-color: #06BACC;
-        } 
-        &:hover, 
+        }
+
+        &:hover,
         &:focus,
         &:active {
             .box-shadow-reset();
-        }        
-
+        }
         /* by size */
         &.form-control-xl {
-            height:auto;
-            padding:6vw 0;
+            height: auto;
+            padding: 6vw 0;
             font-size: 5.8vw;
             line-height: 6vw;
         }
+
         &.form-control-lg {
-            height:auto;
-            padding:4vw 0;
+            height: auto;
+            padding: 4vw 0;
             font-size: 4.8vw;
             line-height: 5.6vw;
         }
+
         &.form-control-md {
-            height:40px;
-            padding:6px 16px;
+            height: 40px;
+            padding: 6px 16px;
             font-size: 16px;
         }
+
         &.form-control-sm {
-            height:35px;
-            padding:6px 16px;
+            height: 35px;
+            padding: 6px 16px;
             font-size: 14px;
-        }        
-        &.form-control-xs {
-            height:30px;
-            padding:6px 16px;
-            font-size: 12px;
         }
 
-            
+        &.form-control-xs {
+            height: 30px;
+            padding: 6px 16px;
+            font-size: 12px;
+        }
         /* by theme */
         &.theme-form {
             background-color: transparent;
@@ -717,52 +778,60 @@ body {
 
             &::-webkit-input-placeholder {
                 .clr-blueGray(color, @dec-placeholderOpacity);
-                font-weight:100;
+                font-weight: 100;
             }
+
             &:-moz-placeholder { /* Firefox 18- */
                 .clr-blueGray(color, @dec-placeholderOpacity);
-                font-weight:100;
+                font-weight: 100;
             }
-            &::-moz-placeholder {  /* Firefox 19+ */   
+
+            &::-moz-placeholder { /* Firefox 19+ */
                 .clr-blueGray(color, @dec-placeholderOpacity);
-                font-weight:100;
+                font-weight: 100;
             }
+
             &.select-wrapper {
                 select + .placeholder-fallback {
                     .clr-blueGray(color, @dec-placeholderOpacity);
-                    font-weight:100;                
+                    font-weight: 100;
                 }
             }
         }
+
         &.theme-default {
             background-color: transparent;
-            border-left:none;
-            border-top:none;
-            border-right:none;
-            border-bottom:none;
-            color:@clr-white;
+            border-left: none;
+            border-top: none;
+            border-right: none;
+            border-bottom: none;
+            color: @clr-white;
 
             &::-webkit-input-placeholder {
                 .clr-white(color, @dec-placeholderOpacity);
-                font-weight:100;
+                font-weight: 100;
             }
+
             &:-moz-placeholder {
                 .clr-white(color, @dec-placeholderOpacity);
-                font-weight:100;
+                font-weight: 100;
             }
+
             &::-moz-placeholder {
                 .clr-white(color, @dec-placeholderOpacity);
-                font-weight:100;
-            }  
+                font-weight: 100;
+            }
+
             & + .custom-placeholder {
                 .clr-white(color, @dec-placeholderOpacity);
-                font-weight:100;
+                font-weight: 100;
             }
         }
+
         &.select-wrapper {
             select + .placeholder-fallback {
-                color:@clr-white !important;
-                font-weight:100;                
+                color: @clr-white !important;
+                font-weight: 100;
             }
         }
     }
@@ -771,27 +840,27 @@ body {
         .clr-white(color, @dec-placeholderOpacity)!important;
         font-weight: normal;
     }
-    
     /* sepcial overrides for selects */
     select.form-control {
         text-indent: -0.4vw !important;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
         text-overflow: ellipsis;
-
         /* by size */
         &.form-control-xl {
-            padding-right:6vw;
-        }
-        &.form-control-lg {
-            padding-right:6vw;
+            padding-right: 6vw;
         }
 
+        &.form-control-lg {
+            padding-right: 6vw;
+        }
         /* by theme */
         &.theme-form {
-            color:@clr-blueGray;
+            color: @clr-blueGray;
             .clr-blueGray(color, @dec-placeholderOpacity);
-            font-weight:100;
+            font-weight: 100;
 
-            &.selected { 
+            &.selected {
                 .clr-blueGray(color, 1);
                 font-weight: bold;
             }
@@ -801,6 +870,7 @@ body {
                 font-weight: bold;
             }
         }
+
         &.theme-default {
             .clr-white(color, @dec-placeholderOpacity);
             font-weight: normal;
@@ -808,18 +878,23 @@ body {
             &.selected {
                 .clr-white(color, 1);
                 font-weight: bold;
-            } 
+            }
 
-            option {font-weight: bold;}
+            option {
+                font-weight: bold;
+            }
+        }
+        /* data validation ui states */
+        &.ng-pristine {
         }
 
-        /* data validation ui states */
-        &.ng-pristine {}
-        &.ng-dirty {}
+        &.ng-dirty {
+        }
 
-        option:first-child {display: none;}   
+        option:first-child {
+            display: none;
+        }
     }
-
     /* custom caret */
     .custom-caret-wrapper {
         position: relative;
@@ -830,63 +905,61 @@ body {
             z-index: 30;
             right: 1.8vw;
             top: 50%;
-            width:3vw;
+            width: 3vw;
             height: 3vw;
             padding: 0;
             margin: -1.2vw 0 0 0;
-
             /*color:@clr-white;*/
             font-size: 3.2vw;
         }
-
         /* by theme */
         .form-control.theme-default + .custom-caret {
-            color:@clr-white;
+            color: @clr-white;
         }
-        .form-control.theme-form + .custom-caret {
-            color:@clr-gray-platinum;
-        }        
-    }
 
+        .form-control.theme-form + .custom-caret {
+            color: @clr-gray-platinum;
+        }
+    }
     /* custom placeholder */
     .custom-placeholder-wrapper {
         position: relative;
 
         .custom-placeholder {
             position: absolute;
-            left: 0; top: 0;
+            left: 0;
+            top: 0;
             z-index: 0;
             text-indent: -0.4vw !important;
 
             &.form-control-xl {
-                height:auto;
-                padding:6vw 0;
+                height: auto;
+                padding: 6vw 0;
                 font-size: 5.8vw;
                 line-height: 6vw;
             }
+
             &.form-control-lg {
-                height:auto;
-                padding:4vw 0;
+                height: auto;
+                padding: 4vw 0;
                 font-size: 4.8vw;
                 line-height: 5.6vw;
             }
-        } 
-        
+        }
         /* by theme */
         .form-control.theme-form + .custom-placeholder {
             /* should be here all the color settings only for custom placeholder */
-            color:@clr-blueGray !important;
-            font-weight:100;
+            color: @clr-blueGray !important;
+            font-weight: 100;
         }
+
         .form-control.theme-default + .custom-placeholder {
             /* should be here all the color settings only for custom placeholder */
             .clr-white(color, @dec-placeholderOpacity);
-            font-weight:100;
-        }        
+            font-weight: 100;
+        }
     }
     /***************************************************************************/
-
-
     /****************************************************************************
      $checkbox
      Description: CSS overrides to bootstrap's checkbox class. Customization.
@@ -898,9 +971,9 @@ body {
                 width: auto;
                 padding: 0;
                 margin: 0 auto;
-                
+
                 span {
-                    display:block;
+                    display: block;
                     width: auto;
                     height: auto;
                     padding: 0;
@@ -910,12 +983,14 @@ body {
                     line-height: 6vw;
                 }
             }
+
             input {
                 visibility: hidden;
                 display: none;
                 width: 0;
                 height: 0;
             }
+
             input + span:before {
                 padding: 1vw 1.2vw;
                 margin-right: 6vw;
@@ -931,12 +1006,14 @@ body {
                 font-size: 3.6vw;
                 line-height: 3vw;
             }
+
             input:checked + span:before {
                 color: @clr-blueTurquoise;
                 font-weight: 700;
                 text-align: center;
                 text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
             }
+
             a {
                 color: @clr-white;
                 text-decoration: underline;
@@ -944,13 +1021,10 @@ body {
                 &:active {
                     text-decoration: underline;
                 }
-
             }
         }
     }
     /***************************************************************************/
-
-
     /****************************************************************************
      $input-group 
      Description: CSS overrides to bootstrap's input-group class.
@@ -962,7 +1036,8 @@ body {
             padding: 0;
             border: none;
             .border-radius-reset();
-        } 
+        }
+
         .input-group-control {
             display: table-cell;
             position: relative;
@@ -970,17 +1045,17 @@ body {
             border: none;
             vertical-align: middle;
         }
+
         select.form-control {
             option {
                 color: @clr-blueDark;
             }
+
             option:first-child {
                 color: @clr-blueDark;
-                padding-left:0;
+                padding-left: 0;
             }
         }
-
-
         /* by size */
         &.input-group-lg {
             .input-group-addon {
@@ -989,53 +1064,54 @@ body {
                 font-size: 6vw;
                 line-height: 12vw;
             }
+
             .input-group-addon + .form-control {
                 height: auto;
                 padding: 4vw 0;
                 font-size: 6vw;
                 line-height: 12vw;
             }
+
             .input-group-control .form-control {
                 height: auto;
                 padding: 3.8vw 0;
                 font-size: 6vw;
-                line-height: 12vw; 
+                line-height: 12vw;
 
                 & + .custom-placeholder {
                     height: auto;
                     /*padding: 5vw 0;*/
                     font-size: 6vw;
-                    line-height: 12vw;                     
+                    line-height: 12vw;
                 }
             }
+
             .input-group-control select.form-control {
                 padding-right: 6vw;
             }
         }
-        
         /* by theme */
         &.theme-default {
-            border-bottom-width:1pt;
-            border-bottom-style:solid;
+            border-bottom-width: 1pt;
+            border-bottom-style: solid;
             .clr-white(border-bottom-color, 0.3);
 
             .input-group-addon {
                 background-color: transparent;
                 border: none;
-                color:@clr-white;
+                color: @clr-white;
             }
+
             .input-group-addon + .form-control {
                 border: none;
             }
+
             .input-group-control .form-control {
                 border: none;
             }
         }
     }
     /***************************************************************************/
-
-
-
     /****************************************************************************
      $form-group
      Description: CSS overrides to bootstrap's form-group class.
@@ -1048,123 +1124,139 @@ body {
             display: block;
             padding: 0;
             border: none;
-        }  
-
+        }
         /* by theme */
         &.theme-form {
             .form-group-control > .form-control.theme-form {
                 border-top-width: 0;
             }
+
             .form-group-control .custom-placeholder {
                 background-color: transparent;
                 border: none;
                 .clr-blueGray(color, 1);
-            }             
-        }        
+            }
+        }
     }
     /***************************************************************************/
-
-
-
     /****************************************************************************
      $alert
      Description: CSS overrides to bootstrap's alert class.
     ****************************************************************************/
     .alert {
-        display: block; 
-        height: auto; 
+        display: block;
+        height: auto;
         margin: 0px;
-        padding:0;
-        border:none;
+        padding: 0;
+        border: none;
         .border-radius(0);
 
         &.fixed-top {
             position: absolute;
             z-index: 1;
-            width:100%; 
+            width: 100%;
         }
+
         &.alert-warning {
             .clr-orange(background-color, 0.5);
-            
         }
+
         &.alert-success {
             .clr-greenMedium(background-color, 0.5);
         }
+
         .alert-message {
             position: relative;
             margin: 0 3vw 0 0;
             padding: 3vw 0 3vw 13vw;
         }
+
         .icomoon {
             display: block;
             position: absolute;
             z-index: 1;
-            left:16px; left: 3.3vw;
-            top:16px; top: 3.3vw;
-            color:@clr-white;
+            left: 16px;
+            left: 3.3vw;
+            top: 16px;
+            top: 3.3vw;
+            color: @clr-white;
             font-size: 5vw;
         }
+
         .icomoon + p {
             margin-top: 0;
-        }        
+        }
+
         p {
             display: block;
             margin: 4vw 0 0 0;
             padding: 1vw 0;
-            color:@clr-white; 
+            color: @clr-white;
             font-size: 4vw;
             font-weight: 600;
         }
+
         ol, ul {
             display: block;
             margin: 0;
             padding: 4vw 0 0 0;
-            color:@clr-white; 
+            color: @clr-white;
             font-size: 4vw;
-            font-weight: 300; 
+            font-weight: 300;
             list-style-position: inside;
 
             li {
                 color: inherit;
                 font-size: inherit;
                 text-transform: none;
+
                 &:first-letter {
                     text-transform: capitalize;
                 }
             }
         }
     }
-    /***************************************************************************/     
-
-
+    /***************************************************************************/
     /****************************************************************************
      $modal
      Description: CSS overrides to bootstrap's modal hierarchy class.
     ****************************************************************************/
     .modal {
-        .modal-dialog {}
-        .modal-content {}
+        .modal-dialog {
+        }
+
+        .modal-content {
+        }
+
         .modal-header {
             position: relative;
             padding: 3vw;
         }
+
         .modal-body {
             padding: 3vw;
         }
+
         .modal-footer {
             padding: 3vw;
         }
+
         .modal-backdrop {
-            position:fixed;
+            position: fixed;
         }
+
         &.ng-isolate-scope {
             background-color: rgba(18, 27, 28, 0.966);
             position: fixed;
             z-index: 2050 !important;
         }
     }
+
     .modal-extend-default {
-        .modal-title {font-size: 6vw;}
+        .modal-title {
+            font-size: 6vw;
+        }
+
         .modal-body {
             height: 100vw;
             overflow-y: scroll;
@@ -1175,6 +1267,7 @@ body {
             }
         }
     }
+
     .modal-theme-default {
         .clr-blueDark(background-color, 0.9);
 
@@ -1182,29 +1275,32 @@ body {
             width: 90vw;
             height: auto;
             margin: 0 auto;
-            margin-top:3vh;
+            margin-top: 3vh;
         }
+
         .modal-content {
             height: auto;
             margin: 0 auto;
             .box-shadow-reset();
             background-color: transparent;
             .clr-white(border-color, 0.3);
-            border-width:1pt;
+            border-width: 1pt;
             border-style: solid;
         }
+
         .modal-title {
             padding: 3.6vw 0 0 0;
-            color:@clr-green;
+            color: @clr-green;
             font-family: Play, Sans-serif;
             font-size: 6.3vw;
             font-weight: 700;
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 1px;                 
+            letter-spacing: 1px;
         }
+
         .modal-header {
-            border:none;
+            border: none;
 
             .icon {
                 position: absolute;
@@ -1215,24 +1311,26 @@ body {
                 width: 9vw;
                 height: 9vw;
                 line-height: 6vw;
+
                 .icomoon {
                     color: @clr-white;
                     font-size: 2.8vw;
                     text-align: center;
                     vertical-align: sub;
                 }
-            }             
+            }
         }
+
         .modal-body {
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             height: 60vh;
-            border:none;
+            border: none;
 
             p, ol li, ul li {
                 height: auto;
                 color: @clr-white;
-                font-size: 5vw; 
+                font-size: 5vw;
                 text-align: justify;
             }
 
@@ -1241,89 +1339,106 @@ body {
                 color: #bcd431;
             }
         }
+
         .modal-footer {
-            border:none;
+            border: none;
             margin: 0;
         }
+
         .icon-close {
             background-color: @clr-orange;
             border: 0.23em solid @clr-white;
             .border-radius-circle();
         }
     }
+
     .user-help-modal {
         .modal-content {
             width: 90vw;
             margin: 0px auto;
-            background: transparent;;
+            background: transparent;
+            ;
             .box-shadow-reset();
         }
+
         .user-help {
-            
             margin: 0px auto;
             .box-shadow-reset();
             .border-radius(4px);
             border: 1px solid #55666B;
+
             img {
                 position: absolute;
                 top: 4vh;
             }
+
             .modal-header {
                 border: 0px none;
             }
-                .icon {
-                    position: absolute;
-                    right: -3.5vw;
-                    top: -3.5vh;
-                    padding: 0px;
-                    margin: 0px;
-                    width: 8vw;
-                    height: 8vw;
-                    line-height: 6vw;
-                    .icomoon {
-                        color: @clr-white;
-                        font-size: 3vw;
-                        text-align: center;
-                    }
-                
+
+            .icon {
+                position: absolute;
+                right: -3.5vw;
+                top: -3.5vh;
+                padding: 0px;
+                margin: 0px;
+                width: 8vw;
+                height: 8vw;
+                line-height: 6vw;
+
+                .icomoon {
+                    color: @clr-white;
+                    font-size: 3vw;
+                    text-align: center;
+                }
             }
+
             .modal-title {
                 position: relative;
                 color: @clr-green;
                 font-size: 6vw;
                 text-align: center;
             }
+
             .modal-body {
                 padding: 4vw;
                 padding-bottom: 8vw;
                 -webkit-overflow-scrolling: touch;
+
                 .subtitle {
                     margin: 0px;
                 }
+
                 ul {
                     margin: 0 10%;
                     padding: 0;
                     text-align: left;
+
                     li {
                         margin-left: 10%;
                     }
                 }
+
                 p, ol li, ul {
                     color: @clr-white;
                     font-size: 5vw;
                 }
+
                 figure {
                     margin-top: 4vh;
                     .border-radius(4px);
                 }
+
                 .checkbox {
                     margin: 2em 0;
                 }
             }
-            .modal-footer { 
+
+            .modal-footer {
                 margin-bottom: 4vh;
-                border: 0px none; 
+                border: 0px none;
             }
+
             .icon-close {
                 background-color: @clr-orange;
                 border: 3pt solid @clr-white;
@@ -1344,16 +1459,13 @@ body {
             }
         }
     }
-    /***************************************************************************/    
-
-    
+    /***************************************************************************/
     /***************************************************************************
     Modal connection error
     ****************************************************************************/
-    
     .error-connection {
-        background-color: #151922!important;
-        position: absolute!important;
+        background-color: #151922 !important;
+        position: absolute !important;
         z-index: 1050;
 
         h3.subtitle {
@@ -1383,19 +1495,19 @@ body {
 
         img {
             position: absolute;
-            top: 12vh!important;
+            top: 12vh !important;
             width: 10vh;
             height: 10vh;
             left: 20vh;
         }
 
         .user-help {
-            border-top: 0!important;
-            margin-top: 30vw!important;
+            border-top: 0 !important;
+            margin-top: 30vw !important;
         }
 
         p {
-            font-weight: normal!important;
+            font-weight: normal !important;
         }
     }
 
@@ -1404,16 +1516,19 @@ body {
         margin-bottom: 0;
         min-height: 0;
         height: 13vw;
-        border:none;
+        border: none;
         .border-radius-reset();
 
-        &.show {display: block;}
+        &.show {
+            display: block;
+        }
+
         &.navbar-absolute-top {
-           display: none;
+            display: none;
         }
 
         .navbar-toggle {
-            border-color:transparent;
+            border-color: transparent;
             .border-radius-reset();
             padding: 0px;
             height: 13vw;
@@ -1421,8 +1536,9 @@ body {
             text-align: center;
 
             .icon-bar {
-                background-color:@clr-white;
+                background-color: @clr-white;
             }
+
             .icomoon {
                 font-size: 6vw;
                 font-weight: bold;
@@ -1430,37 +1546,42 @@ body {
                 color: white;
             }
         }
+
         .navbar-assets {
             display: flex;
-            position:static;
-            padding:0;
+            position: static;
+            padding: 0;
             margin: 0;
             margin-left: 9vw;
             height: 13vw;
-            width:auto;
+            width: auto;
             line-height: 13vw;
 
             .navbar-heading {
-                overflow:hidden;
-                padding:0;
-                margin:0;
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
                 margin-right: auto;
                 height: inherit;
-                color:#fff;
+                color: #fff;
                 font-size: 4.1vw;
-                font-weight:bold;
-                line-height:24px; line-height: inherit;
-                text-overflow:ellipsis;
-                white-space:nowrap
+                font-weight: bold;
+                line-height: 24px;
+                line-height: inherit;
+                -ms-text-overflow: ellipsis;
+                -o-text-overflow: ellipsis;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
+
             .navbar-tools {
-                padding:0;
-                margin:0;
+                padding: 0;
+                margin: 0;
                 height: inherit;
-                list-style-type:none;
+                list-style-type: none;
                 line-height: inherit;
                 margin-left: auto;
-                
+
                 li {
                     padding: 0 2.5vw;
                     margin: 0;
@@ -1471,7 +1592,7 @@ body {
                     position: relative;
                     float: right;
                     display: inline-block;
-                    
+
                     &.disabled {
                         pointer-events: none;
                         color: rgba(0,0,0,.3);
@@ -1480,63 +1601,66 @@ body {
                     &.active {
                         .icomoon {
                             color: rgba(0, 0, 0, 0.3);
+                            -moz-transition: all 0.7s ease 0s;
+                            -o-transition: all 0.7s ease 0s;
+                            -webkit-transition: all 0.7s ease 0s;
                             transition: all 0.7s ease 0s;
                         }
                     }
                 }
+
                 a,
                 a:hover,
                 a:active {
-                    display:inline-block;
+                    display: inline-block;
                     overflow: hidden;
-                    padding:0;
+                    padding: 0;
                     margin: 0 auto;
-                    width:100%;  
-                    height:inherit;
+                    width: 100%;
+                    height: inherit;
                     text-align: center;
                 }
+
                 .icomoon {
-                    color:@clr-white;
+                    color: @clr-white;
                     line-height: inherit;
                     vertical-align: inherit;
                 }
-            }            
+            }
         }
-
         /* by theme */
         &.navbar-orange {
             background-color: @clr-orange;
             border-color: @clr-orange;
         }
+
         &.navbar-blue {
             background-color: #158CCD;
             border-color: #158CCD;
         }
+
         &.navbar-pink {
             background-color: #E70E80;
             border-color: #E70E80;
         }
+
         &.navbar-green {
             background-color: #68BC45;
             border-color: #68BC45;
-        }        
+        }
     }
-    /***************************************************************************/    
-    
-
+    /***************************************************************************/
     /****************************************************************************
      $navbar-toggle
      Description: CSS override to bootstrap's navbar toggle button on mobile.
     ****************************************************************************/
-
     .navbar-toggle {
-        position:absolute;
-        left:0;
-        top:0;
-        float:none;
-        padding:0;
-        margin:0;
-
+        position: absolute;
+        left: 0;
+        top: 0;
+        float: none;
+        padding: 0;
+        margin: 0;
         // .icon-bar {
         //     display:block;
         //     width:6px;
@@ -1545,10 +1669,8 @@ body {
         //     -moz-border-radius:16px;
         //     border-radius:16px
         // }
-    } 
+    }
     /***************************************************************************/
-
-
     /****************************************************************************
      $sidebar
      Description: CSS overrides to angular-ui mobile class sidebar
@@ -1570,32 +1692,32 @@ body {
                     font-size: 5vw;
                 }
             }
+
             .navbar-assets {
-                margin-left:12vw;
+                margin-left: 12vw;
                 .clr-black(background-color, 0.2);
                 //font-size:inherit;
-
                 .navbar-heading {
                     width: 100%;
-                    font-size:inherit;
+                    font-size: inherit;
                 }
             }
         }
+
         .submenu {
             .disabled {
                 color: rgba(0,0,0,.3);
             }
         }
     }
-    /***************************************************************************/    
-
-
+    /***************************************************************************/
     /****************************************************************************
      $panels
      Description: CSS override to bootstrap's panel class.
     ****************************************************************************/
     .panel {
         .border-radius(1.5vw);
+
         & > .panel-heading {
             padding: 5.5vw 2.6vw;
             .border-radius(1.5vw, 1.5vw, 0, 0);
@@ -1605,28 +1727,31 @@ body {
 
             &.with-icons {
                 .icomoon {
-                    margin-right:3vw;
-                    color:@clr-green;
+                    margin-right: 3vw;
+                    color: @clr-green;
                     font-size: inherit;
                     vertical-align: baseline;
                 }
             }
         }
+
         .panel-title {
             margin: 0;
             font-size: inherit;
             font-weight: 700;
             text-transform: none;
         }
+
         & > .panel-body {
             padding-left: 3vw;
             padding-right: 3vw;
             padding-top: 6vw;
-            padding-bottom: 6vw; 
+            padding-bottom: 6vw;
             .border-radius(0, 0, 1.5vw, 1.5vw);
         }
+
         &.panel-default {
-            border:none;
+            border: none;
             .clr-grayDark(background-color, 0.7);
 
             .panel-heading {
@@ -1634,22 +1759,26 @@ body {
                 border: none;
                 color: @clr-white;
             }
+
             .panel-title {
                 color: @clr-white;
             }
-            .panel-body {
 
-            }        
+            .panel-body {
+            }
         }
+
         &.panel-form {
             background-color: transparent;
+
             .panel-body {
                 background-color: @clr-white;
                 .clr-blueGray(color, 0.5);
             }
         }
+
         &.panel-video {
-            display:block;
+            display: block;
             background-color: transparent;
 
             .panel-heading {
@@ -1663,31 +1792,34 @@ body {
                     margin: 0 auto;
                     text-align: left;
                 }
+
                 span {
-                    display:inline-block;
+                    display: inline-block;
                     vertical-align: top;
                     line-height: 6vw;
                 }
+
                 span:first-child {
                     font-size: 6vw;
                 }
+
                 span:first-child + span {
                     padding-left: 1vw;
                     font-size: 4.3vw;
                 }
+
                 .icon-arrow, .icon-arrow-up {
                     float: right;
                     font-size: 5vw;
                 }
             }
+
             .panel-body {
                 background-color: rgba(13,15,20,0.5);
             }
-        }        
+        }
     }
     /***************************************************************************/
-  
-
     /****************************************************************************
      $list-group
      Description: CSS overrides to bootstrap's list-group class and descendants.
@@ -1695,8 +1827,8 @@ body {
     .list-group {
         &.separate-items {
             .list-group-item {
-                padding:0;
-                margin:12px 0 0 0;
+                padding: 0;
+                margin: 12px 0 0 0;
                 .border-radius(1.5vw);
 
                 a {
@@ -1708,14 +1840,18 @@ body {
                     font-weight: bold;
                     line-height: 16vw;
                 }
-                .icomoon {font-weight: normal;}
+
+                .icomoon {
+                    font-weight: normal;
+                }
             }
-            .list-group-item:first-child {margin-top: 0;}
+
+            .list-group-item:first-child {
+                margin-top: 0;
+            }
         }
     }
-    /***************************************************************************/ 
-
-
+    /***************************************************************************/
     /****************************************************************************
      $inline-list
      Description: CSS class to represent an inline list of elements.
@@ -1736,9 +1872,7 @@ body {
             height: auto;
         }
     }
-    /***************************************************************************/    
-
-
+    /***************************************************************************/
     /****************************************************************************
      $block-list
      Description: CSS class to represent a block list of elements.
@@ -1759,9 +1893,7 @@ body {
             height: auto;
         }
     }
-    /***************************************************************************/    
-
-
+    /***************************************************************************/
     /****************************************************************************
      $component
      Description: CSS generic class for components
@@ -1769,13 +1901,16 @@ body {
     .component {
         display: block;
         padding: 0;
-        margin: 30px 0 10px; margin: 6vw 0px 3vw;
-        position:relative;
-        z-index:10;
+        margin: 30px 0 10px;
+        margin: 6vw 0px 3vw;
+        position: relative;
+        z-index: 10;
+
         h3 {
             display: block;
             padding: 0;
-            margin: 0 0 33px; margin: 0 0 7vw;
+            margin: 0 0 33px;
+            margin: 0 0 7vw;
             color: @clr-green;
             font-family: Play, Sans-serif;
             font-size: 1.2em;
@@ -1783,6 +1918,7 @@ body {
             text-align: center;
             letter-spacing: 1px;
         }
+
         p:not(.user-points),
         p:not(.text-center) {
             padding: 0;
@@ -1792,24 +1928,25 @@ body {
             font-size: 20px;
             font-weight: 300;
             text-align: center;
-        }        
+        }
+
         figure {
             padding: 0;
             margin: 0;
         }
+
         video {
             display: block;
             padding: 0;
-            margin:0 auto;
+            margin: 0 auto;
         }
+
         ul, ol {
             text-align: justify;
             font-size: 1em;
         }
     }
     /***************************************************************************/
-  
-
     /****************************************************************************
      $pages
      Description: CSS class for a page wrapper with pages and buttons
@@ -1821,17 +1958,22 @@ body {
             display: none;
             margin-bottom: 15px;
 
-            &.active {display: block;}
+            &.active {
+                display: block;
+            }
         }
+
         .page-number {
-            margin: 15px 0;     margin: 3vw 0;
-            color:@clr-white;
-            font-size: 24px; font-size: 5vw;
+            margin: 15px 0;
+            margin: 3vw 0;
+            color: @clr-white;
+            font-size: 24px;
+            font-size: 5vw;
             font-weight: bold;
 
             span {
                 color: @clr-blueTurquoise;
-            } 
+            }
 
             p span:first-child.icomoon {
                 margin-right: 10vw;
@@ -1841,54 +1983,56 @@ body {
             p span:last-child.icomoon {
                 margin-left: 10vw;
                 font-size: 7vw;
-            } 
+            }
 
             .total-number {
                 color: @clr-white;
             }
 
             .disabled {
-                cursor: text;   
+                cursor: text;
                 opacity: .2;
-                -moz-opacity: 0.2;                
+                -moz-opacity: 0.2;
             }
         }
+
         .btn {
             margin-bottom: 1.5vw;
         }
     }
-    /***************************************************************************/    
-
-
+    /***************************************************************************/
     /****************************************************************************
      $footer
      Description: CSS class for a page wrapper with pages and buttons
-    ****************************************************************************/   
+    ****************************************************************************/
     .footer {
         display: none;
-        background-image:url('../images/bg-footer-ship.gif');
+        background-image: url('../images/bg-footer-ship.gif');
         background-position: 0 99%;
         background-size: cover;
         position: relative;
         padding: 20px 0 0;
         margin: 0;
         min-height: 180px;
-        
+
         .block-list {
             padding-bottom: 50px;
-            margin: 0 auto; 
+            margin: 0 auto;
             text-align: center;
 
             li {
                 margin-top: 12px;
             }
+
             li:first-child {
                 margin-top: 0;
             }
+
             .btn-link {
                 border-width: 3px;
             }
         }
+
         .btn-back-to-top {
             position: absolute;
             left: 50%;
@@ -1903,8 +2047,8 @@ body {
             background-position: 50% 50%;
             background-repeat: no-repeat;
             background-size: contain;
-            
         }
+
         &::before {
             position: absolute;
             width: 100vw;
@@ -1916,19 +2060,15 @@ body {
             background-position: 50% 50%;
             background-repeat: no-repeat;
             background-size: contain;
-            
         }
 
-        &.db-bg{
+        &.db-bg {
             background-image: url("@{url-images}/bg-footer-rocks.png");
             background-position: 50% 0;
             box-shadow: unset;
         }
     }
-
     /***************************************************************************/
-
-
     /****************************************************************************
      $app-preloader
      Description: CSS class to represent a backdrop layer and an animation
@@ -1959,37 +2099,64 @@ body {
             height: 100%;
             width: 100%;
         }
+
         .spinner {
             clear: both;
             position: relative;
             top: 50%;
-            padding:0;
+            padding: 0;
             margin: -3vw auto 0.1vw auto;
             width: 32px;
             height: 32px;
         }
-
-
         /* Spinner Circle Rotation */
         .spinner-circle {
             border: 4px rgba(255,255,255,0.25) solid;
             border-top: 4px rgba(255,255,255,1) solid;
             border-radius: 50%;
             -webkit-animation: rotateSpinner .6s infinite linear;
+            -moz-animation: rotateSpinner .6s infinite linear;
+            -o-animation: rotateSpinner .6s infinite linear;
             animation: rotateSpinner .6s infinite linear;
         }
+
         @-webkit-keyframes rotateSpinner {
-            from { -webkit-transform: rotate(0deg); }
-            to { -webkit-transform: rotate(359deg); }
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(359deg);
+                -moz-transform: rotate(359deg);
+                -ms-transform: rotate(359deg);
+                -o-transform: rotate(359deg);
+                transform: rotate(359deg);
+            }
         }
+
         @keyframes rotateSpinner {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(359deg); }
-        }        
+            from {
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -moz-transform: rotate(359deg);
+                -ms-transform: rotate(359deg);
+                -o-transform: rotate(359deg);
+                -webkit-transform: rotate(359deg);
+                transform: rotate(359deg);
+            }
+        }
     }
     /***************************************************************************/
-
-
     /***********************************************************************
      $app-footer
      Description: CSS to represent the main footer for the application with
@@ -2007,47 +2174,53 @@ body {
         background-position: center top;
         background-repeat: no-repeat;
         .background-size(100%, auto);
-        
+
         .btn-back-to-top {
             display: inline-block;
             padding: 5vw 0px 0px;
         }
+
         .block-list,
         .btn-back-to-top {
             margin-left: auto;
             margin-right: auto;
         }
-        li {    
-            display: block;                               
+
+        li {
+            display: block;
+
             &:first-child {
                 //display: none;
             }
+
             &:last-child a {
                 padding-bottom: 0;
-            } 
-            a{
+            }
+
+            a {
                 display: inline-block;
-            }           
-        }        
-        
+            }
+        }
         /* by theme */
         &.theme-rocks {
             min-height: 57vw;
-            padding: 19vw 0 4vw; 
+            padding: 19vw 0 4vw;
             background-image: url("@{url-images}/bg-dashboard-full.gif");
             background-position: 50% 0;
             .background-size(100%, auto);
             .box-shadow-reset();
         }
+
         &.theme-stage-1 {
             min-height: 40vw;
             padding: 0 0 6vw;
             background-color: transparent;
             background-image: url('@{url-images}/bg-stage-1-dashboard-full.gif');
             background-position: left bottom;
-            background-repeat: no-repeat; 
-            .background-size(100%, auto); 
+            background-repeat: no-repeat;
+            .background-size(100%, auto);
         }
+
         &.theme-stage-2 {
             background-image: url("@{url-images}/bg-stage-2-dashboard.gif");
             background-size: 100% auto;
@@ -2055,8 +2228,9 @@ body {
             background-color: transparent;
             background-repeat: no-repeat;
             min-height: 40vw;
-            padding: 0 0 6vw
+            padding: 0 0 6vw;
         }
+
         &.theme-stage-3 {
             background-image: url("@{url-images}/bg-stage-3-dashboard.gif");
             background-size: 100% auto;
@@ -2064,17 +2238,15 @@ body {
             background-color: transparent;
             background-repeat: no-repeat;
             min-height: 40vw;
-            padding: 0 0 6vw; 
+            padding: 0 0 6vw;
         }
-    } 
-    /***********************************************************************/  
- 
-
+    }
+    /***********************************************************************/
     /****************************************************************************
      16. $forma
      Description: CSS class to create the form components
-    ****************************************************************************/   
-    .form{
+    ****************************************************************************/
+    .form {
         label {
             cursor: pointer;
             display: block;
@@ -2084,12 +2256,15 @@ body {
             padding-left: 10vw;
             position: relative;
         }
+
         input[type="radio"], input[type="checkbox"] {
             display: none;
         }
-        input[type="radio"] + label::before, input[type="checkbox"] + label::before{                
+
+        input[type="radio"] + label::before, input[type="checkbox"] + label::before {
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
+
         label::before {
             background-color: transparent;
             content: "";
@@ -2102,55 +2277,66 @@ body {
             position: absolute;
             width: 8vw;
         }
+
         input[type=radio] + label::before {
             font-size: 15vw;
             height: 8vw;
             line-height: 5vw;
             padding: 0;
             width: 8vw;
-
         }
+
         input[type=checkbox] + label {
         }
+
         input[type=checkbox] + label::before {
             border-radius: 3px;
             padding: 0;
             content: "\2713";
             color: rgba(0,0,0,0);
         }
+
         input[type=checkbox]:checked + label:before {
             content: "\2713";
             text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
             color: @clr-greenLight;
             text-align: center;
         }
-        input[type=checkbox]:checked + label{
+
+        input[type=checkbox]:checked + label {
             color: @clr-greenLight;
         }
+
         input[type=radio] + label:before {
             content: "\2022";
             color: rgba(0,0,0,0);
-            border-radius: 50%;     
+            border-radius: 50%;
         }
+
         input[type=radio]:checked + label:before {
             content: "\2022";
             background-color: @clr-greenLight;
             text-align: center;
         }
-        .tnf{
-            margin:2vw 0;
-            label:before{
-                display:none;
-                content:"";
+
+        .tnf {
+            margin: 2vw 0;
+
+            label:before {
+                display: none;
+                content: "";
             }
-            label{
-               padding:0 !important;
-               display: inline-block;
+
+            label {
+                padding: 0 !important;
+                display: inline-block;
             }
-            input[type=radio]:checked + label{
+
+            input[type=radio]:checked + label {
                 background-color: @clr-greenicon;
             }
-            label{
+
+            label {
                 border: 1px solid @clr-greenicon;
                 display: inline-block;
                 line-height: 200%;
@@ -2158,18 +2344,21 @@ body {
                 padding: 0;
                 text-align: center;
                 width: 50%;
-                &:hover{
+
+                &:hover {
                     background-color: rgba(0,0,0,.2);
                 }
             }
-            label:nth-child(2){
+
+            label:nth-child(2) {
                 border-radius: 10px 0 0 10px;
             }
-            label:nth-child(4){
+
+            label:nth-child(4) {
                 border-radius: 0 10px 10px 0;
             }
-
         }
+
         div.cs-select {
             display: inline-block;
             vertical-align: middle;
@@ -2191,9 +2380,11 @@ body {
         div.cs-select:focus {
             outline: none;
         }
+
         .cs-select select {
             display: none;
         }
+
         .cs-select span {
             display: block;
             position: relative;
@@ -2201,17 +2392,24 @@ body {
             padding: 1em;
             white-space: nowrap;
             overflow: hidden;
+            -ms-text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
             text-overflow: ellipsis;
         }
+
         .cs-select > span {
             padding-right: 3em;
         }
+
         .cs-select > span::after,
         .cs-select .cs-selected span::after {
             speak: none;
             position: absolute;
             top: 50%;
             -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            -o-transform: translateY(-50%);
             transform: translateY(-50%);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -2229,12 +2427,16 @@ body {
 
         .cs-select.cs-active > span::after {
             -webkit-transform: translateY(-50%) rotate(180deg);
+            -moz-transform: translateY(-50%) rotate(180deg);
+            -ms-transform: translateY(-50%) rotate(180deg);
+            -o-transform: translateY(-50%) rotate(180deg);
             transform: translateY(-50%) rotate(180deg);
         }
 
         div.cs-active {
             z-index: 200;
         }
+
         .cs-select .cs-options {
             position: absolute;
             overflow: hidden;
@@ -2242,15 +2444,18 @@ body {
             background: #fff;
             visibility: hidden;
         }
+
         .cs-select.cs-active .cs-options {
             visibility: visible;
         }
+
         .cs-select ul {
             list-style: none;
             margin: 0;
             padding: 0;
             width: 100%;
         }
+
         .cs-select ul span {
             padding: 1em;
         }
@@ -2262,29 +2467,41 @@ body {
         .cs-select li.cs-optgroup ul {
             padding-left: 1em;
         }
+
         .cs-select li.cs-optgroup > span {
             cursor: default;
         }
+
         div.cs-skin-rotate {
             background: transparent;
             -webkit-perspective: 1000px;
+            -moz-perspective: 1000px;
+            -ms-perspective: 1000px;
             perspective: 1000px;
         }
 
         @media screen and (max-width: 30em) {
-            div.cs-skin-rotate { font-size: 1em; }
+            div.cs-skin-rotate {
+                font-size: 1em;
+            }
         }
 
         .cs-skin-rotate > span,
         .cs-skin-rotate .cs-options li {
             background: transparent;
             -webkit-transform-origin: 50% 50% -200px;
+            -moz-transform-origin: 50% 50% -200px;
+            -ms-transform-origin: 50% 50% -200px;
+            -o-transform-origin: 50% 50% -200px;
             transform-origin: 50% 50% -200px;
             -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
             backface-visibility: hidden;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
             -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+            -moz-transition: transform 0.3s, opacity 0.3s;
+            -o-transition: transform 0.3s, opacity 0.3s;
             transition: transform 0.3s, opacity 0.3s;
         }
 
@@ -2292,6 +2509,9 @@ body {
             .cs-skin-rotate > span,
             .cs-skin-rotate .cs-options li {
                 -webkit-transform-origin: 50% 50% -100px;
+                -moz-transform-origin: 50% 50% -100px;
+                -ms-transform-origin: 50% 50% -100px;
+                -o-transform-origin: 50% 50% -100px;
                 transform-origin: 50% 50% -100px;
             }
         }
@@ -2304,6 +2524,9 @@ body {
         .cs-skin-rotate.cs-active > span {
             opacity: 0;
             -webkit-transform: rotate3d(0,1,0,-90deg);
+            -moz-transform: rotate3d(0,1,0,-90deg);
+            -ms-transform: rotate3d(0,1,0,-90deg);
+            -o-transform: rotate3d(0,1,0,-90deg);
             transform: rotate3d(0,1,0,-90deg);
         }
 
@@ -2315,6 +2538,9 @@ body {
         .cs-skin-rotate > span::after,
         .cs-skin-rotate.cs-active > span::after {
             -webkit-transform: translate3d(0,-50%,0) rotate3d(0,0,1,-90deg);
+            -moz-transform: translate3d(0,-50%,0) rotate3d(0,0,1,-90deg);
+            -ms-transform: translate3d(0,-50%,0) rotate3d(0,0,1,-90deg);
+            -o-transform: translate3d(0,-50%,0) rotate3d(0,0,1,-90deg);
             transform: translate3d(0,-50%,0) rotate3d(0,0,1,-90deg);
         }
 
@@ -2326,6 +2552,8 @@ body {
         .cs-skin-rotate .cs-selected span::after {
             opacity: 0.5;
             -webkit-transition: opacity 0.3s;
+            -moz-transition: opacity 0.3s;
+            -o-transition: opacity 0.3s;
             transition: opacity 0.3s;
         }
 
@@ -2347,42 +2575,59 @@ body {
         .cs-skin-rotate .cs-options li {
             opacity: 0;
             -webkit-transform: rotate3d(0,1,0,90deg);
+            -moz-transform: rotate3d(0,1,0,90deg);
+            -ms-transform: rotate3d(0,1,0,90deg);
+            -o-transform: rotate3d(0,1,0,90deg);
             transform: rotate3d(0,1,0,90deg);
         }
 
         .cs-skin-rotate.cs-active .cs-options li {
             opacity: 1;
             -webkit-transform: rotate3d(0,1,0,0deg);
+            -moz-transform: rotate3d(0,1,0,0deg);
+            -ms-transform: rotate3d(0,1,0,0deg);
+            -o-transform: rotate3d(0,1,0,0deg);
             transform: rotate3d(0,1,0,0deg);
             pointer-events: auto;
         }
 
         .cs-skin-rotate .cs-options li:nth-child(2) {
             -webkit-transition-delay: 0.05s;
+            -moz-transition-delay: 0.05s;
+            -o-transition-delay: 0.05s;
             transition-delay: 0.05s;
         }
 
         .cs-skin-rotate .cs-options li:nth-child(3) {
             -webkit-transition-delay: 0.1s;
+            -moz-transition-delay: 0.1s;
+            -o-transition-delay: 0.1s;
             transition-delay: 0.1s;
         }
 
         .cs-skin-rotate .cs-options li:nth-child(4) {
             -webkit-transition-delay: 0.15s;
+            -moz-transition-delay: 0.15s;
+            -o-transition-delay: 0.15s;
             transition-delay: 0.15s;
         }
 
         .cs-skin-rotate .cs-options li:nth-child(5) {
             -webkit-transition-delay: 0.2s;
+            -moz-transition-delay: 0.2s;
+            -o-transition-delay: 0.2s;
             transition-delay: 0.2s;
         }
 
         .cs-skin-rotate.cs-active .cs-options ul li {
             -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
             transform: translate3d(0,0,0);
         }
 
-        .cs-skin-rotate .cs-options li span {    
+        .cs-skin-rotate .cs-options li span {
             background-color: #1f2733;
             padding: 5px 0;
         }
@@ -2392,192 +2637,288 @@ body {
         .cs-skin-rotate .cs-selected span {
             opacity: 0.8;
         }
-
     }
 }
 
-        /***********************************************************************
+/***********************************************************************
          $acerca-programa
          Description: CSS to represent acerca-programa content page
         ************************************************************************/
-        .acerca-programa {
-            a { color: @clr-white; }
-            .component {
-                h3 {
-                    text-align: left;
-                }
-                p {
-                    margin: 0px 0px 10px;
-                    text-align: left;
-                }
-                figure img {
-                    .border-radius(4px);
-                }
-                button { margin: 15px 0px; }
-            }
+.acerca-programa {
+    a {
+        color: @clr-white;
+    }
+
+    .component {
+        h3 {
+            text-align: left;
         }
 
-        /******************************************************************************/
+        p {
+            margin: 0px 0px 10px;
+            text-align: left;
+        }
+
+        figure img {
+            .border-radius(4px);
+        }
+
+        button {
+            margin: 15px 0px;
+        }
+    }
+}
+
+/******************************************************************************/
 
 @keyframes flicker {
     from {
         opacity: 0.5;
     }
+
     4% {
         opacity: 0.5;
     }
+
     6% {
         opacity: 0.45;
     }
+
     8% {
         opacity: 0.55;
     }
+
     10% {
         opacity: 0.45;
     }
+
     11% {
         opacity: 0.5;
     }
+
     12% {
         opacity: 0.65;
     }
+
     14% {
         opacity: 0.55;
     }
+
     16% {
         opacity: 0.70;
     }
+
     17% {
         opacity: 0.55;
     }
+
     19% {
         opacity: 0.5;
     }
+
     20% {
         opacity: 0.5;
     }
+
     24% {
         opacity: 0.5;
     }
+
     26% {
         opacity: 0.69;
     }
+
     28% {
         opacity: 0.5;
     }
+
     38% {
         opacity: 0.45;
     }
+
     40% {
         opacity: 0.5;
     }
+
     42% {
         opacity: 0.6;
     }
+
     44% {
         opacity: 0.5;
     }
+
     46% {
         opacity: 0.5;
     }
+
     56% {
         opacity: 0.5;
     }
+
     58% {
         opacity: 0.75;
     }
+
     60% {
         opacity: 0.5;
     }
+
     68% {
         opacity: 0.5;
     }
+
     70% {
         opacity: .6;
     }
+
     72% {
         opacity: 0.5;
     }
+
     93% {
         opacity: 0.5;
     }
+
     95% {
         opacity: .6;
     }
+
     97% {
         opacity: 0.5;
     }
+
     to {
         opacity: 0.5;
     }
+}
 
-}
 @-webkit-keyframes empty {
-  0% {opacity: 1}
+    0% {
+        opacity: 1;
+    }
 }
+
 @-moz-keyframes empty {
-  0% {opacity: 1}
+    0% {
+        opacity: 1;
+    }
 }
+
 @keyframes empty {
-  0% {opacity: 1}
+    0% {
+        opacity: 1;
+    }
 }
+
 @-webkit-keyframes fadeIn {
-  0% { opacity:0; }
-  100% { opacity:1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
+
 @-moz-keyframes fadeIn {
-  0% { opacity:0; }
-  100% { opacity:1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
+
 @keyframes fadeIn {
-  0% { opacity:0; }
-  100% { opacity:1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
+
 @-webkit-keyframes fadeOut {
-  0% { opacity:1; }
-  100% { opacity:0; }
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
+
 @-moz-keyframes fadeOut {
-  0% { opacity:1; }
-  100% { opacity:0; }
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
+
 @keyframes fadeOut {
-  0% { opacity:1; }
-  100% { opacity:0; }
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
+
 h4.sub-title {
     color: #FFF;
     font-size: 1.2em;
     margin: 1em 0;
     font-weight: 900;
 }
+
 .radial-progress {
     -webkit-clip-path: polygon(0 100%, 0 0, 100% 0, 80% 100%);
     clip-path: polygon(0 100%, 0 0, 100% 0, 80% 100%);
     -webkit-clip-path: url("#myClip");
     clip-path: url("#myClip");
     margin: 20px;
-    width:  @circle-size;
+    width: @circle-size;
     height: @circle-size;
-
     background-color: @circle-background;
     border-radius: 50%;
+
     .circle {
         .mask, .fill, .shadow {
-            width:    @circle-size;
-            height:   @circle-size;
+            width: @circle-size;
+            height: @circle-size;
             position: absolute;
             border-radius: 50%;
         }
+
         .mask, .fill {
             -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -moz-transition: -webkit-transform @transition-length;
+            -o-transition: -webkit-transform @transition-length;
+            -webkit-transition: -webkit-transform @transition-length;
             transition: -webkit-transform @transition-length;
+            -moz-transition: -ms-transform @transition-length;
+            -o-transition: -ms-transform @transition-length;
+            -webkit-transition: -ms-transform @transition-length;
             transition: -ms-transform @transition-length;
+            -moz-transition: transform @transition-length;
+            -o-transition: transform @transition-length;
+            -webkit-transition: transform @transition-length;
             transition: transform @transition-length;
             border-radius: 50%;
         }
+
         .mask {
             clip: rect(0px, @circle-size, @circle-size, @circle-size/2);
+
             .fill {
                 clip: rect(0px, @circle-size/2, @circle-size, 0px);
                 background-color: @circle-color;
@@ -2587,25 +2928,34 @@ h4.sub-title {
 
     @i: 0;
     @increment: 180deg / 100;
+
     .loop (@i) when (@i <= 100) {
         &[data-progress="@{i}"] {
             .circle {
                 .mask.full, .fill {
                     -webkit-transform: rotate(@increment * @i);
                     -ms-transform: rotate(@increment * @i);
+                    -moz-transform: rotate(@increment * @i);
+                    -o-transform: rotate(@increment * @i);
                     transform: rotate(@increment * @i);
-                }   
+                }
+
                 .fill.fix {
                     -webkit-transform: rotate(@increment * @i * 2);
                     -ms-transform: rotate(@increment * @i * 2);
+                    -moz-transform: rotate(@increment * @i * 2);
+                    -o-transform: rotate(@increment * @i * 2);
                     transform: rotate(@increment * @i * 2);
                 }
             }
         }
+
         .loop(@i + 1);
     }
+
     .loop(@i);
 }
+
 .owl-carousel .owl-wrapper:after {
     content: ".";
     display: block;
@@ -2615,37 +2965,47 @@ h4.sub-title {
     height: 0;
 }
 /* display none until init */
-.owl-carousel{
+.owl-carousel {
     display: none;
     position: relative;
     width: 100%;
     -ms-touch-action: pan-y;
+    touch-action: pan-y;
 }
-.owl-carousel .owl-wrapper{
+
+.owl-carousel .owl-wrapper {
     display: none;
     position: relative;
     -webkit-transform: translate3d(0px, 0px, 0px);
+    -moz-transform: translate3d(0px, 0px, 0px);
+    -ms-transform: translate3d(0px, 0px, 0px);
+    -o-transform: translate3d(0px, 0px, 0px);
+    transform: translate3d(0px, 0px, 0px);
 }
-.owl-carousel .owl-wrapper-outer{
+
+.owl-carousel .owl-wrapper-outer {
     overflow: hidden;
     position: relative;
     width: 100%;
 }
-.owl-carousel .owl-wrapper-outer.autoHeight{
+
+.owl-carousel .owl-wrapper-outer.autoHeight {
     -webkit-transition: height 500ms ease-in-out;
     -moz-transition: height 500ms ease-in-out;
     -ms-transition: height 500ms ease-in-out;
     -o-transition: height 500ms ease-in-out;
     transition: height 500ms ease-in-out;
 }
-    
-.owl-carousel .owl-item{
+
+.owl-carousel .owl-item {
     float: left;
 }
+
 .owl-controls .owl-page,
-.owl-controls .owl-buttons div{
+.owl-controls .owl-buttons div {
     cursor: pointer;
 }
+
 .owl-controls {
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -2656,32 +3016,37 @@ h4.sub-title {
 }
 
 /* mouse grab icon */
-.grabbing { 
-    cursor:url(grabbing.png) 8 8, move;
+.grabbing {
+    cursor: url(grabbing.png) 8 8, move;
 }
 
 /* fix */
-.owl-carousel  .owl-wrapper,
-.owl-carousel  .owl-item{
+.owl-carousel .owl-wrapper,
+.owl-carousel .owl-item {
     -webkit-backface-visibility: hidden;
-    -moz-backface-visibility:    hidden;
-    -ms-backface-visibility:     hidden;
-  -webkit-transform: translate3d(0,0,0);
-  -moz-transform: translate3d(0,0,0);
-  -ms-transform: translate3d(0,0,0);
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
 }
-.owl-theme .owl-controls{
+
+.owl-theme .owl-controls {
     margin-top: 10px;
     text-align: center;
 }
 
 /* Styling Next and Prev buttons */
 
-.owl-theme .owl-controls .owl-buttons div{
+.owl-theme .owl-controls .owl-buttons div {
     color: #FFF;
     display: inline-block;
+    -ms-zoom: 1;
     zoom: 1;
-    *display: inline;/*IE7 life-saver */
+    *display: inline; /*IE7 life-saver */
     margin: 5px;
     padding: 3px 10px;
     font-size: 12px;
@@ -2689,30 +3054,32 @@ h4.sub-title {
     -moz-border-radius: 30px;
     border-radius: 30px;
     background: #869791;
-    filter: Alpha(Opacity=50);/*IE7 fix*/
+    filter: Alpha(Opacity=50); /*IE7 fix*/
     opacity: 0.5;
 }
 /* Clickable class fix problem with hover on touch devices */
 /* Use it for non-touch hover action */
-.owl-theme .owl-controls.clickable .owl-buttons div:hover{
-    filter: Alpha(Opacity=100);/*IE7 fix*/
+.owl-theme .owl-controls.clickable .owl-buttons div:hover {
+    filter: Alpha(Opacity=100); /*IE7 fix*/
     opacity: 1;
     text-decoration: none;
 }
 
 /* Styling Pagination*/
 
-.owl-theme .owl-controls .owl-page{
+.owl-theme .owl-controls .owl-page {
     display: inline-block;
+    -ms-zoom: 1;
     zoom: 1;
-    *display: inline;/*IE7 life-saver */
+    *display: inline; /*IE7 life-saver */
 }
-.owl-theme .owl-controls .owl-page span{
+
+.owl-theme .owl-controls .owl-page span {
     display: block;
     width: 12px;
     height: 12px;
     margin: 5px 7px;
-    filter: Alpha(Opacity=50);/*IE7 fix*/
+    filter: Alpha(Opacity=50); /*IE7 fix*/
     opacity: 0.5;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
@@ -2721,14 +3088,14 @@ h4.sub-title {
 }
 
 .owl-theme .owl-controls .owl-page.active span,
-.owl-theme .owl-controls.clickable .owl-page:hover span{
-    filter: Alpha(Opacity=100);/*IE7 fix*/
+.owl-theme .owl-controls.clickable .owl-page:hover span {
+    filter: Alpha(Opacity=100); /*IE7 fix*/
     opacity: 1;
 }
 
 /* If PaginationNumbers is true */
 
-.owl-theme .owl-controls .owl-page span.owl-numbers{
+.owl-theme .owl-controls .owl-page span.owl-numbers {
     height: auto;
     width: auto;
     color: #FFF;
@@ -2740,28 +3107,33 @@ h4.sub-title {
 }
 
 /* preloading images */
-.owl-item.loading{
+.owl-item.loading {
     min-height: 80%;
-    background: url(AjaxLoader.gif) no-repeat center center
+    background: url(AjaxLoader.gif) no-repeat center center;
 }
+
 .owl-origin {
     -webkit-perspective: 1200px;
-    -webkit-perspective-origin-x : 50%;
-    -webkit-perspective-origin-y : 50%;
-    -moz-perspective : 1200px;
-    -moz-perspective-origin-x : 50%;
-    -moz-perspective-origin-y : 50%;
-    perspective : 1200px;
+    -webkit-perspective-origin-x: 50%;
+    -webkit-perspective-origin-y: 50%;
+    -moz-perspective: 1200px;
+    -moz-perspective-origin-x: 50%;
+    -moz-perspective-origin-y: 50%;
+    -ms-perspective: 1200px;
+    perspective: 1200px;
 }
 /* fade */
 .owl-fade-out {
-  z-index: 10;
-  -webkit-animation: fadeOut .7s both ease;
-  -moz-animation: fadeOut .7s both ease;
-  animation: fadeOut .7s both ease;
+    z-index: 10;
+    -webkit-animation: fadeOut .7s both ease;
+    -moz-animation: fadeOut .7s both ease;
+    -o-animation: fadeOut .7s both ease;
+    animation: fadeOut .7s both ease;
 }
+
 .owl-fade-in {
-  -webkit-animation: fadeIn .7s both ease;
-  -moz-animation: fadeIn .7s both ease;
-  animation: fadeIn .7s both ease;
+    -webkit-animation: fadeIn .7s both ease;
+    -moz-animation: fadeIn .7s both ease;
+    -o-animation: fadeIn .7s both ease;
+    animation: fadeIn .7s both ease;
 }
