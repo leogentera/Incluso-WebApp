@@ -57,7 +57,7 @@ body {
 }
 
 .show-nav #site-menu {
-    left: 0px;
+    left: 0;
 }
 
 #site-menu {
@@ -66,7 +66,7 @@ body {
     position: absolute;
     top: 0;
     background-color: #040203;
-    padding: 0px;
+    padding: 0;
     background-repeat: no-repeat;
     background-size: 100% auto;
     .gradient-sky();
@@ -393,7 +393,7 @@ body {
             padding: 6vw 0 6vw 6vw;
 
             li {
-                margin: 1vh 0px;
+                margin: 1vh 0;
             }
 
             a {
@@ -481,7 +481,7 @@ body {
 
     .btn-link {
         display: block;
-        padding: 1.8vw 0px;
+        padding: 1.8vw 0;
         color: @clr-white;
         font-size: 4.4vw;
         font-weight: 600;
@@ -541,7 +541,7 @@ body {
     }
 
     .btn-block {
-        margin: 0px;
+        margin: 0;
     }
     /***************************************************************************/
     /****************************************************************************
@@ -637,7 +637,7 @@ body {
 
         span {
             display: block;
-            /*padding: 6px 0 0;*/ padding: 1vw 0px 0px;
+            /*padding: 6px 0 0;*/ padding: 1vw 0 0;
             width: auto;
             text-transform: uppercase;
         }
@@ -1146,7 +1146,7 @@ body {
     .alert {
         display: block;
         height: auto;
-        margin: 0px;
+        margin: 0;
         padding: 0;
         border: none;
         .border-radius(0);
@@ -1306,8 +1306,8 @@ body {
                 position: absolute;
                 right: -3.6vw;
                 top: -3.6vw;
-                padding: 0px;
-                margin: 0px;
+                padding: 0;
+                margin: 0;
                 width: 9vw;
                 height: 9vw;
                 line-height: 6vw;
@@ -1355,14 +1355,14 @@ body {
     .user-help-modal {
         .modal-content {
             width: 90vw;
-            margin: 0px auto;
+            margin: 0 auto;
             background: transparent;
             ;
             .box-shadow-reset();
         }
 
         .user-help {
-            margin: 0px auto;
+            margin: 0 auto;
             .box-shadow-reset();
             .border-radius(4px);
             border: 1px solid #55666B;
@@ -1373,15 +1373,15 @@ body {
             }
 
             .modal-header {
-                border: 0px none;
+                border: 0 none;
             }
 
             .icon {
                 position: absolute;
                 right: -3.5vw;
                 top: -3.5vh;
-                padding: 0px;
-                margin: 0px;
+                padding: 0;
+                margin: 0;
                 width: 8vw;
                 height: 8vw;
                 line-height: 6vw;
@@ -1406,7 +1406,7 @@ body {
                 -webkit-overflow-scrolling: touch;
 
                 .subtitle {
-                    margin: 0px;
+                    margin: 0;
                 }
 
                 ul {
@@ -1436,7 +1436,7 @@ body {
 
             .modal-footer {
                 margin-bottom: 4vh;
-                border: 0px none;
+                border: 0 none;
             }
 
             .icon-close {
@@ -1530,7 +1530,7 @@ body {
         .navbar-toggle {
             border-color: transparent;
             .border-radius-reset();
-            padding: 0px;
+            padding: 0;
             height: 13vw;
             width: 9vw;
             text-align: center;
@@ -1743,10 +1743,7 @@ body {
         }
 
         & > .panel-body {
-            padding-left: 3vw;
-            padding-right: 3vw;
-            padding-top: 6vw;
-            padding-bottom: 6vw;
+            padding: 6vw 3vw;
             .border-radius(0, 0, 1.5vw, 1.5vw);
         }
 
@@ -1902,7 +1899,7 @@ body {
         display: block;
         padding: 0;
         margin: 30px 0 10px;
-        margin: 6vw 0px 3vw;
+        margin: 6vw 0 3vw;
         position: relative;
         z-index: 10;
 
@@ -2122,11 +2119,11 @@ body {
 
         @-webkit-keyframes rotateSpinner {
             from {
-                -webkit-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -ms-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
+                -webkit-transform: rotate(0);
+                -moz-transform: rotate(0);
+                -ms-transform: rotate(0);
+                -o-transform: rotate(0);
+                transform: rotate(0);
             }
 
             to {
@@ -2140,11 +2137,11 @@ body {
 
         @keyframes rotateSpinner {
             from {
-                -moz-transform: rotate(0deg);
-                -ms-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
+                -moz-transform: rotate(0);
+                -ms-transform: rotate(0);
+                -o-transform: rotate(0);
+                -webkit-transform: rotate(0);
+                transform: rotate(0);
             }
 
             to {
@@ -2177,7 +2174,7 @@ body {
 
         .btn-back-to-top {
             display: inline-block;
-            padding: 5vw 0px 0px;
+            padding: 5vw 0 0;
         }
 
         .block-list,
@@ -2655,7 +2652,7 @@ body {
         }
 
         p {
-            margin: 0px 0px 10px;
+            margin: 0 0 10px;
             text-align: left;
         }
 
@@ -2664,7 +2661,7 @@ body {
         }
 
         button {
-            margin: 15px 0px;
+            margin: 15px 0;
         }
     }
 }
@@ -2920,7 +2917,7 @@ h4.sub-title {
             clip: rect(0px, @circle-size, @circle-size, @circle-size/2);
 
             .fill {
-                clip: rect(0px, @circle-size/2, @circle-size, 0px);
+                clip: rect(0px, @circle-size/2, @circle-size, 0);
                 background-color: @circle-color;
             }
         }
@@ -2976,11 +2973,11 @@ h4.sub-title {
 .owl-carousel .owl-wrapper {
     display: none;
     position: relative;
-    -webkit-transform: translate3d(0px, 0px, 0px);
-    -moz-transform: translate3d(0px, 0px, 0px);
-    -ms-transform: translate3d(0px, 0px, 0px);
-    -o-transform: translate3d(0px, 0px, 0px);
-    transform: translate3d(0px, 0px, 0px);
+    -webkit-transform: translate3d(0px, 0, 0);
+    -moz-transform: translate3d(0px, 0, 0);
+    -ms-transform: translate3d(0px, 0, 0);
+    -o-transform: translate3d(0px, 0, 0);
+    transform: translate3d(0px, 0, 0);
 }
 
 .owl-carousel .owl-wrapper-outer {
