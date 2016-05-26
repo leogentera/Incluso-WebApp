@@ -103,9 +103,7 @@ hallOfFameModule
 
                 function getTop5(city) {
                     $scope.validateConnection(function () {
-                        moodleFactory.Services.GetAsyncHallOfFame($scope.usercourse.courseid, city, $scope.user.token, getTop5Callback, function (data) {
-                            console.log(data)
-                        }, true);
+                        moodleFactory.Services.GetAsyncHallOfFame($scope.usercourse.courseid, city, $scope.user.token, getTop5Callback, function (data) {}, true);
                     }, offlineCallback);
                 }
 

@@ -1021,22 +1021,23 @@ angular
 
             function calculateProfilePoints(questions){
                 var profilePoints = [];
+                debugger;
                 for(var i = 0; i < questions.length; i++){
                     if (questions[i].profileid) {
                         var profileId = questions[i].profileid;
                         if (profileId.length > 0) {
                             for(var j=0; j < profileId.length; j++){
-                                profilePoints.push(profileId[j]);
+                                var pointsByAnswer = { "profileId": profileId[j], "points" : 1 };
+                                profilePoints.push(pointsByAnswer);
                             }
                         }else{
-                            profilePoints.push(profileId);
+                            var pointsByAnswer = { "profileId": profileId, "points" : 1 };
+                            profilePoints.push(pointsByAnswer);
                         }
                     }
-                };                
-                debugger;
-                var pointsByProfile = _.countBy(profilePoints, _.identity);
-                fillProfilePoints(pointsByProfile);
+                };
                 
+                fillProfilePoints(profilePoints);
             }
 
             function updateProfile() {

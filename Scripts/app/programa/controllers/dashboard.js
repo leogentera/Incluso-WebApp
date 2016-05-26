@@ -430,9 +430,7 @@ angular
                     if (currentUser) {
                         moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){
                             $scope.incLoadedItem(); //15
-                            console.log(data);
                         },function(data){
-                            console.log(data);
                         },true);
                     }
 

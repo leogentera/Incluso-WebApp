@@ -36,8 +36,6 @@ angular
                 $rootScope.loadedItem++;
                 var upperValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
                 var percentInc = $rootScope.loadedItem/$rootScope.totalLoads;
-
-                console.log("Calling myLoop with " + infValue + " - " + upperValue);
                 myLoop(infValue, upperValue);
             };
             

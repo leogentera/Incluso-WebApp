@@ -2125,7 +2125,7 @@ angular
                     $scope.model[param].push("");
                 };
 
-                $scope.removeItem70 = function (param, index) {console.log("Removing from " + param);
+                $scope.removeItem70 = function (param, index) {
                     var canI = canIErase($scope.model[param], index, $scope.status70);
 
                     if (canI) {

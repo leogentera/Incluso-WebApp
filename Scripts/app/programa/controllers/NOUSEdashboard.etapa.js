@@ -22,14 +22,12 @@ angular
             ////////////////////
 
             var currentStage = JSON.parse(localStorage.getItem("currentStage"));
-            //console.log(currentStage);
             $scope.idEtapa = currentStage;      //We are in Stage 1
             $rootScope.pageName = $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
             $rootScope.navbarOrange = false;
             $rootScope.navbarBlue = false;
             $rootScope.navbarPink = false;
             $rootScope.navbarGreen = false;
-            console.log($scope.idEtapa);
             if ($scope.idEtapa == 0)               //Zona de vuelo
                 $rootScope.navbarBlue = true;
             if ($scope.idEtapa == 1)               //Zona de navegacion
@@ -57,7 +55,6 @@ angular
                     size: size,
                     windowClass: 'user-help-modal'
                 });
-                console.log("modal open");
             };
 
             $scope.openModal();
@@ -171,7 +168,6 @@ angular
                             size: size,
                             windowClass: 'user-help-modal'
                         });
-                        console.log("modal open");
                     }
                 });
 
@@ -193,7 +189,6 @@ angular
             };
 
             function openStageModal() {
-                console.log("opening");
                 //setTimeout(function(){ 
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
@@ -202,7 +197,6 @@ angular
                     //size: size,
                     windowClass: 'closing-stage-modal user-help-modal'
                 });
-                console.log("modal open closing");
                 //}, 1000);
             };
         }])

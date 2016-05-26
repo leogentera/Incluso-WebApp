@@ -535,7 +535,6 @@ var _updateBadgeStatus = function (coursemoduleid) {
     if (activity) {
       var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
       if (currentBadge) {
-        console.log("badge won" + currentBadge.badgeName + " " + coursemoduleid);
           for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
               if (badges[indexBadge].id == currentBadge.badgeId) {
                   profile.badges[indexBadge].status = "won";
@@ -555,7 +554,6 @@ var _updateBadgeStatus = function (coursemoduleid) {
 var _updateRewardStatus = function () {
 
     var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
-    console.log('Stars from rewards: ' + profile.stars);
     var totalRewards = profile.rewards;
     var profilePoints = profile.stars;
 
@@ -630,8 +628,7 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
             allNotifications[i].status = "won"
             localStorage.setItem("notifications",JSON.stringify(allNotifications));
             
-            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){              
-                console.log("create notification successful");
+            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
             }, errorCallback, true);
               
         } else {
@@ -718,7 +715,6 @@ var _progressNotification = function(){
                     localStorage.setItem("notifications", JSON.stringify(notifications));
           
                     moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
-                        console.log("progress notification created" + currentNotification.name);
                     }, errorCallback, true);
                     
                 }
@@ -740,7 +736,7 @@ var errorCallback = function (data) {
 };
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
-    
+    console.log("GetActivityByActivityIDentifier");
     var matchingActivity = null;
     var breakAll = false;
     var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
@@ -1311,7 +1307,7 @@ var logout = function ($scope, $location) {
 
 
 var fillProfilePoints = function(pointsToAdd, activityType){
-    var profilePoints = localStorage.getItem("profilePoints");
+    var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
     var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
     
     //set profilePoints for the first time
@@ -1340,12 +1336,8 @@ var getProfileCatalogs = function(){
     
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
     if (currentUser) {
-      moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){        
-        console.log(data);
-        },function(data){
-          console.log(data);
-          },true);    
-    }    
+      moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){},function(data){},true);    
+    }
 };
 
 

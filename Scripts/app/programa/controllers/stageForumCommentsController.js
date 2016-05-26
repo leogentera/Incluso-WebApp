@@ -111,7 +111,6 @@ angular
 
                 function countLikesByUser() {
                     var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
-                    console.log(userLikes);
                     if (userLikes && userLikes.likes == 30) {
                         assignLikesBadge();
                     }
@@ -131,10 +130,7 @@ angular
                             showRobotForum();
                             localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
 
-                            moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
-                                console.log("created badge successfully");
-                            }, function () {
-                            });
+                            moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {}, function () {});
 
                         }
                     }
@@ -812,7 +808,6 @@ angular
                 function getRobotMessageContent() {
                     drupalFactory.Services.GetContent("BadgeForumRobot", function (data, key) {
                         $scope.robotContentResources = data.node;
-                        console.log(data.node);
                     }, function () {
                     }, false);
                 }

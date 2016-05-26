@@ -233,7 +233,6 @@ angular
                 var url = _.filter(_activityRoutes, function (x) {
                     return x.id == activity.activity_identifier
                 })[0].url;
-                console.log(url);
                 //Store an Index of the chosen menu item.
                 _setLocalStorageJsonItem("owlIndex", parentIndex);
 
@@ -311,7 +310,6 @@ angular
 
             function showClosingChallengeRobot(challengeCompletedId) {
 
-                //console.log("show closing challengeRobot");
                 $scope.robotMessages = [
                     {
                         title: $scope.contentResources.robot_title_challenge_one,
@@ -342,7 +340,6 @@ angular
                 $scope.actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
                 if ($scope.actualMessage) {
                     _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
-                    //console.log($scope.actualMessage);
                     $scope.openModal_CloseChallenge();
                 }
             }

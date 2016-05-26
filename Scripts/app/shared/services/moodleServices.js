@@ -276,7 +276,7 @@
                                             });
                                         }
                                     }
-                                    _setLocalStorageJsonItem("answersProfile",answersProfile);
+                                    //_setLocalStorageJsonItem("answersProfile",answersProfile);
                                     
                                     _setLocalStorageJsonItem(keyName, activity.data[0]);
                                 }
@@ -447,7 +447,7 @@
                 url: url,
                 headers: { 'Content-Type': 'application/json',
                             'Authorization': currentUser.token }
-            }).success(function (data, status, headers, config) {console.log("SUCCESS COURSE");
+            }).success(function (data, status, headers, config) {
                 createTree(data);
                 successCallback();
             }).error(function (data, status, headers, config) {
@@ -569,10 +569,6 @@
                     headers: { 'Content-Type': 'application/json',
                                'Authorization': currentUser.token }
                 }).success(function (data, status, headers, config) {
-                    console.log("Within Success");
-                    console.log(headers('Content-Length'));
-                    console.log(headers());
-                    console.log(data);
 
                     if (key != null) {
                         _setLocalStorageJsonItem(key,data);

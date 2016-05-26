@@ -296,11 +296,7 @@ angular
                         moodleAPI: API_RESOURCE.format(''),
                         moodleToken: currentUser.token
                     };
-
-                    cordova.exec(function () {
-                        console.log("success");
-                    }, function () {
-                    }, "CallToAndroid", "login", [objectToken]);
+                    cordova.exec(function () {}, function () {}, "CallToAndroid", "login", [objectToken]);
                 }
             }
 

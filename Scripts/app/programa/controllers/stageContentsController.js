@@ -144,7 +144,6 @@ angular
                     if (activitiesData != "") {
                         waitPreloader++;
                         activitiesData = activitiesData.slice(0, -1);
-                        console.log(activitiesData);
                         moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, $scope.token, getActivityInfoCallback, getActivityErrorCallback, true);
                   }
                     if (waitPreloader == 0) {
@@ -173,7 +172,7 @@ angular
                 }
 
                 function setResources(myActivity) {
-                    if (myActivity.activityContent.thumbnail) {console.log(myActivity.activityContent.thumbnail);
+                    if (myActivity.activityContent.thumbnail) {
                         myActivity.activityContent.thumbnail = myActivity.activityContent.thumbnail.fileurl + "&token=" + $scope.token;
                     }                    
                     else {
@@ -311,8 +310,6 @@ angular
             }
 
                 function updateLocalStorageStars(data) {
-                        console.log("updatelocalStorageStars");
-                        console.log(data);
                         var userStars = JSON.parse(localStorage.getItem("userStars"));
                                           
                         var localStorageStarsData = {
@@ -361,8 +358,7 @@ angular
 
             }
 
-                function successEndFuente() {                    
-                    console.log("success end fuente");
+                function successEndFuente() {
                     $scope.$emit('HidePreloader'); 
                     $location.path('/' + stage + '/Dashboard/' + userCurrentStage + '/' + currentChallenge);
             }          
@@ -564,7 +560,6 @@ angular
             };
 
             function getContentResources(activityIdentifierId) {
-                console.log(activityIdentifierId);
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
                     _loadedResources = true;
                     $scope.contentResources = data.node;
