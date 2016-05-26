@@ -18,17 +18,25 @@ angular
             $rootScope.totalLoads = 16;
             $rootScope.loaderForLogin = false;
             progressBar.set(0);
+            var arrayForTimeouts = [];
 
             function myLoop (inf, up) {//To fill the interval between download chunks.
-                setTimeout(function () {
+                var i;
 
-                    inf++;
-                    progressBar.set(inf);
+                for (i = inf; i < up; i++) {//Set the new cicles for the loader bar.
+                    arrayForTimeouts[i] = setTimeout(function() {
+                        progressBar.set(i); //Update progress
 
-                    if (inf < up) {
-                        myLoop(inf, up);
-                    }
-                }, 10);
+                        if (i == 100) {//When load is complete.
+                            $timeout(function(){
+                                $scope.$emit('HidePreloader');
+                                $rootScope.loadedItem = 0;
+                                $rootScope.loaderForLogin = false;
+                                $scope.loaderRandom(); //Reinit Preloader
+                            }, 1000);
+                        }
+                    }, 10);
+                }
             }
 
             $scope.incLoadedItem = function() {
@@ -50,16 +58,16 @@ angular
 
             $scope.loaderRandom = function () {
                 if ($rootScope.loaderForLogin) {//Show Login Preloader
-                    $scope.spinnerShow = 10;
+                    $scope.spinnerShow = 0;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
-                            $scope.spinnerShow = 10;
+                            $scope.spinnerShow = 0;
                     }, 200);
-                } else {
-                    $scope.spinnerShow = Math.floor((Math.random() * 4));
+                } else {//Pick another preloader
+                    $scope.spinnerShow = Math.floor(Math.random() * 4) + 1;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
-                            $scope.spinnerShow = Math.floor((Math.random() * 4));
+                            $scope.spinnerShow = Math.floor(Math.random() * 4) + 1;
                     }, 200);
                 }
             };

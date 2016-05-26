@@ -47,10 +47,6 @@ angular
                 $scope.userCredentialsModel.modelState.isValid = (newValue.length === 0);
             });
 
-            $scope.$watch("loadedItem", function (newValue, oldValue) {
-                //console.log($scope.loadedItem);
-            });
-
             IntervalFactory.CancelUserNotificationWeeklyInterval();
 
             function validateModel() {
@@ -70,7 +66,7 @@ angular
             }
 
             function loadQuizesAssets(userId, userToken, successCallback) {
-                //$scope.$emit('/ShowPreloader');UNNECESSARY
+                $scope.$emit('ShowPreloader');
                 moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, quizesArray, userToken, successCallback, function () {
                 }, true);
             }
@@ -245,7 +241,7 @@ angular
 
                                     $timeout(
                                         function () {
-                                            $scope.$emit('HidePreloader');
+                                            //$scope.$emit('HidePreloader');
                                             $location.path('/ProgramaDashboard');
                                         }, 1000);
 
@@ -302,7 +298,6 @@ angular
 
             function loginWithFacebookConnectedCallback() {
                 $scope.$emit('ShowPreloader');
-                //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
                 $scope.userCredentialsModel.modelState.isValid = true;
@@ -322,7 +317,7 @@ angular
 
                 _loadDrupalResources();
                 $rootScope.OAUTH_ENABLED = true;
-                $rootScope.totalLoads = 12;
+                $rootScope.totalLoads = 14;
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = userFacebook;
