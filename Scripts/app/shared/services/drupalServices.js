@@ -131,7 +131,7 @@
             _httpFactory({
                 method: 'POST',
                 url: url ,
-                headers: { 'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
                 data:  JSON.stringify( drupalFactory.NodeRelation)
             }).success(function (data, status, headers, config) {
 
