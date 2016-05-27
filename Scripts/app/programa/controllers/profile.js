@@ -24,8 +24,23 @@ angular
             $scope.accessedSubsection = false;
             $scope.$emit('scrollTop');
             $scope.$emit('ShowPreloader');
+            $scope.mobilecheck=window.mobilecheck;
 
             $scope.passwordChanged = false;
+            
+            $scope.selectClick = function (items, field) {
+                var selectItems = items.slice();
+                selectItems.unshift(field);
+                if (window.mobilecheck()) {
+                    cordova.exec(function (data) {
+                            var evaluate= '$scope.model.' + field + '="' + items [data.which - 1] + '"';
+                            eval(evaluate);
+                            $scope.$digest();
+                        }, function(){}, "CallToAndroid", "showCombobox", selectItems);
+                }
+                
+                
+            };
 
             $scope.changePasswordModel = {
                 currentPassword: undefined,
@@ -2702,10 +2717,13 @@ angular
                 }
 
             }
+            
         }]).controller('badgeRobotMessageModal', function ($scope, $modalInstance) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+    
+    
 
     var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
     $scope.actualMessage = robotMessage;
