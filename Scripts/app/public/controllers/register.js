@@ -29,6 +29,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+            $scope.mobilecheck=window.mobilecheck;
 
             function offlineCallback() {
                 $timeout(function () {
@@ -291,6 +292,21 @@ angular
                 if (window.mobilecheck()) {
                     cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);
                 }
+            };
+            
+             $scope.selectClick = function (items, field) {
+                var selectItems = items.slice();
+                selectItems.unshift(field);
+                if (window.mobilecheck()) {
+                    cordova.exec(function (data) {
+                            $("select[name='"+field+"'] option").eq(data.which).prop('selected', true);
+                            $timeout( function(){
+                                $("select[name='"+field+"'] option").change();
+                            }, 10);
+                        }, function(){}, "CallToAndroid", "showCombobox", selectItems);
+                }
+                
+                
             };
 
             function SuccessDatePicker(data) {

@@ -24,8 +24,23 @@ angular
             $scope.accessedSubsection = false;
             $scope.$emit('scrollTop');
             $scope.$emit('ShowPreloader');
+            $scope.mobilecheck=window.mobilecheck;
 
             $scope.passwordChanged = false;
+            
+            $scope.selectClick = function (items, field) {
+                var selectItems = items.slice();
+                selectItems.unshift(field);
+                if (window.mobilecheck()) {
+                    cordova.exec(function (data) {
+                            var evaluate= '$scope.model.' + field + '="' + items [data.which - 1] + '"';
+                            eval(evaluate);
+                            $scope.$digest();
+                        }, function(){}, "CallToAndroid", "showCombobox", selectItems);
+                }
+                
+                
+            };
 
             $scope.changePasswordModel = {
                 currentPassword: undefined,
@@ -783,10 +798,10 @@ angular
                             $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
 
                         }, function () {
-                            $scope.model= {
-                                'alias' : $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
-                                'stars' : 'No definidas',
-                                'profileimageurl' : 'assets/avatar/default.png',
+                            $scope.model = {
+                                'alias': $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
+                                'stars': 'No definidas',
+                                'profileimageurl': 'assets/avatar/default.png',
                             };
                         }, true);
                     }
@@ -1116,7 +1131,6 @@ angular
                         }
                     }
 
-
                     //artisticActivities
                     if ($scope.model.artisticActivities && $scope.model.artisticActivities.length > 0) {
                         for (i = 0; i < $scope.model.artisticActivities.length; i++) {
@@ -1282,6 +1296,83 @@ angular
                     }
                 };
 
+                $scope.cancelProfileEdition = function () {//When user clicks "Cancel" on Edit Profile.
+
+                    $scope.currentPage = 1; //Return to page 1.
+                    var i;
+
+                    for (i = 0; i < $scope.visitedSections.length; i++) {
+
+                        //Recover original Profile data from LS...
+                        var originalProfile = JSON.parse(localStorage.getItem("originalProfile/" + $scope.userId));
+
+                        switch ($scope.visitedSections[i]) {//Restore original field values.
+                            case "3000":  // "Mi informacion"
+                                $scope.model.firstname = originalProfile.firstname;
+                                $scope.model.lastname = originalProfile.lastname;
+                                $scope.model.mothername = originalProfile.mothername;
+                                $scope.model.gender = originalProfile.gender;
+                                $scope.model.birthCountry = originalProfile.birthCountry;
+                                $scope.birthdate_Dateformat = originalProfile.birthday;
+                                $scope.model.maritalStatus = originalProfile.maritalStatus;
+                                $scope.model.studies = originalProfile.studies;
+                                $scope.model.address.country = originalProfile.address.country;
+                                $scope.model.address.city = originalProfile.address.city;
+                                $scope.model.address.town = originalProfile.address.town;
+                                $scope.model.address.postalCode = originalProfile.address.postalCode;
+                                $scope.model.address.street = originalProfile.address.street;
+                                $scope.model.address.num_ext = originalProfile.address.num_ext;
+                                $scope.model.address.num_int = originalProfile.address.num_int;
+                                $scope.model.address.colony = originalProfile.address.colony;
+                                $scope.model.phones = originalProfile.phones;
+                                $scope.model.socialNetworks = originalProfile.socialNetworks;
+                                $scope.model.familiaCompartamos = originalProfile.familiaCompartamos;
+
+                                break;
+                            case "3001":  // "Mi Personalidad"
+                                $scope.model.favoriteSports = originalProfile.favoriteSports;
+                                $scope.model.artisticActivities = originalProfile.artisticActivities;
+                                $scope.model.hobbies = originalProfile.hobbies;
+                                $scope.model.social = originalProfile.social;
+                                $scope.model.emprendedor = originalProfile.emprendedor;
+                                $scope.model.talents = originalProfile.talents;
+                                $scope.model.values = originalProfile.values;
+                                $scope.model.habilities = originalProfile.habilities;
+                                $scope.model.inspirationalCharacters = originalProfile.inspirationalCharacters;
+
+                                break;
+                            case "3002":  // "Socioeconómicos"
+                                $scope.model.iLiveWith = originalProfile.iLiveWith;
+                                $scope.model.mainActivity = originalProfile.mainActivity;
+                                $scope.model.level = originalProfile.currentStudies.level;
+                                $scope.model.grade = originalProfile.currentStudies.grade;
+                                $scope.model.period = originalProfile.currentStudies.period;
+                                $scope.model.children = originalProfile.children;
+                                $scope.model.gotMoneyIncome = originalProfile.gotMoneyIncome;
+                                $scope.model.moneyIncome = originalProfile.moneyIncome;
+                                $scope.model.medicalCoverage = originalProfile.medicalCoverage;
+                                $scope.model.medicalInsurance = originalProfile.medicalInsurance;
+
+                                break;
+                            case "3003":  // "Uso de la tecnologia"
+                                $scope.model.knownDevices = originalProfile.knownDevices;
+                                $scope.model.ownDevices = originalProfile.ownDevices;
+                                $scope.model.phoneUsage = originalProfile.phoneUsage;
+                                $scope.model.playVideogames = originalProfile.playVideogames;
+                                $scope.model.videogamesFrecuency = originalProfile.videogamesFrecuency;
+                                $scope.model.videogamesHours = originalProfile.videogamesHours;
+                                $scope.model.kindOfVideogames = originalProfile.kindOfVideogames;
+                                $scope.model.favoriteGames = originalProfile.favoriteGames;
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    $scope.visitedSections = []; //Reset the log of visited sections.
+                };
+
                 $scope.navigateToPage = function (pageNumber) {
                     $scope.currentPage = pageNumber;
                 };
@@ -1296,15 +1387,8 @@ angular
                 };
 
                 $scope.returnToProfile = function () {//After pressing "Terminar" button.
-
                     $scope.$emit('ShowPreloader');
                     $location.path("Perfil/" + $scope.userId);
-                    /*
-                     $timeout(function () {
-                     $scope.$emit('ShowPreloader');
-                     $location.path("Perfil/" + $scope.userId);
-                     }, 1);
-                     */
                 };
 
                 Array.prototype.compare = function (testArr) {
@@ -1480,13 +1564,13 @@ angular
                                         if (!($scope.model.mainActivity.sort()).compare(originalProfile.mainActivity.sort())) {
                                             edited = true;
                                         }
-                                        if ($scope.model.level !== originalProfile.level) {
+                                        if ($scope.model.level !== originalProfile.currentStudies.level) {
                                             edited = true;
                                         }
-                                        if ($scope.model.grade !== originalProfile.grade) {
+                                        if ($scope.model.grade !== originalProfile.currentStudies.grade) {
                                             edited = true;
                                         }
-                                        if ($scope.model.period !== originalProfile.period) {
+                                        if ($scope.model.period !== originalProfile.currentStudies.period) {
                                             edited = true;
                                         }
                                         if ($scope.model.children !== originalProfile.children) {
@@ -1801,7 +1885,7 @@ angular
                         return;
                     }
 
-                    $scope.model.currentStudies = {};
+                    $scope.model.currentStudies = {}; //From "Socioeconómicos"
                     $scope.model.currentStudies.level = $scope.model.level;
                     $scope.model.currentStudies.grade = $scope.model.grade;
                     $scope.model.currentStudies.period = $scope.model.period;
@@ -2633,10 +2717,13 @@ angular
                 }
 
             }
+            
         }]).controller('badgeRobotMessageModal', function ($scope, $modalInstance) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+    
+    
 
     var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
     $scope.actualMessage = robotMessage;
