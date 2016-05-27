@@ -131,8 +131,8 @@
             _httpFactory({
                 method: 'POST',
                 url: url ,
-                headers: { 'Content-Type': 'application/json'},
-                data:  JSON.stringify( drupalFactory.NodeRelation)
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+                data:  JSON.stringify(drupalFactory.NodeRelation)
             }).success(function (data, status, headers, config) {
 
                 //var resultArray = Object.keys(data).map(function(k) { return data[k] });
