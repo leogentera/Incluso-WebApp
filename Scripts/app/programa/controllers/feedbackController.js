@@ -42,31 +42,16 @@ angular
                     break;
             }
             
-            var perfilIncluso = [
-                {
-                    IdProfile: 1,
-                    ProfileName: "Deportista",
-                    ProfileMessage: "Hola " + $scope.user + " Felicidades, haz obtenido el perfil deportista"},
-                {
-                    IdProfile: 2,
-                    ProfileName: "Artístico",
-                    ProfileMessage: "Hola " + $scope.user + " Felicidades, haz obtenido el perfil artístico"},
-                {
-                    IdProfile: 3,
-                    ProfileName: "Social",
-                    ProfileMessage: "Hola " + $scope.user + " Felicidades, haz obtenido el perfil social"},
-                {
-                    IdProfile: 4,
-                    ProfileName: "Intelectual",
-                    ProfileMessage: "Hola " + $scope.user + " Felicidades, haz obtenido el perfil intelectual"}
-            ];
-                
+            var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
+            var perfilIncluso = profileCatalogs.messages || [];
+            
             function initialLoading() {
                 // $scope.showRobot();    
                 $scope.$emit('HidePreloader');
                 
                 var random = getRandom(perfilIncluso.length +1);
-                $scope.messageProfile = _.findWhere(perfilIncluso, {IdProfile: random});
+                $scope.messageProfile = _.findWhere(perfilIncluso, {profileid: random});
+                debugger;
             }
             
             function getRandom(amount) {

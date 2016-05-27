@@ -1784,7 +1784,7 @@ function encodeImageWithUri(imageUri, datatype, callback) {
 
 function getcurrentVersion() {  
     var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
-    var localVersion = "V-TEST";
+    var localVersion = "V-1.0.0.";
     if (deviceVersion && deviceVersion.localVersion) {
       localVersion = deviceVersion.localVersion;
     }
