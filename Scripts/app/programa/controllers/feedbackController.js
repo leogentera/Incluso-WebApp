@@ -36,6 +36,10 @@ angular
                     $scope.location = 'ZonaDeNavegacion/Dashboard/1/5';
                     $rootScope.showStage2Footer = true;
                     break;
+                case 3:
+                    $scope.location = "ZonaDeAterrizaje/Dashboard";
+                    $rootScope.showStage3Footer = true;
+                    break;
             }
             
             var perfilIncluso = [

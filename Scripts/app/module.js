@@ -135,6 +135,7 @@ angular
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html', {cache: true });
+        $http.get('Templates/ZonaDeAterrizaje/Retroalimentacion.html', {cache: true });
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -456,7 +457,6 @@ angular
         $routeProvider.when('/ZonaDeVuelo/Retroalimentacion/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
-            
         });
         
     
@@ -679,6 +679,11 @@ angular
         $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
+        });
+        
+        $routeProvider.when('/ZonaDeAterrizaje/Retroalimentacion/:activityId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/Retroalimentacion.html',
+            controller: 'programafeedbackcontroller'
         });
 
         $routeProvider.when('/FAQs', {
