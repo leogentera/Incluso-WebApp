@@ -16,14 +16,12 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-            
+
             $scope.location = "";
             $scope.messageProfile = "";
-            $scope.user = "";
-            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-            if ($scope.currentUser) {
-                $scope.user = $scope.currentUser.alias;
-            }
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            $scope.user = currentUser.alias;
+            $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.userId));
             
             
             var currentStage = JSON.parse(localStorage.getItem("currentStage"));
@@ -33,11 +31,11 @@ angular
                     $rootScope.showStage1Footer = true;
                     break;
                 case 2:
-                    $scope.location = 'ZonaDeNavegacion/Dashboard/1/5';
+                    $scope.location = 'ZonaDeNavegacion/Dashboard/2/7';
                     $rootScope.showStage2Footer = true;
                     break;
                 case 3:
-                    $scope.location = "ZonaDeAterrizaje/Dashboard";
+                    $scope.location = "ZonaDeAterrizaje/Dashboard/3/6";
                     $rootScope.showStage3Footer = true;
                     break;
             }
@@ -45,19 +43,24 @@ angular
             var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
             var perfilIncluso = profileCatalogs.messages || [];
             
+            
+            function getProfile() {
+                
+                var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
+                var maxProfile = _.max(profilePoints, function(profile){
+                    return profile.points;
+                });
+                
+                var possibleMessages = _.where(perfilIncluso, {profileid: maxProfile.id});
+                var randomNum = _.random(possibleMessages.length);
+                $scope.messageProfile = possibleMessages[randomNum];
+            }
+            
             function initialLoading() {
                 // $scope.showRobot();    
                 $scope.$emit('HidePreloader');
-                
-                var random = getRandom(perfilIncluso.length +1);
-                $scope.messageProfile = _.findWhere(perfilIncluso, {profileid: random});
-                debugger;
+                getProfile();
             }
-            
-            function getRandom(amount) {
-                return Math.floor(Math.random() * (amount - 1) + 1 );
-            }
-            
             
             $scope.ToDashboard = function(){
                 $location.path($scope.location);

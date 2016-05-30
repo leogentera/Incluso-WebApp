@@ -454,14 +454,14 @@ angular
         });
     
 
-        $routeProvider.when('/ZonaDeVuelo/Retroalimentacion/:activityId', {
+        $routeProvider.when('/ZonaDeVuelo/Retroalimentacion', {
             templateUrl: 'Templates/ZonaDeVuelo/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });
         
     
         $routeProvider.when('/ZonaDeVuelo/ExploracionFinal/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', 
+            templateUrl: 'Templates/quiz.html',
             controller: 'stageQuizController',
             reloadOnSearch: false
         });
@@ -485,7 +485,7 @@ angular
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', 
+            templateUrl: 'Templates/quiz.html',
             controller: 'stageQuizController',
             reloadOnSearch: false
         });
@@ -577,7 +577,7 @@ angular
             controller: 'stageForumCommentsController'
         });
         
-        $routeProvider.when('/ZonaDeNavegacion/Retroalimentacion/:activityId', {
+        $routeProvider.when('/ZonaDeNavegacion/Retroalimentacion', {
             templateUrl: 'Templates/ZonaDeNavegacion/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });
@@ -681,7 +681,7 @@ angular
             controller: 'stageForumCommentsController'
         });
         
-        $routeProvider.when('/ZonaDeAterrizaje/Retroalimentacion/:activityId', {
+        $routeProvider.when('/ZonaDeAterrizaje/Retroalimentacion', {
             templateUrl: 'Templates/ZonaDeAterrizaje/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });
