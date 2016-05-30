@@ -29,7 +29,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-            $scope.mobilecheck=window.mobilecheck;
+            $scope.mobilecheck = _comboboxCompat;
 
             function offlineCallback() {
                 $timeout(function () {

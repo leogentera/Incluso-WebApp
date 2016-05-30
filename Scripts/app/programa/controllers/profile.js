@@ -24,7 +24,7 @@ angular
             $scope.accessedSubsection = false;
             $scope.$emit('scrollTop');
             $scope.$emit('ShowPreloader');
-            $scope.mobilecheck=window.mobilecheck;
+            $scope.mobilecheck=_comboboxCompat;
 
             $scope.passwordChanged = false;
             
