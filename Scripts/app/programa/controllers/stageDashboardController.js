@@ -10,7 +10,10 @@ angular
         '$http',
         '$modal',
         '$filter',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+        '$anchorScroll',
+        '$window',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter, $anchorScroll, $window) {
+
             var _loadedResources = false;
             var _pageLoaded = true;
             /* $routeParams.stageId */
@@ -348,14 +351,12 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
+                var quizIdentifiers = ["1001", "1005", "1006", "1007", "1009"];
 
                 if (_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function (x) {
                     return x.id == activity.activity_identifier
                 })[0].url;
-                console.log(url);
-                //Store an Index of the chosen menu item.
-                _setLocalStorageJsonItem("owlIndex", parentIndex);
 
                 if (url) {
 
@@ -363,7 +364,19 @@ angular
                         var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
                         logStartActivityAction(activityId, timeStamp);
-                        $location.path(url);
+
+                        if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
+                            $rootScope.cancelDisabled = true;
+                            $rootScope.quizIdentifier = activity.activity_identifier;
+                            $rootScope.quizUrl = url;
+                            $rootScope.openQuizModal();  // turns on Quiz Modal
+                        }
+
+                        $timeout(function(){
+                            $location.path(url);
+                        }, 100);
+
+
                     } else {
                         $scope.openUpdateAppModal();
                     }
@@ -431,8 +444,6 @@ angular
             }
 
             function showClosingChallengeRobot(challengeCompletedId) {
-
-                //console.log("show closing challengeRobot");
                 $scope.robotMessages = [
                     {
                         title: $scope.contentResources.robot_title_challenge_one,
@@ -463,7 +474,6 @@ angular
                 $scope.actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
                 if ($scope.actualMessage) {
                     _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
-                    //console.log($scope.actualMessage);
                     $scope.openModal_CloseChallenge();
                 }
             }

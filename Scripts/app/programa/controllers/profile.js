@@ -1637,18 +1637,38 @@ angular
 
                         var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        var keysToSync;
+                        var userKeysContent;
+                        var parentActivity;
+                        var activityObject;
+                        var otherAnswerQuiz;
+                        var setOfLabels;
+                        var obj;
+                        var otherFound;
+                        var otherString;
+                        var qIndex;
+                        var updatedActivityOnUsercourse;
+                        var activityModel;
+                        var newAnswer;
+                        var answerLabel;
 
                         if (quizMisCualidades) {// :::::::::: If "Mis Cualidades" section has been modified, make check.
 
-                            var parentActivity = getActivityByActivity_identifier(1005);
-                            var activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
+                            parentActivity = getActivityByActivity_identifier(1005);
+                            activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
+                            keysToSync = ["talents", "values", "habilities"];
+
+                            obj = [
+                                {"questionid": 16, "answers": [""]},
+                                {"questionid": 17, "answers": [""]},
+                                {"questionid": 18, "answers": [""]}
+                            ];
 
                             if (parentActivity != null) {//Check for non null object
                                 if (parentActivity.status === 1) {//If activity.status == 1, then save new info.
-                                    var codedMC = [[], [], []]; //, [], []];
-                                    var keysToSync = ["talents", "values", "habilities"];
-                                    var userKeysContent = [];
-                                    var setOfLabels = [[], [], []];
+                                    var codedMC = [[], [], []];
+                                    userKeysContent = [];
+                                    setOfLabels = [[], [], []];
                                     $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
                                         "userid": 0,
                                         "answers": [null, [0, 0, 0, 0, 0], [], null, []],
@@ -1656,20 +1676,14 @@ angular
                                         "like_status": 0
                                     };
 
-                                    var obj = [
-                                        {"questionid": 16, "answers": [""]},
-                                        {"questionid": 17, "answers": [""]},
-                                        {"questionid": 18, "answers": [""]}
-                                    ];
-
                                     //Get user items in keysToSync from Perfil/nnn.
-                                    for (var i = 0; i < keysToSync.length; i++) {
+                                    for (i = 0; i < keysToSync.length; i++) {
                                         userKeysContent.push(profile[keysToSync[i]]);
                                     }
 
                                     //Convert answers in each item within questions[] array of activity/nnnn to array.
-                                    for (var i = 0; i < activityObject.questions.length; i++) {
-                                        var newAnswer = [];
+                                    for (i = 0; i < activityObject.questions.length; i++) {
+                                        newAnswer = [];
                                         for (var key in activityObject.questions[i].answers) {
                                             if (activityObject.questions[i].answers.hasOwnProperty(key)) {
                                                 newAnswer.push(activityObject.questions[i].answers[key]);
@@ -1679,12 +1693,11 @@ angular
                                         activityObject.questions[i].answers = newAnswer;
                                     }
 
-
                                     //Construct of answerResult & OtroAnswers objects
                                     //    Check if answer option is within Profile key.
-                                    for (var qIndex = 0; qIndex < activityObject.questions.length; qIndex++) {
-                                        for (var i = 0; i < activityObject.questions[qIndex].answers.length - 1; i++) {
-                                            var answerLabel = activityObject.questions[qIndex].answers[i].answer;
+                                    for (qIndex = 0; qIndex < activityObject.questions.length; qIndex++) {
+                                        for (i = 0; i < activityObject.questions[qIndex].answers.length - 1; i++) {
+                                            answerLabel = activityObject.questions[qIndex].answers[i].answer;
                                             setOfLabels[qIndex].push(answerLabel);
 
                                             if (userKeysContent[qIndex].indexOf(answerLabel) > -1) {
@@ -1695,9 +1708,9 @@ angular
                                         }
 
                                         //    Check if "Other" custom answer exists within Profile keys.
-                                        var otherFound = false;
-                                        var otherString = "";
-                                        for (var i = 0; i < userKeysContent[qIndex].length; i++) {
+                                        otherFound = false;
+                                        otherString = "";
+                                        for (i = 0; i < userKeysContent[qIndex].length; i++) {
                                             if (setOfLabels[qIndex].indexOf(userKeysContent[qIndex][i]) == -1) {
                                                 otherFound = true;
                                                 otherString = userKeysContent[qIndex][i];
@@ -1716,14 +1729,14 @@ angular
                                     $scope.AnswersResult.userid = currentUser.userId;
                                     $scope.AnswersResult.like_status = 1;
                                     $scope.AnswersResult.updatetype = 1;
-                                    var updatedActivityOnUsercourse = updateActivityStatus(parentActivity.activity_identifier);
+                                    updatedActivityOnUsercourse = updateActivityStatus(parentActivity.activity_identifier);
 
                                     //Update local storage and activities status array
                                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
                                     updateActivityStatusDictionary(parentActivity.activity_identifier);
                                     $scope.AnswersResult.answers = codedMC;
 
-                                    var activityModel = {
+                                    activityModel = {
                                         "usercourse": updatedActivityOnUsercourse,
                                         "answersResult": $scope.AnswersResult,
                                         "userId": currentUser.userId,
@@ -1739,24 +1752,45 @@ angular
                                     activityModel.answersResult.others = obj;
                                     activityModel.coursemoduleid = parentActivity.coursemoduleid;
                                     activityModel.activityType = "Quiz";
-                                    _endActivity(activityModel, function () {
-                                        //updateProfile();
-                                    }, "");
+                                    _endActivity(activityModel, function () {}, "");
                                 }
                             }
+
+                            //Sync Quiz & Profile
+                            userKeysContent = [];
+                            activityObject = JSON.parse(localStorage.getItem("activity/" + 71));
+                            otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + 71));
+                            $scope.aba = obj;
+                            if (otherAnswerQuiz === null || otherAnswerQuiz === undefined) {//Create this object if it doesn't exists...
+                                otherAnswerQuiz = obj;
+                            }
+
+                            //Get user items in keysToSync from Perfil/nnn.
+                            for (i = 0; i < keysToSync.length; i++) {
+                                userKeysContent[i] = profile[keysToSync[i]];
+                            }
+
+                            syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, 71);
                         }
 
                         if (quizMisGustos) {//If:::::::::: "Mis Gustos" section has been modified, save.
 
-                            var parentActivity = getActivityByActivity_identifier(1006);
-                            var activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
+                            parentActivity = getActivityByActivity_identifier(1006);
+                            activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
+                            keysToSync = ["favoriteSports", "artisticActivities", "hobbies", "social", "emprendedor"];
+                            obj = [
+                                {"questionid": 43, "answers": [""]},
+                                {"questionid": 44, "answers": [""]},
+                                {"questionid": 45, "answers": [""]},
+                                {"questionid": 321, "answers": [""]},
+                                {"questionid": 323, "answers": [""]}
+                            ];
 
                             if (parentActivity != null) {//Check for non null object
                                 if (parentActivity.status === 1) {//If activity.status == 1, then save new info.
                                     var codedMG = [[], [], [], [], []];
-                                    var keysToSync = ["favoriteSports", "artisticActivities", "hobbies", "social", "emprendedor"];
-                                    var userKeysContent = [];
-                                    var setOfLabels = [[], [], [], [], []];
+                                    userKeysContent = [];
+                                    setOfLabels = [[], [], [], [], []];
                                     $scope.AnswersResult = { //Answer Model
                                         "userid": 0,
                                         "answers": [null, [0, 0, 0, 0, 0], [], null, []],
@@ -1764,22 +1798,14 @@ angular
                                         "like_status": 0
                                     };
 
-                                    var obj = [
-                                        {"questionid": 43, "answers": [""]},
-                                        {"questionid": 44, "answers": [""]},
-                                        {"questionid": 45, "answers": [""]},
-                                        {"questionid": 321, "answers": [""]},
-                                        {"questionid": 323, "answers": [""]}
-                                    ];
-
                                     //Get user items in keysToSync from Perfil/nnn.
-                                    for (var i = 0; i < keysToSync.length; i++) {
+                                    for (i = 0; i < keysToSync.length; i++) {
                                         userKeysContent.push(profile[keysToSync[i]]);
                                     }
 
                                     //Convert answers in each item within questions[] array of activity/nnnn to array.
-                                    for (var i = 0; i < activityObject.questions.length; i++) {
-                                        var newAnswer = [];
+                                    for (i = 0; i < activityObject.questions.length; i++) {
+                                        newAnswer = [];
                                         for (var key in activityObject.questions[i].answers) {
                                             if (activityObject.questions[i].answers.hasOwnProperty(key)) {
                                                 newAnswer.push(activityObject.questions[i].answers[key]);
@@ -1791,9 +1817,9 @@ angular
 
                                     //Construct of answerResult & OtroAnswers objects
                                     //    Check if answer option is within Profile key.
-                                    for (var qIndex = 0; qIndex < activityObject.questions.length; qIndex++) {
-                                        for (var i = 0; i < activityObject.questions[qIndex].answers.length - 1; i++) {
-                                            var answerLabel = activityObject.questions[qIndex].answers[i].answer;
+                                    for (qIndex = 0; qIndex < activityObject.questions.length; qIndex++) {
+                                        for (i = 0; i < activityObject.questions[qIndex].answers.length - 1; i++) {
+                                            answerLabel = activityObject.questions[qIndex].answers[i].answer;
                                             setOfLabels[qIndex].push(answerLabel);
 
                                             if (userKeysContent[qIndex].indexOf(answerLabel) > -1) {
@@ -1804,9 +1830,9 @@ angular
                                         }
 
                                         //    Check if "Other" custom answer exists within Profile keys.
-                                        var otherFound = false;
-                                        var otherString = "";
-                                        for (var i = 0; i < userKeysContent[qIndex].length; i++) {
+                                        otherFound = false;
+                                        otherString = "";
+                                        for (i = 0; i < userKeysContent[qIndex].length; i++) {
                                             if (setOfLabels[qIndex].indexOf(userKeysContent[qIndex][i]) == -1) {
                                                 otherFound = true;
                                                 otherString = userKeysContent[qIndex][i];
@@ -1825,14 +1851,14 @@ angular
                                     $scope.AnswersResult.userid = currentUser.userId;
                                     $scope.AnswersResult.like_status = 1;
                                     $scope.AnswersResult.updatetype = 1;
-                                    var updatedActivityOnUsercourse = updateActivityStatus(parentActivity.activity_identifier);
+                                    updatedActivityOnUsercourse = updateActivityStatus(parentActivity.activity_identifier);
 
                                     //Update local storage and activities status array
                                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
                                     updateActivityStatusDictionary(parentActivity.activity_identifier);
                                     $scope.AnswersResult.answers = codedMG;
 
-                                    var activityModel = {
+                                    activityModel = {
                                         "usercourse": updatedActivityOnUsercourse,
                                         "answersResult": $scope.AnswersResult,
                                         "userId": currentUser.userId,
@@ -1848,13 +1874,25 @@ angular
                                     activityModel.answersResult.others = obj;
                                     activityModel.coursemoduleid = parentActivity.coursemoduleid;
                                     activityModel.activityType = "Quiz";
-                                    //console.log(JSON.stringify(activityModel.answersResult));
-                                    _endActivity(activityModel, function () {
-                                        //updateProfile();
-                                    }, "");
+                                    _endActivity(activityModel, function () {  }, "");
                                 }
                             }
 
+                            //Sync Quiz & Profile
+                            userKeysContent = [];
+                            activityObject = JSON.parse(localStorage.getItem("activity/" + 70));
+                            otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + 70));
+                            $scope.aba2 = obj;
+                            if (otherAnswerQuiz === null || otherAnswerQuiz === undefined) {//Create this object if it doesn't exists...
+                                otherAnswerQuiz = obj;
+                            }
+
+                            //Get user items in keysToSync from Perfil/nnn.
+                            for (i = 0; i < keysToSync.length; i++) {
+                                userKeysContent[i] = profile[keysToSync[i]];
+                            }
+
+                            syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, 70);
                         }
 
                         if (showResultsPage) {
@@ -1995,7 +2033,7 @@ angular
 
                                 endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
-                                var activityModel = {
+                                activityModel = {
                                     "usercourse": usercourse,
                                     "coursemoduleid": activity.coursemoduleid,
                                     "userId": currentUser.userId,
@@ -2243,6 +2281,74 @@ angular
                     } else {
                         return true;
                     }
+                }
+
+                function syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, coursemoduleId) {
+                    var i, j;
+                    var codedAnswers = [];
+                    var setOfLabels = [];
+                    var otherFound = false;
+                    var questionId;
+                    var numAnswers;
+
+                    //Modify & save the new "answerQuiz/71" object.
+                    for (i = 0; i < userKeysContent.length; i++) {
+                        codedAnswers.push([]);
+                    }
+
+                    for (i = 0; i < userKeysContent.length; i++) {
+
+                        numAnswers = activityObject.questions[i].answers.length;
+
+                        for (j = 0; j < numAnswers; j++) {//Get the label for answers for each question.
+                            var label = activityObject.questions[i].answers[j].answer;
+
+                            if (label != "Otro") {//Not including the "Otro" label.
+                                setOfLabels.push(label);
+                            }
+                        }
+
+                        for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of userKeysContent[i]...
+                            if (userKeysContent[i].indexOf(setOfLabels[j]) > -1) {
+                                codedAnswers[i].push(1);  //Check the corresponding answer label.
+                            } else {
+                                codedAnswers[i].push(0); //Uncheck the answer label.
+                            }
+                        }
+
+                        for (j = 0; j < userKeysContent[i].length; j++) {//Check if jth-user talent is within setOfLabels...
+                            if (setOfLabels.indexOf((userKeysContent[i][j]).replace(/\r/g, " ").trim()) == -1) {//...if not, then that answer must be the "other" option value.
+                                //It must be the string for the "Other" option...
+                                otherFound = true;
+                                questionId = activityObject.questions[i].id;
+
+                                //Update the "answers" key that corresponds to this question, as defined by questionId.
+                                for (var k = 0; k < otherAnswerQuiz.length; k++) {
+                                    if (otherAnswerQuiz[k].questionid == +questionId) {
+                                        otherAnswerQuiz[k].answers = [userKeysContent[i][j]];
+                                    }
+                                }
+
+                                //otherAnswerQuiz[i].answers = [userKeysContent[i][j]];
+                                codedAnswers[i].push(1);
+                                activityObject.questions[i].userAnswer = userKeysContent[i].join("; ") + "; Otro";
+                                activityObject.questions[i].other = userKeysContent[i][j];
+                                break;
+                            }
+                        }
+
+                        if (!otherFound) {//The question has "other" option empty.
+                            otherAnswerQuiz[i].answers = [""];
+                            codedAnswers[i].push(0);
+                            activityObject.questions[i].userAnswer = userKeysContent[i].join("; ");
+                            activityObject.questions[i].other = "";
+                        }
+                    }
+
+                    _setLocalStorageJsonItem("answersQuiz/" + coursemoduleId, codedAnswers);
+                    _setLocalStorageJsonItem("otherAnswerQuiz/" + coursemoduleId, otherAnswerQuiz);
+                    _setLocalStorageJsonItem("activity/" + coursemoduleId, activityObject);
+                    $scope.activityObject = activityObject;
                 }
 
                 // **************** Section for MIS GUSTOS **************************

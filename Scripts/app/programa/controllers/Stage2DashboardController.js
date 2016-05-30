@@ -306,6 +306,8 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
+                var quizIdentifiers = ["2001", "2007", "2016", "2023"];
+
                 if (_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function (x) {
                     return x.id == activity.activity_identifier
@@ -320,7 +322,18 @@ angular
                         var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
                         logStartActivityAction(activityId, timeStamp);
-                        $location.path(url);
+
+                        if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
+                            $rootScope.cancelDisabled = true;
+                            $rootScope.quizIdentifier = activity.activity_identifier;
+                            $rootScope.quizUrl = url;
+                            $rootScope.openQuizModal();  // turns on Quiz Modal
+                        }
+
+                        $timeout(function(){
+                            $location.path(url);
+                        }, 100);
+
                     } else {
                         $scope.openUpdateAppModal();
                     }
@@ -352,8 +365,6 @@ angular
 
 
             function showClosingChallengeRobot(challengeCompletedId) {
-
-                //console.log("show closing challengeRobot");
                 $scope.robotMessages = [
                     {
                         title: $scope.contentResources.robot_title_challenge_one,
@@ -390,7 +401,6 @@ angular
                 $scope.actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
                 if ($scope.actualMessage) {
                     _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
-                    //console.log($scope.actualMessage);
                     $scope.openModal_CloseChallenge();
                 }
             }
