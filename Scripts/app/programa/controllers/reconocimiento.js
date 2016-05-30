@@ -3205,9 +3205,6 @@ angular
             $scope.$emit('HidePreloader');
         }]).controller('timeOutReconocimiento', function ($scope, $modalInstance) {//TimeOut Robot
 
-    $scope.title = "RECONOCIMIENTO";
-    $scope.message = "Time Out - Try Later";
-
     $scope.cancel = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');

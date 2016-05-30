@@ -821,16 +821,13 @@ angular
 
     var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
     $scope.actualMessage = robotMessage;
-}).controller('timeOutForum', function ($scope, $modalInstance, $route, $location) {//TimeOut Robot
-    $scope.title = "FORO";
-    $scope.message = "Time Out - Try Later";
+}).controller('timeOutForum', function ($scope, $modalInstance, $route) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
         $route.reload();
     };
-
 });
 
 

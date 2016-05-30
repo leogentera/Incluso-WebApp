@@ -459,9 +459,6 @@ angular
             }
         }]).controller('timeOutMapaDelEmprendedor', function ($scope, $modalInstance) {//TimeOut Robot
 
-    $scope.title = "MAPA DEL EMPRENDEDOR";
-    $scope.message = "Time Out - Try Later";
-
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
