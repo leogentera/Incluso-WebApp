@@ -539,7 +539,7 @@
 
                 img {
                     width: 53vw;
-                    height: 53vw;
+                    height: auto;
                     margin-top: -6vw;
                     padding: 2vw;
                 }
@@ -1183,7 +1183,7 @@ section.part.inbloq{
         .closing-stage-modal,
         .dashboard-programa {
             &.in {
-                position: initial;
+                position: relative;
                 height: 100vh;
             }
         }
@@ -1223,21 +1223,6 @@ section.part.inbloq{
         .close-activity {
             .header-title {
                 padding-top: 4vh;
-            }
-        }
-        .modal-timeout {
-            position: relative;
-            img {
-                margin: 0px!important;
-                width: 12vw!important;
-                top: -8vw;
-                background: rgba(18, 27, 28, 0.965) none repeat scroll 0% 0%;
-                padding: 0 1vw 0 4vw;
-                box-sizing: content-box;
-                left: calc(50% - 6vw)!important;
-            }
-            h3 {
-                font-weight: 600;
             }
         }
     }

@@ -241,10 +241,10 @@
                         var proc = setInterval(function() {//Get & save each activity object.
                             if (data.length > 0) {
                                 var activity = data.shift();
+                                var activitiesToConvert = [75, 89, 96, 170, 211, 150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96];
 
                                 if (activity && activity.data[0]) {
                                     var keyName = "activity/" + activity.coursemoduleid;
-                                    var activitiesToConvert = [75, 89, 96, 170, 211];
 
                                     if ( activitiesToConvert.indexOf(parseInt(activity.coursemoduleid)) > -1 ) {
                                         // ------    Change format of 'answers' key from Object to Array.

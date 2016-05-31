@@ -25,6 +25,14 @@ window.mobilecheck = function() {
   return _isCellphone;
 }
 
+var _comboboxCompat = function (){
+  debugger;
+                if(_getAPKVersion()<=15){
+                    return false;
+                }
+                return window.mobilecheck;
+            };
+
 /* catalog keys from moodle */
 var _catalogNames = ["sports",
     "arts",
@@ -1663,12 +1671,14 @@ function _updateDeviceVersionCache () {
     var deviceVersion = {
         lastTimeUpdated: currentDate.getTime(),
         localVersion: "0.0.0",
-        remoteVersion: "0.0.0"
+        remoteVersion: "0.0.0",
+        apkVersion: 15
     };
 
     if (localStorage.getItem("device-version") != null) {
         deviceVersion = JSON.parse(localStorage.getItem("device-version"));
         deviceVersion.lastTimeUpdated = currentDate.getTime();
+        deviceVersion.apkVersion = deviceVersion.apkVersion || 15;
     }
     
     if (window.mobilecheck()) {
@@ -1678,11 +1688,29 @@ function _updateDeviceVersionCache () {
             cordova.exec(function(data) {
                 deviceVersion.localVersion = data.currentVersion;
                 deviceVersion.remoteVersion = data.latestVersion;
+                deviceVersion.apkVersion = data.apkVersion;
                 localStorage.setItem("device-version", JSON.stringify(deviceVersion));
                 FLAG_DEVICE_VERSION_RUNNING = false;
             }, function() { console.log("fail"); FLAG_DEVICE_VERSION_RUNNING = false }, "CallToAndroid", "getversion", []);
         }
     }
+}
+
+function _getAPKVersion () {
+    var currentDate = new Date();
+    
+    var deviceVersion = {
+        lastTimeUpdated: currentDate.getTime(),
+        localVersion: "0.0.0",
+        remoteVersion: "0.0.0",
+        apkVersion: 15
+    };
+
+    if (localStorage.getItem("device-version") != null) {
+        deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+        deviceVersion.lastTimeUpdated = currentDate.getTime();
+    }
+    return deviceVersion.apkVersion;
 }
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {

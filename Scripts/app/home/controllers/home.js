@@ -83,8 +83,28 @@ angular
                     $rootScope.sidebar = false;
             };
 
+            $rootScope.openQuizModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: false,
+                    backdrop: false,
+                    templateUrl: 'quizModal.html',
+                    controller: 'quizModalController',
+                    size: size,
+                    windowClass: 'user-help-modal opening-stage-modal'
+                });
+
+                modalInstance.result.finally(function () {
+                    $scope.$emit('ShowPreloader');
+                    $timeout(function () {
+                        $scope.$emit('HidePreloader');
+                    }, 1000);
+                });
+            };
+
             /* redirect to another page */
             $scope.navigateTo = function (url, sideToggle, activityId) {
+                var quizIdentifiers = ["1005", "1006", "1007", "1009", "2007", "2016", "2023"];
+                var isQuiz = false;
 
                 /* Check if current version is the most recent */
                 if (!_compareSyncDeviceVersions()) {
@@ -122,25 +142,34 @@ angular
                             url = pref + "CabinaDeSoporte/" + activityId;
 
                             //Check if CabinaDeSoporte activity is blocked...
-                            if ($rootScope.activityBlocked[activityId].disabled) {
-                                console.log("### BLOCKED " + activityId);
+                            if ($rootScope.activityBlocked[activityId].disabled) {//The Activity is Blcoked
                                 activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
-                            } else {
-                                console.log("### NOT BLOCKED " + activityId);
                             }
                         }
 
                         logStartActivityAction(activityId, timeStamp);
-                    }
 
-                    $location.path(url);
+                        if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
+                            $rootScope.cancelDisabled = true;
+                            isQuiz = true;
+                            $rootScope.quizIdentifier = activityId.toString();
+                            $rootScope.quizUrl = url;
+                            $rootScope.openQuizModal();  // turns on robot
+                        }
+                    }
 
                     if (sideToggle == "sideToggle") {
                         $rootScope.sidebar = !$rootScope.sidebar;
                     }
 
-                }
+                    if (!isQuiz) {
+                        $location.path(url);
+                    }
 
+                    //$timeout(function(){
+                    //    $location.path(url);
+                    //}, 100);
+                }
             };
 
             $scope.navigateToStageDashboard = function (url, sideToggle, activityId) {
@@ -406,5 +435,29 @@ angular
     $scope.cancel = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
+    };
+}).controller('quizModalController', function ($scope, $rootScope, $modalInstance, $location, $timeout) {
+
+    drupalFactory.Services.GetContent($rootScope.quizIdentifier, function (data, key) {
+
+            if (data.node != null) {
+                $scope.title = data.node.titulo_quiz;
+                $scope.instructions = data.node.instrucciones;
+            }
+
+            _loadedResources = true;
+
+        }, function () {
+            _loadedResources = true;
+        }, false);
+
+    $scope.cancelModal = function () {
+        $modalInstance.dismiss('cancel');
+
+        $timeout(function(){
+            $location.path($rootScope.quizUrl);
+            //$rootScope.cancelDisabled = false;
+            //$scope.$apply();
+        }, 200);
     };
 });
