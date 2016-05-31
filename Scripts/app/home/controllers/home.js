@@ -57,13 +57,14 @@ angular
                     $scope.$emit('ShowPreloader');
                     $timeout(function () {
                         $scope.$emit('HidePreloader');
-                    }, 500);
+                    }, 1000);
                 });
             };
 
             /* redirect to another page */
             $scope.navigateTo = function (url, sideToggle, activityId) {
                 var quizIdentifiers = ["1005", "1006", "1007", "1009", "2007", "2016", "2023"];
+                var isQuiz = false;
 
                 /* Check if current version is the most recent */
                 if (!_compareSyncDeviceVersions()) {
@@ -110,6 +111,7 @@ angular
 
                         if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
                             $rootScope.cancelDisabled = true;
+                            isQuiz = true;
                             $rootScope.quizIdentifier = activityId.toString();
                             $rootScope.quizUrl = url;
                             $rootScope.openQuizModal();  // turns on robot
@@ -120,9 +122,13 @@ angular
                         $rootScope.sidebar = !$rootScope.sidebar;
                     }
 
-                    $timeout(function(){
+                    if (!isQuiz) {
                         $location.path(url);
-                    }, 100);
+                    }
+
+                    //$timeout(function(){
+                    //    $location.path(url);
+                    //}, 100);
                 }
             };
 
@@ -436,5 +442,11 @@ angular
 
     $scope.cancelModal = function () {
         $modalInstance.dismiss('cancel');
+
+        $timeout(function(){
+            $location.path($rootScope.quizUrl);
+            //$rootScope.cancelDisabled = false;
+            //$scope.$apply();
+        }, 200);
     };
 });

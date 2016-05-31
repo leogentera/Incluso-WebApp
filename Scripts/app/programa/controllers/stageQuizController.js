@@ -52,10 +52,6 @@ angular
             $scope.activityTitle = [];
             $rootScope.cancelDisabled = false;
 
-            $timeout(function(){
-                $rootScope.cancelDisabled = false;
-            }, 2000);
-
             var talents = [];
             var values = [];
             var habilities = [];

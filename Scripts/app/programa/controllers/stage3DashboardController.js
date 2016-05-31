@@ -318,6 +318,7 @@ angular
 
             $scope.startActivity = function (activity, index, parentIndex) {
                 var quizIdentifiers = ["3101", "3601"];
+                var isQuiz = false;
 
                 if (_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function (x) {
@@ -336,14 +337,15 @@ angular
 
                         if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
                             $rootScope.cancelDisabled = true;
+                            isQuiz = true;
                             $rootScope.quizIdentifier = activity.activity_identifier;
                             $rootScope.quizUrl = url;
                             $rootScope.openQuizModal();  // turns on Quiz Modal
                         }
 
-                        $timeout(function(){
+                        if (!isQuiz) {
                             $location.path(url);
-                        }, 100);
+                        }
 
                     } else {
                         $scope.openUpdateAppModal();
