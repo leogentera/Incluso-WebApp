@@ -86,8 +86,12 @@
         </section>
         <section class="filter-section form">
             <span class="icomoon icon-list"></span>
+            <label class="form-control form-control-lg theme-default"
+            ng-class="{'placeholder': selectedCity == ''}"
+            ng-show="mobilecheck()">{{selectedCity || 'Filtrar contenido por...'}}</label>
+
             <select name="filter" class="form-control form-control-lg theme-default ng-pristine ng-untouched ng-valid" ng-model="selectedCity"
-                    ng-options="obj as obj for obj in cities" ng-change="updateByCity()">
+                    ng-options="obj as obj for obj in cities" ng-change="updateByCity()" ng-show="!mobilecheck()">
                 <option value="" selected="true" disabled="disabled">Filtrar contenido por...</option>
             </select>
             <span class="icomoon icon-arrow"></span>
