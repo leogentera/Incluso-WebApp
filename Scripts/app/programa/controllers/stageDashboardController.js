@@ -10,7 +10,10 @@ angular
         '$http',
         '$modal',
         '$filter',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+        '$anchorScroll',
+        '$window',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter, $anchorScroll, $window) {
+
             var _loadedResources = false;
             var _pageLoaded = true;
             /* $routeParams.stageId */
@@ -228,6 +231,8 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
+                var quizIdentifiers = ["1001", "1005", "1006", "1007", "1009"];
+                var isQuiz = false;
 
                 if (_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function (x) {
@@ -242,7 +247,20 @@ angular
                         var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
                         logStartActivityAction(activityId, timeStamp);
-                        $location.path(url);
+
+                        if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
+                            $rootScope.cancelDisabled = true;
+                            isQuiz = true;
+                            $rootScope.quizIdentifier = activity.activity_identifier;
+                            $rootScope.quizUrl = url;
+                            $rootScope.openQuizModal();  // turns on Quiz Modal
+                        }
+
+                        if (!isQuiz) {
+                            $location.path(url);
+                        }
+
+
                     } else {
                         $scope.openUpdateAppModal();
                     }
@@ -309,7 +327,6 @@ angular
             }
 
             function showClosingChallengeRobot(challengeCompletedId) {
-
                 $scope.robotMessages = [
                     {
                         title: $scope.contentResources.robot_title_challenge_one,
