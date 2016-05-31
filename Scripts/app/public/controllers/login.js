@@ -244,7 +244,12 @@ angular
             }
 
             $scope.loginWithFacebook = function () {
-                $scope.validateConnection(loginWithFacebookConnectedCallback, offlineCallback);
+                $scope.$emit('ShowPreloader');
+
+                $timeout(function(){
+                    $scope.validateConnection(loginWithFacebookConnectedCallback, offlineCallback);
+                }, 500);
+
             };
 
             
@@ -264,7 +269,7 @@ angular
             }
             
             function loginWithFacebookConnectedCallback() {
-                $scope.$emit('ShowPreloader');
+                //scope.$emit('ShowPreloader');
                 //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
@@ -277,7 +282,7 @@ angular
             }
 
             function FacebookLoginSuccess(data) {
-                $scope.$emit('ShowPreloader');
+                //$scope.$emit('ShowPreloader');
                 var userFacebook = JSON.parse(data);
 
                 _loadDrupalResources();

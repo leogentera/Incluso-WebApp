@@ -94,6 +94,26 @@
                         </div>
                     </script>
 
+                    <!-- Quiz Start Modal -->
+                    <script type="text/ng-template" id="quizModal.html">
+                        <div class="modal-robot robot-lg closing-stage-modal user-help">
+                            <img src="assets/images/img-robot-lg.svg">
+
+                            <div class="modal-header">
+                                <a class="icon icon-close btn btn-circle" ng-click="cancelModal()">
+                                    <span class="icomoon icon-cross"></span>
+                                </a>
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center">{{title}}</h3>
+
+                                <p class="txt-renglon centered">
+                                    {{instructions}}
+                                </p>
+                            </div>
+                        </div>
+                    </script>
+
                     <div tabindex="-1" id="offlineModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
                         <div class="modal-dialog">
                             <div class="modal-content">

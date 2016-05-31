@@ -245,10 +245,11 @@
                         var proc = setInterval(function() {//Get & save each activity object.
                             if (data.length > 0) {
                                 var activity = data.shift();
+                                var activitiesToConvert = [75, 89, 96, 170, 211, 150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96];
+                                var activitiesWithUserId = [242, 243, 244, 245, 246, 249];
 
                                 if (activity && activity.data[0]) {
                                     var keyName = "activity/" + activity.coursemoduleid;
-                                    var activitiesToConvert = [75, 89, 96, 170, 211];
 
                                     if ( activitiesToConvert.indexOf(parseInt(activity.coursemoduleid)) > -1 ) {
                                         // ------    Change format of 'answers' key from Object to Array.
@@ -264,7 +265,11 @@
                                         }
                                     }
 
-                                    _setLocalStorageJsonItem(keyName, activity.data[0]);
+                                    if (activitiesWithUserId.indexOf(activity.coursemoduleid) > -1) {
+                                        keyName = keyName + "?userid=" + userId;
+                                    }
+
+                                    _setLocalStorageJsonItem(keyName, activity.data[0]);//Save converted Activity.
                                 }
 
                             } else {
