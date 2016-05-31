@@ -1305,13 +1305,26 @@ var logout = function ($scope, $location) {
    clearLocalStorage($location);
 };
 
+var getProfilePoints = function(currentUser){
+  
+  var userCourse = JSON.parse(localStorage.getItem('usercourse'));
 
-var fillProfilePoints = function(pointsToAdd, activityType){
+  moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(data){
+    console.log(data);
+    },function(data){
+      console.log(data);
+      },true);
+  
+};
+
+
+var fillProfilePoints = function(pointsToAdd, activityId){
+
     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
     var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
     
     //set profilePoints for the first time
-    if (!profilePoints) {
+    if (!profilePoints || profilePoints.length == 0) {
       profilePoints = profileCatalogs.profiles;
       for(var i= 0; i < profilePoints.length; i++){
           profilePoints[i].points = 0;
@@ -1319,14 +1332,34 @@ var fillProfilePoints = function(pointsToAdd, activityType){
     }
     
     for(var i = 0; i < pointsToAdd.length; i++){
-          var profileIdToAdd = pointsToAdd[i].profileId;
-          var points = pointsToAdd[i].points;
-          for(var j = 0; j < profilePoints.length; j++){
-              if (profilePoints[j].id == profileIdToAdd) {
-                profilePoints[j].points += points;
-              }
+      var profileIdToAdd = pointsToAdd[i].profileId;
+      var points = pointsToAdd[i].points;
+      for(var j = 0; j < profilePoints.length; j++){
+          if (profilePoints[j].id == profileIdToAdd) {
+            profilePoints[j].points += points;
           }
+      }
     }
+        
+    var scores = [];
+    for(var i=0; i < profilePoints.length; i++){
+      var item = profilePoints[i];
+      var profileObject = {
+          "profileid" : item.id,
+          "moduleid": activityId,
+          "score": item.points
+        };
+
+      scores.push(profileObject);
+      var objectProfile = { "scores": scores};
+    }
+
+    moodleFactory.Services.PostProfilePoints('',JSON.stringify(objectProfile),function(data){
+        console.log(data);
+      },function(data){
+          console.log(data);
+        });
+    
     localStorage.setItem("profilePoints",JSON.stringify(profilePoints));
 }
 

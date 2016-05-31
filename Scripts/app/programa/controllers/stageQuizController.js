@@ -1037,7 +1037,7 @@ angular
                     }
                 };
                 
-                fillProfilePoints(profilePoints);
+                fillProfilePoints(profilePoints, $scope.coursemoduleid);
             }
 
             function updateProfile() {

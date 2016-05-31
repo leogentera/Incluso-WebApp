@@ -45,6 +45,11 @@
                 
         };
         
+        var _getProfilePoints = function(userId, courseId, token, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("profilePoints", API_RESOURCE.format('feedbackprofile/' + userId), token, successCallback, errorCallback, forceRefresh);
+        };
+        
+        
         var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
         };
@@ -133,6 +138,10 @@
         var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
             _postAsyncData(key, data, API_RESOURCE.format('reportabuse'), successCallback, errorCallback);
         };
+        
+        var _postProfilePoints = function(key, data, successCallback, errorCallback){
+            _postAsyncData(key, data, API_RESOURCE.format('feedbackprofile'), successCallback, errorCallback);
+        };
 
         var _putUserNotificationRead = function (userId, data, successCallback, errorCallback, forceRefresh) {
             _putAsyncData(null, data, API_RESOURCE.format('notification/') + userId, successCallback, errorCallback);
@@ -171,7 +180,7 @@
         var _putForumPostLikeNoCache = function (postId, data, successCallback, errorCallback) {
             _putDataNoCache(data, API_RESOURCE.format('forum/' + postId), successCallback, errorCallback);
         };
-
+        
         var _getAsyncAlbum = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
@@ -193,7 +202,7 @@
         var _countLikesByUser = function(courseId, token, successCallback, errorCallback, forceRefresh){
             _getAsyncData("likesByUser", API_RESOURCE.format('postcounter/'+ courseId + '?likes=true'), token, successCallback, errorCallback, forceRefresh);
         };
-
+        
         var _getServerDate = function(successCallback){
             _httpFactory({
                     method: 'GET',
@@ -1365,6 +1374,31 @@
             }
         }
 
+        
+        function finalExecution(){
+            _httpFactory(queue.data).success(function (response) {
+                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                requestQueue.shift();
+                if(queue.data.method == 'GET') {
+                    if(queue.key) {
+                        _setLocalStorageJsonItem(queue.key, response);
+                    }
+                }    
+                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                if(requestQueue.length == 0 && _callback != null) {
+                    _callback();
+                    _callback = null;
+                }
+                doRequestforCellphone();
+            }).error(function (response) {
+                if(_isDeviceOnline){
+                   requestQueue[0].retryCount++;
+                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                   doRequestforCellphone();
+                }
+            });
+        };
+        
         function doRequestforCellphone(){            
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);        
 
@@ -1384,33 +1418,6 @@
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
 
-                                function finalExecution(){
-                                    _httpFactory(queue.data)
-                                    .success(function (response) {
-
-                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                                        requestQueue.shift();
-                                        if(queue.data.method == 'GET') {
-                                            if(queue.key) {
-                                                _setLocalStorageJsonItem(queue.key, response);
-                                            }
-                                        }
-
-
-                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                        if(requestQueue.length == 0 && _callback != null) {
-                                            _callback();
-                                            _callback = null;
-                                        }
-                                        doRequestforCellphone();
-                                    }).error(function (response) {
-                                        if(_isDeviceOnline){
-                                           requestQueue[0].retryCount++;
-                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                           doRequestforCellphone();
-                                        }
-                                    });
-                                }
                                 if (queue.data && queue.data.data && queue.data.data.hasfilecontent) {
                                     encodeImageWithUri(queue.data.data.imageuri, queue.data.data.datatype, function(b64){
                                         console.log('imageencodedsuccessfully')
@@ -1577,7 +1584,9 @@
             PostGeolocation: _postGeolocation,
             DesactivateUser: _desactivateUser,
             GetAsyncDiscussionDetail: _getAsyncDiscussionDetail,
-            GetProfileCatalogs: _getProfileCatalogs
+            GetProfileCatalogs: _getProfileCatalogs,
+            PostProfilePoints: _postProfilePoints,
+            GetProfilePoints: _getProfilePoints            
         };
     })();
 }).call(this);

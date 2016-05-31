@@ -324,7 +324,7 @@ angular
                               profilePoints.push(pointsByIntelligence);
                           };
 
-                          fillProfilePoints(profilePoints, "retoMultiple");
+                          fillProfilePoints(profilePoints, $scope.retosMultipleChallenge.coursemoduleid);
                           
                           _setLocalStorageJsonItem("Perfil/" + $scope.user.id, $scope.user);
                           _setLocalStorageJsonItem("CurrentUser", currentUser);

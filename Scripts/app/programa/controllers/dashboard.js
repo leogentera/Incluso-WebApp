@@ -421,12 +421,12 @@ angular
             function getUserLikes() {
                 moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
                     $scope.incLoadedItem(); //13
-                    //getProfileCatalogs();
 
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     if (currentUser) {
                         moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){
                             $scope.incLoadedItem(); //15
+                            getProfilePoints(currentUser);
                         },function(data){
                         },true);
                     }

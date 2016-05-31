@@ -52,8 +52,18 @@ angular
                 });
                 
                 var possibleMessages = _.where(perfilIncluso, {profileid: maxProfile.id});
-                var randomNum = _.random(possibleMessages.length);
+                var randomNum = _.random(0, possibleMessages.length - 1);
                 $scope.messageProfile = possibleMessages[randomNum];
+
+                if ($scope.messageProfile.description.indexOf("@nombre") > -1){
+                    var name = $scope.profile.firstname;
+                    $scope.messageProfile.description = $scope.messageProfile.description.replace("@nombre", name);
+                }
+                if ($scope.messageProfile.description.indexOf("@escudo") > -1){
+                    var shield = $scope.profile.shield;
+                    $scope.messageProfile.description =  $scope.messageProfile.description.replace("@escudo", shield);
+                }
+                                
             }
             
             function initialLoading() {
