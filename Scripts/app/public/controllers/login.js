@@ -297,6 +297,9 @@ angular
             }
 
             function loginWithFacebookConnectedCallback() {
+                $rootScope.loaderForLogin = true; //For Login Preloader
+                progressBar.set(0); //For Login Preloader
+                $scope.loaderRandom(); //For Login Preloader
                 $scope.$emit('ShowPreloader');
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
@@ -309,10 +312,8 @@ angular
             }
 
             function FacebookLoginSuccess(data) {
-                $rootScope.loaderForLogin = true; //For Login Preloader
-                progressBar.set(0); //For Login Preloader
-                $scope.loaderRandom(); //For Login Preloader
-                $scope.$emit('ShowPreloader');
+
+                //$scope.$emit('ShowPreloader');
                 var userFacebook = JSON.parse(data);
 
                 _loadDrupalResources();
