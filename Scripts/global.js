@@ -27,7 +27,6 @@ window.mobilecheck = function() {
 }
 
 var _comboboxCompat = function (){
-  debugger;
                 if(_getAPKVersion()<=15){
                     return false;
                 }

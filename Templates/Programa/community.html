@@ -20,12 +20,12 @@
     <section class="filter-section form">
         <span class="icomoon icon-list"></span>
         <label class="form-control form-control-lg dual-control theme-default"
-            ng-class="{'placeholder': filter == ''}"
-            ng-show="mobilecheck()">{{filter || 'Filtrar contenido por...'}}</label>
-        <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter" ng-change="updateFilter();" ng-show="!mobilecheck()"> 
-          <option value="" disabled>Filtrar contenido por...</option>
-          <option value="default">Ver Todo</option>
-          <option value="relevant">Relevancia</option> 
+            ng-class="{'placeholder': filter.name == ''}"
+            ng-click="selectClick(items, 'filter')"
+            ng-show="mobilecheck()">{{filter.name || 'Filtrar contenido por...'}}</label>
+        <select ng-options="filter as filter.name for filter in items track by filter.value" name="filter"
+                class="form-control form-control-lg theme-default" ng-model="filter" ng-change="updateFilter();" ng-show="!mobilecheck()"> 
+                <option value="" selected="true" disabled="disabled">Filtrar contenido por...</option>
         </select>
         <span class="icomoon icon-arrow"></span>
     </section>

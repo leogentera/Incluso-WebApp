@@ -17,6 +17,22 @@ hallOfFameModule
             $scope.$emit('ShowPreloader');
             var citiesCatalogKey = "citiescatalog";
             $scope.validateConnection(initController, offlineCallback);
+            $scope.mobilecheck = _comboboxCompat;
+            $scope.selectClick = function (items, field) {
+                var selectItems = items.slice();
+                selectItems.unshift(field);
+                if (window.mobilecheck()) {
+                    cordova.exec(function (data) {
+                            $("select[name='"+field+"'] option").eq(data.which).prop('selected', true);
+                            $timeout( function(){
+                                $("select[name='"+field+"'] option").change();
+                            }, 10);
+                        }, function(){}, "CallToAndroid", "showCombobox", selectItems);
+                }
+                
+                
+                
+            };
 
             function offlineCallback() {
                 $timeout(function () {
@@ -112,6 +128,7 @@ hallOfFameModule
                 function getCitiesCatalogCallback() {
                     $scope.cities = moodleFactory.Services.GetCacheJson(citiesCatalogKey);
                     $scope.cities.unshift("Ver Todo");
+                   
                 }
 
                 function getTop5Callback() {
