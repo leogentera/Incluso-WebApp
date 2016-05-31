@@ -2203,32 +2203,6 @@ angular
                 // ######################  Methods to add / delete data  ############################
 
                 // **************** Section for MIS GUSTOS & MIS CUALIDADES**************************
-                function canIErase(arr, index, quizStatus) {
-                    if (quizStatus === 1) {//Quiz is Finished.
-
-                        if (arr[index] == "") {//...You can delete this element...
-                            return true;
-                        } else {
-                            //Check if there are at lest 2 non null-string elements...
-                            var count = 0, i;
-                            for (i = 0; i < arr.length; i++) {
-                                if (arr[i] != "") {
-                                    count++;
-                                }
-                            }
-
-                            if (count > 1) {//...You can delete the item...
-                                return true;
-                            } else {//...You can NOT delete the item...
-                                return false;
-                            }
-                        }
-
-                    } else {
-                        return true;
-                    }
-                }
-
                 function syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, coursemoduleId) {
                     var i, j;
                     var codedAnswers = [];
@@ -2297,11 +2271,33 @@ angular
                     $scope.activityObject = activityObject;
                 }
 
-                // **************** Section for MIS GUSTOS **************************
-                $scope.addFavoriteSports = function () {
-                    $scope.model.favoriteSports.push("");
-                };
-$scope.lookForNinguno = function(param) {
+                function canIErase(arr, index, quizStatus) {
+                    if (quizStatus === 1) {//Quiz is Finished.
+
+                        if (arr[index] == "") {//...You can delete this element...
+                            return true;
+                        } else {
+                            //Check if there are at lest 2 non null-string elements...
+                            var count = 0, i;
+                            for (i = 0; i < arr.length; i++) {
+                                if (arr[i] != "") {
+                                    count++;
+                                }
+                            }
+
+                            if (count > 1) {//...You can delete the item...
+                                return true;
+                            } else {//...You can NOT delete the item...
+                                return false;
+                            }
+                        }
+
+                    } else {
+                        return true;
+                    }
+                }
+
+                $scope.lookForNinguno = function(param) {
                     if ($scope.model[param].indexOf("Ninguno") > -1) {
 
                         $scope.model[param] = ["Ninguno"]; //Clean array $scope.model.param...

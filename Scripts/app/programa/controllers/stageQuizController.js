@@ -349,11 +349,11 @@ angular
                 $scope.activityObject.questions[index].userAnswer = userAnswerString;
 
                 // The checkbox for 'Other' is clicked.
-                if (checkLabel === "Otro" && $scope.answers[index][checkboxIndex]) {//The "Otro" checkbox has been checked.
+                if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {//The "Otro" checkbox has been checked.
                     addHeight($("multichoice" + index)); //Add room for the TextArea
                 }
 
-                if (checkLabel === "Otro" && !$scope.answers[index][checkboxIndex]) {//The "Otro" checkbox has been unchecked.
+                if (checkLabel === "Otro" && !$scope.answers[index][otherIndex]) {//The "Otro" checkbox has been unchecked.
 
                     $scope.activityObject.questions[index].other = "";  //First, do "other=''" for the respective questions object.
                     var indexOfOtro = $scope.activityObject.questions[index].userAnswer.indexOf("; Otro"); //Second, remove "Otro" value from the "userAnswer" for the respective questions object.
@@ -363,7 +363,7 @@ angular
                 }
 
                 //This section is only for "Mis Habilidades" and "Mis Gustos"
-                if (checkLabel === "Ninguno" && $scope.answers[index][checkboxIndex]) {//The "Ninguno" checkbox has been checked.
+                if (checkLabel === "Ninguno" && $scope.answers[index][otherIndex]) {//The "Ninguno" checkbox has been checked.
 
                     $scope.profileDisabled[multichoiceIndex] = true; //Disable all checkboxes
 
@@ -385,7 +385,7 @@ angular
                     $scope.OtroAnswers[multichoiceIndex].answers[0] = ""; //Third, delete user answer from the OtroAnswers object.
                 }
 
-                if (checkLabel === "Ninguno" && !$scope.answers[index][checkboxIndex]) {//The "Ninguno" checkbox has been checked.
+                if (checkLabel === "Ninguno" && !$scope.answers[index][otherIndex]) {//The "Ninguno" checkbox has been checked.
                     $scope.profileDisabled[multichoiceIndex] = false; //Remove disabling
                 }
 

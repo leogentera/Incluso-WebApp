@@ -165,10 +165,6 @@ angular
                     if (!isQuiz) {
                         $location.path(url);
                     }
-
-                    //$timeout(function(){
-                    //    $location.path(url);
-                    //}, 100);
                 }
             };
 
@@ -456,8 +452,6 @@ angular
 
         $timeout(function(){
             $location.path($rootScope.quizUrl);
-            //$rootScope.cancelDisabled = false;
-            //$scope.$apply();
         }, 200);
     };
 });
