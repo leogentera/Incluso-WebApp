@@ -88,6 +88,7 @@
             <span class="icomoon icon-list"></span>
             <label class="form-control form-control-lg theme-default"
             ng-class="{'placeholder': selectedCity == ''}"
+			ng-click="selectClick(cities, 'filter')"
             ng-show="mobilecheck()">{{selectedCity || 'Filtrar contenido por...'}}</label>
 
             <select name="filter" class="form-control form-control-lg theme-default ng-pristine ng-untouched ng-valid" ng-model="selectedCity"

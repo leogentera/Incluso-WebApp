@@ -25,6 +25,56 @@ angular
             function offlineCallback() {
                 $timeout(function () { $location.path("/Offline"); }, 1000);
             }
+            $scope.mobilecheck = _comboboxCompat;
+            
+            $scope.selectClick = function (items, field) {
+                 var selectItems = [];
+                _.each(items, function(item){
+                    selectItems.push(item.name);
+                });
+               
+                selectItems.unshift(field);
+                if (window.mobilecheck()) {
+                    cordova.exec(function (data) {
+                            $("select[name='"+field+"'] option").eq(data.which).prop('selected', true);
+                            $timeout( function(){
+                                $("select[name='"+field+"'] option").change();
+                            }, 10);
+                            
+                        }, function(){}, "CallToAndroid", "showCombobox", selectItems);
+                }
+                
+               
+                
+            };
+            
+            $scope.changeitem= function (field){
+                var index = $("select[name='"+field+"']").prop('selectedIndex')-1;
+                $scope.filtertext=$scope.items[index].name;
+            }
+            
+            $scope.items = [{
+                            name: 'Ver Todo',
+                            value: ''
+                          },{
+                            name: 'Obligatorio',
+                            value: 'Obligatorio'
+                          },{
+                            name: 'Fotografías',
+                            value: 'resource'
+                          },{
+                            name: 'Videos',
+                            value: 'video'
+                          },{
+                            name: 'Textos',
+                            value: 'page'
+                          },{
+                            name: 'Frases',
+                            value: 'label'
+                          },{
+                            name: 'Enlaces',
+                            value: 'url'
+                          }];
 
             function initController() {
 
