@@ -45,7 +45,7 @@ angular
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
 
             var activity_identifier = "1000";
-            getContentResources(activity_identifier);
+            getContentResources(activity_identifier);  /* ENTRY POINT */
 
             setTimeout(function () {
                 var hits = 1;
@@ -219,6 +219,7 @@ angular
 
                 //Update progress
                 $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+                var fromLastQuiz = localStorage.getItem("fromLastQuiz/" + userid);
                 var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
                 $scope.model = progress.course;
                 _setLocalStorageJsonItem("usercourse", $scope.model);
@@ -226,6 +227,11 @@ angular
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
                 _progressNotification();
+
+                if ($scope.stageProgress === 100 && fromLastQuiz) {
+                    localStorage.removeItem("fromLastQuiz/" + userid);
+                    $location.path("/reconocimiento");
+                }
             }
 
             function getContentResources(activityIdentifierId) {
@@ -360,6 +366,7 @@ angular
 }).controller('closingStageThreeController', function ($scope, $modalInstance, $location) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
+        $scope.$emit('scrollTop');
     };
 
     drupalFactory.Services.GetContent("1000", function (data, key) {

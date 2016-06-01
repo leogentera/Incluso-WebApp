@@ -951,6 +951,10 @@ angular
                         updateUserStars($scope.parentActivity.activity_identifier);
                     }
 
+                    if ($scope.activity_identifier === 3601) {
+                        localStorage.setItem("fromLastQuiz/" + $scope.currentUser.userId, "true");
+                    }
+
                     $location.path(pathToRedirect());
                 }
             }
@@ -1244,13 +1248,13 @@ angular
                 angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147);
             }
 
-//This function is activated from Template, with ESSAY type questions
+            //This function is activated from Template, with ESSAY type questions
             $scope.addAbility = function (elem, index) {
                 addHeightEssay(elem);
                 $scope.answers[index].push("");
             };
 
-//This function is activated from Template, with ESSAY type questions
+            //This function is activated from Template, with ESSAY type questions
             $scope.deleteAbility = function (elem, index, innerIndex) {
                 removeHeightEssay(elem);
                 $scope.answers[index].splice(innerIndex, 1);
