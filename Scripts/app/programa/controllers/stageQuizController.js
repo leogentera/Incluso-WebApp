@@ -347,6 +347,7 @@ angular
                 }            
 
                 $scope.activityObject.questions[index].userAnswer = userAnswerString;
+                $scope.activityObject.questions[index].profileid = profileId;
 
                 // The checkbox for 'Other' is clicked.
                 if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {//The "Otro" checkbox has been checked.

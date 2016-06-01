@@ -1359,8 +1359,9 @@ var fillProfilePoints = function(pointsToAdd, activityId){
         };
 
       scores.push(profileObject);
-      var objectProfile = { "scores": scores};
     }
+    
+    var objectProfile = { "scores": scores};
 
     moodleFactory.Services.PostProfilePoints('',JSON.stringify(objectProfile),function(data){
         console.log(data);

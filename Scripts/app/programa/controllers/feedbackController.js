@@ -66,6 +66,12 @@ angular
                                 
             }
             
+            $scope.finishActivity = function(){
+                
+                
+                
+            };
+            
             function initialLoading() {
                 // $scope.showRobot();    
                 $scope.$emit('HidePreloader');

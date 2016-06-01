@@ -768,20 +768,6 @@ angular
                     $scope.navigateTo("/GalleryDetail");
                 };
 
-                function getDataAsync() {
-                    moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback, true);
-                    $scope.$emit('HidePreloader');
-                }
-
-                function getDataAsyncCallback() {
-                    $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                    moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function () {
-                        $scope.course = JSON.parse(localStorage.getItem("course"));
-                        $scope.currentStage = JSON.parse(localStorage.getItem('currentStage')); //getCurrentStage();
-                        _setLocalStorageItem("currentStage", $scope.currentStage);
-
-                    }, errorCallback);
-                }
 
                 function errorCallback(data) {
                     $scope.$emit('scrollTop');
