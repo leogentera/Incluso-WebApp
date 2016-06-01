@@ -21,6 +21,33 @@ angular
                 $timeout(function() { $location.path("/Offline"); }, 1000);
             }
             
+            $scope.mobilecheck = _comboboxCompat;
+            $scope.selectClick = function (items, field) {
+                 var selectItems = [];
+                _.each(items, function(item){
+                    selectItems.push(item.name);
+                });
+               
+                selectItems.unshift(field);
+                if (window.mobilecheck()) {
+                    cordova.exec(function (data) {
+                            $("select[name='"+field+"'] option").eq(data.which).prop('selected', true);
+                            $timeout( function(){
+                                $("select[name='"+field+"'] option").change();
+                            }, 10);
+                        }, function(){}, "CallToAndroid", "showCombobox", selectItems);
+                }
+                
+            };
+            $scope.items = [{
+                            name: 'Ver Todo',
+                            value: 'default'
+                          },{
+                            name: 'Relevancia',
+                            value: 'relevant'
+                          }];
+            $scope.filter = "";
+            
             function initController() {
                 /* global variables */
                 _httpFactory = $http;
@@ -52,7 +79,6 @@ angular
                 $scope.postLinkValue = null;
                 $scope.postVideoValue = null;
                 $scope.postAttachmentValue = null;
-                $scope.filter = "";
                 
                 $scope.urlify = function (text) {
                     var urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -154,9 +180,9 @@ angular
                 
                 $scope.updateFilter = function() {
                     
-                    if (_currentFilter != $scope.filter) {
+                    if (_currentFilter != $scope.filter.value) {
                         
-                        _currentFilter = $scope.filter;
+                        _currentFilter = $scope.filter.value;
                         _postPager.from = 0;
                         _postPager.to = 0;
                         
