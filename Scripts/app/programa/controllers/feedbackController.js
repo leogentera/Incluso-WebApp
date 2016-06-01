@@ -22,21 +22,24 @@ angular
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             $scope.user = currentUser.alias;
             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.userId));
-            
+            $scope.activity = {};
             
             var currentStage = JSON.parse(localStorage.getItem("currentStage"));
             switch (currentStage) {
                 case 1:
                     $scope.location = '/ZonaDeVuelo/Dashboard/1/5';
                     $rootScope.showStage1Footer = true;
+                    $scope.activity = getActivityByActivity_identifier(1002);
                     break;
                 case 2:
                     $scope.location = 'ZonaDeNavegacion/Dashboard/2/7';
                     $rootScope.showStage2Footer = true;
+                    $scope.activity = getActivityByActivity_identifier(2022);
                     break;
                 case 3:
                     $scope.location = "ZonaDeAterrizaje/Dashboard/3/6";
                     $rootScope.showStage3Footer = true;
+                    $scope.activity = getActivityByActivity_identifier(3501);
                     break;
             }
             
@@ -63,13 +66,16 @@ angular
                     var shield = $scope.profile.shield;
                     $scope.messageProfile.description =  $scope.messageProfile.description.replace("@escudo", shield);
                 }
-                                
+
             }
-            
-            $scope.finishActivity = function(){
-                
-                
-                
+
+            var finishActivity = function(){
+                debugger;
+                _endActivity($scope.activity,function(data){
+                    console.log(data)
+                    console.log("finish activity ");
+                    });
+
             };
             
             function initialLoading() {
@@ -79,6 +85,7 @@ angular
             }
             
             $scope.ToDashboard = function(){
+                finishActivity();
                 $location.path($scope.location);
             };
             
