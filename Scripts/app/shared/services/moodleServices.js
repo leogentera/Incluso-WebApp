@@ -976,7 +976,7 @@
                         });
 
                         var childrenActivities = _.filter(activities, function (a) {
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat') || (a.activity_type == 'assign' && a.activityname == 'Retroalimentación'))
                         });
 
                         for (k = 0; k < childrenActivities.length; k++) {

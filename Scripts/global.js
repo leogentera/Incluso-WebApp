@@ -382,7 +382,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
 
 /* ends an activity */
 var _endActivity = function (activityModel, callback, pathCh) {
-
+    debugger;
     //trigger activity type 2 is sent when the activity ends.
     var triggerActivity = 2;
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));

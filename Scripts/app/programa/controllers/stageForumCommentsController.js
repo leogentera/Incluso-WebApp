@@ -710,14 +710,15 @@ angular
                 };
 
                 $scope.showMore = function () {
-
+                        alert("console.log");
                     $scope.modelState.errorMessages = [];
 
                     $scope.validateConnection(function () {
 
                         showMoreCounter++;
                         $scope.$emit('ShowPreloader');
-                        moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, "default", getPostsDataCallback, null, true);
+                        moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, "default",
+                                                                       getPostsDataCallback, function(){}, true);
 
                     }, offlineCallback);
 
