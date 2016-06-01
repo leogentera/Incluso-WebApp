@@ -26,7 +26,6 @@ window.mobilecheck = function() {
 }
 
 var _comboboxCompat = function (){
-  debugger;
                 if(_getAPKVersion()<=15){
                     return false;
                 }
@@ -1722,7 +1721,7 @@ function _updateDeviceVersionCache () {
             cordova.exec(function(data) {
                 deviceVersion.localVersion = data.currentVersion;
                 deviceVersion.remoteVersion = data.latestVersion;
-                deviceVersion.apkVersion = data.apkVersion;
+                deviceVersion.apkVersion = data.apkVersion || 15;
                 localStorage.setItem("device-version", JSON.stringify(deviceVersion));
                 FLAG_DEVICE_VERSION_RUNNING = false;
             }, function() { console.log("fail"); FLAG_DEVICE_VERSION_RUNNING = false }, "CallToAndroid", "getversion", []);
@@ -1744,6 +1743,7 @@ function _getAPKVersion () {
         deviceVersion = JSON.parse(localStorage.getItem("device-version"));
         deviceVersion.lastTimeUpdated = currentDate.getTime();
     }
+    deviceVersion.apkVersion = deviceVersion.apkVersion || 15;
     return deviceVersion.apkVersion;
 }
 

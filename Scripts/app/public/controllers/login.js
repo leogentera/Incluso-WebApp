@@ -281,7 +281,17 @@ angular
             }
 
             $scope.loginWithFacebook = function () {
-                $scope.validateConnection(loginWithFacebookConnectedCallback, offlineCallback);
+                $rootScope.loaderForLogin = true; //For Login Preloader
+                progressBar.set(0); //For Login Preloader
+                $scope.loaderRandom(); //For Login Preloader
+
+                $scope.$emit('ShowPreloader');
+
+
+                $timeout(function(){
+                    $scope.validateConnection(loginWithFacebookConnectedCallback, offlineCallback);
+                }, 500);
+
             };
 
 
@@ -297,7 +307,8 @@ angular
             }
 
             function loginWithFacebookConnectedCallback() {
-                $scope.$emit('ShowPreloader');
+                //scope.$emit('ShowPreloader');
+                //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
                 $scope.userCredentialsModel.modelState.isValid = true;
@@ -309,10 +320,7 @@ angular
             }
 
             function FacebookLoginSuccess(data) {
-                $rootScope.loaderForLogin = true; //For Login Preloader
-                progressBar.set(0); //For Login Preloader
-                $scope.loaderRandom(); //For Login Preloader
-                $scope.$emit('ShowPreloader');
+                //$scope.$emit('ShowPreloader');
                 var userFacebook = JSON.parse(data);
 
                 _loadDrupalResources();
