@@ -139,7 +139,6 @@ angular
             }
 
             function successGame(data){
-              debugger;
                 $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("tuEligesQuestionMap"));
             	var logEntry = {
             		"userid":$scope.user.id,
@@ -186,7 +185,7 @@ angular
                             activitiesCompleted++;
                         }
                     }
-                    debugger;
+
                     if ($scope.IsComplete && activitiesCompleted == parentActivity.activities.length - 1) {
                         parentActivity.status = 1;
                         

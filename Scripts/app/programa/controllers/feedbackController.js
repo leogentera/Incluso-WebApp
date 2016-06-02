@@ -54,7 +54,7 @@ angular
                     return profile.points;
                 });
                 
-                var possibleMessages = _.where(perfilIncluso, {profileid: maxProfile.id});
+                var possibleMessages = _.where(perfilIncluso, {profileid: maxProfile.profileid});
                 var randomNum = _.random(0, possibleMessages.length - 1);
                 $scope.messageProfile = possibleMessages[randomNum];
 
@@ -71,10 +71,12 @@ angular
 
             var finishActivity = function(){
                 debugger;
-                _endActivity($scope.activity,function(data){
-                    console.log(data)
-                    console.log("finish activity ");
-                    });
+                if ($scope.activity.status == 0) {
+                    _endActivity($scope.activity,function(data){
+                            updateActivityStatus($scope.activity.activity_identifier);
+                        });
+                }
+                
 
             };
             
