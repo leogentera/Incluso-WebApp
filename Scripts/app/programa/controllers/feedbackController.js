@@ -54,7 +54,11 @@ angular
                     return profile.points;
                 });
                 
-                var possibleMessages = _.where(perfilIncluso, {profileid: maxProfile.profileid});
+                var assertiveness = $scope.profile.assertiveness == true ? "1" : "0";
+                var financialAbility = $scope.profile.financialAbility == true ? "1" : "0";
+                
+                
+                var possibleMessages = _.where(perfilIncluso, {profileid: maxProfile.profileid, assertive : assertiveness, financialability: financialAbility });
                 var randomNum = _.random(0, possibleMessages.length - 1);
                 $scope.messageProfile = possibleMessages[randomNum];
 
