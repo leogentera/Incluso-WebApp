@@ -379,7 +379,13 @@ angular
     }, false);
 
     $scope.navigateToReconocimiento = function () {
+
         $modalInstance.dismiss('cancel');
+
+        if ($location.path() != "/reconocimiento") {
+            $location.path('/ProgramaDashboard');
+        }
     };
+
     _setLocalStorageItem('robotEndStageThreeShown', true);
 });
