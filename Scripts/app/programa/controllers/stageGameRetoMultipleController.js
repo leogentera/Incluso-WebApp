@@ -315,7 +315,7 @@ angular
                           });
 
                           var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
-                          debugger;
+                          
                           var profilePoints = [];
                           for(var i= 0; i< $scope.user["strengths"].length; i++){                              
                               var intelligenceId = _.findWhere(profileCatalogs.intelligences, { name : $scope.user["strengths"][i] }).id;

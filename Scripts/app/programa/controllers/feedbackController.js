@@ -70,7 +70,6 @@ angular
             }
 
             var finishActivity = function(){
-                debugger;
                 if ($scope.activity.status == 0) {
                     _endActivity($scope.activity,function(data){
                             updateActivityStatus($scope.activity.activity_identifier);
