@@ -48,17 +48,32 @@ angular
             
             
             function getProfile() {
-                
-                var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
-                var maxProfile = _.max(profilePoints, function(profile){
-                    return profile.points;
-                });
+                var profileId = 0;
                 
                 var assertiveness = $scope.profile.assertiveness == true ? "1" : "0";
                 var financialAbility = $scope.profile.financialAbility == true ? "1" : "0";
                 
+                if (!$scope.profile.inclusoprofile) {
+                    var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
+                    
+                    var maxProfile = _.max(profilePoints, function(profile){
+                        return profile.points;
+                    });
+
+                    profileId = maxProfile.profileid;
+                    
+                    $scope.profile.inclusoprofile =  _.findWhere(profileCatalogs.profiles, { id: profileId}).profilename;
+                    
+                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (data) {},function (data) {});
+
+
+                }else{
+                    debugger;
+                    profileId = _.findWhere(profileCatalogs.profiles, { profilename: $scope.profile.inclusoprofile}).id;
+                }
                 
-                var possibleMessages = _.where(perfilIncluso, {profileid: maxProfile.profileid, assertive : assertiveness, financialability: financialAbility });
+                
+                var possibleMessages = _.where(perfilIncluso, {profileid: profileId, assertive : assertiveness, financialability: financialAbility });
                 var randomNum = _.random(0, possibleMessages.length - 1);
                 $scope.messageProfile = possibleMessages[randomNum];
 
@@ -66,6 +81,7 @@ angular
                     var name = $scope.profile.firstname;
                     $scope.messageProfile.description = $scope.messageProfile.description.replace("@nombre", name);
                 }
+                
                 if ($scope.messageProfile.description.indexOf("@escudo") > -1){
                     var shield = $scope.profile.shield;
                     $scope.messageProfile.description =  $scope.messageProfile.description.replace("@escudo", shield);
