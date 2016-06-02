@@ -605,56 +605,6 @@ angular
                 //This is to avoid killing the preloader up starting.
                 $timeout(function () {
 
-                    if ($scope.childActivity) {
-                        $scope.parentActivity.status = 1;
-                        $scope.childActivity.status = 1;
-                        $scope.AnswersResult.activityidnumber = $scope.childActivity.coursemoduleid;
-                    } else {
-                        $scope.parentActivity.status = 1;
-                        $scope.AnswersResult.activityidnumber = $scope.parentActivity.coursemoduleid;
-                    }
-
-                    $scope.isDisabled = true;
-                    $scope.AnswersResult.userid = $scope.currentUser.userId;
-                    $scope.AnswersResult.like_status = $scope.like_status;
-                    $scope.AnswersResult.updatetype = 1;
-                    $scope.showWarning = false;
-
-                    var updatedActivityOnUsercourse;
-                    if ($scope.childActivity) {  //Update status of Quiz ("child") activity
-                        updatedActivityOnUsercourse = updateSubActivityStatus($scope.childActivity.coursemoduleid);  //actualizar arbol
-                        _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
-                    }
-
-                    updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
-
-                    //Update local storage and activities status array
-                    _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
-
-                    if ($scope.childActivity) {
-                        updateActivityStatusDictionary($scope.childActivity.activity_identifier);
-                        updateActivityStatusDictionary($scope.parentActivity.activity_identifier);
-                    } else {
-                        updateActivityStatusDictionary($scope.parentActivity.activity_identifier);
-                    }
-
-                    $scope.AnswersResult.answers = $scope.answers;
-
-                    var activityModel = {
-                        "usercourse": updatedActivityOnUsercourse,
-                        "answersResult": $scope.AnswersResult,
-                        "userId": $scope.currentUser.userId,
-                        "startingTime": $scope.startingTime,
-                        "endingTime": new Date(),
-                        "token": $scope.currentUser.token,
-                        "others": $scope.OtroAnswers
-                    };
-
-                    activityModel.answersResult.dateStart = activityModel.startingTime;
-                    activityModel.answersResult.dateEnd = activityModel.endingTime;
-                    activityModel.answersResult.others = $scope.OtroAnswers;
-                    $scope.activityObject.status = 1;
-
                     //Section for Updating the "userAnswer" key on each question object for the Quiz.
                     var qIndex;
 
@@ -729,7 +679,63 @@ angular
                     }
                     
                     //get profile points from the quiestion's answers.
-                    calculateProfilePoints($scope.activityObject.questions);
+                    if ($scope.childActivity && $scope.childActivity.status == 0) {
+                        calculateProfilePoints($scope.activityObject.questions);
+                    }
+                    if ($scope.parentActivity && $scope.parentActivity.status == 0) {
+                        calculateProfilePoints($scope.activityObject.questions);
+                    }
+                    
+                    
+                    if ($scope.childActivity) {
+                        $scope.parentActivity.status = 1;
+                        $scope.childActivity.status = 1;
+                        $scope.AnswersResult.activityidnumber = $scope.childActivity.coursemoduleid;
+                    } else {
+                        $scope.parentActivity.status = 1;
+                        $scope.AnswersResult.activityidnumber = $scope.parentActivity.coursemoduleid;
+                    }
+
+                    $scope.isDisabled = true;
+                    $scope.AnswersResult.userid = $scope.currentUser.userId;
+                    $scope.AnswersResult.like_status = $scope.like_status;
+                    $scope.AnswersResult.updatetype = 1;
+                    $scope.showWarning = false;
+                    
+                    var updatedActivityOnUsercourse;
+                    if ($scope.childActivity) {  //Update status of Quiz ("child") activity
+                        updatedActivityOnUsercourse = updateSubActivityStatus($scope.childActivity.coursemoduleid);  //actualizar arbol
+                        _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
+                    }
+
+                    updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
+
+                    //Update local storage and activities status array
+                    _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
+
+                    if ($scope.childActivity) {
+                        updateActivityStatusDictionary($scope.childActivity.activity_identifier);
+                        updateActivityStatusDictionary($scope.parentActivity.activity_identifier);
+                    } else {
+                        updateActivityStatusDictionary($scope.parentActivity.activity_identifier);
+                    }
+
+                    $scope.AnswersResult.answers = $scope.answers;
+
+                    var activityModel = {
+                        "usercourse": updatedActivityOnUsercourse,
+                        "answersResult": $scope.AnswersResult,
+                        "userId": $scope.currentUser.userId,
+                        "startingTime": $scope.startingTime,
+                        "endingTime": new Date(),
+                        "token": $scope.currentUser.token,
+                        "others": $scope.OtroAnswers
+                    };
+
+                    activityModel.answersResult.dateStart = activityModel.startingTime;
+                    activityModel.answersResult.dateEnd = activityModel.endingTime;
+                    activityModel.answersResult.others = $scope.OtroAnswers;
+                    $scope.activityObject.status = 1;                                                    
 
                     // Write Updated objects to Local Storage for later recovery.
                     if ($scope.childActivity) {

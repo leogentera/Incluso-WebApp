@@ -454,7 +454,7 @@ angular
         });
     
 
-        $routeProvider.when('/ZonaDeVuelo/Retroalimentacion', {
+        $routeProvider.when('/ZonaDeVuelo/Retroalimentacion/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });
@@ -577,7 +577,7 @@ angular
             controller: 'stageForumCommentsController'
         });
         
-        $routeProvider.when('/ZonaDeNavegacion/Retroalimentacion', {
+        $routeProvider.when('/ZonaDeNavegacion/Retroalimentacion/:activityId', {
             templateUrl: 'Templates/ZonaDeNavegacion/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });
@@ -681,7 +681,7 @@ angular
             controller: 'stageForumCommentsController'
         });
         
-        $routeProvider.when('/ZonaDeAterrizaje/Retroalimentacion', {
+        $routeProvider.when('/ZonaDeAterrizaje/Retroalimentacion/:activityId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });

@@ -22,24 +22,20 @@ angular
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             $scope.user = currentUser.alias;
             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.userId));
-            $scope.activity = {};
+            $scope.activity = getActivityByActivity_identifier($routeParams.activityId);
             
-            var currentStage = JSON.parse(localStorage.getItem("currentStage"));
-            switch (currentStage) {
-                case 1:
+            switch ($routeParams.activityId) {
+                case "1002":
                     $scope.location = '/ZonaDeVuelo/Dashboard/1/5';
                     $rootScope.showStage1Footer = true;
-                    $scope.activity = getActivityByActivity_identifier(1002);
                     break;
-                case 2:
+                case "2022":
                     $scope.location = 'ZonaDeNavegacion/Dashboard/2/7';
                     $rootScope.showStage2Footer = true;
-                    $scope.activity = getActivityByActivity_identifier(2022);
                     break;
-                case 3:
+                case "3501":
                     $scope.location = "ZonaDeAterrizaje/Dashboard/3/6";
-                    $rootScope.showStage3Footer = true;
-                    $scope.activity = getActivityByActivity_identifier(3501);
+                    $rootScope.showStage3Footer = true;                    
                     break;
             }
             
