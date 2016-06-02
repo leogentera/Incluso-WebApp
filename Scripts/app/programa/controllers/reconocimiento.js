@@ -13,6 +13,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
             var _loadedResources = false;
             var _pageLoaded = true;
+            $scope.$emit('scrollTop');
 
             drupalFactory.Services.GetContent("Recognition", function (data, key) {
                 _loadedResources = true;

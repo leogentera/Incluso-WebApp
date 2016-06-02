@@ -366,7 +366,6 @@ angular
 }).controller('closingStageThreeController', function ($scope, $modalInstance, $location) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
-        $scope.$emit('scrollTop');
     };
 
     drupalFactory.Services.GetContent("1000", function (data, key) {
@@ -379,9 +378,8 @@ angular
 
     }, false);
 
-    $scope.navigateToDashboard = function () {
+    $scope.navigateToReconocimiento = function () {
         $modalInstance.dismiss('cancel');
-        $location.path('/ProgramaDashboard');
     };
     _setLocalStorageItem('robotEndStageThreeShown', true);
 });
