@@ -246,7 +246,7 @@
                         url: url,
                         headers: { 'Content-Type': 'application/json' , 'Authorization': token}
                     }).success(function (data, status, headers, config) {
-                        var answersProfile = [];
+                        
                         var proc = setInterval(function() {//Get & save each activity object.
                             if (data.length > 0) {
                                 var activity = data.shift();
@@ -269,25 +269,7 @@
                                             activity.data[0].questions[i].answers = newAnswer;
                                         }
                                     }
-                                    
-                                    for (var i = 0 ; i < activity.data[0].questions.length; i++) {
-                                        var question = activity.data[0].questions[i];
-                                        if (question.answers) {
-                                            Object.keys(question.answers).forEach(function(key){
-                                                
-                                                if (question.answers[key].profileid != 1) {
-                                                    var answerProfileObject = {
-                                                        "answer" : question.answers[key].id,
-                                                        "profileid": question.answers[key].profileid
-                                                    };
-    
-                                                    answersProfile.push(answerProfileObject);
-                                                }
-                                            });
-                                        }
-                                    }
-                                    //_setLocalStorageJsonItem("answersProfile",answersProfile);
-                                    
+
                                     _setLocalStorageJsonItem(keyName, activity.data[0]);
                                 }
 

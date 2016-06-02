@@ -782,7 +782,7 @@ angular
 
             function calculateProfilePoints(questions){
                 var profilePoints = [];
-                debugger;
+
                 for(var i = 0; i < questions.length; i++){
                     if (questions[i].profileid) {
                         var profileId = questions[i].profileid;

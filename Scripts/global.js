@@ -1317,7 +1317,13 @@ var getProfilePoints = function(currentUser){
   var userCourse = JSON.parse(localStorage.getItem('usercourse'));
 
   moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(data){
-    console.log(data);
+    
+    var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
+    for (var i=0; i < profilePoints.length; i++) {
+        profilePoints[i].points = profilePoints[i].score;
+    }
+    localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
+    
     },function(data){
       console.log(data);
       },true);
