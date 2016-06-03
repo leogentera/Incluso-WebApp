@@ -306,7 +306,7 @@ angular
                             
                             //Came back from redirecting...                        
                             var course = moodleFactory.Services.GetCacheJson("course");
-                            moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
+                        moodleFactory.Services.GetAsyncUserPostCounter(userFacebook.token, course.courseid, function () {
                             }, function () {
                             }, false);
                         
