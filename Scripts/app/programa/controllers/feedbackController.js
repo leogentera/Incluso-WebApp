@@ -16,14 +16,14 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-
+            $scope.currentPage = 1;
             $scope.location = "";
             $scope.messageProfile = "";
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             $scope.user = currentUser.alias;
             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.userId));
             $scope.activity = getActivityByActivity_identifier($routeParams.activityId);
-            
+            $scope.closingContentname = "RetroalimentacionClosing";
             switch ($routeParams.activityId) {
                 case "1002":
                     $scope.location = '/ZonaDeVuelo/Dashboard/1/5';
@@ -84,25 +84,40 @@ angular
                 }
 
             }
-
-            var finishActivity = function(){
-                if ($scope.activity.status == 0) {
-                    _endActivity($scope.activity,function(data){
-                            updateActivityStatus($scope.activity.activity_identifier);
-                        });
-                }
-                
-
-            };
             
             function initialLoading() {
-                // $scope.showRobot();    
+                // $scope.showRobot();
                 $scope.$emit('HidePreloader');
+                getContentAsync()
                 getProfile();
+            };
+            
+            
+            function getContentAsync() {
+                
+                drupalFactory.Services.GetContent($scope.closingContentname, function (data, key) {
+                        _loadedResources = true;
+                        $scope.closingContent = data.node;
+                    },
+                        function () {
+                        },
+                            false);
+            };
+            
+            
+            $scope.continueActivity = function(){
+                if ($scope.activity.status == 1) {
+                    $location.path($scope.location);
+                }else{
+                    $scope.currentPage = 2;//Redirect to finish activity page;
+                }
+                
             }
             
-            $scope.ToDashboard = function(){
-                finishActivity();
+            $scope.finishActivity = function(){
+                _endActivity($scope.activity,function(data){
+                    updateActivityStatus($scope.activity.activity_identifier);
+                });
                 $location.path($scope.location);
             };
             

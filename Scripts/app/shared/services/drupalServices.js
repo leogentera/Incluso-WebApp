@@ -69,7 +69,8 @@
         "fuenteDeEnergiaRequirements": 99,
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
         "BadgeForumRobot": 101, /*General - Robot al ganar el badge de foros*/
-        "robot-inclubot" : 56 /*Dashboard Programa - Robot Inclubot*/
+        "robot-inclubot" : 56, /*Dashboard Programa - Robot Inclubot*/
+        "RetroalimentacionClosing" : 103  /*Cierre de actividad Retroalimentación*/
     };
     
 
