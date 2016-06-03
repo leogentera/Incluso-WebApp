@@ -121,21 +121,21 @@ angular
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: true });
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: true });
-        $http.get('Templates/ZonaDeVuelo/Retroalimentacion.html', { cache: true });
+        $http.get('Templates/Programa/Retroalimentacion.html', { cache: true });
 
         ///////// Stage 2 //////////
         $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:true});
         $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: true });
         $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html', { cache: true });
         $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: true });
-        $http.get('Templates/ZonaDeNavegacion/Retroalimentacion.html', { cache: true });
+        //$http.get('Templates/ZonaDeNavegacion/Retroalimentacion.html', { cache: true });
 
         ///////// Stage 3 //////////
         $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html', { cache: true });
         $http.get('Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html', {cache: true });
-        $http.get('Templates/ZonaDeAterrizaje/Retroalimentacion.html', {cache: true });
+        //$http.get('Templates/ZonaDeAterrizaje/Retroalimentacion.html', {cache: true });
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -454,8 +454,8 @@ angular
         });
     
 
-        $routeProvider.when('/ZonaDeVuelo/Retroalimentacion', {
-            templateUrl: 'Templates/ZonaDeVuelo/Retroalimentacion.html',
+        $routeProvider.when('/ZonaDeVuelo/Retroalimentacion/:activityId', {
+            templateUrl: 'Templates/Programa/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });
         
@@ -577,8 +577,8 @@ angular
             controller: 'stageForumCommentsController'
         });
         
-        $routeProvider.when('/ZonaDeNavegacion/Retroalimentacion', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Retroalimentacion.html',
+        $routeProvider.when('/ZonaDeNavegacion/Retroalimentacion/:activityId', {
+            templateUrl: 'Templates/Programa/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });
 
@@ -681,8 +681,8 @@ angular
             controller: 'stageForumCommentsController'
         });
         
-        $routeProvider.when('/ZonaDeAterrizaje/Retroalimentacion', {
-            templateUrl: 'Templates/ZonaDeAterrizaje/Retroalimentacion.html',
+        $routeProvider.when('/ZonaDeAterrizaje/Retroalimentacion/:activityId', {
+            templateUrl: 'Templates/Programa/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });
 

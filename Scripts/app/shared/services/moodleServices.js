@@ -916,8 +916,11 @@
                     course.stages[i].stageStatus = course.stages[i].status;
 
                     course.stages[i]["challenges"] = _.filter(activities, function (a) {
-                        return a.parentsection == course.stages[i].section && a.section != course.stages[i].section && a.activity_type == 'ActivityManager'
+                        return a.parentsection == course.stages[i].section &&
+                            a.section != course.stages[i].section && a.activity_type == 'ActivityManager' && a.activityname != "CABINA DE SOPORTE"
                     });
+                    
+                    //course.stages[i]["challenges"] = [];
 
                     assign = _.find(activities, function (a) {
                         return a.parentsection == course.stages[i].parentsection &&
@@ -949,16 +952,18 @@
                             course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
                         }
 
-                        if (course.stages[i].challenges[j].activity_type == "ActivityManager") {                            
+                        if (course.stages[i].challenges[j].activity_type == "ActivityManager" && course.stages[i].challenges[j].activityname != "CABINA DE SOPORTE") {                            
                             activityManagers.push(course.stages[i].challenges[j]);
                         }
 
                         course.stages[i].challenges[j]["activities"] = _.filter(activities, function (a) {
-                            return a.parentsection == course.stages[i].challenges[j].section && a.section != course.stages[i].challenges[j].section && a.activity_type == 'ActivityManager'
+                            return a.parentsection == course.stages[i].challenges[j].section &&
+                                a.section != course.stages[i].challenges[j].section && a.activity_type == 'ActivityManager' && a.activityname != "CABINA DE SOPORTE"
                         });
 
                         var childrenActivities = _.filter(activities, function (a) {
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat') || (a.activity_type == 'assign' && a.activityname == 'Retroalimentación'))
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' &&
+                                (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Retroalimentación'))
                         });
 
                         for (k = 0; k < childrenActivities.length; k++) {

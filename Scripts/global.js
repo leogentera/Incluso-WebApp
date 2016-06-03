@@ -1518,7 +1518,7 @@ var _activityRoutes = [
     {id: 1005, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
     {id: 1007, name: '', url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
     {id: 1008, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/1008'},
-    {id: 1002, name: '', url: '/ZonaDeVuelo/Retroalimentacion'},
+    {id: 1002, name: '', url: '/ZonaDeVuelo/Retroalimentacion/1002'},
     {id: 1009, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
     {id: 2001, name: '', url: '/ZonaDeNavegacion/ExploracionInicial/2001'},
     {id: 2004, name: '', url: '/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/2004'},
