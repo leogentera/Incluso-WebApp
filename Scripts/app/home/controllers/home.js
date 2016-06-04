@@ -303,6 +303,7 @@ angular
             };
 
             $scope.showChatNotification = function () {
+
                 var chatRead = localStorage.getItem('chatRead/' + localStorage.getItem("userId"));
 
                 if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {

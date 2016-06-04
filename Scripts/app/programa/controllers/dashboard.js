@@ -436,8 +436,10 @@ angular
                         numMessages = 0;
                         _setLocalStorageItem("numMessages/" + $scope.user.userId, numMessages);
                     } else {
+
                         numMessages = parseInt(numMessages, 10);
                         console.log("THERE ARE " + numMessages + " MESSAGES");
+
 
                         if (messages.length > numMessages) {//The Couch Posted Something...
                             console.log(messages.length + " NEW MESSAGES " + numMessages);

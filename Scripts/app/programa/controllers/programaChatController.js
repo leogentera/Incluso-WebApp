@@ -34,6 +34,7 @@ angular
                 $scope.messages = JSON.parse(localStorage.getItem('userChat/' + currentUser.userId));
                 $scope.currentMessage = "";
 
+
                 var interval = setInterval(getMessages, 60000); //Poll Messages continuously.
 
                 $scope.$on('$routeChangeStart', function (next, current) {//If the user Leaves, kill setInterval.
