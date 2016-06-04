@@ -70,9 +70,9 @@
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
         "BadgeForumRobot": 101, /*General - Robot al ganar el badge de foros*/
         "robot-inclubot" : 56, /*Dashboard Programa - Robot Inclubot*/
-        "RetroalimentacionClosing" : 103  /*Cierre de actividad Retroalimentación*/
+        "RetroalimentacionClosing" : 103,  /*Cierre de actividad Retroalimentación*/
+        "chat_generic_message" : 104  /*Mensaje genérico de Chat*/
     };
-    
 
     drupalFactory.Services = (function () {
         

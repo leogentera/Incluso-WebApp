@@ -117,36 +117,6 @@ angular
                     if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
 
-                        if (activityId == "chat") {//The user pressed the Chat icon on Top bar.
-
-                            var currentStage = parseInt(localStorage.getItem("currentStage")); //Last Stage attained by the user.
-                            var pref;
-                            switch (currentStage) {
-                                case 1:
-                                    activityId = "1002";
-                                    pref = "/ZonaDeVuelo/";
-                                    break;
-                                case 2:
-                                    activityId = "2022";
-                                    pref = "/ZonaDeNavegacion/";
-                                    break;
-                                case 3:
-                                    activityId = "3501";
-                                    pref = "/ZonaDeAterrizaje/";
-                                    break;
-                                default:
-                                    activityId = "1002";  //For a new user.
-                                    pref = "/ZonaDeNavegacion/";
-                            }
-
-                            url = pref + "CabinaDeSoporte/" + activityId;
-
-                            //Check if CabinaDeSoporte activity is blocked...
-                            if ($rootScope.activityBlocked[activityId].disabled) {//The Activity is Blcoked
-                                activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
-                            }
-                        }
-
                         logStartActivityAction(activityId, timeStamp);
 
                         if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
@@ -332,6 +302,18 @@ angular
                 }
             };
 
+            $scope.showChatNotification = function () {
+                var chatRead = localStorage.getItem('chatRead/' + localStorage.getItem("userId"));
+
+                if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {
+                    return false;
+                } else {
+
+                    if (chatRead == "false") {
+                        return true;
+                    }
+                }
+            };
 
             //Load activity block status into binding model
             $scope.resetActivityBlockedStatus = function () {

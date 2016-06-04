@@ -403,6 +403,7 @@ angular
                     $scope.incLoadedItem(); //10
                     getUserStarsByPoints();
                     getUserLikes();
+                    getUserChat();
                 }, errorCallback, true);
             }
             
@@ -416,6 +417,36 @@ angular
                 }, function () {
                     $scope.activitiesCompleted = [];
                 }, true);
+            }
+
+            function getUserChat() {
+                moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
+
+                    var messages = localStorage.getItem('userChat/' + $scope.user.userId); //Get all messages posted.
+
+                    if (messages) {
+                        messages = JSON.parse(messages);
+                    } else {
+                        messages = [];
+                    }
+
+                    var numMessages = localStorage.getItem('numMessages/' + $scope.user.userId); //Previous count of Messages
+
+                    if (numMessages === null) {
+                        numMessages = 0;
+                        _setLocalStorageItem("numMessages/" + $scope.user.userId, numMessages);
+                    } else {
+                        numMessages = parseInt(numMessages, 10);
+                        console.log("THERE ARE " + numMessages + " MESSAGES");
+
+                        if (messages.length > numMessages) {//The Couch Posted Something...
+                            console.log(messages.length + " NEW MESSAGES " + numMessages);
+                            _setLocalStorageItem('chatRead/' + $scope.user.userId, "false"); //Turn on Chat Bubble
+                            _setLocalStorageItem('numMessages/' + $scope.user.userId, messages.length);  //Update count of Messages
+                        }
+                    }
+
+                }, errorCallback, true);
             }
 
             function getUserLikes() {

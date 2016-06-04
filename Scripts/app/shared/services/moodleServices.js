@@ -147,8 +147,15 @@
             _putAsyncData(null, data, API_RESOURCE.format('notification/') + userId, successCallback, errorCallback);
         };
 
-        var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
+        var _getUserChat = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("userChat/" + userId, API_RESOURCE.format('messaging/' + userId), token, successCallback, errorCallback, forceRefresh);
+        };
 
+        var _putUserChat = function (userId, data, successCallback, errorCallback) {
+            _putAsyncData(null, data, API_RESOURCE.format('messaging/' + userId), successCallback, errorCallback);
+        };
+
+        var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
             _putAsyncStars("Perfil/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
@@ -614,7 +621,10 @@
                 }
             });
 			dataModel = !otherDataModel ? dataModel : otherDataModel;
-            _setLocalStorageJsonItem(key,dataModel);
+
+            if (key) {
+                _setLocalStorageJsonItem(key, dataModel);
+            }
 
             if(successCallback){
                 successCallback(); 
@@ -1545,6 +1555,8 @@
             GetAsyncLeaderboard: _getAsyncLeaderboard,
             GetAsyncHallOfFame: _getAsyncHallOfFame,
             GetAsyncCatalog: _getAsyncCatalog,
+            GetUserChat: _getUserChat,
+            PutUserChat: _putUserChat,
             PutStars: _assignStars,
             GetAsyncStars: _getAsyncStars,
             PutStartActivity: _startActivity,
