@@ -794,17 +794,17 @@ angular
                         var profileId = questions[i].profileid;
                         if (profileId.length > 0) {
                             for(var j=0; j < profileId.length; j++){
-                                var pointsByAnswer = { "profileId": profileId[j], "points" : 1 };
+                                var pointsByAnswer = { "profileId": profileId[j], "score" : 1, "moduleId" : $scope.coursemoduleid };
                                 profilePoints.push(pointsByAnswer);
                             }
                         }else{
-                            var pointsByAnswer = { "profileId": profileId, "points" : 1 };
+                            var pointsByAnswer = { "profileId": profileId, "score" : 1, "moduleId" : $scope.coursemoduleid };
                             profilePoints.push(pointsByAnswer);
                         }
                     }
                 };
                 
-                fillProfilePoints(profilePoints, $scope.coursemoduleid);
+                fillProfilePoints(profilePoints);
             }
 
             function updateProfile() {

@@ -35,14 +35,14 @@ angular
                     break;
                 case "3501":
                     $scope.location = "ZonaDeAterrizaje/Dashboard/3/6";
-                    $rootScope.showStage3Footer = true;                    
+                    $rootScope.showStage3Footer = true; 
                     break;
             }
             
             var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
             var perfilIncluso = profileCatalogs.messages || [];
             
-            
+                        
             function getProfile() {
                 var profileId = 0;
                 
@@ -52,11 +52,7 @@ angular
                 if (!$scope.profile.inclusoprofile) {
                     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
                     
-                    var maxProfile = _.max(profilePoints, function(profile){
-                        return profile.points;
-                    });
-
-                    profileId = maxProfile.profileid;
+                    profileId = getMaxProfile(profilePoints);
                     
                     $scope.profile.inclusoprofile =  _.findWhere(profileCatalogs.profiles, { id: profileId}).profilename;
                     
@@ -83,6 +79,36 @@ angular
                     $scope.messageProfile.description =  $scope.messageProfile.description.replace("@escudo", shield);
                 }
 
+            }
+            
+            function getMaxProfile(profilePoints) {
+                
+                var profiles = profileCatalog.profiles;
+                for(var i = 0 ; i < profilePoints.length; i++){
+                    var currentProfileActivity = profilePoints[i];
+                    for(var j = 0; j < profiles.length; j++) {
+                        if (profiles[j].id == currentProfileActivity.profileid) {
+                            profiles[j].score += currentProfileActivity.score;
+                        }
+                    }
+                };
+                
+                
+                
+                var maxProfile = _.max(profilePoints, function(profile){
+                        return profile.points;
+                    });                
+                var tiedProfiles = _.where(profilePoints, {profileid: maxProfile.profileid});
+                
+                //
+                if (tiedProfiles.length >= 4) {
+                    return 1; //asignar perfil genérico
+                }else if (tiedProfiles.length > 1) {
+                    //var maxOnActivityMisGustos = 
+                    return 2;
+                }
+                                
+                return 1;
             }
             
             function initialLoading() {
