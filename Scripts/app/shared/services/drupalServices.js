@@ -69,9 +69,10 @@
         "fuenteDeEnergiaRequirements": 99,
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
         "BadgeForumRobot": 101, /*General - Robot al ganar el badge de foros*/
-        "robot-inclubot" : 56 /*Dashboard Programa - Robot Inclubot*/
+        "robot-inclubot" : 56, /*Dashboard Programa - Robot Inclubot*/
+        "RetroalimentacionClosing" : 103,  /*Cierre de actividad Retroalimentación*/
+        "chat_generic_message" : 104  /*Mensaje genérico de Chat*/
     };
-    
 
     drupalFactory.Services = (function () {
         
@@ -132,7 +133,7 @@
                 method: 'POST',
                 url: url ,
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
-                data:  JSON.stringify(drupalFactory.NodeRelation)
+                data:  JSON.stringify( drupalFactory.NodeRelation)
             }).success(function (data, status, headers, config) {
 
                 //var resultArray = Object.keys(data).map(function(k) { return data[k] });

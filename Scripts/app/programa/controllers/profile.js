@@ -19,8 +19,8 @@ angular
             var _loadedResources = false;
             var _pageLoaded = false;
             var showResultsPage = false;
-            quizMisGustos = false;
-            quizMisCualidades = false;
+            var quizMisGustos = false;
+            var quizMisCualidades = false;
             $scope.accessedSubsection = false;
             $scope.$emit('scrollTop');
             $scope.$emit('ShowPreloader');
@@ -132,6 +132,16 @@ angular
                     $scope.phone = true;
                     $scope.socialNet = true;
                     $scope.family = false;
+                    $scope.disabled = {
+                        "talents":false,
+                        "values": false,
+                        "habilities": false,
+                        "favoriteSports": false,
+                        "artisticActivities": false,
+                        "hobbies": false,
+                        "social": false,
+                        "emprendedor": false
+                    };
 
                     $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
                     $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
@@ -235,6 +245,56 @@ angular
                     getAge();
 
                     $scope.showPlaceHolder = true;
+
+                    $scope.model = initFields($scope.model);
+                    loadStrengths();
+                    loadWindowOfOpportunities();
+
+                    $scope.model.level = $scope.model.currentStudies["level"];
+                    $scope.model.grade = $scope.model.currentStudies["grade"];
+                    $scope.model.period = $scope.model.currentStudies["period"];
+
+                    $scope.model.talents = orderCatalog($scope.model.talents);
+                    $scope.model.values = orderCatalog($scope.model.values);
+                    $scope.model.habilities = orderCatalog($scope.model.habilities);
+                    $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
+                    $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
+                    $scope.model.hobbies = orderCatalog($scope.model.hobbies);
+                    $scope.model.social = orderCatalog($scope.model.social);
+                    $scope.model.emprendedor = orderCatalog($scope.model.emprendedor);
+
+                    $scope.genderItems = orderCatalog($scope.genderItems);
+                    $scope.countryItems = orderCatalog($scope.countryItems);
+                    $scope.maritalStatusItems = orderCatalog($scope.maritalStatusItems);
+                    $scope.stateItems = orderCatalog($scope.stateItems);
+                    $scope.phoneTypeList = orderCatalog($scope.phoneTypeList);
+                    $scope.socialNetworksList = orderCatalog($scope.socialNetworksList);
+                    $scope.familiaCompartamosList = orderCatalog($scope.familiaCompartamosList);
+                    $scope.inspirationalCharactersList = orderCatalog($scope.inspirationalCharactersList);
+                    $scope.iLiveWithList = orderCatalog($scope.iLiveWithList);
+                    $scope.knownDevicesList = orderCatalog($scope.knownDevicesList);
+                    $scope.phoneUsageList = orderCatalog($scope.phoneUsageList);
+                    $scope.kindOfVideoGamesList = orderCatalog($scope.kindOfVideoGamesList);
+
+                    $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
+                    $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
+                    $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                    $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
+                    $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
+                    $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
+
+                    $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
+                    $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
+                    $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
+                    $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
+                    $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
+                    $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
+
+                    for (var key in $scope.disabled) {//Verify for the presence of "Ninguno" in the model.
+                        if ($scope.model[key].indexOf("Ninguno") > -1) {
+                            $scope.disabled[key] = true;
+                        }
+                    }
 
                 });
 
@@ -672,50 +732,6 @@ angular
                             });
                         }, 500);
 
-                        $scope.model = initFields($scope.model);
-                        loadStrengths();
-                        loadWindowOfOpportunities();
-
-                        $scope.model.level = $scope.model.currentStudies["level"];
-                        $scope.model.grade = $scope.model.currentStudies["grade"];
-                        $scope.model.period = $scope.model.currentStudies["period"];
-
-                        $scope.model.talents = orderCatalog($scope.model.talents);
-                        $scope.model.values = orderCatalog($scope.model.values);
-                        $scope.model.habilities = orderCatalog($scope.model.habilities);
-                        $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
-                        $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
-                        $scope.model.hobbies = orderCatalog($scope.model.hobbies);
-                        $scope.model.social = orderCatalog($scope.model.social);
-                        $scope.model.emprendedor = orderCatalog($scope.model.emprendedor);
-
-                        $scope.genderItems = orderCatalog($scope.genderItems);
-                        $scope.countryItems = orderCatalog($scope.countryItems);
-                        $scope.maritalStatusItems = orderCatalog($scope.maritalStatusItems);
-                        $scope.stateItems = orderCatalog($scope.stateItems);
-                        $scope.phoneTypeList = orderCatalog($scope.phoneTypeList);
-                        $scope.socialNetworksList = orderCatalog($scope.socialNetworksList);
-                        $scope.familiaCompartamosList = orderCatalog($scope.familiaCompartamosList);
-                        $scope.inspirationalCharactersList = orderCatalog($scope.inspirationalCharactersList);
-                        $scope.iLiveWithList = orderCatalog($scope.iLiveWithList);
-                        $scope.knownDevicesList = orderCatalog($scope.knownDevicesList);
-                        $scope.phoneUsageList = orderCatalog($scope.phoneUsageList);
-                        $scope.kindOfVideoGamesList = orderCatalog($scope.kindOfVideoGamesList);
-
-                        $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
-                        $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
-                        $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
-                        $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
-                        $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
-                        $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
-
-                        $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
-                        $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
-                        $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
-                        $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
-                        $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
-                        $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
-
                         $timeout(function () {
                             $scope.$emit('HidePreloader');
                         }, 2000);
@@ -753,55 +769,11 @@ angular
                                 return "";
                             }
 
-                            $scope.model = initFields($scope.model);
-                            loadStrengths();
-                            loadWindowOfOpportunities();
-
-                            $scope.model.level = $scope.model.currentStudies["level"];
-                            $scope.model.grade = $scope.model.currentStudies["grade"];
-                            $scope.model.period = $scope.model.currentStudies["period"];
-
-                            $scope.model.talents = orderCatalog($scope.model.talents);
-                            $scope.model.values = orderCatalog($scope.model.values);
-                            $scope.model.habilities = orderCatalog($scope.model.habilities);
-                            $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
-                            $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
-                            $scope.model.hobbies = orderCatalog($scope.model.hobbies);
-                            $scope.model.social = orderCatalog($scope.model.social);
-                            $scope.model.emprendedor = orderCatalog($scope.model.emprendedor);
-
-                            $scope.genderItems = orderCatalog($scope.genderItems);
-                            $scope.countryItems = orderCatalog($scope.countryItems);
-                            $scope.maritalStatusItems = orderCatalog($scope.maritalStatusItems);
-                            $scope.stateItems = orderCatalog($scope.stateItems);
-                            $scope.phoneTypeList = orderCatalog($scope.phoneTypeList);
-                            $scope.socialNetworksList = orderCatalog($scope.socialNetworksList);
-                            $scope.familiaCompartamosList = orderCatalog($scope.familiaCompartamosList);
-                            $scope.inspirationalCharactersList = orderCatalog($scope.inspirationalCharactersList);
-                            $scope.iLiveWithList = orderCatalog($scope.iLiveWithList);
-                            $scope.knownDevicesList = orderCatalog($scope.knownDevicesList);
-                            $scope.phoneUsageList = orderCatalog($scope.phoneUsageList);
-                            $scope.kindOfVideoGamesList = orderCatalog($scope.kindOfVideoGamesList);
-
-                            $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
-                            $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
-                            $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
-                            $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
-                            $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
-                            $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
-
-                            $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
-                            $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
-                            $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
-                            $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
-                            $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
-                            $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
-
                         }, function () {
-                            $scope.model = {
-                                'alias': $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
-                                'stars': 'No definidas',
-                                'profileimageurl': 'assets/avatar/default.png',
+                            $scope.model= {
+                                'alias' : $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
+                                'stars' : 'No definidas',
+                                'profileimageurl' : 'assets/avatar/default.png'
                             };
                         }, true);
                     }
@@ -2058,7 +2030,6 @@ angular
                     }
                 }
 
-
                 function validateAllFieldsCompleted() {
                     if ($scope.userCourse && $scope.userCourse.activities) {
 
@@ -2107,7 +2078,6 @@ angular
                     });
                 };
 
-
                 function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                     var result = false;
 
@@ -2121,7 +2091,6 @@ angular
 
                     return result;
                 }
-
 
                 function assignmentMiPersonalidad() {
                     var result = false;
@@ -2232,57 +2201,8 @@ angular
                 };
 
                 // ######################  Methods to add / delete data  ############################
-                $scope.addStudy = function () {
-                    $scope.model.studies.push({});
-                };
 
-                $scope.deleteStudy = function (index) {
-                    $scope.model.studies.splice(index, 1);
-                };
-
-                $scope.addPhone = function () {
-                    $scope.model.phones.push({});
-                };
-
-                $scope.deletePhone = function (index) {
-                    $scope.model.phones.splice(index, 1);
-                };
-
-                $scope.addSocialNetwork = function () {
-                    $scope.model.socialNetworks.push({});
-                };
-
-                $scope.deleteSocialNetwork = function (index) {
-                    $scope.model.socialNetworks.splice(index, 1);
-                };
-
-                // **************** Common for MIS GUSTOS & MIS CUALIDADES **************************
-                function canIErase(arr, index, quizStatus) {
-                    if (quizStatus === 1) {//Quiz is Finished.
-
-                        if (arr[index] == "") {//...You can delete this element...
-                            return true;
-                        } else {
-                            //Check if there are at lest 2 non null-string elements...
-                            var count = 0, i;
-                            for (i = 0; i < arr.length; i++) {
-                                if (arr[i] != "") {
-                                    count++;
-                                }
-                            }
-
-                            if (count > 1) {//...You can delete the item...
-                                return true;
-                            } else {//...You can NOT delete the item...
-                                return false;
-                            }
-                        }
-
-                    } else {
-                        return true;
-                    }
-                }
-
+                // **************** Section for MIS GUSTOS & MIS CUALIDADES**************************
                 function syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, coursemoduleId) {
                     var i, j;
                     var codedAnswers = [];
@@ -2351,184 +2271,73 @@ angular
                     $scope.activityObject = activityObject;
                 }
 
-                // **************** Section for MIS GUSTOS **************************
-                $scope.addFavoriteSports = function () {
-                    $scope.model.favoriteSports.push("");
+                function canIErase(arr, index, quizStatus) {
+                    if (quizStatus === 1) {//Quiz is Finished.
+
+                        if (arr[index] == "") {//...You can delete this element...
+                            return true;
+                        } else {
+                            //Check if there are at lest 2 non null-string elements...
+                            var count = 0, i;
+                            for (i = 0; i < arr.length; i++) {
+                                if (arr[i] != "") {
+                                    count++;
+                                }
+                            }
+
+                            if (count > 1) {//...You can delete the item...
+                                return true;
+                            } else {//...You can NOT delete the item...
+                                return false;
+                            }
+                        }
+
+                    } else {
+                        return true;
+                    }
+                }
+
+                $scope.lookForNinguno = function(param) {
+                    if ($scope.model[param].indexOf("Ninguno") > -1) {
+
+                        $scope.model[param] = ["Ninguno"]; //Clean array $scope.model.param...
+
+                        //Disable button for not allowing add additional options...
+                        $scope.disabled[param] = true;
+                    } else {
+                        $scope.disabled[param] = false;
+                    }
+
                 };
 
-                $scope.deleteFavoriteSports = function (index) {
+                $scope.addItem = function (param) {
+                    $scope.model[param].push("");
+                };
 
-                    var canI = canIErase($scope.model.favoriteSports, index, $scope.status70);
+                $scope.removeItem70 = function (param, index) {
+                    var canI = canIErase($scope.model[param], index, $scope.status70);
 
                     if (canI) {
-                        $scope.model.favoriteSports.splice(index, 1);
+                        $scope.model[param].splice(index, 1);
                     }
                 };
 
-                $scope.addArtisticActivities = function () {
-                    $scope.model.artisticActivities.push("");
-                };
-
-                $scope.deleteArtisticActivities = function (index) {
-
-                    var canI = canIErase($scope.model.artisticActivities, index, $scope.status70);
+                $scope.removeItem71 = function (param, index) {
+                    var canI = canIErase($scope.model[param], index, $scope.status71);
 
                     if (canI) {
-                        $scope.model.artisticActivities.splice(index, 1);
+                        $scope.model[param].splice(index, 1);
                     }
                 };
+                // **************** End of Section for for MIS GUSTOS & MIS CUALIDADES **************************
 
-                $scope.addHobbies = function () {
-                    $scope.model.hobbies.push("");
+
+                $scope.addObject = function(param) {
+                    $scope.model[param].push({});
                 };
 
-                $scope.deleteHobbies = function (index) {
-
-                    var canI = canIErase($scope.model.hobbies, index, $scope.status70);
-
-                    if (canI) {
-                        $scope.model.hobbies.splice(index, 1);
-                    }
-                };
-
-                $scope.addSocial = function () {
-                    $scope.model.social.push("");
-                };
-
-                $scope.deleteSocial = function (index) {
-
-                    var canI = canIErase($scope.model.social, index, $scope.status70);
-
-                    if (canI) {
-                        $scope.model.social.splice(index, 1);
-                    }
-                };
-
-                $scope.addOthers = function () {
-                    $scope.model.emprendedor.push("");
-                };
-
-                $scope.deleteOthers = function (index) {
-
-                    var canI = canIErase($scope.model.emprendedor, index, $scope.status70);
-
-                    if (canI) {
-                        $scope.model.emprendedor.splice(index, 1);
-                    }
-                };
-
-                // **************** Section for MIS CUALIDADES **************************
-                $scope.addTalents = function () {
-                    $scope.model.talents.push("");
-                };
-
-                $scope.deleteTalents = function (index) {
-
-                    var canI = canIErase($scope.model.talents, index, $scope.status71);
-
-                    if (canI) {
-                        $scope.model.talents.splice(index, 1);
-                    }
-                };
-
-                $scope.addValue = function () {
-                    $scope.model.values.push("");
-                };
-
-                $scope.deleteValue = function (index) {
-
-                    var canI = canIErase($scope.model.values, index, $scope.status71);
-
-                    if (canI) {
-                        $scope.model.values.splice(index, 1);
-                    }
-                };
-
-                $scope.addHabilitie = function () {
-                    $scope.model.habilities.push("");
-                };
-
-                $scope.deleteHabilitie = function (index) {
-
-                    var canI = canIErase($scope.model.habilities, index, $scope.status71);
-
-                    if (canI) {
-                        $scope.model.habilities.splice(index, 1);
-                    }
-                };
-
-                // **************** End of Section for MIS CUALIDADES **************************
-
-                $scope.addInspirationalCharacter = function () {
-                    $scope.model.inspirationalCharacters.push({});
-                };
-
-                $scope.deleteInspirationalCharacter = function (index) {
-                    $scope.model.inspirationalCharacters.splice(index, 1);
-                };
-
-                $scope.addMainActivity = function () {
-                    $scope.model.mainActivity.push(new String());
-                };
-
-                $scope.deleteMainActivity = function (index) {
-                    $scope.model.mainActivity.splice(index, 1);
-                };
-
-                $scope.addMoneyIncome = function () {
-                    $scope.model.moneyIncome.push(new String());
-                };
-
-                $scope.deleteMoneyIncome = function (index) {
-                    $scope.model.moneyIncome.splice(index, 1);
-                };
-
-                $scope.addKnownDevice = function () {
-                    $scope.model.knownDevices.push(new String());
-                };
-
-                $scope.deleteKnownDevice = function (index) {
-                    $scope.model.knownDevices.splice(index, 1);
-                };
-
-                $scope.addOwnDevice = function () {
-                    $scope.model.ownDevices.push(new String());
-                };
-
-                $scope.deleteOwnDevice = function (index) {
-                    $scope.model.ownDevices.splice(index, 1);
-                };
-
-                $scope.addPhoneUsage = function () {
-                    $scope.model.phoneUsage.push(new String());
-                };
-
-                $scope.deletePhoneUsage = function (index) {
-                    $scope.model.phoneUsage.splice(index, 1);
-                };
-
-                $scope.addKindOfVideoGame = function () {
-                    $scope.model.kindOfVideogames.push(new String());
-                };
-
-                $scope.deleteKindOfVideoGame = function (index) {
-                    $scope.model.kindOfVideogames.splice(index, 1);
-                };
-
-                $scope.deleteMainActivity = function (index) {
-                    $scope.model.mainActivity.splice(index, 1);
-                };
-
-                $scope.addMainActivity = function () {
-                    $scope.model.mainActivity.push(new String());
-                };
-
-                $scope.addFavoriteGame = function () {
-                    $scope.model.favoriteGames.push(new String());
-                };
-
-                $scope.deleteFavoriteGame = function (index) {
-                    $scope.model.favoriteGames.splice(index, 1);
+                $scope.deleteItem = function(param, index) {
+                    $scope.model[param].splice(index, 1);
                 };
 
                 $scope.addEmail = function () {
@@ -2545,15 +2354,6 @@ angular
                 $scope.deleteAdditionalEmails = function (index) {
                     $scope.model.additionalEmails.splice(index, 1);
                 };
-
-                $scope.addFamiliaCompartamos = function () {
-                    $scope.model.familiaCompartamos.push({});
-                };
-
-                $scope.deleteFamiliaCompartamos = function (index) {
-                    $scope.model.familiaCompartamos.splice(index, 1);
-                };
-
 
                 encodeImageUri = function (imageUri, callback) {
                     var c = document.createElement('canvas');

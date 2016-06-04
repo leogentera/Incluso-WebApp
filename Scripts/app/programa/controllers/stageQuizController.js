@@ -50,6 +50,7 @@ angular
             $scope.userprofile.social = [];
             $scope.userprofile.emprendedor = [];
             $scope.activityTitle = [];
+            $scope.profileDisabled = [];
             $rootScope.cancelDisabled = false;
 
             var talents = [];
@@ -124,6 +125,11 @@ angular
                         $scope.activity_status = parentActivity.status;
                     }
 
+                    //Adaptation for the "Sueña" activity
+                    if ($scope.activityname == "Sueña") {
+                        $scope.activityname = "Mi sueño es:";
+                    }
+
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + $scope.currentUser.userId));
                     var otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + $scope.coursemoduleid));
@@ -137,6 +143,17 @@ angular
                     var activityObject = JSON.parse(localStorage.getItem("activity/" + $scope.coursemoduleid));
 
                     if (activityObject !== null) {
+                        //Change format of 'answers' key from Object to Array.
+                        for (i = 0; i < activityObject.questions.length; i++) {
+                            var newAnswer = [];
+                            for (var key in activityObject.questions[i].answers) {
+                                if (activityObject.questions[i].answers.hasOwnProperty(key)) {
+                                    newAnswer.push(activityObject.questions[i].answers[key]);
+                                }
+                            }
+
+                            activityObject.questions[i].answers = newAnswer;
+                        }
 
                         $scope.activityObject = activityObject; //Get object in the right 'answers' format.
 
@@ -217,8 +234,8 @@ angular
                     $scope.OtroAnswers = [];
                 }
 
-                //Load the arrays for 'Mis Cualidades' and 'Mis Gustos'.
-                var answerLabel;
+                    //Load the arrays for 'Mis Habilidades' and 'Mis Gustos'.
+                    var answerLabel;
 
                 if ($scope.activity_identifier === 1005) {
 
@@ -308,10 +325,13 @@ angular
                 var userAnswerString = "";
                 var k;
                 var longUserAnswerString;
+                var profileId = [];
+                //var longProfileId;
 
                 for (k = 0; k < numOptions; k++) {
                     if ($scope.answers[index][k] == 1) {
                         userAnswerString += $scope.activityObject.questions[index].answers[k].answer;
+                        profileId.push(parseInt($scope.activityObject.questions[index].answers[k].profileid));
                     }
 
                     if (k < numOptions - 1 && $scope.answers[index][k] == 1) {
@@ -321,12 +341,13 @@ angular
 
                 userAnswerString = userAnswerString.trim();
                 longUserAnswerString = userAnswerString.length;
-
+                
                 if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
                     userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
-                }
+                }            
 
                 $scope.activityObject.questions[index].userAnswer = userAnswerString;
+                $scope.activityObject.questions[index].profileid = profileId;
 
                 // The checkbox for 'Other' is clicked.
                 if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {//The "Otro" checkbox has been checked.
@@ -339,8 +360,34 @@ angular
                     var indexOfOtro = $scope.activityObject.questions[index].userAnswer.indexOf("; Otro"); //Second, remove "Otro" value from the "userAnswer" for the respective questions object.
                     $scope.activityObject.questions[index].userAnswer = $scope.activityObject.questions[index].userAnswer.substring(0, indexOfOtro);
                     $scope.OtroAnswers[multichoiceIndex].answers[0] = ""; //Third, delete user answer from the OtroAnswers object.
-
                     removeHeight($("multichoice" + index)); //Finally, adjust the size of the UI.
+                }
+
+                //This section is only for "Mis Habilidades" and "Mis Gustos"
+                if (checkLabel === "Ninguno" && $scope.answers[index][otherIndex]) {//The "Ninguno" checkbox has been checked.
+
+                    $scope.profileDisabled[multichoiceIndex] = true; //Disable all checkboxes
+
+                    if ($scope.answers[index][numOptions - 1]) {
+                        removeHeight($("multichoice" + index)); //Finally, adjust the size of the UI.
+                    }
+
+                    //Uncheck all answers, except "Ninguno"
+                    for (k = 0; k < numOptions; k++) {
+                        if (k != numOptions - 2) {//The "Ninguno" checkbox
+                            $scope.answers[index][k] = 0;
+                        }
+                    }
+
+                    //Update answer objects
+                    $scope.activityObject.questions[index].other = "";  //First, do "other=''" for the respective questions object.
+                    $scope.activityObject.questions[index].userAnswer = "Ninguno"; //Second, make "Ninguno" the only value.
+                    $scope.activityObject.questions[index].profileid = 0;
+                    $scope.OtroAnswers[multichoiceIndex].answers[0] = ""; //Third, delete user answer from the OtroAnswers object.
+                }
+
+                if (checkLabel === "Ninguno" && !$scope.answers[index][otherIndex]) {//The "Ninguno" checkbox has been checked.
+                    $scope.profileDisabled[multichoiceIndex] = false; //Remove disabling
                 }
 
             };
@@ -391,6 +438,13 @@ angular
                         otherObjectItem.answers = [""];
                         $scope.OtroAnswers.push(otherObjectItem);
                     }
+
+                    if (question.userAnswer == "Ninguno") {
+                        $scope.profileDisabled.push(true);  //Disable questions with "Ninguno" checked.
+                    } else {
+                        $scope.profileDisabled.push(false);
+                    }
+
                 }
 
                 if (questionType == "multichoice" && questionNumOfChoices > 2 && !hasOther) {
@@ -551,6 +605,88 @@ angular
                 //This is to avoid killing the preloader up starting.
                 $timeout(function () {
 
+                    //Section for Updating the "userAnswer" key on each question object for the Quiz.
+                    var qIndex;
+
+                    for (qIndex = 0; qIndex < $scope.questionTypeCode.length; qIndex++) {
+                        switch ($scope.questionTypeCode[qIndex]) {
+
+                            case "binary":
+                                $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
+                                $scope.activityObject.questions[qIndex].profileid = parseInt($scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].profileid);
+                                break;
+
+                            case "simplechoice":
+                                $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
+                                $scope.activityObject.questions[qIndex].profileid = parseInt($scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].profileid);
+                                break;
+
+                            case "multichoice":
+                                $scope.activityObject.questions[qIndex].other = $scope.OtroAnswers[$scope.position[qIndex]].answers[0];
+                                break;
+
+                            case "shortanswer":
+                                var userAnswerString = "";
+                                var longUserAnswerString;
+                                var k;
+
+                                for (k = 0; k < $scope.answers[qIndex].length; k++) {
+
+                                    userAnswerString += $scope.answers[qIndex][k];
+
+                                    if (k < $scope.answers[qIndex].length - 1) {
+                                        userAnswerString += "; ";
+                                    }
+                                }
+
+                                userAnswerString = userAnswerString.trim();
+                                longUserAnswerString = userAnswerString.length;
+
+                                if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
+                                    userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
+                                }
+
+                                $scope.activityObject.questions[qIndex].userAnswer = userAnswerString;
+                                $scope.activityObject.questions[qIndex].profileid = 0;
+                                break;
+
+                            case "essay":
+                                userAnswerString = "";
+                                longUserAnswerString = 0;
+
+                                for (k = 0; k < $scope.answers[qIndex].length; k++) {
+                                    userAnswerString += $scope.answers[qIndex][k];
+
+                                    if (k < $scope.answers[qIndex].length - 1) {
+                                        userAnswerString += "; ";
+                                    }
+                                }
+
+                                userAnswerString = userAnswerString.trim();
+                                longUserAnswerString = userAnswerString.length;
+
+                                if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
+                                    userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
+                                }
+
+                                $scope.activityObject.questions[qIndex].userAnswer = userAnswerString;
+                                $scope.activityObject.questions[qIndex].profileid = 0;
+                                break;
+
+                            default:
+                                break;
+                        }                        
+                    }
+                    
+                    //get profile points from the quiestion's answers.
+                    if ($scope.childActivity && $scope.childActivity.status == 0) {
+                        calculateProfilePoints($scope.activityObject.questions);
+                    }
+                    if ($scope.parentActivity && $scope.parentActivity.status == 0) {
+                        calculateProfilePoints($scope.activityObject.questions);
+                    }
+                    
+                    
                     if ($scope.childActivity) {
                         $scope.parentActivity.status = 1;
                         $scope.childActivity.status = 1;
@@ -565,7 +701,7 @@ angular
                     $scope.AnswersResult.like_status = $scope.like_status;
                     $scope.AnswersResult.updatetype = 1;
                     $scope.showWarning = false;
-
+                    
                     var updatedActivityOnUsercourse;
                     if ($scope.childActivity) {  //Update status of Quiz ("child") activity
                         updatedActivityOnUsercourse = updateSubActivityStatus($scope.childActivity.coursemoduleid);  //actualizar arbol
@@ -599,76 +735,7 @@ angular
                     activityModel.answersResult.dateStart = activityModel.startingTime;
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
                     activityModel.answersResult.others = $scope.OtroAnswers;
-                    $scope.activityObject.status = 1;
-
-                    //Section for Updating the "userAnswer" key on each question object for the Quiz.
-                    var qIndex;
-
-                    for (qIndex = 0; qIndex < $scope.questionTypeCode.length; qIndex++) {
-                        switch ($scope.questionTypeCode[qIndex]) {
-
-                            case "binary":
-                                $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
-                                break;
-
-                            case "simplechoice":
-                                $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
-                                break;
-
-                            case "multichoice":
-                                $scope.activityObject.questions[qIndex].other = $scope.OtroAnswers[$scope.position[qIndex]].answers[0];
-                                break;
-
-                            case "shortanswer":
-                                var userAnswerString = "";
-                                var longUserAnswerString;
-                                var k;
-
-                                for (k = 0; k < $scope.answers[qIndex].length; k++) {
-
-                                    userAnswerString += $scope.answers[qIndex][k];
-
-                                    if (k < $scope.answers[qIndex].length - 1) {
-                                        userAnswerString += "; ";
-                                    }
-                                }
-
-                                userAnswerString = userAnswerString.trim();
-                                longUserAnswerString = userAnswerString.length;
-
-                                if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
-                                    userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
-                                }
-
-                                $scope.activityObject.questions[qIndex].userAnswer = userAnswerString;
-                                break;
-
-                            case "essay":
-                                userAnswerString = "";
-                                longUserAnswerString = 0;
-
-                                for (k = 0; k < $scope.answers[qIndex].length; k++) {
-                                    userAnswerString += $scope.answers[qIndex][k];
-
-                                    if (k < $scope.answers[qIndex].length - 1) {
-                                        userAnswerString += "; ";
-                                    }
-                                }
-
-                                userAnswerString = userAnswerString.trim();
-                                longUserAnswerString = userAnswerString.length;
-
-                                if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
-                                    userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
-                                }
-
-                                $scope.activityObject.questions[qIndex].userAnswer = userAnswerString;
-                                break;
-
-                            default:
-                                break;
-                        }
-                    }
+                    $scope.activityObject.status = 1;                                                    
 
                     // Write Updated objects to Local Storage for later recovery.
                     if ($scope.childActivity) {
@@ -717,12 +784,34 @@ angular
                 }, 1);
             };
 
+        
+
+            function calculateProfilePoints(questions){
+                var profilePoints = [];
+
+                for(var i = 0; i < questions.length; i++){
+                    if (questions[i].profileid) {
+                        var profileId = questions[i].profileid;
+                        if (profileId.length > 0) {
+                            for(var j=0; j < profileId.length; j++){
+                                var pointsByAnswer = { "profileId": profileId[j], "points" : 1 };
+                                profilePoints.push(pointsByAnswer);
+                            }
+                        }else{
+                            var pointsByAnswer = { "profileId": profileId, "points" : 1 };
+                            profilePoints.push(pointsByAnswer);
+                        }
+                    }
+                };
+                
+                fillProfilePoints(profilePoints, $scope.coursemoduleid);
+            }
 
             function updateProfile() {
 
                 var i;
 
-                if ($scope.activity_identifier === 1005) {//Mis Cualidades - Etapa 1 - CourseModuleId = 71
+                if ($scope.activity_identifier === 1005) {//Mis Habilidades - Etapa 1 - CourseModuleId = 71
 
                     $scope.userprofile.talents = [];
                     $scope.userprofile.values = [];
@@ -866,6 +955,10 @@ angular
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
                         updateUserStars($scope.parentActivity.activity_identifier);
+                    }
+
+                    if ($scope.activity_identifier === 3601) {
+                        localStorage.setItem("fromLastQuiz/" + $scope.currentUser.userId, "true");
                     }
 
                     $location.path(pathToRedirect());
@@ -1161,13 +1254,13 @@ angular
                 angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147);
             }
 
-//This function is activated from Template, with ESSAY type questions
+            //This function is activated from Template, with ESSAY type questions
             $scope.addAbility = function (elem, index) {
                 addHeightEssay(elem);
                 $scope.answers[index].push("");
             };
 
-//This function is activated from Template, with ESSAY type questions
+            //This function is activated from Template, with ESSAY type questions
             $scope.deleteAbility = function (elem, index, innerIndex) {
                 removeHeightEssay(elem);
                 $scope.answers[index].splice(innerIndex, 1);

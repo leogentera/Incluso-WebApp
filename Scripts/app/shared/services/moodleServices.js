@@ -40,6 +40,16 @@
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
         
+        var _getProfileCatalogs = function(token,successCallback,errorCallback, forceRefresh){
+            _getAsyncData("profileCatalogs", API_RESOURCE.format('feedbackprofile'),token,successCallback, errorCallback, forceRefresh);
+                
+        };
+        
+        var _getProfilePoints = function(userId, courseId, token, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("profilePoints", API_RESOURCE.format('feedbackprofile/' + userId), token, successCallback, errorCallback, forceRefresh);
+        };
+        
+        
         var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
         };
@@ -71,11 +81,9 @@
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityQuizInfo = function (activityId, userId, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh) {
             if (userId != -1) {
-                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
-            } else {
-                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
+                _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh);
             }
         };
         
@@ -130,13 +138,17 @@
         var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
             _postAsyncData(key, data, API_RESOURCE.format('reportabuse'), successCallback, errorCallback);
         };
+        
+        var _postProfilePoints = function(key, data, successCallback, errorCallback){
+            _postAsyncData(key, data, API_RESOURCE.format('feedbackprofile'), successCallback, errorCallback);
+        };
 
         var _putUserNotificationRead = function (userId, data, successCallback, errorCallback, forceRefresh) {
             _putAsyncData(null, data, API_RESOURCE.format('notification/') + userId, successCallback, errorCallback);
         };
 
         var _getUserChat = function (userId, token, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId), token, successCallback, errorCallback, forceRefresh);
+            _getAsyncData("userChat/" + userId, API_RESOURCE.format('messaging/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putUserChat = function (userId, data, successCallback, errorCallback) {
@@ -144,7 +156,6 @@
         };
 
         var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
-
             _putAsyncStars("Perfil/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
@@ -176,7 +187,7 @@
         var _putForumPostLikeNoCache = function (postId, data, successCallback, errorCallback) {
             _putDataNoCache(data, API_RESOURCE.format('forum/' + postId), successCallback, errorCallback);
         };
-
+        
         var _getAsyncAlbum = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
@@ -198,7 +209,7 @@
         var _countLikesByUser = function(courseId, token, successCallback, errorCallback, forceRefresh){
             _getAsyncData("likesByUser", API_RESOURCE.format('postcounter/'+ courseId + '?likes=true'), token, successCallback, errorCallback, forceRefresh);
         };
-
+        
         var _getServerDate = function(successCallback){
             _httpFactory({
                     method: 'GET',
@@ -222,7 +233,7 @@
             }
         };
 
-        var _getAsyncData2 = function (key, url, userId, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh) {
 
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
@@ -233,15 +244,16 @@
             }
             else if (forceRefresh){
                 if (token) {
-                    _getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
-                    _getAsyncForumDiscussions(91, token, function () {}, function () {}, true);
-                    moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
+                    //_getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
+                    //_getAsyncForumDiscussions(91, token, function () {}, function () {}, true);
+                    //moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                     _httpFactory({
                         method: 'POST',
-                        data: {"userid": userId, "activities":[150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249]},
+                        data: {"userid": userId, "activities": activitiesArray},
                         url: url,
                         headers: { 'Content-Type': 'application/json' , 'Authorization': token}
                     }).success(function (data, status, headers, config) {
+                        
                         var proc = setInterval(function() {//Get & save each activity object.
                             if (data.length > 0) {
                                 var activity = data.shift();
@@ -265,11 +277,7 @@
                                         }
                                     }
 
-                                    if (activitiesWithUserId.indexOf(activity.coursemoduleid) > -1) {
-                                        keyName = keyName + "?userid=" + userId;
-                                    }
-
-                                    _setLocalStorageJsonItem(keyName, activity.data[0]);//Save converted Activity.
+                                    _setLocalStorageJsonItem(keyName, activity.data[0]);
                                 }
 
                             } else {
@@ -497,9 +505,9 @@
             });
         };
         
-        var _postAsyncCatalogs = function (key, data, url, successCb, errorCb) {
+        var _postAsyncCatalogs = function (key, data, url, successCb, errorCb) {console.log("Catalog!");
             _getDeviceVersionAsync();
-            
+
             _httpFactory({
                 method: 'POST',
                 url: url,
@@ -529,9 +537,10 @@
 
         var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback, needUpdatePostCounter, addToQueue) {
             _getDeviceVersionAsync();
-            
+            var currentTime = new Date().getTime();
             var discussionid = data.discussionid;
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+
             if (addToQueue) {
                 addRequestToQueue(key, {
                     type: "httpRequest",
@@ -543,32 +552,56 @@
                                'Authorization': currentUser.token }
                     }
                 });
+
                 _setLocalStorageJsonItem(key, data);
+
                 if (successCallback) {
                     successCallback();
                 }
-            }else{
+
+            } else {
                 _httpFactory({
                     method: 'POST',
                     url: url,
                     data: data,
+                    timeout: 60000,
                     headers: { 'Content-Type': 'application/json',
-                               'Authorization': currentUser.token },
+                               'Authorization': currentUser.token }
                 }).success(function (data, status, headers, config) {
 
                     if (key != null) {
                         _setLocalStorageJsonItem(key,data);
                     }
 
-                    if(needUpdatePostCounter == true){
+                    if(needUpdatePostCounter == true) {
                         updatePostCounter(discussionid);
-                    }else{}
+                    }
 
                     successCallback();
                 }).error(function (data, status, headers, config) {
-                    data.statusCode = status;
-                    _setLocalStorageJsonItem(key,data);
-                    errorCallback(data);
+                    var finalTime = new Date().getTime();
+                    var obj = {};
+                    console.log("Within Failure " + (finalTime - currentTime) + " " + data + " " + status);
+
+                    if (data) {
+                        if (data.messageerror) {
+                            obj.messageerror = data.messageerror;
+                            obj.statusCode = status;
+                        } else {
+                            obj.messageerror = "Undefined Server Error";
+                            obj.statusCode = status;
+                        }
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = 500;
+                    }
+
+                    if (finalTime - currentTime > 60000) {
+                        obj.statusCode = 408;
+                        obj.messageerror = "Request Timeout";
+                    }
+
+                    errorCallback(obj);
                 });
             }
         };
@@ -588,7 +621,10 @@
                 }
             });
 			dataModel = !otherDataModel ? dataModel : otherDataModel;
-            _setLocalStorageJsonItem(key,dataModel);
+
+            if (key) {
+                _setLocalStorageJsonItem(key, dataModel);
+            }
 
             if(successCallback){
                 successCallback(); 
@@ -890,8 +926,11 @@
                     course.stages[i].stageStatus = course.stages[i].status;
 
                     course.stages[i]["challenges"] = _.filter(activities, function (a) {
-                        return a.parentsection == course.stages[i].section && a.section != course.stages[i].section && a.activity_type == 'ActivityManager'
+                        return a.parentsection == course.stages[i].section &&
+                            a.section != course.stages[i].section && a.activity_type == 'ActivityManager' && a.activityname != "CABINA DE SOPORTE"
                     });
+                    
+                    //course.stages[i]["challenges"] = [];
 
                     assign = _.find(activities, function (a) {
                         return a.parentsection == course.stages[i].parentsection &&
@@ -923,16 +962,18 @@
                             course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
                         }
 
-                        if (course.stages[i].challenges[j].activity_type == "ActivityManager") {                            
+                        if (course.stages[i].challenges[j].activity_type == "ActivityManager" && course.stages[i].challenges[j].activityname != "CABINA DE SOPORTE") {                            
                             activityManagers.push(course.stages[i].challenges[j]);
                         }
 
                         course.stages[i].challenges[j]["activities"] = _.filter(activities, function (a) {
-                            return a.parentsection == course.stages[i].challenges[j].section && a.section != course.stages[i].challenges[j].section && a.activity_type == 'ActivityManager'
+                            return a.parentsection == course.stages[i].challenges[j].section &&
+                                a.section != course.stages[i].challenges[j].section && a.activity_type == 'ActivityManager' && a.activityname != "CABINA DE SOPORTE"
                         });
 
                         var childrenActivities = _.filter(activities, function (a) {
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' &&
+                                (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Retroalimentación'))
                         });
 
                         for (k = 0; k < childrenActivities.length; k++) {
@@ -1331,6 +1372,31 @@
             }
         }
 
+        
+        function finalExecution(){
+            _httpFactory(queue.data).success(function (response) {
+                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                requestQueue.shift();
+                if(queue.data.method == 'GET') {
+                    if(queue.key) {
+                        _setLocalStorageJsonItem(queue.key, response);
+                    }
+                }    
+                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                if(requestQueue.length == 0 && _callback != null) {
+                    _callback();
+                    _callback = null;
+                }
+                doRequestforCellphone();
+            }).error(function (response) {
+                if(_isDeviceOnline){
+                   requestQueue[0].retryCount++;
+                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                   doRequestforCellphone();
+                }
+            });
+        };
+        
         function doRequestforCellphone(){            
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);        
 
@@ -1350,33 +1416,6 @@
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
 
-                                function finalExecution(){
-                                    _httpFactory(queue.data)
-                                    .success(function (response) {
-
-                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                                        requestQueue.shift();
-                                        if(queue.data.method == 'GET') {
-                                            if(queue.key) {
-                                                _setLocalStorageJsonItem(queue.key, response);
-                                            }
-                                        }
-
-
-                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                        if(requestQueue.length == 0 && _callback != null) {
-                                            _callback();
-                                            _callback = null;
-                                        }
-                                        doRequestforCellphone();
-                                    }).error(function (response) {
-                                        if(_isDeviceOnline){
-                                           requestQueue[0].retryCount++;
-                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                           doRequestforCellphone();
-                                        }
-                                    });
-                                }
                                 if (queue.data && queue.data.data && queue.data.data.hasfilecontent) {
                                     encodeImageWithUri(queue.data.data.imageuri, queue.data.data.datatype, function(b64){
                                         console.log('imageencodedsuccessfully')
@@ -1544,7 +1583,10 @@
             PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
             DesactivateUser: _desactivateUser,
-            GetAsyncDiscussionDetail: _getAsyncDiscussionDetail
+            GetAsyncDiscussionDetail: _getAsyncDiscussionDetail,
+            GetProfileCatalogs: _getProfileCatalogs,
+            PostProfilePoints: _postProfilePoints,
+            GetProfilePoints: _getProfilePoints            
         };
     })();
 }).call(this);

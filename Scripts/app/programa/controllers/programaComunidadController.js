@@ -125,7 +125,6 @@ angular
                                                         
                     drupalFactory.Services.GetContent("BadgeForumRobot",function(data, key){
                         $scope.robotContentResources = data.node;
-                        console.log(data.node);                        
                         },function(){},false);
                     
                     moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, $scope.userToken, initCommunitySuccessCallback, initCommunityErrorCallback, true);
@@ -296,7 +295,6 @@ angular
                 
                 function countLikesByUser() {
                     var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
-                    console.log(userLikes);
                     if (userLikes && userLikes.likes == 30){
                             assignLikesBadge();
                     }
@@ -317,7 +315,6 @@ angular
                             showRobotForum();
                             
                             moodleFactory.Services.PostBadgeToUser(_currentUser.userId, badgeModel, function () {
-                                console.log("created badge successfully");
                             }, function () { });
                             
                         }                    
@@ -346,7 +343,6 @@ angular
                                 }
                             }
                         }
-                        console.log("PostCounter" +  postCounter);
                         if (postCounter >= 30 && badgeForum[0].status == "pending") {
                             
                             var badgeModel = {

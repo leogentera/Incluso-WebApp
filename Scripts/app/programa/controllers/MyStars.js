@@ -83,7 +83,6 @@ myStarsModule.controller('MyStarsController', [
                             if (profileActivity.coursemoduleid == courseModuleId && profileActivity.status == 1) {
                                 profileActivity.sectionname = "Perfil ";
                                 profileActivity.points = data[i].points;
-                                console.log(profileActivity);
                                 starsByActivity.push(profileActivity);
                             }
                         }

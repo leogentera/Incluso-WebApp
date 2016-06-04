@@ -44,6 +44,7 @@ angular
             var subactivitiesCompleted = [];
             $scope.stars = 0;
             $scope.isInstalled = false;
+            var prevCurrentDiscussionIds;
 
             if(!$routeParams.retry) {
                 try {
@@ -261,6 +262,17 @@ angular
                 
             };
 
+            //Time Out Message modal
+            $scope.openModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'timeOutModal.html',
+                    controller: 'timeOutMapaDelEmprendedor',
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-programa'
+                });
+            };
+
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated, canPost) {
                 var results = {
                     "userid": currentUser.userId,
@@ -281,6 +293,7 @@ angular
                 };
                 
                 $scope.$emit('ShowPreloader');
+
                 _endActivity(activityModel, function() {
                     activitiesPosted++;
                     if (activitiesPosted == subactivitiesCompleted.length) {
@@ -292,6 +305,10 @@ angular
                                         for(var d = 0; d < data.discussions.length; d++) {
                                             currentDiscussionIds.push(data.discussions[d].discussion);
                                         }
+
+                                        //Save previous value of "currentDiscussionIds" object.
+                                        prevCurrentDiscussionIds = localStorage.getItem("currentDiscussionIds");
+
                                         localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
                                         
                                         var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
@@ -309,12 +326,13 @@ angular
                                             "filecontent": "",
                                             "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.jpg',
                                             "picture_post_author": $scope.user.profileimageurlsmall,
-                                            "iscountable":0
+                                            "iscountable":0,
+                                            "isgamepost": 1
                                         };
 
                                         function postToForum(){
-                                            moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                                                function() {
+                                            moodleFactory.Services.PostAsyncForumPost('new_post', requestData,
+                                                function() {//Success
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
@@ -332,17 +350,33 @@ angular
                                                         }, 500);
                                                     }, 500);
                                                 },
-                                                function(){
+
+                                                function(obj){//Error
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
                                                         $scope.showSharedAlbum = false;
                                                         $scope.$emit('HidePreloader');
-                                                        $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+
+                                                        //Revert previous request action.
+                                                        if (prevCurrentDiscussionIds === null) {
+                                                            localStorage.removeItem("currentDiscussionIds");
+                                                        } else {
+                                                            localStorage.setItem("currentDiscussionIds", prevCurrentDiscussionIds);
+                                                        }
+
+                                                        if (obj.statusCode == 408) {//Request Timeout
+                                                            $scope.openModal();
+
+                                                        } else {//A different Error happened
+                                                            $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                                        }
+
                                                     }, 1000);
                                                 }, (!_isDeviceOnline)
                                             );
                                         }
+
                                         if (_isDeviceOnline) {
                                             encodeImageUri($scope.pathImagenFicha, function (b64) {
                                                 requestData.filecontent = b64;
@@ -423,4 +457,11 @@ angular
                     );
                 }
             }
-        }]);
+        }]).controller('timeOutMapaDelEmprendedor', function ($scope, $modalInstance) {//TimeOut Robot
+
+    $scope.ToDashboard = function () {
+        $scope.$emit('ShowPreloader');
+        $modalInstance.dismiss('cancel');
+    };
+
+});

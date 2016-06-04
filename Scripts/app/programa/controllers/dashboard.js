@@ -20,22 +20,7 @@ angular
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-            var notSendAgain1 = localStorage.getItem("notSendAgain1/" + localStorage.getItem("userId")); //Used for Chat
-            var notSendAgain2 = localStorage.getItem("notSendAgain2/" + localStorage.getItem("userId")); //Used for Chat
-            var notSendAgain3 = localStorage.getItem("notSendAgain3/" + localStorage.getItem("userId")); //Used for Chat
-
-            if (!notSendAgain1) {//Initialization
-                localStorage.setItem("notSendAgain1/" + localStorage.getItem("userId"), "false");
-            }
-
-            if (!notSendAgain2) {//Initialization
-                localStorage.setItem("notSendAgain2/" + localStorage.getItem("userId"), "false");
-            }
-
-            if (!notSendAgain3) {//Initialization
-                localStorage.setItem("notSendAgain3/" + localStorage.getItem("userId"), "false");
-            }
-
+            
             var activity_identifier = "0000";
             var currentUserProfile = getCurrentUserProfile();
             
@@ -140,7 +125,7 @@ angular
             $scope.navigateToStage = function () {
                 //Check if first time with course
                 if ($scope.usercourse.firsttime) { // 1 (true) : it is first time; 0 : it is not firsttime
-                    $scope.openModal();console.log("Modal!!");
+                    $scope.openModal();
                     //Update firsttime value
                     $scope.updateProgramFirstTime();
                 }
@@ -222,8 +207,6 @@ angular
                                 leaderboard[lb].profileimageurl = niceImageUrl;
                             });
                         }
-                        
-                       
 
                         $scope.course.leaderboard = leaderboard;
                         
@@ -249,9 +232,11 @@ angular
                     _setLocalStorageItem("currentStage", $scope.currentStage);
 
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
+                        $scope.incLoadedItem(); //11
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         currentUserProfile = getCurrentUserProfile();
                         var images = [];
+
                         for(var i = 0; i < $scope.course.leaderboard.length; i++) {
                             var topuser = $scope.course.leaderboard[i];
                             
@@ -267,11 +252,8 @@ angular
                         'name': "avatar_" + $scope.user.userId + ".png",
                         'downloadLink': $scope.user.profileimageurl
                          };
-
                         
                         saveLocalImages(images);
-                        
-                        
                         var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                         
                         if(profile) {
@@ -281,7 +263,7 @@ angular
                         }
                         
                         function profileCallback() {
-                            
+                            $scope.incLoadedItem(); //14
                             var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                             $timeout(function(){
                                 $scope.user.profileimageurl = profile != null ? profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
@@ -296,9 +278,15 @@ angular
                                 });
                             }, 1);
 
+                            moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
+                                $scope.incLoadedItem(); //16
+                            }, function () {}, true);
+
                             _pageLoaded = true;
-                            if (_loadedResources && _pageLoaded) {
-                                $scope.$emit('HidePreloader')
+                            if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
+                                $timeout(function(){
+                                    $scope.$emit('HidePreloader');
+                                }, 1000);
                             }
 
                             if (!profile.termsAndConditions) {
@@ -326,9 +314,6 @@ angular
                                     break;
                                 }
                             }
-                            
-                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){}, function () {}, true);
-                            
                         }
 
                     }, errorCallback, true);
@@ -413,46 +398,73 @@ angular
             function getUserNotifications(courseid) {
                 var courseId = courseid;
                 var userId = _getItem("userId");
+
                 moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {
-                    getUserChat();
-                }, errorCallback, true);
-            }
-
-            function getUserChat(callback) {
-                //Get Messages From Server.
-                moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
-                    if (callback) {
-                        callback();
-                    }
-
-                    var messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
-
-                    if (messages.length == 0) {
-                        localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");
-                    }
-
+                    $scope.incLoadedItem(); //10
                     getUserStarsByPoints();
                     getUserLikes();
-
+                    getUserChat();
                 }, errorCallback, true);
-            }
-
-            function getUserLikes() {
-                moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
-                    
-                    
-                },function(){},true);
             }
             
             function getUserStarsByPoints() {
 
                 moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token, function (dataStars) {
+                    $scope.incLoadedItem(); //12
                     if (dataStars.length > 0) {
                         localStorage.setItem("userStars", JSON.stringify(dataStars));
                     }
                 }, function () {
                     $scope.activitiesCompleted = [];
                 }, true);
+            }
+
+            function getUserChat() {
+                moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
+
+                    var messages = localStorage.getItem('userChat/' + $scope.user.userId); //Get all messages posted.
+
+                    if (messages) {
+                        messages = JSON.parse(messages);
+                    } else {
+                        messages = [];
+                    }
+
+                    var numMessages = localStorage.getItem('numMessages/' + $scope.user.userId); //Previous count of Messages
+
+                    if (numMessages === null) {
+                        numMessages = 0;
+                        _setLocalStorageItem("numMessages/" + $scope.user.userId, numMessages);
+                    } else {
+
+                        numMessages = parseInt(numMessages, 10);
+                        console.log("THERE ARE " + numMessages + " MESSAGES");
+
+
+                        if (messages.length > numMessages) {//The Couch Posted Something...
+                            console.log(messages.length + " NEW MESSAGES " + numMessages);
+                            _setLocalStorageItem('chatRead/' + $scope.user.userId, "false"); //Turn on Chat Bubble
+                            _setLocalStorageItem('numMessages/' + $scope.user.userId, messages.length);  //Update count of Messages
+                        }
+                    }
+
+                }, errorCallback, true);
+            }
+
+            function getUserLikes() {
+                moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
+                    $scope.incLoadedItem(); //13
+
+                    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    if (currentUser) {
+                        moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){
+                            $scope.incLoadedItem(); //15
+                            getProfilePoints(currentUser);
+                        },function(data){
+                        },true);
+                    }
+
+                },function(){},true);
             }
 
             //Open Welcome Message modal

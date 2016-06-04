@@ -18,12 +18,11 @@ var _isDeviceOnline = null;
 var _queuePaused = false;
 var _activityStatus = null;
 var _tutorial = false;
+var _isCellphone = false;
 
 /* Prototypes */
 window.mobilecheck = function() {
-  var check = false;
-  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4)))check = true})(navigator.userAgent||navigator.vendor||window.opera);
-  return check;
+  return _isCellphone;
 }
 
 var _comboboxCompat = function (){
@@ -277,6 +276,8 @@ var _activityDependenciesLegacy = [
     }
 ];
 
+var quizesArray = [150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249];
+
 var notificationTypes = {    
     activityNotifications: 1,
     generalNotifications: 2,
@@ -381,7 +382,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
 
 /* ends an activity */
 var _endActivity = function (activityModel, callback, pathCh) {
-
+    debugger;
     //trigger activity type 2 is sent when the activity ends.
     var triggerActivity = 2;
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -541,7 +542,6 @@ var _updateBadgeStatus = function (coursemoduleid) {
     if (activity) {
       var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
       if (currentBadge) {
-        console.log("badge won" + currentBadge.badgeName + " " + coursemoduleid);
           for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
               if (badges[indexBadge].id == currentBadge.badgeId) {
                   profile.badges[indexBadge].status = "won";
@@ -561,7 +561,6 @@ var _updateBadgeStatus = function (coursemoduleid) {
 var _updateRewardStatus = function () {
 
     var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
-    console.log('Stars from rewards: ' + profile.stars);
     var totalRewards = profile.rewards;
     var profilePoints = profile.stars;
 
@@ -601,23 +600,6 @@ var logStartActivityAction = function(activityId, timeStamp) {
             var triggerActivity = 1;
             _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
-            if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
-                var key1 = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                var key2 = "finishCabinaSoporte/" + currentUser.id;
-                if (localStorage.getItem(key1) == null && !treeActivity.status && localStorage.getItem(key2) == null) {
-                    moodleFactory.Services.GetServerDate(function(date){
-                    _setLocalStorageJsonItem(key1, {
-                        datestarted: date.time,
-                        coursemoduleid: treeActivity.coursemoduleid,
-                        activity_identifier: treeActivity.activity_identifier
-                    });
-                    
-                    localStorage.removeItem(key2);
-                    })                    
-                }
-            }
-
-
         }, function () {
             console.log('Error callback');
         });
@@ -653,8 +635,7 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
             allNotifications[i].status = "won"
             localStorage.setItem("notifications",JSON.stringify(allNotifications));
             
-            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){              
-                console.log("create notification successful");
+            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
             }, errorCallback, true);
               
         } else {
@@ -664,69 +645,6 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     }
 };
 
-
-var _coachNotification = function (stageIndex) {
-
-    var notifications = JSON.parse(localStorage.getItem("notifications"));
-    
-    var userId = localStorage.getItem('userId');
-        
-    var stageId = stageIndex + 1;
-            
-    var notificationCoach = _.find(notifications, function (notif) {
-        if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3 && notif.activityidnumber.substring(0,1) == stageId) {
-            return notif;
-        }
-    });
-
-    if (notificationCoach && notificationCoach.status == "pending") {      
-        var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
-
-                        
-        var notificationId = notificationCoach.id;
-        if ((activity)) {
-            var chatUser = JSON.parse(localStorage.getItem("userChat"));
-            if (chatUser && chatUser.length > 0) {
-                var lastChat = _.max(chatUser, function (chat) {
-                    if (chat.messagesenderid == userId) {
-                        return chat.messagedate;
-                    }
-                });
-
-                //'minutes'- 'days'
-                var daysOfNoChat = notificationCoach.days;
-                var lastDateChat = moment(new Date(lastChat.messagedate)).add(daysOfNoChat, 'days');
-
-                var today = new Date();
-                if (lastDateChat < today) {
-                    //Create chat notification
-                    //moodleFactory.services.createNotification(userId,notificationId, function(){},function(){});
-                    var wonDate = new Date();
-                    var dataModelNotification = {
-                        notificationid : notificationId,
-                        userid: userId,
-                        wondate: wonDate
-                      };
-                                                             
-                    for (var i = 0; i< notifications.length; i++) {
-                      if (notifications[i].id == notificationId) {
-                          notifications[i].wondate = wonDate;
-                          notifications[i].status = "won";
-                      }
-                    }
-                    localStorage.setItem("notifications",JSON.stringify(notifications));
-            
-                    moodleFactory.Services.PostUserNotifications( dataModelNotification, function(){
-                        console.log("create notification successful");
-                      }, errorCallback,true);
-                    
-                } else {
-                    return false;
-                }
-            }
-        }
-    }
-};
 
 
 function updateUserStarsUsingExternalActivity(activity_identifier) {
@@ -804,7 +722,6 @@ var _progressNotification = function(){
                     localStorage.setItem("notifications", JSON.stringify(notifications));
           
                     moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
-                        console.log("progress notification created" + currentNotification.name);
                     }, errorCallback, true);
                     
                 }
@@ -826,7 +743,7 @@ var errorCallback = function (data) {
 };
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
-    
+    console.log("GetActivityByActivityIDentifier");
     var matchingActivity = null;
     var breakAll = false;
     var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
@@ -1395,6 +1312,83 @@ var logout = function ($scope, $location) {
    clearLocalStorage($location);
 };
 
+var getProfilePoints = function(currentUser){
+  
+  var userCourse = JSON.parse(localStorage.getItem('usercourse'));
+
+  moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(data){
+    
+    var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
+    for (var i=0; i < profilePoints.length; i++) {
+        profilePoints[i].points = profilePoints[i].score;
+    }
+    localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
+    
+    },function(data){
+      console.log(data);
+      },true);
+  
+};
+
+
+var fillProfilePoints = function(pointsToAdd, activityId){
+
+    var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
+    var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
+    
+    //set profilePoints for the first time
+    if (!profilePoints || profilePoints.length == 0) {
+      profilePoints = profileCatalogs.profiles;
+      for(var i= 0; i < profilePoints.length; i++){
+          profilePoints[i].points = 0;
+      }
+    }
+    
+    for(var i = 0; i < pointsToAdd.length; i++){
+      var profileIdToAdd = pointsToAdd[i].profileId;
+      var points = pointsToAdd[i].points;
+      for(var j = 0; j < profilePoints.length; j++){
+          if (profilePoints[j].id == profileIdToAdd) {
+            profilePoints[j].points += points;
+          }
+      }
+    }
+        
+    var scores = [];
+    for(var i=0; i < profilePoints.length; i++){
+      var item = profilePoints[i];
+      var profileObject = {
+          "profileid" : item.id,
+          "moduleid": activityId,
+          "score": item.points
+        };
+
+      scores.push(profileObject);
+    }
+    
+    var objectProfile = { "scores": scores};
+
+    moodleFactory.Services.PostProfilePoints('',JSON.stringify(objectProfile),function(data){
+        console.log(data);
+      },function(data){
+          console.log(data);
+        });
+    
+    localStorage.setItem("profilePoints",JSON.stringify(profilePoints));
+}
+
+
+
+var getProfileCatalogs = function(){
+    
+    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+    if (currentUser) {
+      moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){},function(data){},true);    
+    }
+};
+
+
+
 
 
 var clearLocalStorage = function(location){
@@ -1410,8 +1404,7 @@ var clearLocalStorage = function(location){
     localStorage.removeItem("stage");
     localStorage.removeItem("usercourse");
     localStorage.removeItem("currentStage");
-    localStorage.removeItem("notifications");
-    localStorage.removeItem("userChat");
+    localStorage.removeItem("notifications");    
     localStorage.removeItem("leaderboard");
     localStorage.removeItem("activityStatus");
     localStorage.removeItem("userId");
@@ -1525,7 +1518,7 @@ var _activityRoutes = [
     {id: 1005, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
     {id: 1007, name: '', url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
     {id: 1008, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/1008'},
-    {id: 1002, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/1002'},
+    {id: 1002, name: '', url: '/ZonaDeVuelo/Retroalimentacion/1002'},
     {id: 1009, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
     {id: 2001, name: '', url: '/ZonaDeNavegacion/ExploracionInicial/2001'},
     {id: 2004, name: '', url: '/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/2004'},
@@ -1538,7 +1531,7 @@ var _activityRoutes = [
     {id: 2016, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/13y5/2016'},
     {id: 2017, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/2017'},
     {id: 2026, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/2026'},
-    {id: 2022, name: '', url: '/ZonaDeNavegacion/CabinaDeSoporte/2022'},
+    {id: 2022, name: '', url: '/ZonaDeNavegacion/Retroalimentacion/2022'},
     {id: 2023, name: '', url: '/ZonaDeNavegacion/ExploracionFinal/2023'},
     {id: 3101, name: '', url: '/ZonaDeAterrizaje/ExploracionInicial/3101'},
     {id: 3201, name: '', url: '/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201'},
@@ -1548,7 +1541,7 @@ var _activityRoutes = [
     {id: 3401, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/3401'},
     {id: 3402, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
     {id: 3404, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/3404'},
-    {id: 3501, name: '', url: '/ZonaDeAterrizaje/CabinaDeSoporte/3501'},
+    {id: 3501, name: '', url: '/ZonaDeAterrizaje/Retroalimentacion/3501'},
     {id: 3601, name: '', url: '/ZonaDeAterrizaje/ExploracionFinal/3601'},
     {id: 50000, name: 'Comunidad General', url: '/Community/50000'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
@@ -1557,17 +1550,15 @@ var _activityRoutes = [
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
 
-var _activitiesCabinaDeSoporte = [1002, 2022, 3501];
-
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [
     1001,
     1101,
     1049,
-     1020,
-     1039,
-     1010,
-     1021,
+    1020,
+    1039,
+    1010,
+    1021,
     1006,
     1005,
     1007,
@@ -1807,36 +1798,6 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
     _forceUpdateConnectionStatus(sucessIsOnlineCallback, errorIsOnlineCallback);
 };
 
-/* loads drupal resources (content) */
-var _loadedDrupalResources = false;
-var _loadedDrupalResourcesWithErrors = false;
-var _loadDrupalResources = function() {
-    _loadedDrupalResources = false;
-    var propCounter = 0;
-    _loadedDrupalResources = false;
-    _loadedDrupalResourcesWithErrors = false;
-    
-    //for (var prop in drupalFactory.NodeRelation) {
-    //    drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
-    //}
-    drupalFactory.Services.GetDrupalContent(function(){
-            _loadedDrupalResources = true;
-        }, function(){
-            _loadedDrupalResources = false;
-            _loadedDrupalResourcesWithErrors = true;
-        }, true);
-    
-    function successDrupalResourcesCallback() {
-        propCounter++;
-        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
-    }
-    
-    function errorDrupalResourcesCallback() {
-        propCounter++;
-        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
-        _loadedDrupalResourcesWithErrors = true;
-    }
-}
 
 /* params:
    images - array of objects { path, name, downloadLink }
@@ -1891,13 +1852,32 @@ function encodeImageWithUri(imageUri, datatype, callback) {
 
 function getcurrentVersion() {  
     var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
-    var localVersion = "V-TEST";
+    var localVersion = "V-1.0.0.";
     if (deviceVersion && deviceVersion.localVersion) {
       localVersion = deviceVersion.localVersion;
     }
     return localVersion;
 }
 
+
+var progressBar = {
+    set: function (val) {
+        var bar = $(".app-preloader .incluso");
+        val = val < 0 ?  0 : val > 100 ? 100 : val;
+
+        var labelWidth = parseInt(bar.find(".label-progress span:first-child").text(), 10);
+
+        if (val == 0) {//This is for being able to reset the style of the bar.
+            bar.find(".fill-bar").width(val + "%");
+            bar.find(".label-progress span:first-child").text(val);
+        }
+
+        if (val > labelWidth) {//Update percentage
+            bar.find(".fill-bar").width(val + "%");
+            bar.find(".label-progress span:first-child").text(val);
+        }
+    }
+};
 
 /* Waits until page is loaded */
 $(document).ready(function(){

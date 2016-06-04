@@ -181,12 +181,11 @@ angular
                             "actividad_completa": "Si",
                             "calificación": "Aprobado",
                             "gusta_actividad": "Si",
-                            "respuestas": [{"preguntaId": 1, "respuestaId": 2}, {"preguntaId": 2, "respuestaId": 6}, {"preguntaId": 3, "respuestaId": 8}, {"preguntaId": 4, "respuestaId": 11}, {"preguntaId": 10, "respuestaId": 29}, {
-                                "preguntaId": 11,
-                                "respuestaId": 33
-                            }, {"preguntaId": 15, "respuestaId": 44}, {"preguntaId": 18, "respuestaId": 52}]
-                        }
-                    );
+                            "respuestas": [
+                              {"preguntaId": 1, "respuestaId": 2}, {"preguntaId": 2, "respuestaId": 6},
+                              {"preguntaId": 3, "respuestaId": 8}, {"preguntaId": 4, "respuestaId": 11},
+                              {"preguntaId": 10, "respuestaId": 29},{"preguntaId": 11,"respuestaId": 33},
+                              {"preguntaId": 15, "respuestaId": 44}, {"preguntaId": 18, "respuestaId": 52}]});
                 }
             };
 
@@ -243,8 +242,15 @@ angular
                     }
                     if ((activitiesCompleted == parentActivity.activities.length - 1) && $scope.IsComplete) {
                         parentActivity.status = 1;
-                        _endActivity(parentActivity, function () {
-                        });
+                        
+                         //update assertiveness on users profile
+                        if(data["calificación"] && data["calificación"] == "Aprobado"){
+                          var userid = localStorage.getItem("userId");
+                          var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+                          user.financialAbility = true;
+                          moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
+                        }
+                        _endActivity(parentActivity, function () {});
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                     }
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);

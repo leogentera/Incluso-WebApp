@@ -102,14 +102,14 @@ angular
                         "respuestas": [],
                         "retroRespCorrecta":"",
                         "retroRespIncorrecta":""
-            		}
+            		};
             		for(var j = 0; j < currentQuestion.answers.length; j++){
             			var currentAnswer = currentQuestion.answers[j];
 	            		var answer = {
 	            			"respuestaId": "" + (i * 3 + (j + 1)),
 	            			"respuesta": currentAnswer.answer,
                             "tipo": (currentAnswer.fraction == 0 ? "incorrecta" : "correcta")
-	            		}
+	            		};
                         questionMap.answers.push({"answerId": "" + currentAnswer.id, "orderId": "" + (i * 3 + (j + 1))});
                         if (currentAnswer.fraction == 0) {
                             question.retroRespIncorrecta = currentAnswer.feedback;
@@ -185,8 +185,18 @@ angular
                             activitiesCompleted++;
                         }
                     }
+
                     if ($scope.IsComplete && activitiesCompleted == parentActivity.activities.length - 1) {
                         parentActivity.status = 1;
+                        
+                        //update assertiveness on users profile
+                        if(data["calificación"] && data["calificación"] == "Aprobado"){
+                          var userid = localStorage.getItem("userId");
+                          var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+                          user.assertiveness = true;
+                          moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
+                        }
+                        
                         _endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                         updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
@@ -194,6 +204,8 @@ angular
                 }
                 if (data["calificación"] && data["calificación"] == "Reprobado") {
                     $timeout(function(){
+
+
                         $scope.isReprobado = true;
                         _loadedResources = false;
                         _pageLoaded = true;
