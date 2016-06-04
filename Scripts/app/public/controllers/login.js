@@ -323,7 +323,22 @@ angular
                 //$scope.$emit('ShowPreloader');
                 var userFacebook = JSON.parse(data);
 
-                _loadDrupalResources();
+                /* loads drupal resources (content) */
+                _loadedDrupalResources = false;
+                _loadedDrupalResourcesWithErrors = false;
+                _loadedDrupalResources = false;
+                _loadedDrupalResources = false;
+                _loadedDrupalResourcesWithErrors = false;
+
+                drupalFactory.Services.GetDrupalContent(function () {
+                    _loadedDrupalResources = true;
+                    $scope.incLoadedItem(); //????
+                }, function () {
+                    _loadedDrupalResources = false;
+                    _loadedDrupalResourcesWithErrors = true;
+                }, true);
+                /*******************  ******/
+
                 $rootScope.OAUTH_ENABLED = true;
                 $rootScope.totalLoads = 14;
 

@@ -12,7 +12,18 @@
         <a ng-click="navigateToMyProfile()">
           <span class="icomoon icon-profile"></span>
         </a>
-      </li> 
+      </li>
+
+      <li ng-class="toolbarOptionActive('/Chat')">
+        <a ng-click="navigateTo('/Chat', 'Cabina de soporte', 'null', 'navbarorange')">
+          <span class="icomoon icon-headset"></span>
+        </a>
+        <div class="bubble bubble-sm" ng-show="showChatNotification()">
+          <p class="number-alerts">...
+            <span class="glyphicon glyphicon-triangle-top"></span>
+          </p>
+        </div>
+      </li>
 
       <li ng-class="toolbarOptionActive('/Alerts')">
         <a ng-click="navigateTo('Alerts', 'Notificaciones', 'null', 'navbarorange')">
