@@ -49,6 +49,7 @@ angular
                 var assertiveness = $scope.profile.assertiveness == true ? "1" : "0";
                 var financialAbility = $scope.profile.financialAbility == true ? "1" : "0";
                 
+                debugger;
                 if (!$scope.profile.inclusoprofile) {
                     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
                     
@@ -60,7 +61,6 @@ angular
 
 
                 }else{
-                    debugger;
                     profileId = _.findWhere(profileCatalogs.profiles, { profilename: $scope.profile.inclusoprofile}).id;
                 }
                 
@@ -83,7 +83,7 @@ angular
             
             function getMaxProfile(profilePoints) {
                 
-                var profiles = profileCatalog.profiles;
+                var profiles = profileCatalogs.profiles;
                 for(var i = 0 ; i < profilePoints.length; i++){
                     var currentProfileActivity = profilePoints[i];
                     for(var j = 0; j < profiles.length; j++) {
@@ -95,7 +95,7 @@ angular
                 
                 
                 
-                var maxProfile = _.max(profilePoints, function(profile){
+                var maxProfile = _.max(profiles, function(profile){
                         return profile.points;
                     });                
                 var tiedProfiles = _.where(profilePoints, {profileid: maxProfile.profileid});
