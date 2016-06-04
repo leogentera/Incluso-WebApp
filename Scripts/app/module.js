@@ -25,6 +25,7 @@ angular
         'incluso.program.systemRequirements',
         'incluso.programa.notificationcontroller',
         'incluso.programa.notificationlikescontroller',
+        'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
         'incluso.programa.reconocimiento',
@@ -36,7 +37,6 @@ angular
         // TODO: Should be just one controller for all stage dashboards, will merge soon
         'incluso.stage.dashboardcontroller2',
         'incluso.stage.dashboardcontroller3',
-
         'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',
         'incluso.stage.forumcommentscontroller',
@@ -97,10 +97,9 @@ angular
         $http.get('Templates/Juegos/Game.html', { cache: true });        
         $http.get('Templates/NotificationDetails.html', { cache: true });  
         $http.get('Templates/Programa/Dashboard.html', { cache: true });
-
+        $http.get('Templates/Chat/index.html', { cache: true });
         $http.get('Templates/Leaderboard/index.html', { cache: true });          
         $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: true });
-
         $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: true });          
         $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: true });  
@@ -311,8 +310,12 @@ angular
         $routeProvider.when('/AlbumIncluso', {
             templateUrl: 'Templates/Programa/AlbumIncluso.html',
             controller: 'AlbumInclusoController'
-        });
+       });
 
+        $routeProvider.when('/Chat', {
+            templateUrl: 'Templates/Chat/index.html',
+            controller: 'programaChatController'
+        });
             
         $routeProvider.when('/Leaderboard', { 
             templateUrl: 'Templates/Leaderboard/index.html',
@@ -452,13 +455,11 @@ angular
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html',
             controller: 'stageMessageController'
         });
-    
 
         $routeProvider.when('/ZonaDeVuelo/Retroalimentacion/:activityId', {
             templateUrl: 'Templates/Programa/Retroalimentacion.html',
             controller: 'programafeedbackcontroller'
         });
-        
     
         $routeProvider.when('/ZonaDeVuelo/ExploracionFinal/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html',
