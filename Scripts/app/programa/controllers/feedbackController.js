@@ -104,7 +104,7 @@ angular
                 
                 //evaluates if another profile has the maximum score also
                 var tiedProfiles = _.filter(profiles, function(item){
-                    return item.score == maxProfile.score && item.id != maxProfile.id;
+                    return item.score == maxProfile.score;
                 });
 
 
@@ -117,23 +117,37 @@ angular
                         for(var i = 0; i < tiedProfiles.length; i++){
                             var profileTied = tiedProfiles[i];
                             if (profileTied.id == item.profileid) {
-                                return profilePoints.moduleid = misGustosActivityId
+                                return item.moduleid == misGustosActivityId;
                             }
                         }
                     });
 
-
-                    var maxMisGustos = _.max(misGustosActivities,function(item){
-                            return item.score
-                        });
                     
-                    if (maxMisGustos.length > 1) {
+                    var misGustosProfiles = profileCatalogs.profiles;
+                    for(var i=0; i < misGustosProfiles; i++){
+                        misGustosProfiles[i].score = misGustosProfiles[i].score || 0;
+                        for(var j = 0; j < misGustosActivities; j++){
+                            if (misGustosActivities[j].profileid == misGustosProfiles.id) {
+                                misGustosProfiles[i].score += misGustosActivities.score;    
+                            }
+                        };
+                    };
+
+                    var maxMisGustos = _.max(misGustosProfiles,function(item){
+                        return item.score;
+                    });
+                    
+                    var tiedMisGustos = _.filter(misGustosProfiles, function(item){
+                        return item.score == maxMisGustos.score;
+                    }); 
+                
+                    if (tiedMisGustos.length > 1) {
 
                         var retoMultipleActivities = _.filter(misGustosActivities, function(item){
                             for(var i = 0; i < misGustosActivities.length; i++){
                                 var misGustosActivity = misGustosActivities[i];
                                 if (misGustosActivity.id == item.profileid) {
-                                    return misgustosActivities.moduleid = retoMultipleActivityId
+                                    return misgustosActivities.moduleid == retoMultipleActivityId;
                                 }
                             };
                         });
