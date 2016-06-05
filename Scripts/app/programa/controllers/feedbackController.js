@@ -24,6 +24,9 @@ angular
             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.userId));
             $scope.activity = getActivityByActivity_identifier($routeParams.activityId);
             $scope.closingContentname = "RetroalimentacionClosing";
+            var misGustosActivityId = 70;
+            var retoMultipleActivityId = 139;
+            
             switch ($routeParams.activityId) {
                 case "1002":
                     $scope.location = '/ZonaDeVuelo/Dashboard/1/5';
@@ -87,28 +90,59 @@ angular
                 for(var i = 0 ; i < profilePoints.length; i++){
                     var currentProfileActivity = profilePoints[i];
                     for(var j = 0; j < profiles.length; j++) {
+                        profiles[j].score = profiles[j].score != undefined ? profiles[j].score : 0;
                         if (profiles[j].id == currentProfileActivity.profileid) {
                             profiles[j].score += currentProfileActivity.score;
                         }
                     }
                 };
                 
-                
-                
+                //gets profile with maximum score
                 var maxProfile = _.max(profiles, function(profile){
-                        return profile.points;
-                    });                
-                var tiedProfiles = _.where(profilePoints, {profileid: maxProfile.profileid});
+                        return profile.score;
+                    });
                 
-                //
+                //evaluates if another profile has the maximum score also
+                var tiedProfiles = _.filter(profiles, function(item){
+                    return item.score == maxProfile.score && item.id != maxProfile.id;
+                });
+
+
                 if (tiedProfiles.length >= 4) {
-                    return 1; //asignar perfil genérico
+                    //If there are more than 4 profiles in draw sets Generic profile to it
+                    return _.where(profiles, { profilename : "Generico"}).id;
                 }else if (tiedProfiles.length > 1) {
-                    //var maxOnActivityMisGustos = 
-                    return 2;
+
+                    var misGustosActivities = _.filter(profilePoints,function(item){
+                        for(var i = 0; i < tiedProfiles.length; i++){
+                            var profileTied = tiedProfiles[i];
+                            if (profileTied.id == item.profileid) {
+                                return profilePoints.moduleid = misGustosActivityId
+                            }
+                        }
+                    });
+
+
+                    var maxMisGustos = _.max(misGustosActivities,function(item){
+                            return item.score
+                        });
+                    
+                    if (maxMisGustos.length > 1) {
+
+                        var retoMultipleActivities = _.filter(misGustosActivities, function(item){
+                            for(var i = 0; i < misGustosActivities.length; i++){
+                                var misGustosActivity = misGustosActivities[i];
+                                if (misGustosActivity.id == item.profileid) {
+                                    return misgustosActivities.moduleid = retoMultipleActivityId
+                                }
+                            };
+                        });
+                    }
+                    
+                    return maxMisGustos.id;
                 }
-                                
-                return 1;
+
+                return maxProfile.id;
             }
             
             function initialLoading() {
