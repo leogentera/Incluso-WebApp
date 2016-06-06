@@ -83,7 +83,7 @@ angular
             
             function getMaxProfile(profilePoints) {
                 // Gets the score by profile
-                var profiles = profileCatalogs.profiles;
+                var profiles = copyProfile(profileCatalogs.profiles);
                 for(var i = 0 ; i < profilePoints.length; i++){
                     var currentProfileActivity = profilePoints[i];
                     for(var j = 0; j < profiles.length; j++) {
@@ -117,14 +117,18 @@ angular
                     });
 
                     //Fills profiles with the score obtained in misGustosActivities
-                    var misGustosProfiles = profileCatalogs.profiles;
-                    for(var i=0; i < misGustosProfiles; i++){
-                        misGustosProfiles[i].score = misGustosProfiles[i].score || 0;
-                        for(var j = 0; j < misGustosActivities; j++){
-                            if (misGustosActivities[j].profileid == misGustosProfiles.id) { misGustosProfiles[i].score += misGustosActivities.score; }
+                    var misGustosProfiles = copyProfile( profileCatalogs.profiles);
+                    for(var i=0; i < misGustosActivities.length; i++){
+                        var misGustosActivity = misGustosActivities[i];                        
+                        for(var j=0; j < misGustosProfiles.length; j++){
+                            misGustosProfiles[j].score = misGustosProfiles[j].score != undefined ? misGustosProfiles[j].score : 0;
+                            if(misGustosActivities[i].profileid == misGustosProfiles[j].id){
+                                misGustosProfiles[j].score += misGustosActivities[i].score;
+                            }  
                         };
                     };
-                    //Gets profile with the highest score from misGustosProfiles
+                    
+                    //Gets the profile with the highest score from misGustosProfiles
                     var maxMisGustos = _.max(misGustosProfiles,function(item){ return item.score; });
                     //Evaluates if there are more than one profile with the same highest score of maxMisGustos
                     var tiedMisGustos = _.filter(misGustosProfiles, function(item){ return item.score == maxMisGustos.score; }); 
@@ -138,20 +142,23 @@ angular
                             };
                         });
                         
+                        //Fill profiles with the score obtained in retoMultipleActivities
                         var retoMultipleProfiles = profileCatalogs.profiles;
                         for(var i= 0; i < retoMultipleProfiles.length; i++){
                             retoMultipleProfiles[i].score = retoMultipleProfiles[i].score || 0;
-                            for(j=0;j < retoMultipleActivities;j++){
-                                if(retoMultipleActivities[j].profileid == retoMultipleProfiles[i].id){ retoMultipleProfiles[j].score += retoMultipleActivities.score; }    
+                            for(j=0;j < retoMultipleActivities.length;j++){
+                                if(retoMultipleActivities[j].profileid == retoMultipleProfiles[i].id){
+                                    retoMultipleProfiles[i].score += retoMultipleActivities[j].score; }    
                             };
                         };
-                        
+                        //Gets the profile with the highest score from retoMultipleProfiles
                         var maxRetoMultiple = _.max(retoMultipleProfiles,function(item){ return  item.score; });
-                        
+                        //Evaluates if there are more than one profile with the same score of maxRetoMultiple
                         var tiedRetoMultiple = _.filter(retoMultipleProfiles,function(item){ return item.score == maxRetoMultiple.score});
-                        
-                        if (tiedRetoMultiple > 1) {
-                            
+                        //If there is a tie in retoMultiple then gets a returns a random profile from tiedRetoMultiple
+                        if (tiedRetoMultiple.length > 1) {
+                            var randomIndex = _.random(0, tiedRetoMultiple.length - 1);
+                            return tiedRetoMultiple[randomIndex].id;
                         }else{
                             return maxRetoMultiple.id;
                         }
@@ -162,6 +169,16 @@ angular
                     return maxProfile.id;
                 }
             }
+            
+            function copyProfile(profile) {
+                var arrayOfProfiles = [];
+                for(var i = 0; i < profile.length; i++){
+                    var profileCopied =  $.extend(true, {}, profile[i]);
+                    arrayOfProfiles.push(profileCopied);
+                }
+                return arrayOfProfiles;
+            }
+            
             
             function initialLoading() {
                 // $scope.showRobot();
