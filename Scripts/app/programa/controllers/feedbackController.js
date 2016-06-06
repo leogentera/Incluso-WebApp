@@ -211,7 +211,9 @@ angular
             
             $scope.finishActivity = function(){
                 _endActivity($scope.activity,function(data){
-                    updateActivityStatus($scope.activity.activity_identifier);
+                    var updatedActivityOnUserCourse = updateActivityStatus($scope.activity.activity_identifier);
+                    //Update local storage and activities status array
+                    _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);
                 });
                 $location.path($scope.location);
             };
