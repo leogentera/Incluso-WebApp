@@ -789,8 +789,10 @@ angular
             function calculateProfilePoints(questions){
                 var profilePoints = [];
 
+                var profiles = JSON.parse(localStorage.getItem("profileCatalogs")).profiles;
+                var profileNone = _.where(profiles, {profilename: "None"}).id || 1;
                 for(var i = 0; i < questions.length; i++){
-                    if (questions[i].profileid) {
+                    if (questions[i].profileid && questions[i].profileid != profileNone) {
                         var profileId = questions[i].profileid;
                         if (profileId.length > 0) {
                             for(var j=0; j < profileId.length; j++){

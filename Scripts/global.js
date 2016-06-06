@@ -1326,7 +1326,10 @@ var getProfilePoints = function(currentUser){
 
 
 var fillProfilePoints = function(pointsToAdd){
-
+  
+    if (pointsToAdd.length == 0) {
+      return;
+    }
     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
     
     var scores = [];

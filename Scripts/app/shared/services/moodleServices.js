@@ -1000,6 +1000,7 @@
                                     course.stages[i].challenges[j].activities[k].activity_identifier = assign.activity_identifier;
                                     course.stages[i].challenges[j].activities[k].last_status_update = assign.last_status_update;
                                     course.stages[i].challenges[j].activities[k].status = assign.status;
+                                    course.stages[i].challenges[j].activities[k].modifieddate = assign.modifieddate;
                                 }
 
                                 course.stages[i].challenges[j].activities[k]["activities"] = _.filter(activities, function (a) {
@@ -1371,31 +1372,6 @@
                 _callback = null;
             }
         }
-
-        
-        function finalExecution(){
-            _httpFactory(queue.data).success(function (response) {
-                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                requestQueue.shift();
-                if(queue.data.method == 'GET') {
-                    if(queue.key) {
-                        _setLocalStorageJsonItem(queue.key, response);
-                    }
-                }    
-                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                if(requestQueue.length == 0 && _callback != null) {
-                    _callback();
-                    _callback = null;
-                }
-                doRequestforCellphone();
-            }).error(function (response) {
-                if(_isDeviceOnline){
-                   requestQueue[0].retryCount++;
-                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                   doRequestforCellphone();
-                }
-            });
-        };
         
         function doRequestforCellphone(){            
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);        
@@ -1416,6 +1392,29 @@
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
 
+                                function finalExecution(){
+                                    _httpFactory(queue.data).success(function (response) {
+                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                        requestQueue.shift();
+                                        if(queue.data.method == 'GET') {
+                                            if(queue.key) {
+                                                _setLocalStorageJsonItem(queue.key, response);
+                                            }
+                                        }    
+                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                        if(requestQueue.length == 0 && _callback != null) {
+                                            _callback();
+                                            _callback = null;
+                                        }
+                                        doRequestforCellphone();
+                                    }).error(function (response) {
+                                        if(_isDeviceOnline){
+                                           requestQueue[0].retryCount++;
+                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                           doRequestforCellphone();
+                                        }
+                                    });
+                                };
                                 if (queue.data && queue.data.data && queue.data.data.hasfilecontent) {
                                     encodeImageWithUri(queue.data.data.imageuri, queue.data.data.datatype, function(b64){
                                         console.log('imageencodedsuccessfully')
