@@ -1778,6 +1778,9 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
     _forceUpdateConnectionStatus(sucessIsOnlineCallback, errorIsOnlineCallback);
 };
 
+/* loads drupal resources (content) */
+var _loadedDrupalResources = false;
+var _loadedDrupalResourcesWithErrors = false;
 
 /* params:
    images - array of objects { path, name, downloadLink }

@@ -438,11 +438,8 @@ angular
                     } else {
 
                         numMessages = parseInt(numMessages, 10);
-                        console.log("THERE ARE " + numMessages + " MESSAGES");
-
 
                         if (messages.length > numMessages) {//The Couch Posted Something...
-                            console.log(messages.length + " NEW MESSAGES " + numMessages);
                             _setLocalStorageItem('chatRead/' + $scope.user.userId, "false"); //Turn on Chat Bubble
                             _setLocalStorageItem('numMessages/' + $scope.user.userId, messages.length);  //Update count of Messages
                         }
