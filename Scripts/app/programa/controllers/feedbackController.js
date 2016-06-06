@@ -48,9 +48,16 @@ angular
                         
             function getProfile() {
                 var profileId = 0;
+                var currentStage = localStorage.getItem("currentStage");
                 
-                var assertiveness = $scope.profile.assertiveness == true ? "1" : "0";
-                var financialAbility = $scope.profile.financialAbility == true ? "1" : "0";
+                var assertiveness = "-1";//Default null value
+                var financialAbility = "-1";//Default null value
+                if (currentStage >= 2) {
+                    assertiveness = $scope.profile.assertiveness == true ? "1" : "0";
+                }
+                if (currentStage == 3) {
+                    financialAbility = $scope.profile.financialAbility == true ? "1" : "0";
+                }
                 
                 if (!$scope.profile.inclusoprofile) {
                     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
