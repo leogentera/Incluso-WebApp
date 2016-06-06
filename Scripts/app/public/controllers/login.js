@@ -135,6 +135,7 @@ angular
 
             $scope.login = function () {
                 $rootScope.loaderForLogin = true; //For Login Preloader
+                $rootScope.totalLoads = 16; //Number of Requests
                 progressBar.set(0); //For Login Preloader
                 $scope.loaderRandom(); //For Login Preloader
                 $scope.$emit('ShowPreloader');
@@ -211,8 +212,8 @@ angular
 
                         //Run queue
                         moodleFactory.Services.ExecuteQueue(function () {
-                            //Preparing for syncAll.
-                            //succesful credentials
+                            //Preparing for syncAll. Succesful credentials
+
                             moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
                                 $scope.incLoadedItem(); //3
 
@@ -282,16 +283,14 @@ angular
 
             $scope.loginWithFacebook = function () {
                 $rootScope.loaderForLogin = true; //For Login Preloader
+                $rootScope.totalLoads = 15;  //Number of Requests
                 progressBar.set(0); //For Login Preloader
                 $scope.loaderRandom(); //For Login Preloader
-
                 $scope.$emit('ShowPreloader');
-
 
                 $timeout(function(){
                     $scope.validateConnection(loginWithFacebookConnectedCallback, offlineCallback);
                 }, 500);
-
             };
 
 
@@ -307,8 +306,6 @@ angular
             }
 
             function loginWithFacebookConnectedCallback() {
-                //scope.$emit('ShowPreloader');
-                //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
                 $scope.userCredentialsModel.modelState.isValid = true;
@@ -340,7 +337,6 @@ angular
                 /*******************  ******/
 
                 $rootScope.OAUTH_ENABLED = true;
-                $rootScope.totalLoads = 14;
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = userFacebook;
