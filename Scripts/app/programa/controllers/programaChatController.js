@@ -33,7 +33,7 @@ angular
                 $scope.senderId = currentUser.userId;
                 $scope.messages = JSON.parse(localStorage.getItem('userChat/' + currentUser.userId));
                 $scope.currentMessage = "";
-
+                $location.hash("anchor-bottom");
 
                 var interval = setInterval(getMessages, 60000); //Poll Messages continuously.
 
@@ -42,7 +42,6 @@ angular
                 });
 
                 function getMessages() {
-
                     $scope.validateConnection(function () {
                         moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
                     }, function () {
