@@ -16,7 +16,7 @@ angular
             $scope.scrollToTop();
             $scope.model = getDataAsync();
             $scope.currentPage = 1;
-            $scope.loading = false;
+            $rootScope.loading = false;
             $rootScope.pageName = "Guia de uso";
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = false;
