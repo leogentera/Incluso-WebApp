@@ -19,9 +19,9 @@ angular
             _httpFactory = $http;
 
             if ($location.$$path.split('/')[1]) {
-                $scope.loading = true;
+                $rootScope.loading = true;
             } else {
-                $scope.loading = false;
+                $rootScope.loading = false;
             }
 
             $scope.loaderRandom = function () {
@@ -273,10 +273,10 @@ angular
 
             /* Preloader default callbacks and listeners */
             var _showPreloader = function () {
-                $scope.loading = true;
+                $rootScope.loading = true;
             };
             var _hidePreloader = function () {
-                $scope.loading = false;
+                $rootScope.loading = false;
             };
             $scope.$on('ShowPreloader', _showPreloader);
             $scope.$on('HidePreloader', _hidePreloader);
