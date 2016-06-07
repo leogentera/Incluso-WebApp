@@ -195,6 +195,11 @@ angular
                           var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
                           user.assertiveness = true;
                           moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
+                        }else if (data["calificación"] && data["calificación"] == "Reprobado"){
+                          var userid = localStorage.getItem("userId");
+                          var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+                          user.assertiveness = false;
+                          moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
                         }
                         
                         _endActivity(parentActivity, function(){ });

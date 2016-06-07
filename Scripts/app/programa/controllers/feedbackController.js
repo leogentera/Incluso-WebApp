@@ -83,9 +83,9 @@ angular
                     $scope.messageProfile.description = $scope.messageProfile.description.replace("@nombre", name);
                 }
                 
-                if ($scope.messageProfile.description.indexOf("@escudo") > -1){
+                if ($scope.messageProfile.description.indexOf("@inteligencia-escudo") > -1){
                     var shield = $scope.profile.shield;
-                    $scope.messageProfile.description =  $scope.messageProfile.description.replace("@escudo", shield);
+                    $scope.messageProfile.description =  $scope.messageProfile.description.replace("@inteligencia-escudo", shield);
                 }
 
             }
@@ -179,6 +179,7 @@ angular
                 }
             }
             
+            //Returns a copy by Val of the Profile object
             function copyProfile(profile) {
                 var arrayOfProfiles = [];
                 for(var i = 0; i < profile.length; i++){
