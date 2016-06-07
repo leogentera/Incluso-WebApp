@@ -23,7 +23,7 @@ angular
             quizMisCualidades = false;
             $scope.accessedSubsection = false;
             $scope.$emit('scrollTop');
-            $scope.$emit('ShowPreloader');
+            //$scope.$emit('ShowPreloader');
             $scope.mobilecheck=_comboboxCompat;
 
             $scope.passwordChanged = false;
@@ -2659,6 +2659,25 @@ angular
                 };
 
                 function SuccessAvatar(data) {
+                    $rootScope.spinnerAvatar = true; //Type avatar spinner
+                    $rootScope.loading = true; //Start spinner
+
+                    $timeout(function () {
+                        if(!$("#spinner").is(':visible')) {
+                            $rootScope.spinnerAvatar = true;
+                        }
+                    }, 200);
+
+                    $timeout(function(){
+                        $rootScope.spinnerAvatar = false;
+                        $rootScope.loading = true;
+                        $scope.loaderRandom(); //For Generic Preloader
+
+                        $timeout(function(){
+                            $rootScope.loading = false; //Hide spinner
+                        }, 2000);
+                    }, 1500);
+
                     //the next fields should match the database in moodle
                     $scope.avatarInfo = [{
                         "userid": data.userId,
