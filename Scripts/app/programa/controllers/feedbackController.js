@@ -23,7 +23,9 @@ angular
             $scope.user = currentUser.alias;
             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.userId));
             $scope.activity = getActivityByActivity_identifier($routeParams.activityId);
+            $scope.like_status = 1;
             $scope.closingContentname = "RetroalimentacionClosing";
+            $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
             var misGustosActivityId = 70;
             var retoMultipleActivityId = 139;
             
@@ -217,7 +219,16 @@ angular
             }
             
             $scope.finishActivity = function(){
-                _endActivity($scope.activity,function(data){
+                
+                var endTime = moment().format('YYYY:MM:DD HH:mm:ss');
+                
+                var activityModel = {
+                    like_status : $scope.like_status ,
+                    dateStart : $scope.startingTime,
+                    dateEnd : endTime
+                };
+                
+                _endActivity(activityModel,function(data){
                     var updatedActivityOnUserCourse = updateActivityStatus($scope.activity.activity_identifier);
                     //Update local storage and activities status array
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);

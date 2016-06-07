@@ -396,6 +396,11 @@ var _endActivity = function (activityModel, callback, pathCh) {
     }
     else if (activityModel.activityType == "Assign") {
         var data = {userid: currentUserId};
+        if (activityModel.dateStart && activityModel.dateEnd && activityModel.like_status) {
+          data.dateStart = activityModel.dateStart;
+          data.dateEnd = activityModel.dateEnd;
+          data.like_status = activityModel.like_status;
+        }
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
     } else {
         var data = {userid: currentUserId};
