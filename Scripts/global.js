@@ -382,7 +382,6 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
 
 /* ends an activity */
 var _endActivity = function (activityModel, callback, pathCh) {
-    debugger;
     //trigger activity type 2 is sent when the activity ends.
     var triggerActivity = 2;
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -397,6 +396,11 @@ var _endActivity = function (activityModel, callback, pathCh) {
     }
     else if (activityModel.activityType == "Assign") {
         var data = {userid: currentUserId};
+        if (activityModel.dateStart && activityModel.dateEnd && activityModel.like_status) {
+          data.dateStart = activityModel.dateStart;
+          data.dateEnd = activityModel.dateEnd;
+          data.like_status = activityModel.like_status;
+        }
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
     } else {
         var data = {userid: currentUserId};

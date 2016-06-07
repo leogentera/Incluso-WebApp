@@ -23,7 +23,9 @@ angular
             $scope.user = currentUser.alias;
             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.userId));
             $scope.activity = getActivityByActivity_identifier($routeParams.activityId);
+            $scope.like_status = 1;
             $scope.closingContentname = "RetroalimentacionClosing";
+            $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
             var misGustosActivityId = 70;
             var retoMultipleActivityId = 139;
             
@@ -48,9 +50,16 @@ angular
                         
             function getProfile() {
                 var profileId = 0;
+                var currentStage = localStorage.getItem("currentStage");
                 
-                var assertiveness = $scope.profile.assertiveness == true ? "1" : "0";
-                var financialAbility = $scope.profile.financialAbility == true ? "1" : "0";
+                var assertiveness = "-1";//Default null value
+                var financialAbility = "-1";//Default null value
+                if (currentStage >= 2) {
+                    assertiveness = $scope.profile.assertiveness == true ? "1" : "0";
+                }
+                if (currentStage == 3) {
+                    financialAbility = $scope.profile.financialAbility == true ? "1" : "0";
+                }
                 
                 if (!$scope.profile.inclusoprofile) {
                     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
@@ -74,9 +83,9 @@ angular
                     $scope.messageProfile.description = $scope.messageProfile.description.replace("@nombre", name);
                 }
                 
-                if ($scope.messageProfile.description.indexOf("@escudo") > -1){
+                if ($scope.messageProfile.description.indexOf("@inteligencia-escudo") > -1){
                     var shield = $scope.profile.shield;
-                    $scope.messageProfile.description =  $scope.messageProfile.description.replace("@escudo", shield);
+                    $scope.messageProfile.description =  $scope.messageProfile.description.replace("@inteligencia-escudo", shield);
                 }
 
             }
@@ -170,6 +179,7 @@ angular
                 }
             }
             
+            //Returns a copy by Val of the Profile object
             function copyProfile(profile) {
                 var arrayOfProfiles = [];
                 for(var i = 0; i < profile.length; i++){
@@ -210,7 +220,16 @@ angular
             }
             
             $scope.finishActivity = function(){
-                _endActivity($scope.activity,function(data){
+                
+                var endTime = moment().format('YYYY:MM:DD HH:mm:ss');
+                
+                var activityModel = {
+                    like_status : $scope.like_status ,
+                    dateStart : $scope.startingTime,
+                    dateEnd : endTime
+                };
+                
+                _endActivity(activityModel,function(data){
                     var updatedActivityOnUserCourse = updateActivityStatus($scope.activity.activity_identifier);
                     //Update local storage and activities status array
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);
