@@ -51,25 +51,24 @@ angular
             _httpFactory = $http;
 
             if ($location.$$path.split('/')[1]) {
-                $scope.loading = true;
+                $rootScope.loading = true;
             } else {
-                $scope.loading = false;
+                $rootScope.loading = false;
             }
 
             $scope.loaderRandom = function () {
                 if ($rootScope.loaderForLogin) {//Show Login Preloader
-                    $scope.spinnerShow = 0;
+                    $rootScope.spinnerShow = 0;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
-                            $scope.spinnerShow = 0;
+                            $rootScope.spinnerShow = 0;
                     }, 200);
-                } else {//Pick another preloader
-                    $scope.spinnerShow = Math.floor(Math.random() * 4) + 1;
+                } else {//Pick another preloader, 1 - 4
+                    $rootScope.spinnerShow = Math.floor(Math.random() * 4) + 1;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
-                            $scope.spinnerShow = Math.floor(Math.random() * 4) + 1;
-                    }, 200);
-                }
+                            $rootScope.spinnerShow = Math.floor(Math.random() * 4) + 1;
+                    }, 200);                }
             };
 
             var classdisable;
@@ -279,10 +278,10 @@ angular
 
             /* Preloader default callbacks and listeners */
             var _showPreloader = function () {
-                $scope.loading = true;
+                $rootScope.loading = true;
             };
             var _hidePreloader = function () {
-                $scope.loading = false;
+                $rootScope.loading = false;
             };
             $scope.$on('ShowPreloader', _showPreloader);
             $scope.$on('HidePreloader', _hidePreloader);
