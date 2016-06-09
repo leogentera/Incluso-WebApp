@@ -2635,7 +2635,6 @@ angular
                     };
 
                     try {
-                        $scope.$emit('ShowPreloader');
                         cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                     } catch (e) {
                         SuccessAvatar({
