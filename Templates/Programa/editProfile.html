@@ -15,7 +15,6 @@
             <div class="user-avatar">
                 <figure>
                     <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive"/>
-                    <!--figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption-->
                 </figure>
                 <a type="button" id="editProfile" ng-click="avatar()" class="btn">
                     <span class="icomoon icon-edit"></span>
@@ -150,17 +149,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <!--<div class="form-group theme-form">
-                                                        <div class="form-group-control">
-                                                            <input
-                                                            type="text"
-                                                            name="alias"
-                                                            class="form-control form-control-lg theme-form"
-                                                            placeholder="Alias"
-                                                            ng-model="model.alias" required />
-                                                        </div>
-                                                    </div>-->
-
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
@@ -180,23 +168,6 @@
                                                             <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                                                         </div>
                                                     </div>
-
-                                                    <!--
-                                                    <div class="form-group theme-form">
-                                                        <div class="form-group-control custom-caret-wrapper">
-                                                            <select class="form-control form-control-lg theme-form"
-                                                                    ng-model="model.gender"
-                                                                    ng-options="item for item in genderItems"
-                                                                    ng-init="model.gender == null"
-                                                                    ng-class="{'selected': model.gender.length != 0 && model.gender != null}">
-                                                                <option value="" ng-disabled="!!model.gender">
-                                                                    Sexo
-                                                                </option>
-                                                            </select>
-                                                            <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                                        </div>
-                                                    </div>
-                                                    -->
 
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
@@ -227,10 +198,6 @@
                                                                    ng-model="birthdate_Dateformat" minlength="10"
                                                                    maxlength="10" aria-describedby="birthDateAddOn"
                                                                    placeholder="Fecha de nacimiento" required/>
-
-                                                            <!-- ng-change="birthdayChanged(this)" -->
-                                                            <!-- <span class="{{showPlaceHolder == true ? 'custom-placeholder form-control-lg show' : 'custom-placeholder form-control-lg hidden'}}" >Fecha de nacimiento</span> -->
-
                                                         </div>
                                                     </div>
 
@@ -526,7 +493,6 @@
                                                         <li ng-repeat="sn in model.socialNetworks track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Red Social {{model.socialNetworks.indexOf(sn) + 1}}</span> -->
                                                                     <span>Red Social {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteItem('socialNetworks', $index)">
@@ -620,7 +586,6 @@
                                                         <li ng-repeat="fc in model.familiaCompartamos">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Familiar Compartamos {{model.familiaCompartamos.indexOf(fc) + 1}}</span>  -->
                                                                     <span>Familiar Compartamos {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteItem('familiaCompartamos', $index)">
@@ -1576,8 +1541,6 @@
                                                     <a class="btn btn-default btn-transparent btn-lg btn-block"
                                                        ng-click="cancelProfileEdition()">Cancelar</a>
                                                 </div>
-
-                                                <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOLD#CODEOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO  -->
                                             </fieldset>
                                         </div>
                                     </div>
@@ -1746,7 +1709,6 @@
                                                     <a class="btn btn-default btn-transparent btn-lg btn-block"
                                                        ng-click="cancelProfileEdition()">Cancelar</a>
                                                 </div>
-                                                <!-- ##################OLD#CODE##################  -->
                                             </fieldset>
                                         </div>
                                     </div>
@@ -1989,10 +1951,7 @@
 
                             </div>
                         </article>
-
                     </div>
-
-
                 </div>
             </form>
         </section>

@@ -1,5 +1,4 @@
 //##############################   Controller for Quizzes   ##############################
-//##############################         Version 1.2        ##############################
 angular
     .module('incluso.stage.quizcontroller', [])
     .controller('stageQuizController', [
@@ -15,7 +14,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             var _loadedResources = false;
 
-            //$scope.$emit('ShowPreloader'); //show preloader
+            $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
             _location = $location;
             _timeout = $timeout;
@@ -60,7 +59,7 @@ angular
             var artisticActivities = [];
             var hobbies = [];
             var social = [];
-            var others = [];
+            var emprendedor = [];
 
             $scope.AnswersResult = { //For storing responses.
                 "userid": 0,
@@ -73,7 +72,6 @@ angular
             $scope.activity_identifier = parseInt($routeParams.activityIdentifier);
 
             //########################################  ENTRY POINT  ###################################
-            //getContentAsync();   // get content from drupal for Closing Page
             getDataAsync();      // get Quiz data from service
             //##########################################################################################
 
@@ -92,10 +90,10 @@ angular
                 drupalFactory.Services.GetContent(stageContent, function (data, key) {
                         _loadedResources = true;
                         $scope.closingContent = data.node;
-                    },
-                    function () {
-                    },
-                    false);
+                },
+                function () {
+                },
+                false);
             }
 
 
@@ -143,21 +141,10 @@ angular
                     var activityObject = JSON.parse(localStorage.getItem("activity/" + $scope.coursemoduleid));
 
                     if (activityObject !== null) {
-                        //Change format of 'answers' key from Object to Array.
-                        for (i = 0; i < activityObject.questions.length; i++) {
-                            var newAnswer = [];
-                            for (var key in activityObject.questions[i].answers) {
-                                if (activityObject.questions[i].answers.hasOwnProperty(key)) {
-                                    newAnswer.push(activityObject.questions[i].answers[key]);
-                                }
-                            }
-
-                            activityObject.questions[i].answers = newAnswer;
-                        }
 
                         $scope.activityObject = activityObject; //Get object in the right 'answers' format.
 
-                        if ($scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
+                        if ($scope.activity_status && $scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
 
                             localAnswers = JSON.parse(localStorage.getItem("answersQuiz/" + $scope.coursemoduleid));
 
@@ -234,10 +221,10 @@ angular
                     $scope.OtroAnswers = [];
                 }
 
-                    //Load the arrays for 'Mis Habilidades' and 'Mis Gustos'.
-                    var answerLabel;
+                //Load the arrays for 'Mis Habilidades' and 'Mis Gustos'.
+                var answerLabel;
 
-                if ($scope.activity_identifier === 1005) {
+                if ($scope.activity_identifier === 1005) {//Mis Habilidades
 
                     //Load array for Talents
                     question = $scope.activityObject.questions[0];  //First question
@@ -264,7 +251,7 @@ angular
                     }
                 }
 
-                if ($scope.activity_identifier === 1006) {
+                if ($scope.activity_identifier === 1006) {//Mis Gustos
 
                     //Load array for favoriteSports
                     question = $scope.activityObject.questions[0];  //First question
@@ -298,12 +285,12 @@ angular
                         social.push(answerLabel);
                     }
 
-                    //Load array for Others
+                    //Load array for Emprendedor
                     question = $scope.activityObject.questions[4];  //First question
                     questionNumOfChoices = question.answers.length;  //Number of choices
                     for (i = 0; i < questionNumOfChoices; i++) {
                         answerLabel = question.answers[i].answer;
-                        others.push(answerLabel);
+                        emprendedor.push(answerLabel);
                     }
                 }
 
@@ -350,7 +337,7 @@ angular
                 $scope.activityObject.questions[index].profileid = profileId;
 
                 // The checkbox for 'Other' is clicked.
-                if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {//The "Otro" checkbox has been checked.
+                if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {
                     addHeight($("multichoice" + index)); //Add room for the TextArea
                 }
 
@@ -594,6 +581,8 @@ angular
                     default:
                         break;
                 }
+
+                $scope.$emit('HidePreloader'); //show preloader
             }
 
 
@@ -912,7 +901,7 @@ angular
                         $scope.userprofile.social.push($scope.OtroAnswers[3].answers[0]);
                     }
 
-                    //Update Others
+                    //Update Emprendedor
                     for (i = 0; i < $scope.answers[4].length - 1; i++) {
                         if ($scope.answers[4][i]) {
                             $scope.userprofile.emprendedor.push(others[i]);
@@ -1281,17 +1270,6 @@ angular
                 $scope.numOfOthers = 0;
                 $location.path(pathToRedirect());
             };
-
-            function getArrayForOther(activityObject) {
-                var obj = [];
-                for (var i = 0; i < activityObject.questions.length; i++) {
-                    if (activityObject.questions[i].questionType == "multichoice") {
-                        obj.push({"questionid": +activityObject.questions[i].id, "answers": [""]});
-                    }
-                }
-
-                return obj;
-            }
 
             function pathToRedirect() {
                 //Making up path to redirect user to the proper dashboard

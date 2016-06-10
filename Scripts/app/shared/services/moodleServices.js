@@ -244,9 +244,6 @@
             }
             else if (forceRefresh){
                 if (token) {
-                    //_getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
-                    //_getAsyncForumDiscussions(91, token, function () {}, function () {}, true);
-                    //moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                     _httpFactory({
                         method: 'POST',
                         data: {"userid": userId, "activities": activitiesArray},
@@ -258,13 +255,11 @@
                             if (data.length > 0) {
                                 var activity = data.shift();
                                 var activitiesToConvert = [75, 89, 96, 170, 211, 150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96];
-                                var activitiesWithUserId = [242, 243, 244, 245, 246, 249];
 
                                 if (activity && activity.data[0]) {
-                                    var keyName = "activity/" + activity.coursemoduleid;
 
                                     if ( activitiesToConvert.indexOf(parseInt(activity.coursemoduleid)) > -1 ) {
-                                        // ------    Change format of 'answers' key from Object to Array.
+                                        // -- Change format of 'answers' key from Object to Array.
                                         for (i = 0; i < activity.data[0].questions.length; i++) {
                                             var newAnswer = [];
                                             for (var key in activity.data[0].questions[i].answers) {
@@ -277,7 +272,8 @@
                                         }
                                     }
 
-                                    _setLocalStorageJsonItem(keyName, activity.data[0]);
+                                    //Save converted Activity.
+                                    _setLocalStorageJsonItem("activity/" + activity.coursemoduleid, activity.data[0]);
                                 }
 
                             } else {

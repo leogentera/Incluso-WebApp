@@ -43,7 +43,6 @@ angular
                 var infValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
                 $rootScope.loadedItem++;
                 var upperValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
-                var percentInc = $rootScope.loadedItem/$rootScope.totalLoads;
                 myLoop(infValue, upperValue);
             };
             
@@ -96,7 +95,7 @@ angular
                     $scope.$emit('ShowPreloader');
                     $timeout(function () {
                         $scope.$emit('HidePreloader');
-                    }, 1000);
+                    }, 1500);
                 });
             };
 
@@ -119,7 +118,6 @@ angular
                         logStartActivityAction(activityId, timeStamp);
 
                         if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
-                            $rootScope.cancelDisabled = true;
                             isQuiz = true;
                             $rootScope.quizIdentifier = activityId.toString();
                             $rootScope.quizUrl = url;
@@ -418,7 +416,7 @@ angular
 
     drupalFactory.Services.GetContent($rootScope.quizIdentifier, function (data, key) {
 
-            if (data.node != null) {
+            if (data.node && data.node.titulo_quiz && data.node.instrucciones) {
                 $scope.title = data.node.titulo_quiz;
                 $scope.instructions = data.node.instrucciones;
             }

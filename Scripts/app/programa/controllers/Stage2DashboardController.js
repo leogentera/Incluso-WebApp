@@ -270,7 +270,6 @@ angular
                         logStartActivityAction(activityId, timeStamp);
 
                         if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
-                            $rootScope.cancelDisabled = true;
                             isQuiz = true;
                             $rootScope.quizIdentifier = activity.activity_identifier;
                             $rootScope.quizUrl = url;
