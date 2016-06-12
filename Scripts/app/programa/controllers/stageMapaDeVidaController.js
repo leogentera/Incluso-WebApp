@@ -242,7 +242,8 @@ angular
                         logEntry.endingTime = data.fechaFin;
                         logEntry.like_status = (data.gustaActividad == "Si" ? 1 : 0 );
                         quizzesRequests.push(logEntry);
-                        _setLocalStorageJsonItem("activity/" + dimensionId + "?userid=" + logEntry.userid, activity);
+                        //_setLocalStorageJsonItem("activity/" + dimensionId + "?userid=" + logEntry.userid, activity);
+                        _setLocalStorageJsonItem("activity/" + dimensionId, activity);
                     }
                 }
                 _setLocalStorageJsonItem("mapaDeVidaActivities", $scope.mapaDeVidaActivities);

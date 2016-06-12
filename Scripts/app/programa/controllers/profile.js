@@ -1278,7 +1278,7 @@ angular
 
                         //Recover original Profile data from LS...
                         var originalProfile = JSON.parse(localStorage.getItem("originalProfile/" + $scope.userId));
-
+console.log($scope.visitedSections);
                         switch ($scope.visitedSections[i]) {//Restore original field values.
                             case "3000":  // "Mi informacion"
                                 $scope.model.firstname = originalProfile.firstname;
@@ -1874,7 +1874,7 @@ angular
                             $scope.currentPage = 12; //Finally, show the results page.
                         }
 
-                        $scope.visitedSections = null; //Clean record of visited sections.
+                        //$scope.visitedSections = null; //Clean record of visited sections.
                         ClearLocalStorage("originalProfile/");
                     }
 
@@ -1928,11 +1928,27 @@ angular
                             $scope.$emit('HidePreloader');   //Save profile successful...
                             $scope.index();
                         },
-                        function (data) {
+                        function (obj) {
                             //Save profile fail...
-                            $scope.$emit('HidePreloader'); //--
+                            $scope.$emit('HidePreloader');
+
+                            if (obj.statusCode == 408) {//Request Timeout
+                                $scope.openModal();
+                            }
                         });
                 }
+
+                //Time Out Message modal
+                $scope.openModal = function (size) {
+                    var modalInstance = $modal.open({
+                        animation: $scope.animationsEnabled,
+                        templateUrl: 'timeOutModal.html',
+                        controller: 'timeOutProfile',
+                        size: size,
+                        windowClass: 'user-help-modal dashboard-programa'
+                    });
+                };
+
 
                 function updateStarsForCompletedSections() {
                     //Here we look for completed profile sections;
@@ -2648,9 +2664,14 @@ angular
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-    
-    
 
     var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
     $scope.actualMessage = robotMessage;
+}).controller('timeOutProfile', function ($scope, $modalInstance) {//TimeOut Robot
+
+    $scope.ToDashboard = function () {
+        $scope.$emit('ShowPreloader');
+        $modalInstance.dismiss('cancel');
+    };
+
 });
