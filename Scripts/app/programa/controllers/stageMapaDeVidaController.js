@@ -128,13 +128,17 @@ angular
                     request.fichaProyecto.push(proyecto);
                     $scope.dimensionMap.push(dimensionMap);
                 }
+                var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
+                var parentActivityIdentifier = $routeParams.moodleid;
+                var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
+               request.fechaModificación=parentActivity.modifieddate;
                 _setLocalStorageJsonItem("mapaDeVidaDimensionMap", $scope.dimensionMap);
                 return request;
             }
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-                try {
+               try {
                     cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
                 catch (e) {
@@ -149,6 +153,7 @@ angular
                             "fechaFin": "2015/09/15 14:28:12",
                             "actividadCompleta": "Si",
                             "gustaActividad": "Si",
+                            "fechaModificación": "06/10/2016 11:08:18",
                             "fichaProyecto": [{
                                 "dimensionId": 1,
                                 "respuestas": [{"preguntaId": 1, "respuesta": "Dimension 11 1."}, {"preguntaId": 2, "respuesta": "Dimension 11 2."}, {
@@ -264,6 +269,9 @@ angular
                 var subactivitiesCompleted = [];
                 var activitiesCompleted = 0;
                 var parent_finished = false;
+                
+                parentActivity.modifieddate=data.fechaModificación || '';
+                parentActivity.onlymodifieddate=true;
 
                 _.each(quizzesRequests, function (q) {
                     if (q.quiz_answered) {
@@ -273,12 +281,15 @@ angular
                         activitiesAtLeastOne++;
                     }
                 });
+                
                 if (parentActivity.status == 0 && $scope.IsComplete) {
                     parentActivity.status = 1;
                     parent_finished = true;
+                    parentActivity.onlymodifieddate=false;
+                }
                     _endActivity(parentActivity);
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
-                }
+                
                 if (activitiesAtLeastOne > 0) {
                     if (parentActivity.activities) {
                         for (var i = 0; i < subactivitiesCompleted.length; i++) {
