@@ -213,7 +213,7 @@ angular
                         activity: childCourseModuleId
                     };
 
-                    moodleFactory.Services.PutAsyncFirstTimeInfoForForums(userId, CurrentUser.token, dataModel, function () {console.log("ALL perfect!"); }, function () { });
+                    moodleFactory.Services.PutAsyncFirstTimeInfoForForums(userId, CurrentUser.token, dataModel, function () { }, function () { });
                 }
 
                 function getForumDiscussionsCallback(data, key) {

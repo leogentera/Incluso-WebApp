@@ -169,19 +169,20 @@ angular
                 $scope.like_status = 1;
                 var activitymanagers = [];
                 var activitiesData = "";
+                var numOblRemaining = 0;
+                var totalObligatorios = 0;
 
                 activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
+
                 if (!activities) {
                     $scope.fuenteDeEnergia = _.find(activitymanagers, function (a) {
                         return a.activity_identifier == moduleid
                     });
-                    getDataAsync();
-                }
-                else {
+                } else {
                     $scope.fuenteDeEnergia = activities;
-                    getDataAsync();
                 }
 
+                getDataAsync();
                 checkProgress();
 
                 $scope.navigateToPage = function (pageNumber) {
@@ -190,14 +191,24 @@ angular
 
                 function getDataAsync() {
                     for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
-
                         activitiesData += "activity[" + i + "]=" + $scope.fuenteDeEnergia.activities[i].coursemoduleid + "&";
+                        totalObligatorios += (1 - parseInt($scope.fuenteDeEnergia.activities[i].optional)); //Count total Required resources.
+
+                        if (!$scope.fuenteDeEnergia.activities[i].status) {//Count Required & non Finished resources.
+                            numOblRemaining += (1 - parseInt($scope.fuenteDeEnergia.activities[i].optional));
+                        }
                     }
+
+                    if (totalObligatorios >= $scope.fuenteDeEnergia.resources_required) {
+                        totalObligatorios = $scope.fuenteDeEnergia.resources_required;
+                    } console.log(totalObligatorios);
+
                     if (activitiesData != "") {
                         waitPreloader++;
                         activitiesData = activitiesData.slice(0, -1);
                         moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, $scope.token, getActivityInfoCallback, getActivityErrorCallback, true);
                     }
+
                     if (waitPreloader == 0) {
                         _pageLoaded = true;
                         if (_loadedResources && _pageLoaded) {
@@ -266,20 +277,19 @@ angular
                                 if (subactivities[j].optional && subactivities[j].status) {
                                     totalOptionalPoints += subactivities[j].points;
                                 }
-
                             }
                         }
-
                     }
-                    //Not all were actually aearned (if more than max resources) but if less than max_resources the user will be able to earn more
 
+                    //Not all were actually aearned (if more than max resources) but if less than max_resources the user will be able to earn more
                     for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status) {
                             $scope.statusObligatorios += 1;
                             starsMandatory += 50;
                         }
                     }
-                    if ($scope.statusObligatorios >= $scope.fuenteDeEnergia.resources_required && $scope.fuenteDeEnergia.status == 0) {
+
+                    if ($scope.statusObligatorios >= totalObligatorios && $scope.fuenteDeEnergia.status == 0) {
                         $scope.currentPage = 2;
                     }
                 }
@@ -324,19 +334,18 @@ angular
                                     if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                         $scope.statusObligatorios += 1;
                                         starsMandatory += 50;
-                                        if ($scope.statusObligatorios >= $scope.fuenteDeEnergia.resources_required && !$scope.fuenteDeEnergia.status) {
+                                        if ($scope.statusObligatorios >= totalObligatorios && !$scope.fuenteDeEnergia.status) {
                                             assingStars(true, $scope.fuenteDeEnergia.coursemoduleid, $scope.fuenteDeEnergia.points);
-                                            $scope.navigateToPage(2);
+                                            $scope.currentPage = 2;
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         assingStars(false, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
                                     }
                                 }
+
                                 break;
                             }
                         }
-
                     }, offlineCallback);
                 };
 
@@ -381,7 +390,6 @@ angular
                     };
 
                     userStars.push(localStorageStarsData);
-
                     localStorage.setItem("userStars", JSON.stringify(userStars));
                 }
 
@@ -511,22 +519,23 @@ angular
                             }, false);
 
                             $scope.continue = function () {
-                                if ($scope.neverShowAgain) {
+                                $timeout(function(){
+                                    if ($scope.neverShowAgain) {
 
-                                    var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
+                                        var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
+                                        var profile = moodleFactory.Services.GetCacheJson("Perfil/" + currentUser.userId);
+                                        profile.hasRequiredApps = true;
 
-                                    var profile = moodleFactory.Services.GetCacheJson("Perfil/" + currentUser.userId);
-                                    profile.hasRequiredApps = true;
-                                    moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,
-                                        function (data) {
-                                        },
-                                        function (data) {
-                                        });
-                                }
+                                        moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,
+                                            function (data) {
+                                            },
+                                            function (data) {
+                                            });
+                                    }
 
-                                $modalInstance.dismiss('cancel');
+                                    $modalInstance.dismiss('cancel');
+                                }, 500);
                             };
-
                         },
                         size: size,
                         windowClass: 'user-help-modal dashboard-stage-intro'
