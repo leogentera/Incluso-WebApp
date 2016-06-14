@@ -102,7 +102,7 @@ angular
 
                                     newMessage = {
                                         messagetext: firstTimeMessage,
-                                        messagesenderid: currentUser.userId,
+                                        messagesenderid: 478, //Dev  Prod:350
                                         messagedate: new Date()
                                     };
 

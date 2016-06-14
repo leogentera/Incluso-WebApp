@@ -401,9 +401,18 @@ var _endActivity = function (activityModel, callback, pathCh) {
           data.dateEnd = activityModel.dateEnd;
           data.like_status = activityModel.like_status;
         }
+        if(activityModel.hasOwnProperty('onlymodifieddate')){
+          data.onlymodifieddate=activityModel.onlymodifieddate;
+          data.modifieddate=activityModel.modifieddate;
+        }
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
     } else {
         var data = {userid: currentUserId};
+        if(activityModel.hasOwnProperty('onlymodifieddate')){
+          data.onlymodifieddate=activityModel.onlymodifieddate;
+          data.modifieddate=activityModel.modifieddate;
+          
+        }
 
         // update activity status dictionary used for blocking activity links
         updateActivityStatusDictionary(activityModel.activity_identifier);
@@ -1015,6 +1024,11 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
             for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                 var activity = challenge.activities[activityIndex];
                 if (activity.activities && activity.activity_identifier == parentActivity.activity_identifier) {
+                  
+                    if(parentActivity.hasOwnProperty('onlymodifieddate')){
+                      activity.modifieddate=parentActivity.modifieddate;
+                    }
+                    
                     if (activity.status == 1 && firstActivityLock) {
                         breakAll = true;
                         break;
