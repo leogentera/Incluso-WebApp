@@ -1126,7 +1126,8 @@ angular
 
             //################################# UTILITY FUNCTIONS ################################
             function cleanText(userAnswer) {
-                var result = userAnswer.replace(/\r/g, "").replace(/<br>/g, "").replace(/<p>/g, "").replace(/<\/p>/g, "").replace(/\n/g, "");
+                var result = userAnswer.replace(/\r?\n|\r/g, "").trim();
+
                 return result;
             }
 
