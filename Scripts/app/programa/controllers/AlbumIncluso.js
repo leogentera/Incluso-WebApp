@@ -487,11 +487,11 @@ angular
                 }
 
                 /* My goals */
-                var myGoals1Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20171") + "?userid=" + _userId);
-                var myGoals2Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20172") + "?userid=" + _userId);
-                var myGoals3Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20173") + "?userid=" + _userId);
-                var myGoals4Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20174") + "?userid=" + _userId);
-                var myGoals5Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20175") + "?userid=" + _userId);
+                var myGoals1Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20171"));
+                var myGoals2Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20172"));
+                var myGoals3Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20173"));
+                var myGoals4Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20174"));
+                var myGoals5Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20175"));
 
                 var myGoals1QuizAnswers = [];
                 var myGoals2QuizAnswers = [];
@@ -560,7 +560,7 @@ angular
                 }
 
                 /* My project */
-                var myProjectQuiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("34021") + "?userid=" + _userId);
+                var myProjectQuiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("34021"));
                 var myProjectAnswers = [];
                 var myProjectQuestion = myProjectQuiz && myProjectQuiz.questions ? myProjectQuiz.questions[0] : null;
 
@@ -951,7 +951,7 @@ angular
         }]).controller('timeOutAlbumIncluso', function ($scope, $modalInstance) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
-        $scope.$emit('ShowPreloader');
+        $scope.$emit('HidePreloader');
         $modalInstance.dismiss('cancel');
     };
 

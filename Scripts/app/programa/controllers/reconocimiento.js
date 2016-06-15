@@ -3206,7 +3206,7 @@ angular
             $scope.$emit('HidePreloader');
         }]).controller('timeOutReconocimiento', function ($scope, $modalInstance) {//TimeOut Robot
 
-    $scope.cancel = function () {
+    $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };
