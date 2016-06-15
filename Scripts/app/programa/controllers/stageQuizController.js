@@ -785,17 +785,26 @@ angular
                         var profileId = questions[i].profileid;
                         if (profileId.length > 0) {
                             for(var j=0; j < profileId.length; j++){
-                                var pointsByAnswer = { "profileId": profileId[j], "score" : 1, "moduleId" : $scope.coursemoduleid };
+                                var pointsByAnswer = { "profileId": profileId[j], "score" : 1};
                                 profilePoints.push(pointsByAnswer);
                             }
                         }else{
-                            var pointsByAnswer = { "profileId": profileId, "score" : 1, "moduleId" : $scope.coursemoduleid };
+                            var pointsByAnswer = { "profileId": profileId, "score" : 1};
                             profilePoints.push(pointsByAnswer);
                         }
                     }
                 };
                 
-                fillProfilePoints(profilePoints);
+                var groupedProfiles = _(profilePoints).groupBy('profileId');
+                var sumOfGroupedProfiles = _(groupedProfiles).map(function(g,key){
+                       return {
+                            profileId: key,
+                            score: _(g).reduce(function(m,x){return m + x.score},0),
+                            moduleId : $scope.coursemoduleid
+                        };
+                    });
+                
+                fillProfilePoints(sumOfGroupedProfiles);
             }
 
             function updateProfile() {
