@@ -43,7 +43,6 @@ angular
                 var infValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
                 $rootScope.loadedItem++;
                 var upperValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
-                var percentInc = $rootScope.loadedItem/$rootScope.totalLoads;
                 myLoop(infValue, upperValue);
             };
             
@@ -51,25 +50,24 @@ angular
             _httpFactory = $http;
 
             if ($location.$$path.split('/')[1]) {
-                $scope.loading = true;
+                $rootScope.loading = true;
             } else {
-                $scope.loading = false;
+                $rootScope.loading = false;
             }
 
             $scope.loaderRandom = function () {
                 if ($rootScope.loaderForLogin) {//Show Login Preloader
-                    $scope.spinnerShow = 0;
+                    $rootScope.spinnerShow = 0;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
-                            $scope.spinnerShow = 0;
+                            $rootScope.spinnerShow = 0;
                     }, 200);
-                } else {//Pick another preloader
-                    $scope.spinnerShow = Math.floor(Math.random() * 4) + 1;
+                } else {//Pick another preloader, 1 - 4
+                    $rootScope.spinnerShow = Math.floor(Math.random() * 4) + 1;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
-                            $scope.spinnerShow = Math.floor(Math.random() * 4) + 1;
-                    }, 200);
-                }
+                            $rootScope.spinnerShow = Math.floor(Math.random() * 4) + 1;
+                    }, 200);                }
             };
 
             var classdisable;
@@ -97,7 +95,7 @@ angular
                     $scope.$emit('ShowPreloader');
                     $timeout(function () {
                         $scope.$emit('HidePreloader');
-                    }, 1000);
+                    }, 1500);
                 });
             };
 
@@ -120,7 +118,6 @@ angular
                         logStartActivityAction(activityId, timeStamp);
 
                         if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
-                            $rootScope.cancelDisabled = true;
                             isQuiz = true;
                             $rootScope.quizIdentifier = activityId.toString();
                             $rootScope.quizUrl = url;
@@ -279,10 +276,10 @@ angular
 
             /* Preloader default callbacks and listeners */
             var _showPreloader = function () {
-                $scope.loading = true;
+                $rootScope.loading = true;
             };
             var _hidePreloader = function () {
-                $scope.loading = false;
+                $rootScope.loading = false;
             };
             $scope.$on('ShowPreloader', _showPreloader);
             $scope.$on('HidePreloader', _hidePreloader);
@@ -302,7 +299,8 @@ angular
                 }
             };
 
-            $scope.showChatNotification = function () {console.log("showChatNotification");
+            $scope.showChatNotification = function () {
+
                 var chatRead = localStorage.getItem('chatRead/' + localStorage.getItem("userId"));
 
                 if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {
@@ -418,7 +416,7 @@ angular
 
     drupalFactory.Services.GetContent($rootScope.quizIdentifier, function (data, key) {
 
-            if (data.node != null) {
+            if (data.node && data.node.titulo_quiz && data.node.instrucciones) {
                 $scope.title = data.node.titulo_quiz;
                 $scope.instructions = data.node.instrucciones;
             }

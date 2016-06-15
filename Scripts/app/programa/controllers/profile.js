@@ -23,7 +23,7 @@ angular
             var quizMisCualidades = false;
             $scope.accessedSubsection = false;
             $scope.$emit('scrollTop');
-            $scope.$emit('ShowPreloader');
+            //$scope.$emit('ShowPreloader');
             $scope.mobilecheck=_comboboxCompat;
 
             $scope.passwordChanged = false;
@@ -133,7 +133,7 @@ angular
                     $scope.socialNet = true;
                     $scope.family = false;
                     $scope.disabled = {
-                        "talents":false,
+                        "talents": false,
                         "values": false,
                         "habilities": false,
                         "favoriteSports": false,
@@ -293,6 +293,7 @@ angular
                     for (var key in $scope.disabled) {//Verify for the presence of "Ninguno" in the model.
                         if ($scope.model[key].indexOf("Ninguno") > -1) {
                             $scope.disabled[key] = true;
+                            $scope.model[key] = ["Ninguno"]; //Set value for array.
                         }
                     }
 
@@ -712,7 +713,7 @@ angular
                         if ($scope.model.profileimageurl) {
                             $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                         }
-
+                            console.log("saving old profile");
                         //Save a oopy of the original data...
                         _setLocalStorageJsonItem("originalProfile/" + $scope.userId, $scope.model);
 
@@ -1277,7 +1278,7 @@ angular
 
                         //Recover original Profile data from LS...
                         var originalProfile = JSON.parse(localStorage.getItem("originalProfile/" + $scope.userId));
-
+console.log($scope.visitedSections);
                         switch ($scope.visitedSections[i]) {//Restore original field values.
                             case "3000":  // "Mi informacion"
                                 $scope.model.firstname = originalProfile.firstname;
@@ -1485,37 +1486,39 @@ angular
 
                                         break;
                                     case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
-
+                                        console.log($scope.model.favoriteSports);
+                                        console.log(originalProfile.favoriteSports);
+                                        console.log(_.isEqual($scope.model.favoriteSports, originalProfile.favoriteSports));
                                         if (!$scope.model.favoriteSports.compare(originalProfile.favoriteSports.sort())) {
-                                            edited = true;
+                                            edited = true;console.log("1 ****");
                                             quizMisGustos = true;
                                         }
                                         if (!$scope.model.artisticActivities.compare(originalProfile.artisticActivities.sort())) {
-                                            edited = true;
+                                            edited = true;console.log("2 ****");
                                             quizMisGustos = true;
                                         }
                                         if (!$scope.model.hobbies.compare(originalProfile.hobbies.sort())) {
-                                            edited = true;
+                                            edited = true;console.log("3 ****");
                                             quizMisGustos = true;
                                         }
                                         if (!$scope.model.social.compare(originalProfile.social.sort())) {
-                                            edited = true;
+                                            edited = true;console.log("4 ****");
                                             quizMisGustos = true;
                                         }
                                         if (!$scope.model.emprendedor.compare(originalProfile.emprendedor.sort())) {
-                                            edited = true;
+                                            edited = true;console.log("5 ****");
                                             quizMisGustos = true;
                                         }
                                         if (!$scope.model.talents.compare(originalProfile.talents.sort())) {
-                                            edited = true;
+                                            edited = true;console.log("6 ****");
                                             quizMisCualidades = true;
                                         }
                                         if (!$scope.model.values.compare(originalProfile.values.sort())) {
-                                            edited = true;
+                                            edited = true;console.log("7 ****");
                                             quizMisCualidades = true;
                                         }
                                         if (!$scope.model.habilities.compare(originalProfile.habilities.sort())) {
-                                            edited = true;
+                                            edited = true;console.log("8 ****");
                                             quizMisCualidades = true;
                                         }
                                         if (!arraysAreEqual($scope.model.inspirationalCharacters, originalProfile.inspirationalCharacters)) {
@@ -1871,7 +1874,7 @@ angular
                             $scope.currentPage = 12; //Finally, show the results page.
                         }
 
-                        $scope.visitedSections = null; //Clean record of visited sections.
+                        //$scope.visitedSections = null; //Clean record of visited sections.
                         ClearLocalStorage("originalProfile/");
                     }
 
@@ -1925,11 +1928,27 @@ angular
                             $scope.$emit('HidePreloader');   //Save profile successful...
                             $scope.index();
                         },
-                        function (data) {
+                        function (obj) {
                             //Save profile fail...
-                            $scope.$emit('HidePreloader'); //--
+                            $scope.$emit('HidePreloader');
+
+                            if (obj.statusCode == 408) {//Request Timeout
+                                $scope.openModal();
+                            }
                         });
                 }
+
+                //Time Out Message modal
+                $scope.openModal = function (size) {
+                    var modalInstance = $modal.open({
+                        animation: $scope.animationsEnabled,
+                        templateUrl: 'timeOutModal.html',
+                        controller: 'timeOutProfile',
+                        size: size,
+                        windowClass: 'user-help-modal dashboard-programa'
+                    });
+                };
+
 
                 function updateStarsForCompletedSections() {
                     //Here we look for completed profile sections;
@@ -2299,15 +2318,11 @@ angular
 
                 $scope.lookForNinguno = function(param) {
                     if ($scope.model[param].indexOf("Ninguno") > -1) {
-
                         $scope.model[param] = ["Ninguno"]; //Clean array $scope.model.param...
-
-                        //Disable button for not allowing add additional options...
-                        $scope.disabled[param] = true;
+                        $scope.disabled[param] = true;  //Disable button for not allowing add additional options.
                     } else {
                         $scope.disabled[param] = false;
                     }
-
                 };
 
                 $scope.addItem = function (param) {
@@ -2435,7 +2450,7 @@ angular
                     };
 
                     try {
-                        $scope.$emit('ShowPreloader');
+
                         cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                     } catch (e) {
                         SuccessAvatar({
@@ -2454,11 +2469,31 @@ angular
                             "gustaActividad": "Si",
                             "pathImagen": "avatar_196.png"
                         });
-
                     }
                 };
 
                 function SuccessAvatar(data) {
+                    $rootScope.spinnerAvatar = true; //Type avatar spinner
+                    $rootScope.loading = true; //Start spinner
+
+                    $timeout(function () {
+                        if(!$("#spinner").is(':visible')) {
+                            $rootScope.spinnerAvatar = true;
+                        }
+                    }, 200);
+
+                    $timeout(function(){
+                        $rootScope.spinnerAvatar = false;
+                        $rootScope.loaderForLogin = false; //For Login Preloader
+                        $rootScope.loading = true;
+                        $scope.loaderRandom(); //For Generic Preloader
+
+                        $timeout(function(){
+                            $rootScope.spinnerAvatar = false;
+                            $rootScope.loading = false; //Hide spinner
+                        }, 2000);
+                    }, 1500);
+
                     //the next fields should match the database in moodle
                     $scope.avatarInfo = [{
                         "userid": data.userId,
@@ -2478,6 +2513,7 @@ angular
                         "alias": $scope.model.username,
                         "escudo": $scope.model.shield
                     }];
+
                     uploadAvatar($scope.avatarInfo);
                     _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
                 }
@@ -2628,9 +2664,14 @@ angular
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-    
-    
 
     var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
     $scope.actualMessage = robotMessage;
+}).controller('timeOutProfile', function ($scope, $modalInstance) {//TimeOut Robot
+
+    $scope.ToDashboard = function () {
+        $scope.$emit('ShowPreloader');
+        $modalInstance.dismiss('cancel');
+    };
+
 });

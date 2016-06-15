@@ -16,7 +16,7 @@ angular
             _timeout = $timeout;
             _httpFactory = $http;
             _isCellphone = false;
-            cordova.exec(function () {_isCellphone=true}, function () {},"CallToAndroid", "isCellphone", []);
+            document.addEventListener("deviceready", function(){cordova.exec(function () {_isCellphone=true}, function () {},"CallToAndroid", "isCellphone", [])}, false);
             $scope.scrollToTop();
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
@@ -135,6 +135,7 @@ angular
 
             $scope.login = function () {
                 $rootScope.loaderForLogin = true; //For Login Preloader
+                $rootScope.totalLoads = 16; //Number of Requests
                 progressBar.set(0); //For Login Preloader
                 $scope.loaderRandom(); //For Login Preloader
                 $scope.$emit('ShowPreloader');
@@ -211,8 +212,8 @@ angular
 
                         //Run queue
                         moodleFactory.Services.ExecuteQueue(function () {
-                            //Preparing for syncAll.
-                            //succesful credentials
+                            //Preparing for syncAll. Succesful credentials
+
                             moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
                                 $scope.incLoadedItem(); //3
 
@@ -282,16 +283,14 @@ angular
 
             $scope.loginWithFacebook = function () {
                 $rootScope.loaderForLogin = true; //For Login Preloader
+                $rootScope.totalLoads = 12; //Number of Requests
                 progressBar.set(0); //For Login Preloader
                 $scope.loaderRandom(); //For Login Preloader
-
                 $scope.$emit('ShowPreloader');
-
 
                 $timeout(function(){
                     $scope.validateConnection(loginWithFacebookConnectedCallback, offlineCallback);
                 }, 500);
-
             };
 
 
@@ -307,8 +306,6 @@ angular
             }
 
             function loginWithFacebookConnectedCallback() {
-                //scope.$emit('ShowPreloader');
-                //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
                 $scope.userCredentialsModel.modelState.isValid = true;
@@ -320,7 +317,6 @@ angular
             }
 
             function FacebookLoginSuccess(data) {
-                //$scope.$emit('ShowPreloader');
                 var userFacebook = JSON.parse(data);
 
                 /* loads drupal resources (content) */
@@ -332,7 +328,7 @@ angular
 
                 drupalFactory.Services.GetDrupalContent(function () {
                     _loadedDrupalResources = true;
-                    $scope.incLoadedItem(); //????
+                    $scope.incLoadedItem(); //1
                 }, function () {
                     _loadedDrupalResources = false;
                     _loadedDrupalResourcesWithErrors = true;
@@ -340,7 +336,6 @@ angular
                 /*******************  ******/
 
                 $rootScope.OAUTH_ENABLED = true;
-                $rootScope.totalLoads = 14;
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = userFacebook;
@@ -357,32 +352,32 @@ angular
 
                     //succesful credentials
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
-                        $scope.incLoadedItem(); //1
+                        $scope.incLoadedItem(); //NOT FORCE REFRESH
 
                         //Came back from redirecting...                        
                         var course = moodleFactory.Services.GetCacheJson("course");
                         moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
-                            $scope.incLoadedItem(); //2
+                            $scope.incLoadedItem(); ////NOT FORCE REFRESH
                         }, function () {
                         }, false);
 
                         IntervalFactory.StartUserNotificationWeeklyInterval();
 
                         moodleFactory.Services.GetAsyncForumDiscussions(85, data.token, function () {
-                            $scope.incLoadedItem(); //3
+                            $scope.incLoadedItem(); //2
                         }, function () {}, true);
 
                         moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
-                            $scope.incLoadedItem(); //4
+                            $scope.incLoadedItem(); //3
                         }, function () {}, true);
 
                         moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
-                            $scope.incLoadedItem(); //5 y 6
+                            $scope.incLoadedItem(); //4 y 5
                         }, function(){}, true);
 
                         //Load Quizzes assets
                         loadQuizesAssets(userFacebook.id, userFacebook.token, function() {
-                            $scope.incLoadedItem(); //7
+                            $scope.incLoadedItem(); //6
                         });
 
                         $timeout(

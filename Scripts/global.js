@@ -382,7 +382,6 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
 
 /* ends an activity */
 var _endActivity = function (activityModel, callback, pathCh) {
-    debugger;
     //trigger activity type 2 is sent when the activity ends.
     var triggerActivity = 2;
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -397,9 +396,23 @@ var _endActivity = function (activityModel, callback, pathCh) {
     }
     else if (activityModel.activityType == "Assign") {
         var data = {userid: currentUserId};
+        if (activityModel.dateStart && activityModel.dateEnd && activityModel.like_status) {
+          data.dateStart = activityModel.dateStart;
+          data.dateEnd = activityModel.dateEnd;
+          data.like_status = activityModel.like_status;
+        }
+        if(activityModel.hasOwnProperty('onlymodifieddate')){
+          data.onlymodifieddate=activityModel.onlymodifieddate;
+          data.modifieddate=activityModel.modifieddate;
+        }
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
     } else {
         var data = {userid: currentUserId};
+        if(activityModel.hasOwnProperty('onlymodifieddate')){
+          data.onlymodifieddate=activityModel.onlymodifieddate;
+          data.modifieddate=activityModel.modifieddate;
+          
+        }
 
         // update activity status dictionary used for blocking activity links
         updateActivityStatusDictionary(activityModel.activity_identifier);
@@ -1011,6 +1024,11 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
             for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                 var activity = challenge.activities[activityIndex];
                 if (activity.activities && activity.activity_identifier == parentActivity.activity_identifier) {
+                  
+                    if(parentActivity.hasOwnProperty('onlymodifieddate')){
+                      activity.modifieddate=parentActivity.modifieddate;
+                    }
+                    
                     if (activity.status == 1 && firstActivityLock) {
                         breakAll = true;
                         break;
@@ -1318,12 +1336,6 @@ var getProfilePoints = function(currentUser){
 
   moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(data){
     
-    var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
-    for (var i=0; i < profilePoints.length; i++) {
-        profilePoints[i].points = profilePoints[i].score;
-    }
-    localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
-    
     },function(data){
       console.log(data);
       },true);
@@ -1331,50 +1343,37 @@ var getProfilePoints = function(currentUser){
 };
 
 
-var fillProfilePoints = function(pointsToAdd, activityId){
-
+var fillProfilePoints = function(pointsToAdd){
+  
+    if (pointsToAdd.length == 0) {
+      return;
+    }
     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
-    var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
     
-    //set profilePoints for the first time
-    if (!profilePoints || profilePoints.length == 0) {
-      profilePoints = profileCatalogs.profiles;
-      for(var i= 0; i < profilePoints.length; i++){
-          profilePoints[i].points = 0;
-      }
-    }
-    
-    for(var i = 0; i < pointsToAdd.length; i++){
-      var profileIdToAdd = pointsToAdd[i].profileId;
-      var points = pointsToAdd[i].points;
-      for(var j = 0; j < profilePoints.length; j++){
-          if (profilePoints[j].id == profileIdToAdd) {
-            profilePoints[j].points += points;
-          }
-      }
-    }
-        
     var scores = [];
-    for(var i=0; i < profilePoints.length; i++){
-      var item = profilePoints[i];
-      var profileObject = {
-          "profileid" : item.id,
-          "moduleid": activityId,
-          "score": item.points
-        };
-
-      scores.push(profileObject);
+    for(var i =0; i < pointsToAdd.length; i++){
+        var item = pointsToAdd[i];
+        profilePoints.push(item);
+        
+        var profileObject = {
+          "profileid" : item.profileId,
+          "moduleid" : item.moduleId,
+          "score": item.score
+          };
+        
+        scores.push(profileObject);
     }
     
     var objectProfile = { "scores": scores};
-
-    moodleFactory.Services.PostProfilePoints('',JSON.stringify(objectProfile),function(data){
+    
+     moodleFactory.Services.PostProfilePoints('',JSON.stringify(objectProfile),function(data){
         console.log(data);
       },function(data){
           console.log(data);
         });
+     
+    localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
     
-    localStorage.setItem("profilePoints",JSON.stringify(profilePoints));
 }
 
 
@@ -1798,6 +1797,9 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
     _forceUpdateConnectionStatus(sucessIsOnlineCallback, errorIsOnlineCallback);
 };
 
+/* loads drupal resources (content) */
+var _loadedDrupalResources = false;
+var _loadedDrupalResourcesWithErrors = false;
 
 /* params:
    images - array of objects { path, name, downloadLink }

@@ -129,6 +129,10 @@ angular
                     }
                     request.proyectos.push(proyecto);
                 }
+                var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
+                var parentActivityIdentifier = $routeParams.moodleid;
+                var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
+                request.fechaModificación=parentActivity.modifieddate;
                 _setLocalStorageJsonItem("mapaDelEmprendedorProjectsMap", $scope.projectMap);
                 return request;
             }
@@ -140,7 +144,7 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"gustaActividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"formaEntrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"1"},{"recursos":["rcs","sds"],"propuesta":"2propuesta","relacion":["rlc2"],"clientes":"papa","personas":["PRSNS","mama"],"formaEntrega":["NTRG","sdas"],"actividades":["NSWR","act2"],"necesidades":"nccsds","proyecto":"definity","proyectoId":"2"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"3"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"4"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"5"}],"fechaFin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividadCompleta":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fechaInicio":"10\/07\/2015 12:22:52","duracion":"4"}
+                        {"gustaActividad":"Si","fechaModificación": "06/10/2016 11:08:18","proyectos":[{"recursos":["RSRCS"],"propuesta":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"formaEntrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"1"},{"recursos":["rcs","sds"],"propuesta":"2propuesta","relacion":["rlc2"],"clientes":"papa","personas":["PRSNS","mama"],"formaEntrega":["NTRG","sdas"],"actividades":["NSWR","act2"],"necesidades":"nccsds","proyecto":"definity","proyectoId":"2"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"3"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"4"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"5"}],"fechaFin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividadCompleta":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fechaInicio":"10\/07\/2015 12:22:52","duracion":"4"}
                     );
                }
             }
@@ -213,11 +217,15 @@ angular
                         subactivitiesCompleted.push(q.coursemoduleid);
                     }
                 });
+                parentActivity.modifieddate=data.fechaModificación || '';
+                parentActivity.onlymodifieddate=true;
                 if (parentActivity.status == 0 && quizzesAnswered.completed > 0) {
                     parentUpdated = true;
+                    parentActivity.onlymodifieddate=false;
+                }
                     _endActivity(parentActivity);
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false);
-                }
+                
                 if (subactivitiesCompleted.length > 0) {
                     if (parentActivity.activities) {
                         userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted, false);
