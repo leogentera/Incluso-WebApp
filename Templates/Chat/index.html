@@ -2,7 +2,7 @@
     <article class="starway">
         <section class="component">
             <div class="msg-container" id="chatMessages">
-                <div class="{{msge.messagesenderid == senderId ? 'msg sent' : 'msg received'}}" ng-repeat="msge in messages">
+                <div class="{{msge.messagesenderid == senderId && !msge.sendAsCouch ? 'msg sent' : 'msg received'}}" ng-repeat="msge in messages">
                     <div class="msg-icn icomoon"></div>
                     <div class="text">
                         <span ng-bind-html="msge.messagetext" style="white-space: pre-line;"></span>
