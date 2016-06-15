@@ -524,6 +524,7 @@ angular
                                     function (data) {},true);
                                 }
                                 $modalInstance.dismiss('cancel');
+                                }, 500);
                             };
                         },
                         size: size,
