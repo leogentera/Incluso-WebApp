@@ -705,6 +705,9 @@ angular
                         $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                         $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
                         $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                        $scope.socialList = $scope.socialList.concat($scope.model.social);
+                        $scope.othersList = $scope.othersList.concat($scope.model.emprendedor);
+
                         $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
                         $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
                         $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
@@ -712,6 +715,9 @@ angular
                         $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                         $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
                         $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
+                        $scope.socialList = deleteRepeatedEntries($scope.socialList);
+                        $scope.othersList = deleteRepeatedEntries($scope.othersList);
+
                         $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
                         $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
                         $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
@@ -786,6 +792,9 @@ angular
                             $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                             $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
                             $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                            $scope.socialList = $scope.socialList.concat($scope.model.social);
+                            $scope.othersList = $scope.othersList.concat($scope.model.emprendedor);
+
                             $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
                             $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
                             $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
@@ -793,6 +802,9 @@ angular
                             $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                             $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
                             $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
+                            $scope.socialList = deleteRepeatedEntries($scope.socialList);
+                            $scope.othersList = deleteRepeatedEntries($scope.othersList);
+
                             $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
                             $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
                             $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
@@ -1390,24 +1402,6 @@ angular
                     $scope.$emit('ShowPreloader');
                     $location.path("Perfil/" + $scope.userId);
                 };
-
-                //Array.prototype.compare = function (testArr) {
-                //    if (this.length != testArr.length) return false;
-                //
-                //    for (var i = 0; i < testArr.length; i++) {
-                //        if (this[i].compare) {
-                //            if (!this[i].comparre(testArr[i])) {
-                //                return false;
-                //            }
-                //        }
-                //
-                //        if (this[i].toLowerCase() !== testArr[i].toLowerCase()) {
-                //            return false;
-                //        }
-                //    }
-                //
-                //    return true;
-                //};
 
                 function arraysAreEqual(ary1, ary2) {
                     if (ary1.length !== ary2.length) {
