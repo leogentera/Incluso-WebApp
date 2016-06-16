@@ -28,6 +28,8 @@ angular
             $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
             var misGustosActivityId = 70;
             var retoMultipleActivityId = 139;
+            var tuEligesActivityIdentifier = 2012;
+            var multiplicaTuDineroActivityIdentifier = 3302;
             
             switch ($routeParams.activityId) {
                 case "1002":
@@ -54,10 +56,14 @@ angular
                 
                 var assertiveness = "-1";//Default null value
                 var financialAbility = "-1";//Default null value
-                if (currentStage >= 2) {
+                
+                var tuEligesActivity = getActivityByActivity_identifier(tuEligesActivityIdentifier);
+                var multiplicaTuDineroActivity = getActivityByActivity_identifier(multiplicaTuDineroActivityIdentifier);
+                
+                if (tuEligesActivity && tuEligesActivity.status != 0) {
                     assertiveness = $scope.profile.assertiveness == true ? "1" : "0";
                 }
-                if (currentStage == 3) {
+                if (multiplicaTuDineroActivity && multiplicaTuDineroActivity.status != 0) {
                     financialAbility = $scope.profile.financialAbility == true ? "1" : "0";
                 }
                 
@@ -226,7 +232,8 @@ angular
                 var activityModel = {
                     like_status : $scope.like_status ,
                     dateStart : $scope.startingTime,
-                    dateEnd : endTime
+                    dateEnd : endTime,
+                    coursemoduleid : $scope.activity.coursemoduleid
                 };
                 
                 _endActivity(activityModel,function(data){
