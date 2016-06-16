@@ -47,8 +47,6 @@ angular
                     }, function () {
                     }, "CallToAndroid", "showCombobox", selectItems);
                 }
-
-
             };
 
             $scope.changeitem = function (field) {
@@ -201,7 +199,7 @@ angular
 
                     if (totalObligatorios >= $scope.fuenteDeEnergia.resources_required) {
                         totalObligatorios = $scope.fuenteDeEnergia.resources_required;
-                    } console.log(totalObligatorios);
+                    }
 
                     if (activitiesData != "") {
                         waitPreloader++;
