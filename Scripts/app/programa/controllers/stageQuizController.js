@@ -913,7 +913,7 @@ angular
                     //Update Emprendedor
                     for (i = 0; i < $scope.answers[4].length - 1; i++) {
                         if ($scope.answers[4][i]) {
-                            $scope.userprofile.emprendedor.push(others[i]);
+                            $scope.userprofile.emprendedor.push(emprendedor[i]);
                         }
                     }
 
@@ -1219,7 +1219,8 @@ angular
 
             //################################# UTILITY FUNCTIONS ################################
             function cleanText(userAnswer) {
-                var result = userAnswer.replace(/\r/g, "").replace(/<br>/g, "").replace(/<p>/g, "").replace(/<\/p>/g, "").replace(/\n/g, "");
+                var result = userAnswer.replace(/\r?\n|\r/g, "").trim();
+
                 return result;
             }
 
