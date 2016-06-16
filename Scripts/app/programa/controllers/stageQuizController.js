@@ -904,7 +904,7 @@ angular
                     //Update Emprendedor
                     for (i = 0; i < $scope.answers[4].length - 1; i++) {
                         if ($scope.answers[4][i]) {
-                            $scope.userprofile.emprendedor.push(others[i]);
+                            $scope.userprofile.emprendedor.push(emprendedor[i]);
                         }
                     }
 

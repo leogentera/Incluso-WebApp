@@ -713,7 +713,7 @@ angular
                         if ($scope.model.profileimageurl) {
                             $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                         }
-                            console.log("saving old profile");
+
                         //Save a oopy of the original data...
                         _setLocalStorageJsonItem("originalProfile/" + $scope.userId, $scope.model);
 
@@ -1278,7 +1278,7 @@ angular
 
                         //Recover original Profile data from LS...
                         var originalProfile = JSON.parse(localStorage.getItem("originalProfile/" + $scope.userId));
-console.log($scope.visitedSections);
+
                         switch ($scope.visitedSections[i]) {//Restore original field values.
                             case "3000":  // "Mi informacion"
                                 $scope.model.firstname = originalProfile.firstname;
@@ -1486,9 +1486,7 @@ console.log($scope.visitedSections);
 
                                         break;
                                     case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
-                                        console.log($scope.model.favoriteSports);
-                                        console.log(originalProfile.favoriteSports);
-                                        console.log(_.isEqual($scope.model.favoriteSports, originalProfile.favoriteSports));
+
                                         if (!$scope.model.favoriteSports.compare(originalProfile.favoriteSports.sort())) {
                                             edited = true;console.log("1 ****");
                                             quizMisGustos = true;
