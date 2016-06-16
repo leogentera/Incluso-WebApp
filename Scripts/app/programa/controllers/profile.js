@@ -279,6 +279,9 @@ angular
                     $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                     $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
                     $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                    $scope.socialList = $scope.socialList.concat($scope.model.social);
+                    $scope.othersList = $scope.othersList.concat($scope.model.emprendedor);
+
                     $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
                     $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
                     $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
@@ -286,6 +289,9 @@ angular
                     $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                     $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
                     $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
+                    $scope.socialList = deleteRepeatedEntries($scope.socialList);
+                    $scope.othersList = deleteRepeatedEntries($scope.othersList);
+
                     $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
                     $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
                     $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
@@ -496,14 +502,14 @@ angular
                     var orderedArr = [];
 
                     for (i = 0; i < n; i++) {
-                        orderedArr.push(arr[i].replace(/\r?\n|\r/g, " ").trim().toLowerCase());
+                        orderedArr.push(arr[i].replace(/\r?\n|\r/g, "").trim().toLowerCase());
                     }
 
                     orderedArr = orderedArr.sort();
 
                     for (i = 0; i < n; i++) {
                         for (j = 0; j < n; j++) {
-                            if (arr[j].replace(/\r?\n|\r/g, " ").trim().toLowerCase() == orderedArr[i]) {
+                            if (arr[j].replace(/\r?\n|\r/g, "").trim().toLowerCase() == orderedArr[i]) {
                                 finalArr.push(arr[j].replace(/\r?\n|\r/g, " ").trim());
                             }
                         }
@@ -1487,35 +1493,42 @@ angular
                                         break;
                                     case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
 
-                                        if (!$scope.model.favoriteSports.compare(originalProfile.favoriteSports.sort())) {
+                                        if (!_.isEqual($scope.model.favoriteSports, originalProfile.favoriteSports)) {
                                             edited = true;console.log("1 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.artisticActivities.compare(originalProfile.artisticActivities.sort())) {
+
+                                        if (!_.isEqual($scope.model.artisticActivities, originalProfile.artisticActivities)) {
                                             edited = true;console.log("2 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.hobbies.compare(originalProfile.hobbies.sort())) {
+
+                                        if (!_.isEqual($scope.model.hobbies, originalProfile.hobbies)) {
                                             edited = true;console.log("3 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.social.compare(originalProfile.social.sort())) {
+
+                                        if (!_.isEqual($scope.model.social, originalProfile.social)) {
                                             edited = true;console.log("4 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.emprendedor.compare(originalProfile.emprendedor.sort())) {
+
+                                        if (!_.isEqual($scope.model.emprendedor, originalProfile.emprendedor)) {
                                             edited = true;console.log("5 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.talents.compare(originalProfile.talents.sort())) {
+
+                                        if (!_.isEqual($scope.model.talents, originalProfile.talents)) {
                                             edited = true;console.log("6 ****");
                                             quizMisCualidades = true;
                                         }
-                                        if (!$scope.model.values.compare(originalProfile.values.sort())) {
+
+                                        if (!_.isEqual($scope.model.values, originalProfile.values)) {
                                             edited = true;console.log("7 ****");
                                             quizMisCualidades = true;
                                         }
-                                        if (!$scope.model.habilities.compare(originalProfile.habilities.sort())) {
+
+                                        if (!_.isEqual($scope.model.habilities, originalProfile.habilities)) {
                                             edited = true;console.log("8 ****");
                                             quizMisCualidades = true;
                                         }
@@ -1534,7 +1547,7 @@ angular
                                         if ($scope.model.iLiveWith !== originalProfile.iLiveWith) {
                                             edited = true;
                                         }
-                                        if (!($scope.model.mainActivity.sort()).compare(originalProfile.mainActivity.sort())) {
+                                        if (!_.isEqual($scope.model.mainActivity, originalProfile.mainActivity)) {
                                             edited = true;
                                         }
                                         if ($scope.model.level !== originalProfile.currentStudies.level) {
@@ -1552,7 +1565,7 @@ angular
                                         if ($scope.model.gotMoneyIncome !== originalProfile.gotMoneyIncome) {
                                             edited = true;
                                         }
-                                        if (!($scope.model.moneyIncome.sort()).compare(originalProfile.moneyIncome.sort())) {
+                                        if (!_.isEqual($scope.model.moneyIncome, originalProfile.moneyIncome)) {
                                             edited = true;
                                         }
                                         if ($scope.model.medicalCoverage !== originalProfile.medicalCoverage) {
@@ -1570,13 +1583,13 @@ angular
 
                                         break;
                                     case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
-                                        if (!($scope.model.knownDevices.sort()).compare(originalProfile.knownDevices.sort())) {
+                                        if (!_.isEqual($scope.model.knownDevices, originalProfile.knownDevices)) {
                                             edited = true;
                                         }
-                                        if (!($scope.model.ownDevices.sort()).compare(originalProfile.ownDevices.sort())) {
+                                        if (!_.isEqual($scope.model.ownDevices, originalProfile.ownDevices)) {
                                             edited = true;
                                         }
-                                        if (!($scope.model.phoneUsage.sort()).compare(originalProfile.phoneUsage.sort())) {
+                                        if (!_.isEqual($scope.model.phoneUsage, originalProfile.phoneUsage)) {
                                             edited = true;
                                         }
                                         if ($scope.model.playVideogames !== originalProfile.playVideogames) {
@@ -1588,10 +1601,10 @@ angular
                                         if ($scope.model.videogamesHours !== originalProfile.videogamesHours) {
                                             edited = true;
                                         }
-                                        if (!($scope.model.kindOfVideogames.sort()).compare(originalProfile.kindOfVideogames.sort())) {
+                                        if (!_.isEqual($scope.model.kindOfVideogames, originalProfile.kindOfVideogames)) {
                                             edited = true;
                                         }
-                                        if (!($scope.model.favoriteGames.sort()).compare(originalProfile.favoriteGames.sort())) {
+                                        if (!_.isEqual($scope.model.favoriteGames, originalProfile.favoriteGames)) {
                                             edited = true;
                                         }
 
