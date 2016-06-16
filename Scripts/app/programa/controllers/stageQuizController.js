@@ -88,8 +88,8 @@ angular
                 }
 
                 drupalFactory.Services.GetContent(stageContent, function (data, key) {
-                        _loadedResources = true;
-                        $scope.closingContent = data.node;
+                    _loadedResources = true;
+                    $scope.closingContent = data.node;
                 },
                 function () {
                 },
@@ -328,10 +328,10 @@ angular
 
                 userAnswerString = userAnswerString.trim();
                 longUserAnswerString = userAnswerString.length;
-                
+
                 if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
                     userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
-                }            
+                }
 
                 $scope.activityObject.questions[index].userAnswer = userAnswerString;
                 $scope.activityObject.questions[index].profileid = profileId;
@@ -664,9 +664,9 @@ angular
 
                             default:
                                 break;
-                        }                        
+                        }
                     }
-                    
+
                     //get profile points from the quiestion's answers.
                     if ($scope.childActivity && $scope.childActivity.status == 0) {
                         calculateProfilePoints($scope.activityObject.questions);
@@ -674,8 +674,8 @@ angular
                     if ($scope.parentActivity && $scope.parentActivity.status == 0) {
                         calculateProfilePoints($scope.activityObject.questions);
                     }
-                    
-                    
+
+
                     if ($scope.childActivity) {
                         $scope.parentActivity.status = 1;
                         $scope.childActivity.status = 1;
@@ -690,7 +690,7 @@ angular
                     $scope.AnswersResult.like_status = $scope.like_status;
                     $scope.AnswersResult.updatetype = 1;
                     $scope.showWarning = false;
-                    
+
                     var updatedActivityOnUsercourse;
                     if ($scope.childActivity) {  //Update status of Quiz ("child") activity
                         updatedActivityOnUsercourse = updateSubActivityStatus($scope.childActivity.coursemoduleid);  //actualizar arbol
@@ -724,7 +724,7 @@ angular
                     activityModel.answersResult.dateStart = activityModel.startingTime;
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
                     activityModel.answersResult.others = $scope.OtroAnswers;
-                    $scope.activityObject.status = 1;                                                    
+                    $scope.activityObject.status = 1;
 
                     // Write Updated objects to Local Storage for later recovery.
                     if ($scope.childActivity) {
@@ -773,29 +773,38 @@ angular
                 }, 1);
             };
 
-        
 
-            function calculateProfilePoints(questions){
+
+            function calculateProfilePoints(questions) {
                 var profilePoints = [];
 
                 var profiles = JSON.parse(localStorage.getItem("profileCatalogs")).profiles;
-                var profileNone = _.where(profiles, {profilename: "None"}).id || 1;
-                for(var i = 0; i < questions.length; i++){
+                var profileNone = _.where(profiles, { profilename: "None" }).id || 1;
+                for (var i = 0; i < questions.length; i++) {
                     if (questions[i].profileid && questions[i].profileid != profileNone) {
                         var profileId = questions[i].profileid;
                         if (profileId.length > 0) {
-                            for(var j=0; j < profileId.length; j++){
-                                var pointsByAnswer = { "profileId": profileId[j], "score" : 1, "moduleId" : $scope.coursemoduleid };
+                            for (var j = 0; j < profileId.length; j++) {
+                                var pointsByAnswer = { "profileId": profileId[j], "score": 1 };
                                 profilePoints.push(pointsByAnswer);
                             }
-                        }else{
-                            var pointsByAnswer = { "profileId": profileId, "score" : 1, "moduleId" : $scope.coursemoduleid };
+                        } else {
+                            var pointsByAnswer = { "profileId": profileId, "score": 1 };
                             profilePoints.push(pointsByAnswer);
                         }
                     }
                 };
-                
-                fillProfilePoints(profilePoints);
+
+                var groupedProfiles = _(profilePoints).groupBy('profileId');
+                var sumOfGroupedProfiles = _(groupedProfiles).map(function (g, key) {
+                    return {
+                        profileId: key,
+                        score: _(g).reduce(function (m, x) { return m + x.score }, 0),
+                        moduleId: $scope.coursemoduleid
+                    };
+                });
+
+                fillProfilePoints(sumOfGroupedProfiles);
             }
 
             function updateProfile() {
@@ -904,7 +913,7 @@ angular
                     //Update Emprendedor
                     for (i = 0; i < $scope.answers[4].length - 1; i++) {
                         if ($scope.answers[4][i]) {
-                            $scope.userprofile.emprendedor.push(others[i]);
+                            $scope.userprofile.emprendedor.push(emprendedor[i]);
                         }
                     }
 
@@ -1210,7 +1219,8 @@ angular
 
             //################################# UTILITY FUNCTIONS ################################
             function cleanText(userAnswer) {
-                var result = userAnswer.replace(/\r/g, "").replace(/<br>/g, "").replace(/<p>/g, "").replace(/<\/p>/g, "").replace(/\n/g, "");
+                var result = userAnswer.replace(/\r?\n|\r/g, "").trim();
+
                 return result;
             }
 
@@ -1234,15 +1244,15 @@ angular
             }
 
             function addHeightEssay(elem) {
-                var elemHeight = angular.element(elem).height();
+                var elemHeight = angular.element("#" + elem + "> ul > li").height() + 12;
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-                angular.element(".owl-wrapper-outer").css('height', containerHeight + 147);
-                angular.element(elem).css('height', elemHeight + 147);
+                angular.element(".owl-wrapper-outer").css('height', containerHeight + elemHeight);
             }
 
             function removeHeightEssay(elem) {
+                var elemHeight = angular.element("#" + elem + "> ul > li").height() + 12;
                 var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 147);
+                angular.element("div.owl-wrapper-outer").css('height', containerHeight - elemHeight);
             }
 
             //This function is activated from Template, with ESSAY type questions
@@ -1389,6 +1399,6 @@ angular
                 }
             }
         };
-    }]);
+    } ]);
 
 

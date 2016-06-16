@@ -688,7 +688,7 @@
             var timeOfExpiration;
             var errCallback;
 
-            if (key.indexOf("Perfil") > -1) {
+            if (key && key.indexOf("Perfil") > -1) {
                 timeOfExpiration = globalTimeOut;
                 errCallback = errorCallback;
             } else {
@@ -1339,7 +1339,7 @@
                 requestQueue = cacheQueue;
             }
             queue.retryCount = 0;
-            queue.userID = _currentUser.userId // Necesitamos guardar el request en la cola con el usuario actual
+            queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;
             requestQueue.push(queue);
             _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);

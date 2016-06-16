@@ -385,6 +385,7 @@ angular
                                         for (var d = 0; d < data.discussions.length; d++) {
                                             currentDiscussionIds.push(data.discussions[d].discussion);
                                         }
+                                        localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
 
                                         var discussion = _.find(data.discussions, function (d) {
                                             return d.name.toLowerCase().indexOf("toma el reto") > -1 || d.name.toLowerCase().indexOf("comparte") > -1

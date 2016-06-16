@@ -52,9 +52,8 @@ angular
                     $(".typing-section textarea").focus();
                 });
 
-                //**************   GET CHAT CONVERSATION   *******************
+                // Get Chat conversation
                 moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
-                //************************************************************
 
                 function getUserRefreshChatCallback() {
                     $scope.$emit('HidePreloader'); //hide preloader
@@ -70,7 +69,7 @@ angular
                     _setLocalStorageItem('numMessages/' + currentUser.userId, $scope.messages.length);
                 }
 
-                // ****************** METHOD THAT RUNS WHEN USER SENDS A NEW CHAT POST ********************
+                // METHOD THAT RUNS WHEN USER SENDS A NEW CHAT POST
                 $scope.sendMessage = function () {
                     var newMessage;
 
@@ -79,7 +78,7 @@ angular
                         if ($scope.currentMessage.trim() != "") {//If there is currently some text...
                             triggerAndroidKeyboardHide();
 
-                            //Save Model for User Post...
+                            // 1) Create Model for User Post...
                             newMessage = {
                                 messagetext: $scope.currentMessage,
                                 messagesenderid: currentUser.userId,
@@ -88,35 +87,36 @@ angular
 
                             /* time out to avoid android lag on fully hiding keyboard */
                             $timeout(function () {
-                                // 1) Save User Post in LS...
+                                // 2) Save User Post in LS...
                                 $scope.messages.push(newMessage);
                                 $scope.currentMessage = ""; //Clean Text Area
                                 _setLocalStorageItem('userChat/' + currentUser.userId, JSON.stringify($scope.messages));
                                 $anchorScroll();
 
-                                // 2) Save User Post Remotely.
+                                // 3) Save User Post Remotely.
                                 moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
 
-                                if ($scope.messages.length == 1) {//This is the First post by USer...
-                                    var firstTimeMessage = JSON.parse(localStorage.getItem("drupal/content/chat_generic_message")).node.chat_instructions;
+                                // 4) Create Model for Automated Message
+                                var firstTimeMessage = JSON.parse(localStorage.getItem("drupal/content/chat_generic_message")).node.chat_instructions;
 
-                                    newMessage = {
-                                        messagetext: firstTimeMessage,
-                                        messagesenderid: 478, //Dev  Prod:350
-                                        messagedate: new Date()
-                                    };
+                                newMessage = {
+                                    messagetext: firstTimeMessage,
+                                    messagesenderid: currentUser.userId, //Dev  Prod:350
+                                    sendAsCouch: true,
+                                    messagedate: new Date()
+                                };
 
-                                    /* time out to avoid android lag on fully hiding keyboard */
-                                    $timeout(function () {
-                                        // 1) Save Generic Message in LS...
-                                        $scope.messages.push(newMessage);
-                                        _setLocalStorageItem('userChat/' + currentUser.userId, JSON.stringify($scope.messages));
-                                        $anchorScroll();
+                                /* time out to avoid android lag on fully hiding keyboard */
+                                $timeout(function () {
+                                    // 5) Save Generic Message in LS...
+                                    $scope.messages.push(newMessage);
+                                    _setLocalStorageItem('userChat/' + currentUser.userId, JSON.stringify($scope.messages));
+                                    $anchorScroll();
 
-                                        // 2) Save Generic Message Remotely.
-                                        moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
-                                    }, 1000);
-                                }
+                                    // 6) Save Automated Message Remotely.
+                                    moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                                }, 1000);
+
                             }, 1000);
                         }
 
