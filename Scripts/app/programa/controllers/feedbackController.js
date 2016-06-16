@@ -118,7 +118,8 @@ angular
 
                 if (tiedProfiles.length >= 4) { 
                     //If there are more than 4 profiles in draw sets Generic profile to it
-                    return _.where(profiles, { profilename : "Generico"}).id;
+                    var genericProfile = _.findWhere(profiles, { profilename : "Generico"});
+                    return genericProfile.id;
                 }else if (tiedProfiles.length > 1) {
 
                     //Gets an array of the score obtained in the activity Mis Gustos
