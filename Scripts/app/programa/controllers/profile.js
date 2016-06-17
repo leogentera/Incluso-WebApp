@@ -280,6 +280,9 @@ angular
                     $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                     $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
                     $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                    $scope.socialList = $scope.socialList.concat($scope.model.social);
+                    $scope.othersList = $scope.othersList.concat($scope.model.emprendedor);
+
                     $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
                     $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
                     $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
@@ -287,6 +290,9 @@ angular
                     $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                     $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
                     $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
+                    $scope.socialList = deleteRepeatedEntries($scope.socialList);
+                    $scope.othersList = deleteRepeatedEntries($scope.othersList);
+
                     $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
                     $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
                     $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
@@ -505,6 +511,7 @@ angular
                         for (j = 0; j < n; j++) {
                             if (arr[j].replace(/\r?\n|\r/g, "").trim().toLowerCase() == orderedArr[i]) {
                                 finalArr.push(arr[j].replace(/\r?\n|\r/g, "").trim());
+
                             }
                         }
                     }
@@ -1495,121 +1502,128 @@ angular
                                     break;
                                 case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
 
-                                        if (!$scope.model.favoriteSports.compare(originalProfile.favoriteSports.sort())) {
-                                            edited = true;
+                                        if (!_.isEqual($scope.model.favoriteSports, originalProfile.favoriteSports)) {
+                                            edited = true;console.log("1 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.artisticActivities.compare(originalProfile.artisticActivities.sort())) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.artisticActivities, originalProfile.artisticActivities)) {
+                                            edited = true;console.log("2 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.hobbies.compare(originalProfile.hobbies.sort())) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.hobbies, originalProfile.hobbies)) {
+                                            edited = true;console.log("3 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.social.compare(originalProfile.social.sort())) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.social, originalProfile.social)) {
+                                            edited = true;console.log("4 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.emprendedor.compare(originalProfile.emprendedor.sort())) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.emprendedor, originalProfile.emprendedor)) {
+                                            edited = true;console.log("5 ****");
                                             quizMisGustos = true;
                                         }
-                                        if (!$scope.model.talents.compare(originalProfile.talents.sort())) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.talents, originalProfile.talents)) {
+                                            edited = true;console.log("6 ****");
                                             quizMisCualidades = true;
                                         }
-                                        if (!$scope.model.values.compare(originalProfile.values.sort())) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.values, originalProfile.values)) {
+                                            edited = true;console.log("7 ****");
                                             quizMisCualidades = true;
                                         }
-                                        if (!$scope.model.habilities.compare(originalProfile.habilities.sort())) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.habilities, originalProfile.habilities)) {
+                                            edited = true;console.log("8 ****");
                                             quizMisCualidades = true;
                                         }
                                         if (!arraysAreEqual($scope.model.inspirationalCharacters, originalProfile.inspirationalCharacters)) {
                                             edited = true;
                                         }
 
-                                    if (edited && $scope.logOfSections[i].status == 1) {
-                                        $scope.logOfSections[i].visited = true;
-                                        showResultsPage = true;
-                                        edited = false;
-                                    }
+                                        if (edited && $scope.logOfSections[i].status == 1) {
+                                            $scope.logOfSections[i].visited = true;
+                                            showResultsPage = true;
+                                            edited = false;
+                                        }
 
-                                    break;
-                                case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
-                                    if ($scope.model.iLiveWith !== originalProfile.iLiveWith) {
-                                        edited = true;
-                                    }
-                                    if (!_.isEqual($scope.model.mainActivity.sort(), originalProfile.mainActivity.sort())) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.level !== originalProfile.currentStudies.level) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.grade !== originalProfile.currentStudies.grade) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.period !== originalProfile.currentStudies.period) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.children !== originalProfile.children) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.gotMoneyIncome !== originalProfile.gotMoneyIncome) {
-                                        edited = true;
-                                    }
-                                    if (!_.isEqual($scope.model.moneyIncome.sort(), originalProfile.moneyIncome.sort())) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.medicalCoverage !== originalProfile.medicalCoverage) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.medicalInsurance !== originalProfile.medicalInsurance) {
-                                        edited = true;
-                                    }
+                                        break;
+                                    case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
+                                        if ($scope.model.iLiveWith !== originalProfile.iLiveWith) {
+                                            edited = true;
+                                        }
+                                        if (!_.isEqual($scope.model.mainActivity, originalProfile.mainActivity)) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.level !== originalProfile.currentStudies.level) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.grade !== originalProfile.currentStudies.grade) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.period !== originalProfile.currentStudies.period) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.children !== originalProfile.children) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.gotMoneyIncome !== originalProfile.gotMoneyIncome) {
+                                            edited = true;
+                                        }
+                                        if (!_.isEqual($scope.model.moneyIncome, originalProfile.moneyIncome)) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.medicalCoverage !== originalProfile.medicalCoverage) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.medicalInsurance !== originalProfile.medicalInsurance) {
+                                            edited = true;
+                                        }
 
-                                    if (edited && $scope.logOfSections[i].status == 1) {
-                                        $scope.logOfSections[i].visited = true;
-                                        showResultsPage = true;
-                                        edited = false;
-                                    }
+                                        if (edited && $scope.logOfSections[i].status == 1) {
+                                            $scope.logOfSections[i].visited = true;
+                                            showResultsPage = true;
+                                            edited = false;
+                                        }
 
-                                    break;
-                                case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
-                                    if (!_.isEqual($scope.model.knownDevices.sort(), originalProfile.knownDevices.sort())) {
-                                        edited = true;
-                                    }
-                                    if (!_.isEqual($scope.model.ownDevices.sort(), originalProfile.ownDevices.sort())) {
-                                        edited = true;
-                                    }
-                                    if (!_.isEqual($scope.model.phoneUsage.sort(), originalProfile.phoneUsage.sort())) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.playVideogames !== originalProfile.playVideogames) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.videogamesFrecuency !== originalProfile.videogamesFrecuency) {
-                                        edited = true;
-                                    }
-                                    if ($scope.model.videogamesHours !== originalProfile.videogamesHours) {
-                                        edited = true;
-                                    }
-                                    if (!_.isEqual($scope.model.kindOfVideogames.sort(), originalProfile.kindOfVideogames.sort())) {
-                                        edited = true;
-                                    }
-                                    if (!_.isEqual($scope.model.favoriteGames.sort(), originalProfile.favoriteGames.sort())) {
-                                        edited = true;
-                                    }
+                                        break;
+                                    case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
+                                        if (!_.isEqual($scope.model.knownDevices, originalProfile.knownDevices)) {
+                                            edited = true;
+                                        }
+                                        if (!_.isEqual($scope.model.ownDevices, originalProfile.ownDevices)) {
+                                            edited = true;
+                                        }
+                                        if (!_.isEqual($scope.model.phoneUsage, originalProfile.phoneUsage)) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.playVideogames !== originalProfile.playVideogames) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.videogamesFrecuency !== originalProfile.videogamesFrecuency) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.videogamesHours !== originalProfile.videogamesHours) {
+                                            edited = true;
+                                        }
+                                        if (!_.isEqual($scope.model.kindOfVideogames, originalProfile.kindOfVideogames)) {
+                                            edited = true;
+                                        }
+                                        if (!_.isEqual($scope.model.favoriteGames, originalProfile.favoriteGames)) {
+                                            edited = true;
+                                        }
 
-                                    if (edited && $scope.logOfSections[i].status == 1) {
-                                        $scope.logOfSections[i].visited = true;
-                                        showResultsPage = true;
-                                        edited = false;
-                                    }
+                                        if (edited && $scope.logOfSections[i].status == 1) {
+                                            $scope.logOfSections[i].visited = true;
+                                            showResultsPage = true;
+                                            edited = false;
+                                        }
 
-                                    break;
+                                        break;
                                 default:
                                     break;
                             }
