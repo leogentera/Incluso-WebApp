@@ -1,5 +1,5 @@
 angular
-    .module('incluso.stage.dashboardcontroller', [])
+    .module('incluso.stage.dashboardcontroller', ['ngSanitize'])
     .controller('stageDashboardController', [
         '$q',
         '$scope',
@@ -10,7 +10,10 @@ angular
         '$http',
         '$modal',
         '$filter',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+        '$anchorScroll',
+        '$window',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter, $anchorScroll, $window) {
+
             var _loadedResources = false;
             var _pageLoaded = true;
             /* $routeParams.stageId */
@@ -20,6 +23,14 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus(); //Copies last version of activity blocked status into model variable
+
+            // ---- Update Chat Status -----------------------------------------------
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
+            }
+
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
@@ -128,7 +139,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: false, //$scope.animationsEnabled,
                     templateUrl: 'OpeningStageModal.html',
-                    controller: 'OpeningStageController',
+                    controller: 'OpeningStage1',
                     size: size,
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
@@ -189,6 +200,7 @@ angular
                 "Conócete": "assets/images/challenges/stage-1/img-conocete.svg",
                 "Mis sueños": "assets/images/challenges/stage-1/img-mis-suenos.svg",
                 "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
+                "Retroalimentación": "assets/images/challenges/stage-1/img-challenge-feedback.svg",
                 "Exploración final": "assets/images/challenges/stage-1/img-evaluacion-final.svg"
             };
 
@@ -198,6 +210,7 @@ angular
                 "Conócete": "Juega y descubre tus inteligencias",
                 "Mis sueños": "Cada sueño en su lugar",
                 "Cabina de soporte": "Contacta a tu coach",
+                "Retroalimentación" : "Retroalimentaciónsssssssssss",
                 "Exploración final": "Explora qué tanto descubriste en la Zona de Vuelo"
             };
 
@@ -218,12 +231,13 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
+                var quizIdentifiers = ["1001", "1005", "1006", "1007", "1009"];
+                var isQuiz = false;
 
                 if (_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function (x) {
                     return x.id == activity.activity_identifier
                 })[0].url;
-
                 //Store an Index of the chosen menu item.
                 _setLocalStorageJsonItem("owlIndex", parentIndex);
 
@@ -233,7 +247,18 @@ angular
                         var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
                         logStartActivityAction(activityId, timeStamp);
-                        $location.path(url);
+
+                        if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
+                            isQuiz = true;
+                            $rootScope.quizIdentifier = activity.activity_identifier;
+                            $rootScope.quizUrl = url;
+                            $rootScope.openQuizModal();  // turns on Quiz Modal
+                        }
+
+                        if (!isQuiz) {
+                            $location.path(url);
+                        }
+
                     } else {
                         $scope.openUpdateAppModal();
                     }
@@ -253,7 +278,6 @@ angular
 
                 var challengeCompletedId = _closeChallenge($scope.idEtapa);
 
-                _coachNotification($scope.idEtapa);
 
                 //Exclude challenges initial and final from showing modal robot
                 var challengeExploracionInicial = 140;
@@ -267,8 +291,6 @@ angular
 
                 if (_tryCloseStage($scope.idEtapa)) {
                     $scope.openModal_CloseStage();
-
-                    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
                     moodleFactory.Services.PostGeolocation(1);
                 }
 
@@ -303,8 +325,6 @@ angular
             }
 
             function showClosingChallengeRobot(challengeCompletedId) {
-
-                //console.log("show closing challengeRobot");
                 $scope.robotMessages = [
                     {
                         title: $scope.contentResources.robot_title_challenge_one,
@@ -335,7 +355,6 @@ angular
                 $scope.actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
                 if ($scope.actualMessage) {
                     _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
-                    //console.log($scope.actualMessage);
                     $scope.openModal_CloseChallenge();
                 }
             }
@@ -349,16 +368,32 @@ angular
 
     $scope.actualMessage = challengeMessage;
 
+}).controller('OpeningStage1', function ($scope, $modalInstance) {//To show Opening Stage Robot
+    drupalFactory.Services.GetContent("3000", function (data, key) {
+
+        if (data.node != null) {
+            $scope.title = data.node.titulo_bienvenida_robot;
+            $scope.message = data.node.robot_stage_welcome;
+        }
+    }, function () {}, false);
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
 }).controller('closingStageController', function ($scope, $modalInstance, $location) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
         $location.path('/ProgramaDashboard');  //Redirect to dashboard inicio.
     };
 
-    $scope.robotMessages = {
-        title: "Cierre Zona de Vuelo",
-        message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
-    };
+    drupalFactory.Services.GetContent("3000", function (data, key) {
+
+        if (data.node != null) {
+            $scope.title = data.node.titulo_cierre_robot;
+            $scope.message = data.node.robot_stage_close;
+        }
+    }, function () {}, false);
 
     $scope.navigateToDashboard = function () {
         $modalInstance.dismiss('cancel');

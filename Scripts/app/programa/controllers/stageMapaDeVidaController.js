@@ -30,19 +30,12 @@ angular
             $scope.user = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.mapaDeVidaActivities = moodleFactory.Services.GetCacheJson("mapaDeVidaActivities");
-            $scope.mapaDeVidaAnswers = moodleFactory.Services.GetCacheJson("mapaDeVidaAnswers/" + $scope.user.id);
             $scope.stars = 0;
             $scope.isInstalled = false;
             $scope.pathImagenFicha = "";
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             var activitiesPosted = 0;
             var activitiesAtLeastOne = 0;
-
-            for (var key in localStorage) {
-                if (key.indexOf("mapaDeVidaAnswers") > -1 && key.indexOf($scope.user.id) < 0) {
-                    localStorage.removeItem(key);
-                }
-            }
 
             if (!$routeParams.retry) {
                 try {
@@ -84,25 +77,8 @@ angular
                     ( asyncRequest ? _.find(mapaDeVidaActivity.activities, function (r) {
                         return r.activityname == data.name
                     }).coursemoduleid : data.coursemoduleid);
-                if (!$scope.mapaDeVidaAnswers || $scope.mapaDeVidaAnswers.length < $scope.mapaDeVidaActivities.length) {
-                    $scope.mapaDeVidaAnswers = (!$scope.mapaDeVidaAnswers ? [] : $scope.mapaDeVidaAnswers );
-                    getUserData($scope.mapaDeVidaActivities[$scope.mapaDeVidaActivities.length - 1]["coursemoduleid"]);
-                }
-                else {
-                    $scope.$emit('HidePreloader');
-                }
+                $scope.$emit('HidePreloader');
                 _setLocalStorageJsonItem("mapaDeVidaActivities", $scope.mapaDeVidaActivities);
-            }
-
-            function getUserData(activityId) {
-                moodleFactory.Services.GetAsyncActivity(activityId + "?userid=" + $scope.user.id, currentUser.token, function (data) {
-                    $scope.mapaDeVidaAnswers.push(data);
-                    $scope.mapaDeVidaAnswers[$scope.mapaDeVidaAnswers.length - 1]["coursemoduleid"] = activityId;
-                    if ($scope.mapaDeVidaAnswers.length == $scope.mapaDeVidaActivities.length) {
-                        _setLocalStorageJsonItem("mapaDeVidaAnswers/" + $scope.user.id, $scope.mapaDeVidaAnswers);
-                        $scope.$emit('HidePreloader');
-                    }
-                });
             }
 
             function createRequest() {
@@ -132,7 +108,7 @@ angular
 
                     _.each(activity.questions, function (q, j) {
                         var respuesta = {"preguntaId": "" + (j + 1), "respuesta": ""};
-                        var activityAnswer = _.find($scope.mapaDeVidaAnswers, function (a) {
+                        var activityAnswer = _.find($scope.mapaDeVidaActivities, function (a) {
                             return a.coursemoduleid == activity.coursemoduleid
                         });
                         if (activityAnswer.questions) {
@@ -152,13 +128,17 @@ angular
                     request.fichaProyecto.push(proyecto);
                     $scope.dimensionMap.push(dimensionMap);
                 }
+                var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
+                var parentActivityIdentifier = $routeParams.moodleid;
+                var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
+               request.fechaModificación=parentActivity.modifieddate;
                 _setLocalStorageJsonItem("mapaDeVidaDimensionMap", $scope.dimensionMap);
                 return request;
             }
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-                try {
+               try {
                     cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
                 catch (e) {
@@ -173,6 +153,7 @@ angular
                             "fechaFin": "2015/09/15 14:28:12",
                             "actividadCompleta": "Si",
                             "gustaActividad": "Si",
+                            "fechaModificación": "06/10/2016 11:08:18",
                             "fichaProyecto": [{
                                 "dimensionId": 1,
                                 "respuestas": [{"preguntaId": 1, "respuesta": "Dimension 11 1."}, {"preguntaId": 2, "respuesta": "Dimension 11 2."}, {
@@ -232,7 +213,7 @@ angular
                         var activity = _.find($scope.mapaDeVidaActivities, function (a) {
                             return a.coursemoduleid == dimensionId;
                         });
-                        var activityCache = _.find($scope.mapaDeVidaAnswers, function (a) {
+                        var activityCache = _.find($scope.mapaDeVidaActivities, function (a) {
                             return a.coursemoduleid == dimensionId;
                         });
                         for (var j = 0; j < dimension.respuestas.length; j++) {
@@ -266,10 +247,11 @@ angular
                         logEntry.endingTime = data.fechaFin;
                         logEntry.like_status = (data.gustaActividad == "Si" ? 1 : 0 );
                         quizzesRequests.push(logEntry);
-                        _setLocalStorageJsonItem("activity/" + dimensionId + "?userid=" + logEntry.userid, activity);
+                        //_setLocalStorageJsonItem("activity/" + dimensionId + "?userid=" + logEntry.userid, activity);
+                        _setLocalStorageJsonItem("activity/" + dimensionId, activity);
                     }
                 }
-                _setLocalStorageJsonItem("mapaDeVidaAnswers/" + $scope.user.id, $scope.mapaDeVidaAnswers);
+                _setLocalStorageJsonItem("mapaDeVidaActivities", $scope.mapaDeVidaActivities);
                 var quizzesAnswered = _.countBy($scope.mapaDeVidaActivities, function (a) {
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function (q) {
@@ -287,6 +269,9 @@ angular
                 var subactivitiesCompleted = [];
                 var activitiesCompleted = 0;
                 var parent_finished = false;
+                
+                parentActivity.modifieddate=data.fechaModificación || '';
+                parentActivity.onlymodifieddate=true;
 
                 _.each(quizzesRequests, function (q) {
                     if (q.quiz_answered) {
@@ -296,12 +281,15 @@ angular
                         activitiesAtLeastOne++;
                     }
                 });
+                
                 if (parentActivity.status == 0 && $scope.IsComplete) {
                     parentActivity.status = 1;
                     parent_finished = true;
+                    parentActivity.onlymodifieddate=false;
+                }
                     _endActivity(parentActivity);
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
-                }
+                
                 if (activitiesAtLeastOne > 0) {
                     if (parentActivity.activities) {
                         for (var i = 0; i < subactivitiesCompleted.length; i++) {
@@ -331,23 +319,40 @@ angular
             }
 
             encodeImageUri = function (imageUri, callback) {
-                var c = document.createElement('canvas');
-                var ctx = c.getContext("2d");
-                var img = new Image();
+                cordova.exec(function (data) {
+                    callback(data);
+                }, function () {
+                    console.log("Image couldnt be retrieved from cordova");
+                    var c = document.createElement('canvas');
+                    var ctx = c.getContext("2d");
+                    var img = new Image();
 
-                img.onload = function () {
-                    c.width = this.width;
-                    c.height = this.height;
-                    ctx.drawImage(img, 0, 0);
+                    img.onload = function () {
+                        c.width = this.width;
+                        c.height = this.height;
+                        ctx.drawImage(img, 0, 0);
 
-                    if (typeof callback === 'function') {
-                        var dataURL = c.toDataURL("image/jpg");
-                        callback(dataURL.slice(22, dataURL.length));
-                    }
+                        if (typeof callback === 'function') {
+                            var dataURL = c.toDataURL("image/jpg");
+                            callback(dataURL.slice(22, dataURL.length));
+                        }
 
-                };
+                    };
 
-                img.src = imageUri;
+                    img.src = imageUri;
+                }, "CallToAndroid", " getImage", [imageUri]);
+
+            };
+
+            //Time Out Message modal
+            $scope.openModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'timeOutModal.html',
+                    controller: 'timeOutMapaDeVida',
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-programa'
+                });
             };
 
             $scope.saveQuiz = function (activity, quiz, userCourseUpdated, parentStatus) {
@@ -359,6 +364,7 @@ angular
                     "dateStart": quiz.startingTime,
                     "dateEnd": quiz.endingTime
                 };
+
                 var activityModel = {
                     "usercourse": userCourseUpdated,
                     "coursemoduleid": activity.coursemoduleid,
@@ -367,6 +373,7 @@ angular
                     "token": currentUser.token,
                     "activityType": "Quiz"
                 };
+
                 _endActivity(activityModel, function () {
                     activitiesPosted++;
                     if (activitiesPosted == activitiesAtLeastOne) {
@@ -378,9 +385,10 @@ angular
                                         for (var d = 0; d < data.discussions.length; d++) {
                                             currentDiscussionIds.push(data.discussions[d].discussion);
                                         }
+                                        localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
 
                                         var discussion = _.find(data.discussions, function (d) {
-                                           return d.name.toLowerCase().indexOf("toma el reto") > -1 || d.name.toLowerCase().indexOf("comparte") > -1
+                                            return d.name.toLowerCase().indexOf("toma el reto") > -1 || d.name.toLowerCase().indexOf("comparte") > -1
                                         });
                                         var requestData = {
                                             "userid": $scope.user.id,
@@ -396,12 +404,13 @@ angular
                                             "filecontent": "",
                                             "filename": 'mapa_de_vida_' + $scope.user.id + '.jpg',
                                             "picture_post_author": $scope.user.profileimageurlsmall,
-                                            "iscountable": 0
+                                            "iscountable": 0,
+                                            "isgamepost": 1
                                         };
 
                                         function postToForum() {
                                             moodleFactory.Services.PostAsyncForumPost('new_post', requestData,
-                                                function () {
+                                                function () {//Success
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
@@ -419,13 +428,19 @@ angular
                                                         }, 500);
                                                     }, 500);
                                                 },
-                                                function () {
+                                                function (obj) {//Error
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
                                                         $scope.showSharedAlbum = false;
                                                         $scope.$emit('HidePreloader');
-                                                        $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+
+                                                        if (obj.statusCode == 408) {//Request Timeout
+                                                            $scope.openModal();
+                                                        } else {//A different Error happened
+                                                            $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+                                                        }
+
                                                     }, 1000);
                                                 }, (!_isDeviceOnline)
                                             );
@@ -566,4 +581,11 @@ angular
                 }
             }
 
-        }]);
+        }]).controller('timeOutMapaDeVida', function ($scope, $modalInstance) {//TimeOut Robot
+
+    $scope.ToDashboard = function () {
+        $scope.$emit('ShowPreloader');
+        $modalInstance.dismiss('cancel');
+    };
+
+});

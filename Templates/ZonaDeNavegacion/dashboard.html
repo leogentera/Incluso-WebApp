@@ -85,28 +85,6 @@
         </section>
     </article>
 
-    <script type="text/ng-template" id="ClosingStage.html">
-        <div class="modal-robot robot-sm closing-stage-modal user-help">
-            <img src="assets/images/img-robot-sm.svg" alt="robot" />
-            <div class="modal-header">
-                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
-                    <span class="icomoon icon-cross"></span>
-                </a>
-            </div>
-            <div class="modal-body">
-                <h3 class="subtitle">Cierre zona de vuelo</h3>
-                <p class="txt-renglon centered">
-                    ¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda,
-                    los sueños son el motor principal
-                    de tu nave
-                </p>
-                <p class="txt-renglon centered">
-                    ¡Ahora tu aventura ya tiene un rumbo!
-                </p>
-            </div>
-        </div>
-    </script>
-
     <script type="text/ng-template" id="OpeningStageModal.html">
         <div class="modal-robot robot-sm closing-stage-modal user-help">
             <img class='robot-sm' src="assets/images/img-robot-sm.svg" alt="robot" />
@@ -117,12 +95,8 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">Zona de Navegación</h3>
-                <p class="txt-renglon centered">
-                    Prepárate, estamos por atravesar una gran lluvia de asteroides,
-                    para continuar el viaje tendrás que tomar algunas decisiones
-                    y vencer obstáculos. ¡Sigue adelante!
-                </p>
+                <h3 class="subtitle text-center" ng-bind-html="title"></h3>
+                <p class="txt-renglon centered" ng-bind-html="message"></p>
             </div>
         </div>
     </script>
@@ -151,8 +125,8 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">{{robotMessages.title}}</h3>
-                <p class="txt-renglon centered">{{robotMessages.message}}</p>
+                <h3 class="subtitle text-center" ng-bind-html="title"></h3>
+                <p class="txt-renglon centered" ng-bind-html="message"></p>
             </div>
             <a class="btn btn-primary btn-lg btn-cnt" id="continuar" style="margin-bottom: 30px;" ng-click="navigateToDashboard()">CONTINUAR</a>
         </div>

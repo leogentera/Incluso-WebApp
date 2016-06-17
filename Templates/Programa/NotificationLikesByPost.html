@@ -1,0 +1,19 @@
+<div class="incluso-app content-page-theme">
+    <article class="starway">  
+	    <div class="component">
+	    	<h3 class="box-dark item-title">Usuarios que les gusta tu publicación</h3>
+	    	<ul class="list-group green-lantern-theme" ng-repeat="user in likes">
+	    		<li class="list-item">
+	    			<figure class="img-sm">
+						<img ng-src="{{user.picture_post_author != '' ? user.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate : 'assets/avatar/default-2.png'}}"/>
+					</figure>
+    				<div class="pull-left"><span>{{user.username}}</span></div>
+    				<span class="icomoon icon-like pull-left no-padding pink"></span>
+	    		</li>
+    		</ul> 	
+	    </div>
+	    <p class="actions component">
+          <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')">Regresar</a>
+        </p>
+    </article>
+</div>

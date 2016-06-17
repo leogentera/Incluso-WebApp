@@ -19,12 +19,29 @@ angular
             var _loadedResources = false;
             var _pageLoaded = false;
             var showResultsPage = false;
+            var quizMisGustos = false;
+            var quizMisCualidades = false;
             $scope.accessedSubsection = false;
             $scope.$emit('scrollTop');
-
-            $scope.$emit('ShowPreloader');
+            //$scope.$emit('ShowPreloader');
+            $scope.mobilecheck=_comboboxCompat;
 
             $scope.passwordChanged = false;
+
+            $scope.selectClick = function (items, field) {
+                var selectItems = items.slice();
+                selectItems.unshift(field);
+                if (window.mobilecheck()) {
+                    cordova.exec(function (data) {
+                        var evaluate = '$scope.model.' + field + '="' + items [data.which - 1] + '"';
+                        eval(evaluate);
+                        $scope.$digest();
+                    }, function () {
+                    }, "CallToAndroid", "showCombobox", selectItems);
+                }
+
+
+            };
 
             $scope.changePasswordModel = {
                 currentPassword: undefined,
@@ -116,6 +133,16 @@ angular
                     $scope.phone = true;
                     $scope.socialNet = true;
                     $scope.family = false;
+                    $scope.disabled = {
+                        "talents": false,
+                        "values": false,
+                        "habilities": false,
+                        "favoriteSports": false,
+                        "artisticActivities": false,
+                        "hobbies": false,
+                        "social": false,
+                        "emprendedor": false
+                    };
 
                     $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
                     $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
@@ -146,20 +173,24 @@ angular
                         errorMessages: []
                     };
 
-                    //Get status of Quiz "Mis Cualidades"
-                    var activity71 = moodleFactory.Services.GetCacheJson("activity/71");
-                    if (activity71 !== null) {
-                        $scope.status71 = parseInt(activity71.status, 10);
-                    } else {
-                        $scope.status71 = -1;
-                    }
-
                     //Get status of Quiz "Mis Gustos"
-                    var activity70 = moodleFactory.Services.GetCacheJson("activity/70");
-                    if (activity70 !== null) {
-                        $scope.status70 = parseInt(activity70.status, 10);
+                    var activity70 = localStorage.getItem("activity/70");
+
+                    if (activity70 !== null && activity70 !== undefined) {
+                        var obj = JSON.parse(activity70);
+                        $scope.status70 = parseInt(obj.status, 10);
                     } else {
                         $scope.status70 = -1;
+                    }
+
+                    //Get status of Quiz "Mis Cualidades"
+                    var activity71 = localStorage.getItem("activity/71");
+
+                    if (activity71 !== null && activity71 !== undefined) {
+                        var obj = JSON.parse(activity71);
+                        $scope.status71 = parseInt(obj.status, 10);
+                    } else {
+                        $scope.status71 = -1;
                     }
 
                     $rootScope.pageName = "Mi perfil";
@@ -175,10 +206,12 @@ angular
                     $scope.educationStatusList = _getCatalogValuesBy("educationStatus");
                     $scope.favoritSportsList = _getCatalogValuesBy("sports");
                     $scope.artisticActivitiesList = _getCatalogValuesBy("arts");
-                    $scope.hobbiesList = _getCatalogValuesBy("hobbiescatalog");
-                    $scope.talentsList = _getCatalogValuesBy("talentscatalog");
-                    $scope.valuesList = _getCatalogValuesBy("valuescatalog");
-                    $scope.habilitiesList = _getCatalogValuesBy("habilitiescatalog");
+                    $scope.cultureList = _getCatalogValuesBy("hobbiescatalog");
+                    $scope.socialList = _getCatalogValuesBy("socialcatalog");
+                    $scope.othersList = _getCatalogValuesBy("emprendedorcatalog");
+                    $scope.habilitiesList = _getCatalogValuesBy("talentscatalog");
+                    $scope.destrezasList = _getCatalogValuesBy("valuescatalog");
+                    $scope.actitudesList = _getCatalogValuesBy("habilitiescatalog");
                     $scope.iLiveWithList = _getCatalogValuesBy("relativeOrTutor");
                     $scope.mainActivityList = _getCatalogValuesBy("activity");
                     $scope.levelList = _getCatalogValuesBy("studiesLevel");
@@ -213,6 +246,63 @@ angular
                     getAge();
 
                     $scope.showPlaceHolder = true;
+
+                    $scope.model = initFields($scope.model);
+                    loadStrengths();
+                    loadWindowOfOpportunities();
+
+                    $scope.model.level = $scope.model.currentStudies["level"];
+                    $scope.model.grade = $scope.model.currentStudies["grade"];
+                    $scope.model.period = $scope.model.currentStudies["period"];
+
+                    $scope.model.talents = orderCatalog($scope.model.talents);
+                    $scope.model.values = orderCatalog($scope.model.values);
+                    $scope.model.habilities = orderCatalog($scope.model.habilities);
+                    $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
+                    $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
+                    $scope.model.hobbies = orderCatalog($scope.model.hobbies);
+                    $scope.model.social = orderCatalog($scope.model.social);
+                    $scope.model.emprendedor = orderCatalog($scope.model.emprendedor);
+
+                    $scope.genderItems = orderCatalog($scope.genderItems);
+                    $scope.countryItems = orderCatalog($scope.countryItems);
+                    $scope.maritalStatusItems = orderCatalog($scope.maritalStatusItems);
+                    $scope.stateItems = orderCatalog($scope.stateItems);
+                    $scope.phoneTypeList = orderCatalog($scope.phoneTypeList);
+                    $scope.socialNetworksList = orderCatalog($scope.socialNetworksList);
+                    $scope.familiaCompartamosList = orderCatalog($scope.familiaCompartamosList);
+                    $scope.inspirationalCharactersList = orderCatalog($scope.inspirationalCharactersList);
+                    $scope.iLiveWithList = orderCatalog($scope.iLiveWithList);
+                    $scope.knownDevicesList = orderCatalog($scope.knownDevicesList);
+                    $scope.phoneUsageList = orderCatalog($scope.phoneUsageList);
+                    $scope.kindOfVideoGamesList = orderCatalog($scope.kindOfVideoGamesList);
+
+                    $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
+                    $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
+                    $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                    $scope.socialList = $scope.socialList.concat($scope.model.social);
+                    $scope.othersList = $scope.othersList.concat($scope.model.emprendedor);
+
+                    $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
+                    $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
+                    $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
+
+                    $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
+                    $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
+                    $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
+                    $scope.socialList = deleteRepeatedEntries($scope.socialList);
+                    $scope.othersList = deleteRepeatedEntries($scope.othersList);
+
+                    $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
+                    $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
+                    $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
+
+                    for (var key in $scope.disabled) {//Verify for the presence of "Ninguno" in the model.
+                        if ($scope.model[key].indexOf("Ninguno") > -1) {
+                            $scope.disabled[key] = true;
+                            $scope.model[key] = ["Ninguno"]; //Set value for array.
+                        }
+                    }
 
                 });
 
@@ -395,7 +485,7 @@ angular
                     var i;
 
                     for (i = 0; i < n; i++) {
-                        mirrorUpper.push(arr[i].replace(/\r?\n|\r/g, " ").trim().toUpperCase());
+                        mirrorUpper.push(arr[i].replace(/\r?\n|\r/g, "").trim().toUpperCase());
                     }
 
                     arr = arr.filter(function (item, pos) {
@@ -406,22 +496,22 @@ angular
                 }
 
                 function orderCatalog(arr) {
-
                     var n = arr.length;
                     var i, j;
                     var finalArr = [];
                     var orderedArr = [];
 
                     for (i = 0; i < n; i++) {
-                        orderedArr.push(arr[i].replace(/\r?\n|\r/g, " ").trim().toLowerCase());
+                        orderedArr.push(arr[i].replace(/\r?\n|\r/g, "").trim().toLowerCase());
                     }
 
                     orderedArr = orderedArr.sort();
 
                     for (i = 0; i < n; i++) {
                         for (j = 0; j < n; j++) {
-                            if (arr[j].replace(/\r?\n|\r/g, " ").trim().toLowerCase() == orderedArr[i]) {
-                                finalArr.push(arr[j].replace(/\r?\n|\r/g, " ").trim());
+                            if (arr[j].replace(/\r?\n|\r/g, "").trim().toLowerCase() == orderedArr[i]) {
+                                finalArr.push(arr[j].replace(/\r?\n|\r/g, "").trim());
+
                             }
                         }
                     }
@@ -557,8 +647,6 @@ angular
 
                                 $scope.$emit('scrollTop');
                                 $scope.$emit('HidePreloader');
-                                //console.log(data); console.log(JSON.stringify(data));
-                                //var resultData = data;
 
                                 if (data.success == true) {//If the
 
@@ -652,48 +740,6 @@ angular
                             });
                         }, 500);
 
-                        $scope.model = initFields($scope.model);
-                        loadStrengths();
-                        loadWindowOfOpportunities();
-
-                        $scope.model.level = $scope.model.currentStudies["level"];
-                        $scope.model.grade = $scope.model.currentStudies["grade"];
-                        $scope.model.period = $scope.model.currentStudies["period"];
-
-                        $scope.model.talents = orderCatalog($scope.model.talents);
-                        $scope.model.values = orderCatalog($scope.model.values);
-                        $scope.model.habilities = orderCatalog($scope.model.habilities);
-                        $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
-                        $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
-                        $scope.model.hobbies = orderCatalog($scope.model.hobbies);
-
-                        $scope.genderItems = orderCatalog($scope.genderItems);
-                        $scope.countryItems = orderCatalog($scope.countryItems);
-                        $scope.maritalStatusItems = orderCatalog($scope.maritalStatusItems);
-                        $scope.stateItems = orderCatalog($scope.stateItems);
-                        $scope.phoneTypeList = orderCatalog($scope.phoneTypeList);
-                        $scope.socialNetworksList = orderCatalog($scope.socialNetworksList);
-                        $scope.familiaCompartamosList = orderCatalog($scope.familiaCompartamosList);
-                        $scope.inspirationalCharactersList = orderCatalog($scope.inspirationalCharactersList);
-                        $scope.iLiveWithList = orderCatalog($scope.iLiveWithList);
-                        $scope.knownDevicesList = orderCatalog($scope.knownDevicesList);
-                        $scope.phoneUsageList = orderCatalog($scope.phoneUsageList);
-                        $scope.kindOfVideoGamesList = orderCatalog($scope.kindOfVideoGamesList);
-
-                        $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
-                        $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
-                        $scope.hobbiesList = $scope.hobbiesList.concat($scope.model.hobbies);
-                        $scope.talentsList = $scope.talentsList.concat($scope.model.talents);
-                        $scope.valuesList = $scope.valuesList.concat($scope.model.values);
-                        $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.habilities);
-
-                        $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
-                        $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
-                        $scope.hobbiesList = deleteRepeatedEntries($scope.hobbiesList);
-                        $scope.talentsList = deleteRepeatedEntries($scope.talentsList);
-                        $scope.valuesList = deleteRepeatedEntries($scope.valuesList);
-                        $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
-
                         $timeout(function () {
                             $scope.$emit('HidePreloader');
                         }, 2000);
@@ -731,53 +777,11 @@ angular
                                 return "";
                             }
 
-                            $scope.model = initFields($scope.model);
-                            loadStrengths();
-                            loadWindowOfOpportunities();
-
-                            $scope.model.level = $scope.model.currentStudies["level"];
-                            $scope.model.grade = $scope.model.currentStudies["grade"];
-                            $scope.model.period = $scope.model.currentStudies["period"];
-
-                            $scope.model.talents = orderCatalog($scope.model.talents);
-                            $scope.model.values = orderCatalog($scope.model.values);
-                            $scope.model.habilities = orderCatalog($scope.model.habilities);
-                            $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
-                            $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
-                            $scope.model.hobbies = orderCatalog($scope.model.hobbies);
-
-                            $scope.genderItems = orderCatalog($scope.genderItems);
-                            $scope.countryItems = orderCatalog($scope.countryItems);
-                            $scope.maritalStatusItems = orderCatalog($scope.maritalStatusItems);
-                            $scope.stateItems = orderCatalog($scope.stateItems);
-                            $scope.phoneTypeList = orderCatalog($scope.phoneTypeList);
-                            $scope.socialNetworksList = orderCatalog($scope.socialNetworksList);
-                            $scope.familiaCompartamosList = orderCatalog($scope.familiaCompartamosList);
-                            $scope.inspirationalCharactersList = orderCatalog($scope.inspirationalCharactersList);
-                            $scope.iLiveWithList = orderCatalog($scope.iLiveWithList);
-                            $scope.knownDevicesList = orderCatalog($scope.knownDevicesList);
-                            $scope.phoneUsageList = orderCatalog($scope.phoneUsageList);
-                            $scope.kindOfVideoGamesList = orderCatalog($scope.kindOfVideoGamesList);
-
-                            $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
-                            $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
-                            $scope.hobbiesList = $scope.hobbiesList.concat($scope.model.hobbies);
-                            $scope.talentsList = $scope.talentsList.concat($scope.model.talents);
-                            $scope.valuesList = $scope.valuesList.concat($scope.model.values);
-                            $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.habilities);
-
-                            $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
-                            $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
-                            $scope.hobbiesList = deleteRepeatedEntries($scope.hobbiesList);
-                            $scope.talentsList = deleteRepeatedEntries($scope.talentsList);
-                            $scope.valuesList = deleteRepeatedEntries($scope.valuesList);
-                            $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
-
                         }, function () {
                             $scope.model= {
                                 'alias' : $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
                                 'stars' : 'No definidas',
-                                'profileimageurl' : 'assets/avatar/default.png',
+                                'profileimageurl' : 'assets/avatar/default.png'
                             };
                         }, true);
                     }
@@ -1107,7 +1111,6 @@ angular
                         }
                     }
 
-
                     //artisticActivities
                     if ($scope.model.artisticActivities && $scope.model.artisticActivities.length > 0) {
                         for (i = 0; i < $scope.model.artisticActivities.length; i++) {
@@ -1273,6 +1276,83 @@ angular
                     }
                 };
 
+                $scope.cancelProfileEdition = function () {//When user clicks "Cancel" on Edit Profile.
+
+                    $scope.currentPage = 1; //Return to page 1.
+                    var i;
+
+                    for (i = 0; i < $scope.visitedSections.length; i++) {
+
+                        //Recover original Profile data from LS...
+                        var originalProfile = JSON.parse(localStorage.getItem("originalProfile/" + $scope.userId));
+
+                        switch ($scope.visitedSections[i]) {//Restore original field values.
+                            case "3000":  // "Mi informacion"
+                                $scope.model.firstname = originalProfile.firstname;
+                                $scope.model.lastname = originalProfile.lastname;
+                                $scope.model.mothername = originalProfile.mothername;
+                                $scope.model.gender = originalProfile.gender;
+                                $scope.model.birthCountry = originalProfile.birthCountry;
+                                $scope.birthdate_Dateformat = originalProfile.birthday;
+                                $scope.model.maritalStatus = originalProfile.maritalStatus;
+                                $scope.model.studies = originalProfile.studies;
+                                $scope.model.address.country = originalProfile.address.country;
+                                $scope.model.address.city = originalProfile.address.city;
+                                $scope.model.address.town = originalProfile.address.town;
+                                $scope.model.address.postalCode = originalProfile.address.postalCode;
+                                $scope.model.address.street = originalProfile.address.street;
+                                $scope.model.address.num_ext = originalProfile.address.num_ext;
+                                $scope.model.address.num_int = originalProfile.address.num_int;
+                                $scope.model.address.colony = originalProfile.address.colony;
+                                $scope.model.phones = originalProfile.phones;
+                                $scope.model.socialNetworks = originalProfile.socialNetworks;
+                                $scope.model.familiaCompartamos = originalProfile.familiaCompartamos;
+
+                                break;
+                            case "3001":  // "Mi Personalidad"
+                                $scope.model.favoriteSports = originalProfile.favoriteSports;
+                                $scope.model.artisticActivities = originalProfile.artisticActivities;
+                                $scope.model.hobbies = originalProfile.hobbies;
+                                $scope.model.social = originalProfile.social;
+                                $scope.model.emprendedor = originalProfile.emprendedor;
+                                $scope.model.talents = originalProfile.talents;
+                                $scope.model.values = originalProfile.values;
+                                $scope.model.habilities = originalProfile.habilities;
+                                $scope.model.inspirationalCharacters = originalProfile.inspirationalCharacters;
+
+                                break;
+                            case "3002":  // "Socioeconómicos"
+                                $scope.model.iLiveWith = originalProfile.iLiveWith;
+                                $scope.model.mainActivity = originalProfile.mainActivity;
+                                $scope.model.level = originalProfile.currentStudies.level;
+                                $scope.model.grade = originalProfile.currentStudies.grade;
+                                $scope.model.period = originalProfile.currentStudies.period;
+                                $scope.model.children = originalProfile.children;
+                                $scope.model.gotMoneyIncome = originalProfile.gotMoneyIncome;
+                                $scope.model.moneyIncome = originalProfile.moneyIncome;
+                                $scope.model.medicalCoverage = originalProfile.medicalCoverage;
+                                $scope.model.medicalInsurance = originalProfile.medicalInsurance;
+
+                                break;
+                            case "3003":  // "Uso de la tecnologia"
+                                $scope.model.knownDevices = originalProfile.knownDevices;
+                                $scope.model.ownDevices = originalProfile.ownDevices;
+                                $scope.model.phoneUsage = originalProfile.phoneUsage;
+                                $scope.model.playVideogames = originalProfile.playVideogames;
+                                $scope.model.videogamesFrecuency = originalProfile.videogamesFrecuency;
+                                $scope.model.videogamesHours = originalProfile.videogamesHours;
+                                $scope.model.kindOfVideogames = originalProfile.kindOfVideogames;
+                                $scope.model.favoriteGames = originalProfile.favoriteGames;
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    $scope.visitedSections = []; //Reset the log of visited sections.
+                };
+
                 $scope.navigateToPage = function (pageNumber) {
                     $scope.currentPage = pageNumber;
                 };
@@ -1287,27 +1367,27 @@ angular
                 };
 
                 $scope.returnToProfile = function () {//After pressing "Terminar" button.
-
                     $scope.$emit('ShowPreloader');
                     $location.path("Perfil/" + $scope.userId);
-                    /*
-                     $timeout(function () {
-                     $scope.$emit('ShowPreloader');
-                     $location.path("Perfil/" + $scope.userId);
-                     }, 1);
-                     */
                 };
 
-                Array.prototype.compare = function (testArr) {
-                    if (this.length != testArr.length) return false;
-                    for (var i = 0; i < testArr.length; i++) {
-                        if (this[i].compare) {
-                            if (!this[i].compare(testArr[i])) return false;
-                        }
-                        if (this[i] !== testArr[i]) return false;
-                    }
-                    return true;
-                };
+                //Array.prototype.compare = function (testArr) {
+                //    if (this.length != testArr.length) return false;
+                //
+                //    for (var i = 0; i < testArr.length; i++) {
+                //        if (this[i].compare) {
+                //            if (!this[i].comparre(testArr[i])) {
+                //                return false;
+                //            }
+                //        }
+                //
+                //        if (this[i].toLowerCase() !== testArr[i].toLowerCase()) {
+                //            return false;
+                //        }
+                //    }
+                //
+                //    return true;
+                //};
 
                 function arraysAreEqual(ary1, ary2) {
                     if (ary1.length !== ary2.length) {
@@ -1326,123 +1406,146 @@ angular
                     return true;
                 }
 
-                $scope.index = function () {//Redirect to editing profile again.
-                    if ($location.$$path == '/Perfil/Editar/' + $scope.userId) {
+                function checkForUpdatedSections() {
+                    //This method updates the value of the global variables quizMisGustos and quizMisCualidades.
+                    //This method also returns the variable showResults page.
+                    //if ($location.$$path == '/Perfil/Editar/' + $scope.userId) {
 
-                        //Make up the total points earned & title.
-                        $scope.sum = 0;
-                        var i;
-                        var showResultsPage = false;
-                        var edited = false;
+                    //Make up the total points earned & title.
+                    $scope.sum = 0;
+                    var i;
+                    var showResultsPage = false;
+                    var edited = false;
 
-                        for (i = 0; i < $scope.logOfSections.length; i++) {
-                            //If the user just completed some section in Profile...
-                            if ($scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 && $scope.logOfSections[i].points > 0) {
-                                $scope.sum += $scope.logOfSections[i].points;
-                                $scope.logOfSections[i].visited = true;
-                                showResultsPage = true;
-                            }
+                    for (i = 0; i < $scope.logOfSections.length; i++) {
+                        //If the user just completed some section in Profile...
+                        if ($scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 && $scope.logOfSections[i].points > 0) {
+                            $scope.sum += $scope.logOfSections[i].points;
+                            $scope.logOfSections[i].visited = true;
+                            showResultsPage = true;
                         }
+                    }
 
-                        for (i = 0; i < $scope.logOfSections.length; i++) {
-                            //If the user just visited some previously finished activity...
-                            if ($scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 && $scope.logOfSections[i].points == 0 && $scope.logOfSections[i].status == 1) {
-                                //Recover original Profile data from LS...
-                                var originalProfile = JSON.parse(localStorage.getItem("originalProfile/" + $scope.userId));
+                    for (i = 0; i < $scope.logOfSections.length; i++) {
+                        //If the user just visited some previously finished activity...
+                        if ($scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 && $scope.logOfSections[i].points == 0) {
+                            //Recover original Profile data from LS...
+                            var originalProfile = JSON.parse(localStorage.getItem("originalProfile/" + $scope.userId));
 
-                                switch ($scope.logOfSections[i].id) {
-                                    case "3000":  // "Llenar mi informacion"; points to assign: 400
+                            switch ($scope.logOfSections[i].id) {
+                                case "3000":  // "Llenar mi informacion"; points to assign: 400
 
-                                        if ($scope.model.firstname !== originalProfile.firstname) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.lastname !== originalProfile.lastname) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.mothername !== originalProfile.mothername) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.gender !== originalProfile.gender) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.birthCountry !== originalProfile.birthCountry) {
-                                            edited = true;
-                                        }
-                                        if ($scope.birthdate_Dateformat !== originalProfile.birthday) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.maritalStatus !== originalProfile.maritalStatus) {
-                                            edited = true;
-                                        }
-                                        if (!arraysAreEqual($scope.model.studies, originalProfile.studies)) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.country !== originalProfile.country) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.city !== originalProfile.city) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.town !== originalProfile.town) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.postalCode !== originalProfile.postalCode) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.street !== originalProfile.street) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.num_ext !== originalProfile.num_ext) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.num_int !== originalProfile.num_int) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.colony !== originalProfile.colony) {
-                                            edited = true;
-                                        }
-                                        if (!arraysAreEqual($scope.model.phones, originalProfile.phones)) {
-                                            edited = true;
-                                        }
-                                        if (!arraysAreEqual($scope.model.socialNetworks, originalProfile.socialNetworks)) {
-                                            edited = true;
-                                        }
-                                        if (!arraysAreEqual($scope.model.familiaCompartamos, originalProfile.familiaCompartamos)) {
-                                            edited = true;
+                                    if ($scope.model.firstname !== originalProfile.firstname) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.lastname !== originalProfile.lastname) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.mothername !== originalProfile.mothername) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.gender !== originalProfile.gender) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.birthCountry !== originalProfile.birthCountry) {
+                                        edited = true;
+                                    }
+                                    if ($scope.birthdate_Dateformat !== originalProfile.birthday) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.maritalStatus !== originalProfile.maritalStatus) {
+                                        edited = true;
+                                    }
+                                    if (!arraysAreEqual($scope.model.studies, originalProfile.studies)) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.address.country !== originalProfile.address.country) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.address.city !== originalProfile.address.city) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.address.town !== originalProfile.address.town) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.address.postalCode !== originalProfile.address.postalCode) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.address.street !== originalProfile.address.street) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.address.num_ext !== originalProfile.address.num_ext) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.address.num_int !== originalProfile.address.num_int) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.address.colony !== originalProfile.address.colony) {
+                                        edited = true;
+                                    }
+                                    if (!arraysAreEqual($scope.model.phones, originalProfile.phones)) {
+                                        edited = true;
+                                    }
+                                    if (!arraysAreEqual($scope.model.socialNetworks, originalProfile.socialNetworks)) {
+                                        edited = true;
+                                    }
+                                    if (!arraysAreEqual($scope.model.familiaCompartamos, originalProfile.familiaCompartamos)) {
+                                        edited = true;
+                                    }
+
+                                    if (edited && $scope.logOfSections[i].status == 1) {
+                                        $scope.logOfSections[i].visited = true;
+                                        showResultsPage = true;
+                                        edited = false;
+                                    }
+
+                                    break;
+                                case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
+
+                                        if (!_.isEqual($scope.model.favoriteSports, originalProfile.favoriteSports)) {
+                                            edited = true;console.log("1 ****");
+                                            quizMisGustos = true;
                                         }
 
-                                        if (edited) {
-                                            $scope.logOfSections[i].visited = true;
-                                            showResultsPage = true;
-                                            edited = false;
+                                        if (!_.isEqual($scope.model.artisticActivities, originalProfile.artisticActivities)) {
+                                            edited = true;console.log("2 ****");
+                                            quizMisGustos = true;
                                         }
 
-                                        break;
-                                    case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
+                                        if (!_.isEqual($scope.model.hobbies, originalProfile.hobbies)) {
+                                            edited = true;console.log("3 ****");
+                                            quizMisGustos = true;
+                                        }
 
-                                        if (!$scope.model.favoriteSports.compare(originalProfile.favoriteSports)) {
-                                            edited = true;
+                                        if (!_.isEqual($scope.model.social, originalProfile.social)) {
+                                            edited = true;console.log("4 ****");
+                                            quizMisGustos = true;
                                         }
-                                        if (!$scope.model.artisticActivities.compare(originalProfile.artisticActivities)) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.emprendedor, originalProfile.emprendedor)) {
+                                            edited = true;console.log("5 ****");
+                                            quizMisGustos = true;
                                         }
-                                        if (!$scope.model.hobbies.compare(originalProfile.hobbies)) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.talents, originalProfile.talents)) {
+                                            edited = true;console.log("6 ****");
+                                            quizMisCualidades = true;
                                         }
-                                        if (!$scope.model.talents.compare(originalProfile.talents)) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.values, originalProfile.values)) {
+                                            edited = true;console.log("7 ****");
+                                            quizMisCualidades = true;
                                         }
-                                        if (!$scope.model.values.compare(originalProfile.values)) {
-                                            edited = true;
-                                        }
-                                        if (!$scope.model.habilities.compare(originalProfile.habilities)) {
-                                            edited = true;
+
+                                        if (!_.isEqual($scope.model.habilities, originalProfile.habilities)) {
+                                            edited = true;console.log("8 ****");
+                                            quizMisCualidades = true;
                                         }
                                         if (!arraysAreEqual($scope.model.inspirationalCharacters, originalProfile.inspirationalCharacters)) {
                                             edited = true;
                                         }
 
-                                        if (edited) {
+                                        if (edited && $scope.logOfSections[i].status == 1) {
                                             $scope.logOfSections[i].visited = true;
                                             showResultsPage = true;
                                             edited = false;
@@ -1453,16 +1556,16 @@ angular
                                         if ($scope.model.iLiveWith !== originalProfile.iLiveWith) {
                                             edited = true;
                                         }
-                                        if (!$scope.model.mainActivity.compare(originalProfile.mainActivity)) {
+                                        if (!_.isEqual($scope.model.mainActivity, originalProfile.mainActivity)) {
                                             edited = true;
                                         }
-                                        if ($scope.model.level !== originalProfile.level) {
+                                        if ($scope.model.level !== originalProfile.currentStudies.level) {
                                             edited = true;
                                         }
-                                        if ($scope.model.grade !== originalProfile.grade) {
+                                        if ($scope.model.grade !== originalProfile.currentStudies.grade) {
                                             edited = true;
                                         }
-                                        if ($scope.model.period !== originalProfile.period) {
+                                        if ($scope.model.period !== originalProfile.currentStudies.period) {
                                             edited = true;
                                         }
                                         if ($scope.model.children !== originalProfile.children) {
@@ -1471,7 +1574,7 @@ angular
                                         if ($scope.model.gotMoneyIncome !== originalProfile.gotMoneyIncome) {
                                             edited = true;
                                         }
-                                        if (!$scope.model.moneyIncome.compare(originalProfile.moneyIncome)) {
+                                        if (!_.isEqual($scope.model.moneyIncome, originalProfile.moneyIncome)) {
                                             edited = true;
                                         }
                                         if ($scope.model.medicalCoverage !== originalProfile.medicalCoverage) {
@@ -1481,7 +1584,7 @@ angular
                                             edited = true;
                                         }
 
-                                        if (edited) {
+                                        if (edited && $scope.logOfSections[i].status == 1) {
                                             $scope.logOfSections[i].visited = true;
                                             showResultsPage = true;
                                             edited = false;
@@ -1489,13 +1592,13 @@ angular
 
                                         break;
                                     case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
-                                        if (!$scope.model.knownDevices.compare(originalProfile.knownDevices)) {
+                                        if (!_.isEqual($scope.model.knownDevices, originalProfile.knownDevices)) {
                                             edited = true;
                                         }
-                                        if (!$scope.model.ownDevices.compare(originalProfile.ownDevices)) {
+                                        if (!_.isEqual($scope.model.ownDevices, originalProfile.ownDevices)) {
                                             edited = true;
                                         }
-                                        if (!$scope.model.phoneUsage.compare(originalProfile.phoneUsage)) {
+                                        if (!_.isEqual($scope.model.phoneUsage, originalProfile.phoneUsage)) {
                                             edited = true;
                                         }
                                         if ($scope.model.playVideogames !== originalProfile.playVideogames) {
@@ -1507,90 +1610,377 @@ angular
                                         if ($scope.model.videogamesHours !== originalProfile.videogamesHours) {
                                             edited = true;
                                         }
-                                        if (!$scope.model.kindOfVideogames.compare(originalProfile.kindOfVideogames)) {
+                                        if (!_.isEqual($scope.model.kindOfVideogames, originalProfile.kindOfVideogames)) {
                                             edited = true;
                                         }
-                                        if (!$scope.model.favoriteGames.compare(originalProfile.favoriteGames)) {
+                                        if (!_.isEqual($scope.model.favoriteGames, originalProfile.favoriteGames)) {
                                             edited = true;
                                         }
 
-                                        if (edited) {
+                                        if (edited && $scope.logOfSections[i].status == 1) {
                                             $scope.logOfSections[i].visited = true;
                                             showResultsPage = true;
                                             edited = false;
                                         }
 
                                         break;
-                                    default:
-                                        //sectionName = "Mi información";
-                                        break;
-                                }
+                                default:
+                                    break;
                             }
                         }
+                    }
+
+                    //////
+                    $scope.accessedSubsection = false;
+                    return showResultsPage;
+                }
+
+                function updateQuizes() {console.log("UPDATING QUIZES...............");
+                    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
+                    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    var keysToSync;
+                    var userKeysContent;
+                    var parentActivity;
+                    var activityObject;
+                    var otherAnswerQuiz;
+                    var setOfLabels;
+                    var obj;
+                    var otherFound;
+                    var otherString;
+                    var qIndex;
+                    var updatedActivityOnUsercourse;
+                    var activityModel;
+                    var newAnswer;
+                    var answerLabel;
+
+                    if (quizMisCualidades) {// :::::::::: If "Mis Cualidades" section has been modified, make check.
+                        console.log("EDITED MIS CUALIDADES");
+                        parentActivity = getActivityByActivity_identifier(1005);
+                        activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
+                        keysToSync = ["talents", "values", "habilities"];
+
+                        obj = [
+                            {"questionid": 16, "answers": [""]},
+                            {"questionid": 17, "answers": [""]},
+                            {"questionid": 18, "answers": [""]}
+                        ];
+
+                        if (parentActivity != null) {//Check for non null object
+                            if (parentActivity.status === 1) {//If activity.status == 1, then save new info.
+                                var codedMC = [[], [], []];
+                                userKeysContent = [];
+                                setOfLabels = [[], [], []];
+                                $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
+                                    "userid": 0,
+                                    "answers": [null, [0, 0, 0, 0, 0], [], null, []],
+                                    "activityidnumber": 0,
+                                    "like_status": 0
+                                };
+
+                                //Get user items in keysToSync from Perfil/nnn.
+                                for (i = 0; i < keysToSync.length; i++) {
+                                    userKeysContent.push(profile[keysToSync[i]]);
+                                }
+
+                                //Convert answers in each item within questions[] array of activity/nnnn to array.
+                                for (i = 0; i < activityObject.questions.length; i++) {
+                                    newAnswer = [];
+                                    for (var key in activityObject.questions[i].answers) {
+                                        if (activityObject.questions[i].answers.hasOwnProperty(key)) {
+                                            newAnswer.push(activityObject.questions[i].answers[key]);
+                                        }
+                                    }
+
+                                    activityObject.questions[i].answers = newAnswer;
+                                }
+
+                                //Construct of answerResult & OtroAnswers objects
+                                //    Check if answer option is within Profile key.
+                                for (qIndex = 0; qIndex < activityObject.questions.length; qIndex++) {
+                                    for (i = 0; i < activityObject.questions[qIndex].answers.length - 1; i++) {
+                                        answerLabel = activityObject.questions[qIndex].answers[i].answer;
+                                        setOfLabels[qIndex].push(answerLabel);
+
+                                        if (userKeysContent[qIndex].indexOf(answerLabel) > -1) {
+                                            codedMC[qIndex].push(1);
+                                        } else {
+                                            codedMC[qIndex].push(0);
+                                        }
+                                    }
+
+                                    //    Check if "Other" custom answer exists within Profile keys.
+                                    otherFound = false;
+                                    otherString = "";
+                                    for (i = 0; i < userKeysContent[qIndex].length; i++) {
+                                        if (setOfLabels[qIndex].indexOf(userKeysContent[qIndex][i]) == -1) {
+                                            otherFound = true;
+                                            otherString = userKeysContent[qIndex][i];
+                                        }
+                                    }
+
+                                    if (otherFound) {//There is a custom string from user.
+                                        codedMC[qIndex].push(1);
+                                        obj[qIndex].answers[0] = otherString;
+                                    } else {
+                                        codedMC[qIndex].push(0);
+                                    }
+                                }
+
+                                $scope.AnswersResult.activityidnumber = parentActivity.coursemoduleid;
+                                $scope.AnswersResult.userid = currentUser.userId;
+                                $scope.AnswersResult.like_status = 1;
+                                $scope.AnswersResult.updatetype = 1;
+                                updatedActivityOnUsercourse = updateActivityStatus(parentActivity.activity_identifier);
+
+                                //Update local storage and activities status array
+                                _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
+                                updateActivityStatusDictionary(parentActivity.activity_identifier);
+                                $scope.AnswersResult.answers = codedMC;
+
+                                activityModel = {
+                                    "usercourse": updatedActivityOnUsercourse,
+                                    "answersResult": $scope.AnswersResult,
+                                    "userId": currentUser.userId,
+                                    "startingTime": startingTime,
+                                    "endingTime": endingTime,
+                                    "token": currentUser.token,
+                                    "others": obj,
+                                    "completed": false
+                                };
+
+                                activityModel.answersResult.dateStart = activityModel.startingTime;
+                                activityModel.answersResult.dateEnd = activityModel.endingTime;
+                                activityModel.answersResult.others = obj;
+                                activityModel.coursemoduleid = parentActivity.coursemoduleid;
+                                activityModel.activityType = "Quiz";
+                                _endActivity(activityModel, function () {
+                                }, "");
+                            }
+                        }
+
+                        //Sync Quiz & Profile
+                        userKeysContent = [];
+                        activityObject = JSON.parse(localStorage.getItem("activity/" + 71));
+                        otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + 71));
+                        $scope.aba = obj;
+                        if (otherAnswerQuiz === null || otherAnswerQuiz === undefined) {//Create this object if it doesn't exists...
+                            otherAnswerQuiz = obj;
+                        }
+
+                        //Get user items in keysToSync from Perfil/nnn.
+                        for (i = 0; i < keysToSync.length; i++) {
+                            userKeysContent[i] = profile[keysToSync[i]];
+                        }
+
+                        syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, 71);
+                    }
+
+                    if (quizMisGustos) {//If:::::::::: "Mis Gustos" section has been modified, save.
+                        console.log("Edited Mis Gustos");
+                        parentActivity = getActivityByActivity_identifier(1006);
+                        activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
+                        keysToSync = ["favoriteSports", "artisticActivities", "hobbies", "social", "emprendedor"];
+                        obj = [
+                            {"questionid": 43, "answers": [""]},
+                            {"questionid": 44, "answers": [""]},
+                            {"questionid": 45, "answers": [""]},
+                            {"questionid": 321, "answers": [""]},
+                            {"questionid": 323, "answers": [""]}
+                        ];
+
+                        if (parentActivity != null) {//Check for non null object
+                            if (parentActivity.status === 1) {//If activity.status == 1, then save new info.
+                                var codedMG = [[], [], [], [], []];
+                                userKeysContent = [];
+                                setOfLabels = [[], [], [], [], []];
+                                $scope.AnswersResult = { //Answer Model
+                                    "userid": 0,
+                                    "answers": [null, [0, 0, 0, 0, 0], [], null, []],
+                                    "activityidnumber": 0,
+                                    "like_status": 0
+                                };
+
+                                //Get user items in keysToSync from Perfil/nnn.
+                                for (i = 0; i < keysToSync.length; i++) {
+                                    userKeysContent.push(profile[keysToSync[i]]);
+                                }
+
+                                //Convert answers in each item within questions[] array of activity/nnnn to array.
+                                for (i = 0; i < activityObject.questions.length; i++) {
+                                    newAnswer = [];
+                                    for (var key in activityObject.questions[i].answers) {
+                                        if (activityObject.questions[i].answers.hasOwnProperty(key)) {
+                                            newAnswer.push(activityObject.questions[i].answers[key]);
+                                        }
+                                    }
+
+                                    activityObject.questions[i].answers = newAnswer;
+                                }
+
+                                //Construct of answerResult & OtroAnswers objects
+                                //    Check if answer option is within Profile key.
+                                for (qIndex = 0; qIndex < activityObject.questions.length; qIndex++) {
+                                    for (i = 0; i < activityObject.questions[qIndex].answers.length - 1; i++) {
+                                        answerLabel = activityObject.questions[qIndex].answers[i].answer;
+                                        setOfLabels[qIndex].push(answerLabel);
+
+                                        if (userKeysContent[qIndex].indexOf(answerLabel) > -1) {
+                                            codedMG[qIndex].push(1);
+                                        } else {
+                                            codedMG[qIndex].push(0);
+                                        }
+                                    }
+
+                                    //    Check if "Other" custom answer exists within Profile keys.
+                                    otherFound = false;
+                                    otherString = "";
+                                    for (i = 0; i < userKeysContent[qIndex].length; i++) {
+                                        if (setOfLabels[qIndex].indexOf(userKeysContent[qIndex][i]) == -1) {
+                                            otherFound = true;
+                                            otherString = userKeysContent[qIndex][i];
+                                        }
+                                    }
+
+                                    if (otherFound) {//There is a custom string from user.
+                                        codedMG[qIndex].push(1);
+                                        obj[qIndex].answers[0] = otherString;
+                                    } else {
+                                        codedMG[qIndex].push(0);
+                                    }
+                                }
+
+                                $scope.AnswersResult.activityidnumber = parentActivity.coursemoduleid;
+                                $scope.AnswersResult.userid = currentUser.userId;
+                                $scope.AnswersResult.like_status = 1;
+                                $scope.AnswersResult.updatetype = 1;
+                                updatedActivityOnUsercourse = updateActivityStatus(parentActivity.activity_identifier);
+
+                                //Update local storage and activities status array
+                                _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
+                                updateActivityStatusDictionary(parentActivity.activity_identifier);
+                                $scope.AnswersResult.answers = codedMG;
+
+                                activityModel = {
+                                    "usercourse": updatedActivityOnUsercourse,
+                                    "answersResult": $scope.AnswersResult,
+                                    "userId": currentUser.userId,
+                                    "startingTime": startingTime,
+                                    "endingTime": endingTime,
+                                    "token": currentUser.token,
+                                    "others": obj,
+                                    "completed": false
+                                };
+
+                                activityModel.answersResult.dateStart = activityModel.startingTime;
+                                activityModel.answersResult.dateEnd = activityModel.endingTime;
+                                activityModel.answersResult.others = obj;
+                                activityModel.coursemoduleid = parentActivity.coursemoduleid;
+                                activityModel.activityType = "Quiz";
+                                _endActivity(activityModel, function () {
+                                }, "");
+                            }
+                        }
+
+                        //Sync Quiz & Profile
+                        userKeysContent = [];
+                        activityObject = JSON.parse(localStorage.getItem("activity/" + 70));
+                        otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + 70));
+
+                        if (otherAnswerQuiz === null || otherAnswerQuiz === undefined) {//Create this object if it doesn't exists...
+                            otherAnswerQuiz = obj;
+                        }
+
+                        //Get user items in keysToSync from Perfil/nnn.
+                        for (i = 0; i < keysToSync.length; i++) {
+                            userKeysContent[i] = profile[keysToSync[i]];
+                        }
+
+                        syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, 70);
+                    }
 
                         if (showResultsPage) {
                             $scope.currentPage = 12; //Finally, show the results page.
                         }
 
-                        $scope.visitedSections = null; //Clean record of visited sections.
+                        //$scope.visitedSections = null; //Clean record of visited sections.
                         ClearLocalStorage("originalProfile/");
                     }
 
-                    if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && !showResultsPage) {
-                        $location.path("Perfil/" + $scope.userId);   //Return to Profile.
-                    }
-
-                    if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
-                        $location.path("Perfil/" + $scope.userId);
-                    }
-
-                    $scope.accessedSubsection = false;
+                $scope.saveAccountSettings = function () {
+                    saveUserProfile();
                 };
 
                 $scope.save = function () {
 
-                    var fromPath = $location.$$path;
-                    var fromPrivacy = fromPath == "/Perfil/ConfigurarPrivacidad/" + $scope.userId;
-                    if (!$scope.accessedSubsection && !fromPrivacy) {
+                    if (!$scope.accessedSubsection) {
                         $location.path("Perfil/" + $scope.userId);
                         return;
                     }
 
-                    $scope.model.currentStudies = {};
+                    $scope.model.currentStudies = {}; //From "Socioeconómicos"
                     $scope.model.currentStudies.level = $scope.model.level;
                     $scope.model.currentStudies.grade = $scope.model.grade;
                     $scope.model.currentStudies.period = $scope.model.period;
-                    //$scope.model.birthday = $scope.birthdate_Dateformat;  //Take date from UI.
 
-                    if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
-                        saveUser();
+                    var validationResult = validateRestrictions();  //Valid if validateModel() returns true.
+
+                    if (validationResult) {
+                        $scope.$emit('ShowPreloader');
+                        $scope.model.modelState.isValid = true;
+                        deleteRepeatedValues();   //Validates for required restrictions.
+                        saveUserProfile();
                     } else {
-                        var validationResult = validateRestrictions();  //Valid if validateModel() returns true.
-
-                        if (validationResult) {
-                            $scope.model.modelState.isValid = true;
-                            deleteRepeatedValues();   //Validates for required restrictions.
-                            $scope.$emit('ShowPreloader');
-                            saveUser();
-                        } else {
-                            $scope.model.modelState.isValid = false;
-                            $scope.$emit('scrollTop');
-                        }
+                        $scope.model.modelState.isValid = false;
+                        $scope.$emit('scrollTop');
                     }
                 };
 
-                function saveUser() { //Save the current state of profile variables.
+                function saveUserProfile() { //Save the current state of profile variables.
                     moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
-                        function (data) {
-                            updateStarsForCompletedSections();
-                            $scope.$emit('HidePreloader');   //Save profile successful...
-                            $scope.index();
+                        function (data) {//Save profile successful...
+
+                            if ($location.path().indexOf('/Perfil/Editar/') > -1) {
+                                updateStarsForCompletedSections();
+                                var showResultsPage = checkForUpdatedSections();
+
+                                //If the user Edited sections from Quizes...
+                                if (quizMisGustos || quizMisCualidades) {
+                                    updateQuizes();
+                                }
+
+                                $scope.$emit('HidePreloader');
+
+                                if (showResultsPage) {
+                                    $scope.currentPage = 12; //Finally, show the results page.
+                                } else {
+                                    $location.path("Perfil/" + $scope.userId);   //Return to Profile.
+                                }
+
+                            } else {//The user comes from Configurar Privacidad
+                                $location.path("Perfil/" + $scope.userId);
+                            }
                         },
-                        function (data) {
+                        function (obj) {
                             //Save profile fail...
-                            $scope.$emit('HidePreloader'); //--
+                            $scope.$emit('HidePreloader');
+
+                            if (obj.statusCode == 408) {//Request Timeout
+                                $scope.openModal();
+                            }
                         });
                 }
+
+                //Time Out Message modal
+                $scope.openModal = function (size) {
+                    var modalInstance = $modal.open({
+                        animation: $scope.animationsEnabled,
+                        templateUrl: 'timeOutModal.html',
+                        controller: 'timeOutProfile',
+                        size: size,
+                        windowClass: 'user-help-modal dashboard-programa'
+                    });
+                };
+
 
                 function updateStarsForCompletedSections() {
                     //Here we look for completed profile sections;
@@ -1599,7 +1989,6 @@ angular
                     var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     $scope.userCourse = usercourse;
-                    /**/
                     var sectionName, sectionId;
                     showResultsPage = true; //Show page 12 for Final Results.
 
@@ -1615,7 +2004,7 @@ angular
                                 sectionName = "Mi personalidad";
                                 sectionId = "3001";
                                 break;
-                            case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
+                            case "3002":  // "Llenar Socioeconomicos"; points to assign: 400
                                 sectionName = "Socioeconómicos";
                                 sectionId = "3002";
                                 break;
@@ -1667,7 +2056,7 @@ angular
 
                                 endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
-                                var activityModel = {
+                                activityModel = {
                                     "usercourse": usercourse,
                                     "coursemoduleid": activity.coursemoduleid,
                                     "userId": currentUser.userId,
@@ -1687,18 +2076,10 @@ angular
                                 $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 0});
                             }
                         } else { //The subsection has been previously completed.
-
-                            /* This does not seem necessary...
-                             if (!showResultsPage && activity.activity_identifier == $scope.origin) {
-                             showResultsPage = true;
-                             }
-                             */
-
                             $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 1});
                         }
                     }
                 }
-
 
                 function validateAllFieldsCompleted() {
                     if ($scope.userCourse && $scope.userCourse.activities) {
@@ -1723,7 +2104,6 @@ angular
                             moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () {
                             }, function () {
                             });
-
                         }
                     }
                 }
@@ -1748,7 +2128,6 @@ angular
                     });
                 };
 
-
                 function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                     var result = false;
 
@@ -1762,7 +2141,6 @@ angular
 
                     return result;
                 }
-
 
                 function assignmentMiPersonalidad() {
                     var result = false;
@@ -1818,6 +2196,14 @@ angular
                         return item.trim().length > 0 && $scope.model.hobbies.indexOf(item) == pos;
                     });
 
+                    $scope.model.social = $scope.model.social.filter(function (item, pos) {
+                        return item.trim().length > 0 && $scope.model.social.indexOf(item) == pos;
+                    });
+
+                    $scope.model.emprendedor = $scope.model.emprendedor.filter(function (item, pos) {
+                        return item.trim().length > 0 && $scope.model.emprendedor.indexOf(item) == pos;
+                    });
+
                     $scope.model.talents = $scope.model.talents.filter(function (item, pos) {
                         return item.trim().length > 0 && $scope.model.talents.indexOf(item) == pos;
                     });
@@ -1865,31 +2251,76 @@ angular
                 };
 
                 // ######################  Methods to add / delete data  ############################
-                $scope.addStudy = function () {
-                    $scope.model.studies.push({});
-                };
 
-                $scope.deleteStudy = function (index) {
-                    $scope.model.studies.splice(index, 1);
-                };
+                // **************** Section for MIS GUSTOS & MIS CUALIDADES**************************
+                function syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, coursemoduleId) {
+                    var i, j;
+                    var codedAnswers = [];
+                    var setOfLabels = [];
+                    var otherFound = false;
+                    var questionId;
+                    var numAnswers;
 
-                $scope.addPhone = function () {
-                    $scope.model.phones.push({});
-                };
+                    //Modify & save the new "answerQuiz/71" object.
+                    for (i = 0; i < userKeysContent.length; i++) {
+                        codedAnswers.push([]);
+                    }
 
-                $scope.deletePhone = function (index) {
-                    $scope.model.phones.splice(index, 1);
-                };
+                    for (i = 0; i < userKeysContent.length; i++) {
 
-                $scope.addSocialNetwork = function () {
-                    $scope.model.socialNetworks.push({});
-                };
+                        numAnswers = activityObject.questions[i].answers.length;
 
-                $scope.deleteSocialNetwork = function (index) {
-                    $scope.model.socialNetworks.splice(index, 1);
-                };
+                        for (j = 0; j < numAnswers; j++) {//Get the label for answers for each question.
+                            var label = activityObject.questions[i].answers[j].answer;
 
-                // **************** Section for MIS GUSTOS **************************
+                            if (label != "Otro") {//Not including the "Otro" label.
+                                setOfLabels.push(label);
+                            }
+                        }
+
+                        for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of userKeysContent[i]...
+                            if (userKeysContent[i].indexOf(setOfLabels[j]) > -1) {
+                                codedAnswers[i].push(1);  //Check the corresponding answer label.
+                            } else {
+                                codedAnswers[i].push(0); //Uncheck the answer label.
+                            }
+                        }
+
+                        for (j = 0; j < userKeysContent[i].length; j++) {//Check if jth-user talent is within setOfLabels...
+                            if (setOfLabels.indexOf((userKeysContent[i][j]).replace(/\r/g, " ").trim()) == -1) {//...if not, then that answer must be the "other" option value.
+                                //It must be the string for the "Other" option...
+                                otherFound = true;
+                                questionId = activityObject.questions[i].id;
+
+                                //Update the "answers" key that corresponds to this question, as defined by questionId.
+                                for (var k = 0; k < otherAnswerQuiz.length; k++) {
+                                    if (otherAnswerQuiz[k].questionid == +questionId) {
+                                        otherAnswerQuiz[k].answers = [userKeysContent[i][j]];
+                                    }
+                                }
+
+                                //otherAnswerQuiz[i].answers = [userKeysContent[i][j]];
+                                codedAnswers[i].push(1);
+                                activityObject.questions[i].userAnswer = userKeysContent[i].join("; ") + "; Otro";
+                                activityObject.questions[i].other = userKeysContent[i][j];
+                                break;
+                            }
+                        }
+
+                        if (!otherFound) {//The question has "other" option empty.
+                            otherAnswerQuiz[i].answers = [""];
+                            codedAnswers[i].push(0);
+                            activityObject.questions[i].userAnswer = userKeysContent[i].join("; ");
+                            activityObject.questions[i].other = "";
+                        }
+                    }
+
+                    _setLocalStorageJsonItem("answersQuiz/" + coursemoduleId, codedAnswers);
+                    _setLocalStorageJsonItem("otherAnswerQuiz/" + coursemoduleId, otherAnswerQuiz);
+                    _setLocalStorageJsonItem("activity/" + coursemoduleId, activityObject);
+                    $scope.activityObject = activityObject;
+                }
+
                 function canIErase(arr, index, quizStatus) {
                     if (quizStatus === 1) {//Quiz is Finished.
 
@@ -1916,159 +2347,43 @@ angular
                     }
                 }
 
-                $scope.addFavoriteSports = function () {
-                    $scope.model.favoriteSports.push("");
-                };
-
-                $scope.deleteFavoriteSports = function (index) {
-
-                    var canI = canIErase($scope.model.favoriteSports, index, $scope.status70);
-
-                    if (canI) {
-                        $scope.model.favoriteSports.splice(index, 1);
+                $scope.lookForNinguno = function(param) {
+                    if ($scope.model[param].indexOf("Ninguno") > -1) {
+                        $scope.model[param] = ["Ninguno"]; //Clean array $scope.model.param...
+                        $scope.disabled[param] = true;  //Disable button for not allowing add additional options.
+                    } else {
+                        $scope.disabled[param] = false;
                     }
                 };
 
-                $scope.addArtisticActivities = function () {
-                    $scope.model.artisticActivities.push("");
+                $scope.addItem = function (param) {
+                    $scope.model[param].push("");
                 };
 
-                $scope.deleteArtisticActivities = function (index) {
-
-                    var canI = canIErase($scope.model.artisticActivities, index, $scope.status70);
+                $scope.removeItem70 = function (param, index) {
+                    var canI = canIErase($scope.model[param], index, $scope.status70);
 
                     if (canI) {
-                        $scope.model.artisticActivities.splice(index, 1);
+                        $scope.model[param].splice(index, 1);
                     }
                 };
 
-                $scope.addHobbies = function () {
-                    $scope.model.hobbies.push("");
-                };
-
-                $scope.deleteHobbies = function (index) {
-
-                    var canI = canIErase($scope.model.hobbies, index, $scope.status70);
+                $scope.removeItem71 = function (param, index) {
+                    var canI = canIErase($scope.model[param], index, $scope.status71);
 
                     if (canI) {
-                        $scope.model.hobbies.splice(index, 1);
+                        $scope.model[param].splice(index, 1);
                     }
                 };
+                // **************** End of Section for for MIS GUSTOS & MIS CUALIDADES **************************
 
-                // **************** End of Section for MIS GUSTOS **************************
 
-                // **************** Section for MIS CUALIDADES **************************
-                $scope.addTalents = function () {
-                    $scope.model.talents.push("");
+                $scope.addObject = function(param) {
+                    $scope.model[param].push({});
                 };
 
-                $scope.deleteTalents = function (index) {
-
-                    var canI = canIErase($scope.model.talents, index, $scope.status71);
-
-                    if (canI) {
-                        $scope.model.talents.splice(index, 1);
-                    }
-                };
-
-                $scope.addValue = function () {
-                    $scope.model.values.push("");
-                };
-
-                $scope.deleteValue = function (index) {
-
-                    var canI = canIErase($scope.model.values, index, $scope.status71);
-
-                    if (canI) {
-                        $scope.model.values.splice(index, 1);
-                    }
-                };
-
-                $scope.addHabilitie = function () {
-                    $scope.model.habilities.push("");
-                };
-
-                $scope.deleteHabilitie = function (index) {
-
-                    var canI = canIErase($scope.model.habilities, index, $scope.status71);
-
-                    if (canI) {
-                        $scope.model.habilities.splice(index, 1);
-                    }
-                };
-
-                // **************** End of Section for MIS CUALIDADES **************************
-
-                $scope.addInspirationalCharacter = function () {
-                    $scope.model.inspirationalCharacters.push({});
-                };
-
-                $scope.deleteInspirationalCharacter = function (index) {
-                    $scope.model.inspirationalCharacters.splice(index, 1);
-                };
-
-                $scope.addMainActivity = function () {
-                    $scope.model.mainActivity.push(new String());
-                };
-
-                $scope.deleteMainActivity = function (index) {
-                    $scope.model.mainActivity.splice(index, 1);
-                };
-
-                $scope.addMoneyIncome = function () {
-                    $scope.model.moneyIncome.push(new String());
-                };
-
-                $scope.deleteMoneyIncome = function (index) {
-                    $scope.model.moneyIncome.splice(index, 1);
-                };
-
-                $scope.addKnownDevice = function () {
-                    $scope.model.knownDevices.push(new String());
-                };
-
-                $scope.deleteKnownDevice = function (index) {
-                    $scope.model.knownDevices.splice(index, 1);
-                };
-
-                $scope.addOwnDevice = function () {
-                    $scope.model.ownDevices.push(new String());
-                };
-
-                $scope.deleteOwnDevice = function (index) {
-                    $scope.model.ownDevices.splice(index, 1);
-                };
-
-                $scope.addPhoneUsage = function () {
-                    $scope.model.phoneUsage.push(new String());
-                };
-
-                $scope.deletePhoneUsage = function (index) {
-                    $scope.model.phoneUsage.splice(index, 1);
-                };
-
-                $scope.addKindOfVideoGame = function () {
-                    $scope.model.kindOfVideogames.push(new String());
-                };
-
-                $scope.deleteKindOfVideoGame = function (index) {
-                    $scope.model.kindOfVideogames.splice(index, 1);
-                };
-
-                $scope.deleteMainActivity = function (index) {
-                    $scope.model.mainActivity.splice(index, 1);
-                };
-
-                $scope.addMainActivity = function () {
-                    $scope.model.mainActivity.push(new String());
-                };
-
-                $scope.addFavoriteGame = function () {
-                    $scope.model.favoriteGames.push(new String());
-                };
-
-                $scope.deleteFavoriteGame = function (index) {
-                    $scope.model.favoriteGames.splice(index, 1);
+                $scope.deleteItem = function(param, index) {
+                    $scope.model[param].splice(index, 1);
                 };
 
                 $scope.addEmail = function () {
@@ -2085,15 +2400,6 @@ angular
                 $scope.deleteAdditionalEmails = function (index) {
                     $scope.model.additionalEmails.splice(index, 1);
                 };
-
-                $scope.addFamiliaCompartamos = function () {
-                    $scope.model.familiaCompartamos.push({});
-                };
-
-                $scope.deleteFamiliaCompartamos = function (index) {
-                    $scope.model.familiaCompartamos.splice(index, 1);
-                };
-
 
                 encodeImageUri = function (imageUri, callback) {
                     var c = document.createElement('canvas');
@@ -2175,8 +2481,10 @@ angular
                     };
 
                     try {
-                        $scope.$emit('ShowPreloader');
-                        cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                        $rootScope.loading = true; //Start spinner
+                        $timeout(function () {
+                            cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                        }, 500);
                     } catch (e) {
                         SuccessAvatar({
                             "userId": $scope.userId,
@@ -2194,11 +2502,31 @@ angular
                             "gustaActividad": "Si",
                             "pathImagen": "avatar_196.png"
                         });
-
                     }
                 };
 
                 function SuccessAvatar(data) {
+                    $rootScope.spinnerAvatar = true; //Type avatar spinner
+                    $rootScope.loading = true; //Start spinner
+
+                    $timeout(function () {
+                        if(!$("#spinner").is(':visible')) {
+                            $rootScope.spinnerAvatar = true;
+                        }
+                    }, 200);
+
+                    $timeout(function(){
+                        $rootScope.spinnerAvatar = false;
+                        $rootScope.loaderForLogin = false; //For Login Preloader
+                        $rootScope.loading = true;
+                        $scope.loaderRandom(); //For Generic Preloader
+
+                        $timeout(function(){
+                            $rootScope.spinnerAvatar = false;
+                            $rootScope.loading = false; //Hide spinner
+                        }, 2000);
+                    }, 1500);
+
                     //the next fields should match the database in moodle
                     $scope.avatarInfo = [{
                         "userid": data.userId,
@@ -2218,6 +2546,7 @@ angular
                         "alias": $scope.model.username,
                         "escudo": $scope.model.shield
                     }];
+
                     uploadAvatar($scope.avatarInfo);
                     _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
                 }
@@ -2363,6 +2692,7 @@ angular
                 }
 
             }
+
         }]).controller('badgeRobotMessageModal', function ($scope, $modalInstance) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
@@ -2370,4 +2700,11 @@ angular
 
     var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
     $scope.actualMessage = robotMessage;
+}).controller('timeOutProfile', function ($scope, $modalInstance) {//TimeOut Robot
+
+    $scope.ToDashboard = function () {
+        $scope.$emit('ShowPreloader');
+        $modalInstance.dismiss('cancel');
+    };
+
 });

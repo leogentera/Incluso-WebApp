@@ -98,6 +98,19 @@ angular
                     break;
                 }
             }
+
+            $scope.setNotificationClass = function (notification) {
+                switch (notification.type) {
+                    case notificationTypes.commentsNotifications:
+                        return "icomoon icon-comment pull-left no-padding green-aqua";                        
+                    case notificationTypes.likesNotifications:
+                        return "icomoon icon-like pull-left no-padding pink";
+                        break;
+                    default:
+                        return "icomoon icon-antena pull-left no-padding pink";
+                        break;
+                }
+            }
             
             $scope.$emit('HidePreloader');
             
@@ -110,32 +123,36 @@ angular
                 
                 var seen_date_now = new Date();
                 for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
-                    if (userNotifications[indexNotification].id == notificationId) {
+                    if (userNotifications[indexNotification].usernotificationid == notificationId) {
                         userNotifications[indexNotification].seen_date = seen_date_now;
-                    }else{
-                        
-                    }                    
+                    }
                 }
                 
                 
                 _setLocalStorageJsonItem("notifications", userNotifications);
                 _readNotification(userId,notificationId);
-
-                $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');            
+                $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');
             
             }
             
             var _readNotification = function (currentUserId, currentNotificationId) {
                 var seen_date_now = new Date();
-            
                 var data = {                    
                     notificationid: currentNotificationId,
                     seen_date: seen_date_now                    
                 };
             
-                moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
-                }, function () {
-                },true);
-            };        
+                moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function(){
+                    cordova.exec(function () {
+                        console.log("$scope.navigateTo inside cordova method");
+                        }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
+                    }
+                , function () {},true);
+            };
+            
+            
+            
+            
+            
         }
 ]);

@@ -139,15 +139,15 @@
     width: 25vw;
     margin: auto;
     position: relative;
-    
+
     &.planet {
         width: 35vw;
     }
-    
+
     .opacity {
         .animation("opacity", .3s);
     }
-            
+
     .opacity-1s {
         .animation("opacity", 1s);
         bottom: inherit!mportant;
@@ -157,11 +157,15 @@
     .rotating {
         .animation("rotating", 3s);
     }
-            
+
+    .rotating-10s {
+        .animation("rotating", 10s);
+    }
+
     .vibration {
         .animation("vibration", .5s);
     }
-    
+
     .points {
         width: 25vw;
         display: block;
@@ -169,49 +173,124 @@
         position: relative;
         margin: auto;
     }
-    
+
+    &.incluso {
+        display: flex !important;
+        width: 100%;
+        margin: initial;
+        position: relative;
+        background-attachment: fixed;
+        background-image:url('@{url-images}/spinners/incluso/bg-incluso.png');
+        background-position: center;
+        background-size: cover;
+        
+        > div {
+            width: 80vw;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .loading-bar {
+            width: 70vw;
+            height: 1.5em;
+            background: rgba(0,0,0,.8);
+            margin: 6vw auto 0;
+            border-radius: 1em;
+            overflow: hidden;
+
+            .fill-bar {
+                width: 0;
+                height: 1.5em;
+                background: #DBE376;
+                -webkit-transition: all 10ms ease-in-out;
+                -moz-transition: all 10ms ease-in-out;
+                -o-transition: all 10ms ease-in-out;
+                transition: all 10ms ease-in-out;
+            }
+        }
+
+        .label-progress {
+            color: rgb(191, 211, 58);
+            text-align: center;
+            margin-top: 4vw;
+            font-size: 2em;
+            font-weight: 600;
+
+            span:first-child {
+                display: inline-block;
+                text-align: center;
+                width: 60px;
+            }
+        }
+    }
+
     .trail {
         width: 20vw;
         display: block;
         margin: auto;
         padding-top: 6vw;
     }
-    
+
     .spinner-complement {
         position: absolute;
         bottom: 0;
         left: 0;
+
         &.point-0 {
             left: 10%;
             width: 21%;
             .animation("opacity-p0", 4s);
-        }  
+        }
+
         &.point-1 {
             left: 39%;
             width: 21%;
             .animation("opacity-p1", 4s);
-        }   
+        }
+
         &.point-2 {
             left: 68%;
             width: 21%;
             .animation("opacity-p2", 4s);
-        }   
+        }
+
         &.robot {
             top: 7%;
             bottom: inherit;
         }
+
         &.orbit-bk {
             z-index: -2;
             top: 0;
             bottom: inherit;
-        } 
+        }
+
         &.orbit-front, &.moon {
             top: 0;
             bottom: inherit;
         }
+
         &.moon {
             width: 12%;
             .animation("orbit", 2s);
         }
+
+        &.light {
+            top: -28vw;
+            z-index: -1;
+        }
+    }
+    
+    &.other {
+        background-color: black;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    &.other {
+        background-color: black;
+        width: 100vw;
+        height: 100vh;
     }
 }

@@ -39,19 +39,14 @@ angular
             $scope.user = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.mapaDeEmprendedorActivities = moodleFactory.Services.GetCacheJson("mapaDeEmprendedorActivities");
-            $scope.mapaDeEmprendedorAnswers = moodleFactory.Services.GetCacheJson("mapaDeEmprendedorAnswers/" + $scope.user.id);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
             var subactivitiesCompleted = [];
             $scope.stars = 0;
             $scope.isInstalled = false;
+            var prevCurrentDiscussionIds;
 
             if(!$routeParams.retry) {
-                for(var key in localStorage){  
-                    if(key.indexOf("mapaDeEmprendedorAnswers") > -1 && key.indexOf($scope.user.id) < 0){
-                        localStorage.removeItem(key);  
-                    }
-                }
                 try {
                   cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
                 }
@@ -84,26 +79,9 @@ angular
             function assignCourseModuleId(asyncRequest, data){
                 $scope.mapaDeEmprendedorActivities[$scope.mapaDeEmprendedorActivities.length - 1]["coursemoduleid"] = 
                     ( asyncRequest ? _.find(mapaDeEmprendedorActivity.activities, function(r){ return r.activityname == data.name }).coursemoduleid : data.coursemoduleid);
-                if (!$scope.mapaDeEmprendedorAnswers || $scope.mapaDeEmprendedorAnswers.length < $scope.mapaDeEmprendedorActivities.length) {
-                    $scope.mapaDeEmprendedorAnswers = (!$scope.mapaDeEmprendedorAnswers ? [] : $scope.mapaDeEmprendedorAnswers );
-                    getUserData($scope.mapaDeEmprendedorActivities[$scope.mapaDeEmprendedorActivities.length - 1]["coursemoduleid"]);
-                }
-                else{
                     $scope.$emit('HidePreloader');
-                }
                 _setLocalStorageJsonItem("mapaDeEmprendedorActivities", $scope.mapaDeEmprendedorActivities);
 
-            }
-
-            function getUserData(activityId) {
-                moodleFactory.Services.GetAsyncActivity(activityId + "?userid=" + $scope.user.id, currentUser.token, function(data){
-                    $scope.mapaDeEmprendedorAnswers.push(data);
-                    $scope.mapaDeEmprendedorAnswers[$scope.mapaDeEmprendedorAnswers.length-1]["coursemoduleid"] = activityId;
-                    if ($scope.mapaDeEmprendedorAnswers.length == $scope.mapaDeEmprendedorActivities.length) {
-                        _setLocalStorageJsonItem("mapaDeEmprendedorAnswers/" + $scope.user.id, $scope.mapaDeEmprendedorAnswers);
-                        $scope.$emit('HidePreloader');
-                    };
-                });
             }
 
             function createRequest(){
@@ -132,8 +110,8 @@ angular
                         "relacion": [],
                         "formaEntrega": []
                     }
-                    for(var j=0; j < $scope.mapaDeEmprendedorAnswers.length; j++){
-                        var activityAnswers = $scope.mapaDeEmprendedorAnswers[j];
+                    for(var j=0; j < $scope.mapaDeEmprendedorActivities.length; j++){
+                        var activityAnswers = $scope.mapaDeEmprendedorActivities[j];
                         if (activityAnswers.questions && activityAnswers.coursemoduleid == activity.coursemoduleid) {
                             _.each(activityAnswers.questions, function(q){
                                 for (var key in proyecto) {
@@ -151,6 +129,10 @@ angular
                     }
                     request.proyectos.push(proyecto);
                 }
+                var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
+                var parentActivityIdentifier = $routeParams.moodleid;
+                var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
+                request.fechaModificación=parentActivity.modifieddate;
                 _setLocalStorageJsonItem("mapaDelEmprendedorProjectsMap", $scope.projectMap);
                 return request;
             }
@@ -162,9 +144,9 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"gustaActividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"formaEntrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"1"},{"recursos":["rcs","sds"],"propuesta":"2propuesta","relacion":["rlc2"],"clientes":"papa","personas":["PRSNS","mama"],"formaEntrega":["NTRG","sdas"],"actividades":["NSWR","act2"],"necesidades":"nccsds","proyecto":"definity","proyectoId":"2"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"3"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"4"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"5"}],"fechaFin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividadCompleta":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fechaInicio":"10\/07\/2015 12:22:52","duracion":"4"}
+                        {"gustaActividad":"Si","fechaModificación": "06/10/2016 11:08:18","proyectos":[{"recursos":["RSRCS"],"propuesta":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"formaEntrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"1"},{"recursos":["rcs","sds"],"propuesta":"2propuesta","relacion":["rlc2"],"clientes":"papa","personas":["PRSNS","mama"],"formaEntrega":["NTRG","sdas"],"actividades":["NSWR","act2"],"necesidades":"nccsds","proyecto":"definity","proyectoId":"2"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"3"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"4"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"5"}],"fechaFin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividadCompleta":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fechaInicio":"10\/07\/2015 12:22:52","duracion":"4"}
                     );
-                }
+               }
             }
 
             function successGame(data){
@@ -193,7 +175,7 @@ angular
                                 var question = _.find(activity.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)[0].slice(0, -1)) > -1 });
                                 if(question){
                                     question.userAnswer = getAnswer(answer, true);
-                                    var activityCache = _.find($scope.mapaDeEmprendedorAnswers, function(a){ return a.coursemoduleid == proyectoId; });
+                                    var activityCache = _.find($scope.mapaDeEmprendedorActivities, function(a){ return a.coursemoduleid == proyectoId; });
                                     if(activityCache){
                                         if(activityCache.questions && activityCache.questions.length == activity.questions.length){
                                             var questionCache = _.find(activityCache.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)[0].slice(0, -1)) > -1 });
@@ -209,11 +191,11 @@ angular
                                 }
                             });
                             quizzesRequests.push(logEntry);
-                            _setLocalStorageJsonItem("activity/" + logEntry.coursemoduleid + "?userid=" + logEntry.userid, activity);
+                            _setLocalStorageJsonItem("activity/" + logEntry.coursemoduleid , activity);
                         }
                     }
                 }
-                _setLocalStorageJsonItem("mapaDeEmprendedorAnswers/" + $scope.user.id, $scope.mapaDeEmprendedorAnswers);
+                _setLocalStorageJsonItem("mapaDeEmprendedorActivities", $scope.mapaDeEmprendedorActivities);
                 var quizzesAnswered = _.countBy($scope.mapaDeEmprendedorActivities, function(a){
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function(q){
@@ -224,7 +206,6 @@ angular
                 });
 
                 $scope.IsComplete = $scope.mapaDeEmprendedorActivities &&
-                                    $scope.mapaDeEmprendedorAnswers &&
                                     quizzesAnswered.completed &&
                                     quizzesAnswered.completed >= $scope.mapaDeEmprendedorActivities.length;
 
@@ -236,11 +217,15 @@ angular
                         subactivitiesCompleted.push(q.coursemoduleid);
                     }
                 });
+                parentActivity.modifieddate=data.fechaModificación || '';
+                parentActivity.onlymodifieddate=true;
                 if (parentActivity.status == 0 && quizzesAnswered.completed > 0) {
                     parentUpdated = true;
+                    parentActivity.onlymodifieddate=false;
+                }
                     _endActivity(parentActivity);
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false);
-                }
+                
                 if (subactivitiesCompleted.length > 0) {
                     if (parentActivity.activities) {
                         userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted, false);
@@ -258,23 +243,42 @@ angular
                     }, 1000);
                 }
             }
-
+            
             encodeImageUri = function (imageUri, callback) {
-                var c = document.createElement('canvas');
-                var ctx = c.getContext("2d");
-                var img = new Image();
-                img.onload = function () {
-                    c.width = this.width;
-                    c.height = this.height;
-                    ctx.drawImage(img, 0, 0);
+                cordova.exec(function (data) {
+                        callback(data);
+                    }, function () {
+                        console.log("Image couldnt be retrieved from cordova");
+                        var c = document.createElement('canvas');
+                        var ctx = c.getContext("2d");
+                        var img = new Image();
+        
+                        img.onload = function () {
+                            c.width = this.width;
+                            c.height = this.height;
+                            ctx.drawImage(img, 0, 0);
+        
+                            if (typeof callback === 'function') {
+                                var dataURL = c.toDataURL("image/jpg");
+                                callback(dataURL.slice(22, dataURL.length));
+                            }
+        
+                        };
+        
+                        img.src = imageUri;
+                    }, "CallToAndroid", " getImage", [imageUri]);
+                
+            };
 
-                    if (typeof callback === 'function') {
-                        var dataURL = c.toDataURL("image/jpg");
-                        callback(dataURL.slice(22, dataURL.length));
-                    }
-
-                };
-                img.src = imageUri;
+            //Time Out Message modal
+            $scope.openModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'timeOutModal.html',
+                    controller: 'timeOutMapaDelEmprendedor',
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-programa'
+                });
             };
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated, canPost) {
@@ -297,6 +301,7 @@ angular
                 };
                 
                 $scope.$emit('ShowPreloader');
+
                 _endActivity(activityModel, function() {
                     activitiesPosted++;
                     if (activitiesPosted == subactivitiesCompleted.length) {
@@ -308,6 +313,10 @@ angular
                                         for(var d = 0; d < data.discussions.length; d++) {
                                             currentDiscussionIds.push(data.discussions[d].discussion);
                                         }
+
+                                        //Save previous value of "currentDiscussionIds" object.
+                                        prevCurrentDiscussionIds = localStorage.getItem("currentDiscussionIds");
+
                                         localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
                                         
                                         var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
@@ -325,12 +334,13 @@ angular
                                             "filecontent": "",
                                             "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.jpg',
                                             "picture_post_author": $scope.user.profileimageurlsmall,
-                                            "iscountable":0
+                                            "iscountable":0,
+                                            "isgamepost": 1
                                         };
 
                                         function postToForum(){
-                                            moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                                                function() {
+                                            moodleFactory.Services.PostAsyncForumPost('new_post', requestData,
+                                                function() {//Success
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
@@ -348,17 +358,33 @@ angular
                                                         }, 500);
                                                     }, 500);
                                                 },
-                                                function(){
+
+                                                function(obj){//Error
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
                                                         $scope.showSharedAlbum = false;
                                                         $scope.$emit('HidePreloader');
-                                                        $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+
+                                                        //Revert previous request action.
+                                                        if (prevCurrentDiscussionIds === null) {
+                                                            localStorage.removeItem("currentDiscussionIds");
+                                                        } else {
+                                                            localStorage.setItem("currentDiscussionIds", prevCurrentDiscussionIds);
+                                                        }
+
+                                                        if (obj.statusCode == 408) {//Request Timeout
+                                                            $scope.openModal();
+
+                                                        } else {//A different Error happened
+                                                            $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                                        }
+
                                                     }, 1000);
                                                 }, (!_isDeviceOnline)
                                             );
                                         }
+
                                         if (_isDeviceOnline) {
                                             encodeImageUri($scope.pathImagenFicha, function (b64) {
                                                 requestData.filecontent = b64;
@@ -439,4 +465,11 @@ angular
                     );
                 }
             }
-        }]);
+        }]).controller('timeOutMapaDelEmprendedor', function ($scope, $modalInstance) {//TimeOut Robot
+
+    $scope.ToDashboard = function () {
+        $scope.$emit('ShowPreloader');
+        $modalInstance.dismiss('cancel');
+    };
+
+});

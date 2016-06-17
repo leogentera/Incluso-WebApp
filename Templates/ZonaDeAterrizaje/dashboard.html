@@ -117,12 +117,8 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">Zona de Aterrizaje</h3>
-                <p class="txt-renglon centered">
-                    ¡Hemos llegado al planeta IPSE 1.0!
-                    Reúne el equipo de exploración necesario para recorrer este nuevo
-                    planeta y descubrir cómo hacer tus sueños realidad.
-                </p>
+                <h3 class="subtitle text-center" ng-bind-html="title"></h3>
+                <p class="txt-renglon centered" ng-bind-html="message"></p>
             </div>
         </div>
     </script>
@@ -151,10 +147,10 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">Zona de Aterrizaje</h3>
-                <p class="txt-renglon centered">¡Bien hecho! Lograste reunir el equipo de exploración espacial. Ahora tienes el mapa que reúne tus sueños y tus habilidades en una idea de negocio que mejorará tu comunidad ¡Estás listo para caminar hacia tus metas!</p>
+                <h3 class="subtitle text-center" ng-bind-html="title"></h3>
+                <p class="txt-renglon centered" ng-bind-html="message"></p>
             </div>
-            <a class="btn btn-primary btn-lg btn-cnt" id="continuar" style="margin-bottom: 30px;" ng-click="navigateToDashboard()">CONTINUAR</a>
+            <a class="btn btn-primary btn-lg btn-cnt" id="continuar" style="margin-bottom: 30px;" ng-click="navigateToReconocimiento()">CONTINUAR</a>
         </div>
     </script>
 

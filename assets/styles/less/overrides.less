@@ -539,7 +539,7 @@
 
                 img {
                     width: 53vw;
-                    height: auto;
+                    height: 53vw;
                     margin-top: -6vw;
                     padding: 2vw;
                 }
@@ -933,7 +933,26 @@ section.part.inbloq{
 
 .incluso-app {
     .old-code {display:none !important;}
+    
+    .modal-timeout {
+        position: relative;
+        img {
+            margin: 0px!important;
+            width: 12vw!important;
+            top: -8vw!important;
+            background: rgba(18, 27, 28, 0.965) none repeat scroll 0% 0%;
+            padding: 0 1vw 0 4vw;
+            box-sizing: content-box;
+            left: calc(50% - 6vw)!important;
+        }
+        h3 {
+            font-weight: 600;
+        }
+    }
+    
 }
+
+
 
 
 
@@ -1187,7 +1206,7 @@ section.part.inbloq{
                 height: 100vh;
             }
         }
-        .chat {
+        .chat, .feedback {
             width: 90%;
             margin: 0px auto;
             .robot-sm{
@@ -1195,6 +1214,19 @@ section.part.inbloq{
                 img {
                     left: 43vw;
                     margin-top: 0px;
+                }
+                .icon-img {
+                    position: absolute;
+                    top: 4vh;
+                    left: 43vw;
+                    width: 16vw;
+                    background: #000;
+                    img {
+                        position: initial;
+                        width: 12vw;
+                        margin: 0 2vw 0 3vw;
+                        display: block;
+                    }
                 }
                 .modal-body {
                     padding: 5vh 4vw;

@@ -1,6 +1,9 @@
 //global variables and functions
-var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-4/RestfulAPI/public/{0}"; //Azure Development environment
+var API_RESOURCE = "http://definityincluso.cloudapp.net:82/testing/api/RestfulAPI/public/{0}" // Internal QA Development environment
+// var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-5/RestfulAPI/public/{0}"; //Azure Development environment
 var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
+var DRUPAL_CONTENT_RESOURCE = "http://definityincluso.cloudapp.net/drupal_proxy/proxy.php";
+var SIGNALR_API_RESOURCE = "http://signalrchat-incluso.azurewebsites.net/realtime/echo"; //Azure Development environment
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
 //var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
@@ -15,13 +18,19 @@ var _isDeviceOnline = null;
 var _queuePaused = false;
 var _activityStatus = null;
 var _tutorial = false;
+var _isCellphone = false;
 
 /* Prototypes */
 window.mobilecheck = function() {
-  var check = false;
-  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4)))check = true})(navigator.userAgent||navigator.vendor||window.opera);
-  return check;
+  return _isCellphone;
 }
+
+var _comboboxCompat = function (){
+                if(_getAPKVersion()<=15){
+                    return false;
+                }
+                return window.mobilecheck;
+            };
 
 /* catalog keys from moodle */
 var _catalogNames = ["sports",
@@ -57,7 +66,10 @@ var _catalogNames = ["sports",
     "playVideogames",
     "communityAccess",
     "citiesCatalog",
-    "gender"
+    "gender",
+    "socialcatalog",
+    "emprendedorcatalog",
+    "metThisAppBy"
 ];
 
 var _activityDependencies=[
@@ -264,12 +276,16 @@ var _activityDependenciesLegacy = [
     }
 ];
 
+var quizesArray = [150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249];
+
 var notificationTypes = {    
     activityNotifications: 1,
     generalNotifications: 2,
     profileNotifications: 3,
     progressNotifications: 4,
-    globalProgressNotifications: 5
+    globalProgressNotifications: 5,
+    commentsNotifications: 6,
+    likesNotifications: 7
 };
 
 var allServicesCallback = function () {
@@ -366,7 +382,6 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
 
 /* ends an activity */
 var _endActivity = function (activityModel, callback, pathCh) {
-
     //trigger activity type 2 is sent when the activity ends.
     var triggerActivity = 2;
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -381,9 +396,23 @@ var _endActivity = function (activityModel, callback, pathCh) {
     }
     else if (activityModel.activityType == "Assign") {
         var data = {userid: currentUserId};
+        if (activityModel.dateStart && activityModel.dateEnd && activityModel.like_status) {
+          data.dateStart = activityModel.dateStart;
+          data.dateEnd = activityModel.dateEnd;
+          data.like_status = activityModel.like_status;
+        }
+        if(activityModel.hasOwnProperty('onlymodifieddate')){
+          data.onlymodifieddate=activityModel.onlymodifieddate;
+          data.modifieddate=activityModel.modifieddate;
+        }
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
     } else {
         var data = {userid: currentUserId};
+        if(activityModel.hasOwnProperty('onlymodifieddate')){
+          data.onlymodifieddate=activityModel.onlymodifieddate;
+          data.modifieddate=activityModel.modifieddate;
+          
+        }
 
         // update activity status dictionary used for blocking activity links
         updateActivityStatusDictionary(activityModel.activity_identifier);
@@ -526,7 +555,6 @@ var _updateBadgeStatus = function (coursemoduleid) {
     if (activity) {
       var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
       if (currentBadge) {
-        console.log("badge won" + currentBadge.badgeName + " " + coursemoduleid);
           for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
               if (badges[indexBadge].id == currentBadge.badgeId) {
                   profile.badges[indexBadge].status = "won";
@@ -546,7 +574,6 @@ var _updateBadgeStatus = function (coursemoduleid) {
 var _updateRewardStatus = function () {
 
     var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
-    console.log('Stars from rewards: ' + profile.stars);
     var totalRewards = profile.rewards;
     var profilePoints = profile.stars;
 
@@ -586,22 +613,6 @@ var logStartActivityAction = function(activityId, timeStamp) {
             var triggerActivity = 1;
             _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
-            if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
-                var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
-                    moodleFactory.Services.GetServerDate(function(date){
-                    _setLocalStorageJsonItem(key, {
-                        datestarted: date.time,
-                        coursemoduleid: treeActivity.coursemoduleid,
-                        activity_identifier: treeActivity.activity_identifier
-                    });
-                    
-                    localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
-                    })                    
-                }
-            }
-            
-
         }, function () {
             console.log('Error callback');
         });
@@ -637,8 +648,7 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
             allNotifications[i].status = "won"
             localStorage.setItem("notifications",JSON.stringify(allNotifications));
             
-            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){              
-                console.log("create notification successful");
+            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
             }, errorCallback, true);
               
         } else {
@@ -648,69 +658,6 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     }
 };
 
-
-var _coachNotification = function (stageIndex) {
-
-    var notifications = JSON.parse(localStorage.getItem("notifications"));
-    
-    var userId = localStorage.getItem('userId');
-        
-    var stageId = stageIndex + 1;
-            
-    var notificationCoach = _.find(notifications, function (notif) {
-        if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3 && notif.activityidnumber.substring(0,1) == stageId) {
-            return notif;
-        }
-    });
-
-    if (notificationCoach && notificationCoach.status == "pending") {      
-        var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
-
-                        
-        var notificationId = notificationCoach.id;
-        if ((activity)) {
-            var chatUser = JSON.parse(localStorage.getItem("userChat"));
-            if (chatUser && chatUser.length > 0) {
-                var lastChat = _.max(chatUser, function (chat) {
-                    if (chat.messagesenderid == userId) {
-                        return chat.messagedate;
-                    }
-                });
-
-                //'minutes'- 'days'
-                var daysOfNoChat = notificationCoach.days;
-                var lastDateChat = moment(new Date(lastChat.messagedate)).add(daysOfNoChat, 'days');
-
-                var today = new Date();
-                if (lastDateChat < today) {
-                    //Create chat notification
-                    //moodleFactory.services.createNotification(userId,notificationId, function(){},function(){});
-                    var wonDate = new Date();
-                    var dataModelNotification = {
-                        notificationid : notificationId,
-                        userid: userId,
-                        wondate: wonDate
-                      };
-                                                             
-                    for (var i = 0; i< notifications.length; i++) {
-                      if (notifications[i].id == notificationId) {
-                          notifications[i].wondate = wonDate;
-                          notifications[i].status = "won";
-                      }
-                    }
-                    localStorage.setItem("notifications",JSON.stringify(notifications));
-            
-                    moodleFactory.Services.PostUserNotifications( dataModelNotification, function(){
-                        console.log("create notification successful");
-                      }, errorCallback,true);
-                    
-                } else {
-                    return false;
-                }
-            }
-        }
-    }
-};
 
 
 function updateUserStarsUsingExternalActivity(activity_identifier) {
@@ -760,39 +707,39 @@ var _progressNotification = function(){
       
         for(i = 0; i < notifications.length; i++){
             var currentNotification = notifications[i];
-            
+          
              //{rangeId : 1, progressMin: 0, progressMax:0},
-             if (currentNotification.type == notificationTypes.globalProgressNotifications && currentNotification.globalprogress) {
+            if (currentNotification.type == notificationTypes.globalProgressNotifications && currentNotification.globalprogress) {
                  
                 var notificationRanges = _.findWhere(_globalProgressRanges, {rangeId: currentNotification.globalprogress} );
                 var notificationRegistrerDate = new Date(currentNotification.registerdate * 1000);
                 var notificationLastAccessDate = currentNotification.lastaccessdate ? new Date(currentNotification.lastaccessdate * 1000) : null;
                 var userRegisterDate = new Date(profile.timeCreated * 1000);
                 var userLastAccessDate  = new Date(profile.lastAccess * 1000);
-                
+            
                 if (currentNotification.status != "won" && 
                         ((notificationRanges.progressMax == 0 && currentNotification.registerdate == moment(userRegisterDate).format('DD-MM-YYYY')) || 
                             (moment(notificationRegistrerDate).format('DD-MM-YYYY') == moment(userRegisterDate).format('DD-MM-YYYY') &&
                                 moment(notificationLastAccessDate).format('DD-MM-YYYY') == moment(userLastAccessDate).format('DD-MM-YYYY') && 
                                 userCourse.globalProgress > notificationRanges.progressMin && userCourse.globalProgress <= notificationRanges.progressMax))) {
-
+              
                     var wonDate = new Date();
                     var dataModelNotification = {
-                        notificationid : String(currentNotification.id),
-                        userid: currentUser.id,
-                        wondate : wonDate
+                      notificationid : String(currentNotification.id),
+                      userid: currentUser.id,
+                      wondate : wonDate
                     };
-                  
+                    
                     notifications[i].wondate = wonDate;
                     notifications[i].status = "won";
                     localStorage.setItem("notifications", JSON.stringify(notifications));
-        
+          
                     moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
-                        console.log("progress notification created" + currentNotification.name);
                     }, errorCallback, true);
-              }
-          }
-      }
+                    
+                }
+            }  
+        }
     }
 }
 
@@ -809,7 +756,7 @@ var errorCallback = function (data) {
 };
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
-    
+    console.log("GetActivityByActivityIDentifier");
     var matchingActivity = null;
     var breakAll = false;
     var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
@@ -1077,6 +1024,11 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
             for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                 var activity = challenge.activities[activityIndex];
                 if (activity.activities && activity.activity_identifier == parentActivity.activity_identifier) {
+                  
+                    if(parentActivity.hasOwnProperty('onlymodifieddate')){
+                      activity.modifieddate=parentActivity.modifieddate;
+                    }
+                    
                     if (activity.status == 1 && firstActivityLock) {
                         breakAll = true;
                         break;
@@ -1361,14 +1313,86 @@ var logout = function ($scope, $location) {
                     })
             }
         ).success(function (data, status, headers, config) {
+                if ($scope.currentUser && $scope.currentUser.token) {
+                    var objectToken = {
+                        moodleAPI: API_RESOURCE.format(''),
+                        moodleToken: $scope.currentUser.token
+                    };
+
+                    cordova.exec(function () {}, function () {},"CallToAndroid", "logout", [objectToken]);
+            }
             }
         );
     }
     
     }, function(){});
 
-    //Deleting objects from Quizes
-    ClearLocalStorage("answersQuiz/");
+   clearLocalStorage($location);
+};
+
+var getProfilePoints = function(currentUser){
+  
+  var userCourse = JSON.parse(localStorage.getItem('usercourse'));
+
+  moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(data){
+    
+    },function(data){
+      console.log(data);
+      },true);
+  
+};
+
+
+var fillProfilePoints = function(pointsToAdd){
+  
+    if (pointsToAdd.length == 0) {
+      return;
+    }
+    var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
+    
+    var scores = [];
+    for(var i =0; i < pointsToAdd.length; i++){
+        var item = pointsToAdd[i];
+        profilePoints.push(item);
+        
+        var profileObject = {
+          "profileid" : item.profileId,
+          "moduleid" : item.moduleId,
+          "score": item.score
+          };
+        
+        scores.push(profileObject);
+    }
+    
+    var objectProfile = { "scores": scores};
+    
+     moodleFactory.Services.PostProfilePoints('',JSON.stringify(objectProfile),function(data){
+        console.log(data);
+      },function(data){
+          console.log(data);
+        });
+     
+    localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
+    
+}
+
+
+
+var getProfileCatalogs = function(){
+    
+    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+    if (currentUser) {
+      moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){},function(data){},true);    
+    }
+};
+
+
+
+
+
+var clearLocalStorage = function(location){
+  
+  ClearLocalStorage("answersQuiz/");
     ClearLocalStorage("otherAnswerQuiz/");
     ClearLocalStorage("activityObject/");
     ClearLocalStorage("owlIndex");
@@ -1379,13 +1403,11 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("stage");
     localStorage.removeItem("usercourse");
     localStorage.removeItem("currentStage");
-    localStorage.removeItem("notifications");
-    localStorage.removeItem("userChat");
+    localStorage.removeItem("notifications");    
     localStorage.removeItem("leaderboard");
     localStorage.removeItem("activityStatus");
     localStorage.removeItem("userId");
     localStorage.removeItem("avatarInfo");
-    localStorage.removeItem("chatRead");
     localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
@@ -1414,15 +1436,15 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("UserTalents");
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");
-
-    var existingInterval = localStorage.getItem('Interval');
-    if(existingInterval){
-        clearInterval(existingInterval);
-        localStorage.removeItem("Interval");
+    
+    if (location) {
+        location.path('/');
     }
 
-    $location.path('/');
-};
+}
+
+
+
 
 function ClearLocalStorage(startsWith) {
     var myLength = startsWith.length;
@@ -1495,7 +1517,7 @@ var _activityRoutes = [
     {id: 1005, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
     {id: 1007, name: '', url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
     {id: 1008, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/1008'},
-    {id: 1002, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/1002'},
+    {id: 1002, name: '', url: '/ZonaDeVuelo/Retroalimentacion/1002'},
     {id: 1009, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
     {id: 2001, name: '', url: '/ZonaDeNavegacion/ExploracionInicial/2001'},
     {id: 2004, name: '', url: '/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/2004'},
@@ -1508,7 +1530,7 @@ var _activityRoutes = [
     {id: 2016, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/13y5/2016'},
     {id: 2017, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/2017'},
     {id: 2026, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/2026'},
-    {id: 2022, name: '', url: '/ZonaDeNavegacion/CabinaDeSoporte/2022'},
+    {id: 2022, name: '', url: '/ZonaDeNavegacion/Retroalimentacion/2022'},
     {id: 2023, name: '', url: '/ZonaDeNavegacion/ExploracionFinal/2023'},
     {id: 3101, name: '', url: '/ZonaDeAterrizaje/ExploracionInicial/3101'},
     {id: 3201, name: '', url: '/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201'},
@@ -1518,7 +1540,7 @@ var _activityRoutes = [
     {id: 3401, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/3401'},
     {id: 3402, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
     {id: 3404, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/3404'},
-    {id: 3501, name: '', url: '/ZonaDeAterrizaje/CabinaDeSoporte/3501'},
+    {id: 3501, name: '', url: '/ZonaDeAterrizaje/Retroalimentacion/3501'},
     {id: 3601, name: '', url: '/ZonaDeAterrizaje/ExploracionFinal/3601'},
     {id: 50000, name: 'Comunidad General', url: '/Community/50000'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
@@ -1527,17 +1549,15 @@ var _activityRoutes = [
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
 
-var _activitiesCabinaDeSoporte = [1002,2022,3501];
-
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [
     1001,
     1101,
     1049,
-     1020,
-     1039,
-     1010,
-     1021,
+    1020,
+    1039,
+    1010,
+    1021,
     1006,
     1005,
     1007,
@@ -1689,26 +1709,47 @@ function _updateDeviceVersionCache () {
     var deviceVersion = {
         lastTimeUpdated: currentDate.getTime(),
         localVersion: "0.0.0",
-        remoteVersion: "0.0.0"
+        remoteVersion: "0.0.0",
+        apkVersion: 15
+    };
+
+    if (localStorage.getItem("device-version") != null) {
+        deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+        deviceVersion.lastTimeUpdated = currentDate.getTime();
+        deviceVersion.apkVersion = deviceVersion.apkVersion || 15;
+    }
+    
+    if (window.mobilecheck()) {
+        if (!FLAG_DEVICE_VERSION_RUNNING) {
+            FLAG_DEVICE_VERSION_RUNNING = true;
+            //ejecutando device-version
+            cordova.exec(function(data) {
+                deviceVersion.localVersion = data.currentVersion;
+                deviceVersion.remoteVersion = data.latestVersion;
+                deviceVersion.apkVersion = data.apkVersion || 15;
+                localStorage.setItem("device-version", JSON.stringify(deviceVersion));
+                FLAG_DEVICE_VERSION_RUNNING = false;
+            }, function() { console.log("fail"); FLAG_DEVICE_VERSION_RUNNING = false }, "CallToAndroid", "getversion", []);
+        }
+    }
+}
+
+function _getAPKVersion () {
+    var currentDate = new Date();
+    
+    var deviceVersion = {
+        lastTimeUpdated: currentDate.getTime(),
+        localVersion: "0.0.0",
+        remoteVersion: "0.0.0",
+        apkVersion: 15
     };
 
     if (localStorage.getItem("device-version") != null) {
         deviceVersion = JSON.parse(localStorage.getItem("device-version"));
         deviceVersion.lastTimeUpdated = currentDate.getTime();
     }
-    
-    if (window.mobilecheck()) {
-        if (!FLAG_DEVICE_VERSION_RUNNING) {
-            FLAG_DEVICE_VERSION_RUNNING = true;
-            //console.log("ejecutando device-version");
-            cordova.exec(function(data) {
-                deviceVersion.localVersion = data.currentVersion;
-                deviceVersion.remoteVersion = data.latestVersion;
-                localStorage.setItem("device-version", JSON.stringify(deviceVersion));
-                FLAG_DEVICE_VERSION_RUNNING = false;
-            }, function() { console.log("fail"); FLAG_DEVICE_VERSION_RUNNING = false }, "CallToAndroid", "getversion", []);
-        }
-    }
+    deviceVersion.apkVersion = deviceVersion.apkVersion || 15;
+    return deviceVersion.apkVersion;
 }
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
@@ -1759,27 +1800,6 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
 /* loads drupal resources (content) */
 var _loadedDrupalResources = false;
 var _loadedDrupalResourcesWithErrors = false;
-var _loadDrupalResources = function() {
-    _loadedDrupalResources = false;
-    var propCounter = 0;
-    _loadedDrupalResources = false;
-    _loadedDrupalResourcesWithErrors = false;
-    
-    for (var prop in drupalFactory.NodeRelation) {
-        drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
-    }
-    
-    function successDrupalResourcesCallback() {
-        propCounter++;
-        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
-    }
-    
-    function errorDrupalResourcesCallback() {
-        propCounter++;
-        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
-        _loadedDrupalResourcesWithErrors = true;
-    }
-}
 
 /* params:
    images - array of objects { path, name, downloadLink }
@@ -1831,6 +1851,35 @@ function encodeImageWithUri(imageUri, datatype, callback) {
     };
     img.src = imageUri;
 }
+
+function getcurrentVersion() {  
+    var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+    var localVersion = "V-1.0.0.";
+    if (deviceVersion && deviceVersion.localVersion) {
+      localVersion = deviceVersion.localVersion;
+    }
+    return localVersion;
+}
+
+
+var progressBar = {
+    set: function (val) {
+        var bar = $(".app-preloader .incluso");
+        val = val < 0 ?  0 : val > 100 ? 100 : val;
+
+        var labelWidth = parseInt(bar.find(".label-progress span:first-child").text(), 10);
+
+        if (val == 0) {//This is for being able to reset the style of the bar.
+            bar.find(".fill-bar").width(val + "%");
+            bar.find(".label-progress span:first-child").text(val);
+        }
+
+        if (val > labelWidth) {//Update percentage
+            bar.find(".fill-bar").width(val + "%");
+            bar.find(".label-progress span:first-child").text(val);
+        }
+    }
+};
 
 /* Waits until page is loaded */
 $(document).ready(function(){

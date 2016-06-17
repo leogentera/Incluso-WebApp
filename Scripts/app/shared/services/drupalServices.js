@@ -3,6 +3,7 @@
     
     drupalFactory.NodeRelation = {
         "tutorial": 95, /* General - Tutorial */
+        "host":"http://definityincluso.cloudapp.net/incluso-drupal",
         "0000": 57, /* Programa - Dashboard */
         "1002": 53, /* Zona de Vuelo - Cabina de Soporte - Chat */
         "1010": 46, /* Zona de Vuelo - Con�cete - Punto de Encuentro */
@@ -67,9 +68,11 @@
         "systemRequirements": 98,
         "fuenteDeEnergiaRequirements": 99,
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
-        "BadgeForumRobot": 101 /*General - Robot al ganar el badge de foros*/
+        "BadgeForumRobot": 101, /*General - Robot al ganar el badge de foros*/
+        "robot-inclubot" : 56, /*Dashboard Programa - Robot Inclubot*/
+        "RetroalimentacionClosing" : 103,  /*Cierre de actividad Retroalimentación*/
+        "chat_generic_message" : 104  /*Mensaje genérico de Chat*/
     };
-    
 
     drupalFactory.Services = (function () {
         
@@ -113,8 +116,53 @@
             }
         };
 
+        var _getDrupalContent = function ( successCallback, errorCallback, forceRefresh) {
+
+            _getAsyncDataDrupal(DRUPAL_CONTENT_RESOURCE, successCallback, errorCallback, forceRefresh);
+        };
+        var _getAsyncDataDrupal = function (url, successCallback, errorCallback, forceRefresh) {
+
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+
+            if (returnValue) {
+                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                return returnValue;
+            }
+
+            _httpFactory({
+                method: 'POST',
+                url: url ,
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+                data:  JSON.stringify( drupalFactory.NodeRelation)
+            }).success(function (data, status, headers, config) {
+
+                //var resultArray = Object.keys(data).map(function(k) { return data[k] });
+                //resultArray.forEach(function(element, index, array){
+                //    _setLocalStorageJsonItem("drupal/content/" + index, element);
+                //});
+
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        //alert(key + " -> " + p[key]);
+                        _setLocalStorageJsonItem("drupal/content/" + key, data[key]);
+                    }
+                }
+
+                successCallback(data);
+                //successCallback(data, key);
+            }).error(function (data, status, headers, config) {
+
+                if (returnValue != null) {
+                    successCallback(returnValue, key);
+                }else {
+                    errorCallback(data);
+                }
+            });
+        };
+
         return {
             GetContent: _getContent,
+            GetDrupalContent: _getDrupalContent,
         };
     })();
     

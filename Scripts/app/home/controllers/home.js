@@ -10,25 +10,64 @@ angular
         '$http',
         '$filter',
         '$modal',
-        function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal) {
+        '$timeout',
+        function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal, $timeout) {
             
             $rootScope.OAUTH_ENABLED = false;
+            $rootScope.loadedItem = 0;
+            $rootScope.totalLoads = 16;
+            $rootScope.loaderForLogin = false;
+            progressBar.set(0);
+            var arrayForTimeouts = [];
+
+            function myLoop (inf, up) {//To fill the interval between download chunks.
+                var i;
+
+                for (i = inf; i < up; i++) {//Set the new cicles for the loader bar.
+                    arrayForTimeouts[i] = setTimeout(function() {
+                        progressBar.set(i); //Update progress
+
+                        if (i == 100) {//When load is complete.
+                            $timeout(function(){
+                                $scope.$emit('HidePreloader');
+                                $rootScope.loadedItem = 0;
+                                $rootScope.loaderForLogin = false;
+                                $scope.loaderRandom(); //Reinit Preloader
+                            }, 1000);
+                        }
+                    }, 10);
+                }
+            }
+
+            $scope.incLoadedItem = function() {
+                var infValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
+                $rootScope.loadedItem++;
+                var upperValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
+                myLoop(infValue, upperValue);
+            };
             
             // To handle page reloads
             _httpFactory = $http;
 
             if ($location.$$path.split('/')[1]) {
-                $scope.loading = true;
+                $rootScope.loading = true;
             } else {
-                $scope.loading = false;
+                $rootScope.loading = false;
             }
 
             $scope.loaderRandom = function () {
-                $scope.spinnerShow = Math.floor((Math.random() * 4));
-                setInterval(function () { 
-                    if(!$("#spinner").is(':visible'))
-                         $scope.spinnerShow = Math.floor((Math.random() * 4));
-                }, 200);
+                if ($rootScope.loaderForLogin) {//Show Login Preloader
+                    $rootScope.spinnerShow = 0;
+                    setInterval(function () {
+                        if(!$("#spinner").is(':visible'))
+                            $rootScope.spinnerShow = 0;
+                    }, 200);
+                } else {//Pick another preloader, 1 - 4
+                    $rootScope.spinnerShow = Math.floor(Math.random() * 4) + 1;
+                    setInterval(function () {
+                        if(!$("#spinner").is(':visible'))
+                            $rootScope.spinnerShow = Math.floor(Math.random() * 4) + 1;
+                    }, 200);                }
             };
 
             var classdisable;
@@ -42,8 +81,28 @@ angular
                     $rootScope.sidebar = false;
             };
 
+            $rootScope.openQuizModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: false,
+                    backdrop: false,
+                    templateUrl: 'quizModal.html',
+                    controller: 'quizModalController',
+                    size: size,
+                    windowClass: 'user-help-modal opening-stage-modal'
+                });
+
+                modalInstance.result.finally(function () {
+                    $scope.$emit('ShowPreloader');
+                    $timeout(function () {
+                        $scope.$emit('HidePreloader');
+                    }, 1500);
+                });
+            };
+
             /* redirect to another page */
             $scope.navigateTo = function (url, sideToggle, activityId) {
+                var quizIdentifiers = ["1005", "1006", "1007", "1009", "2007", "2016", "2023"];
+                var isQuiz = false;
 
                 /* Check if current version is the most recent */
                 if (!_compareSyncDeviceVersions()) {
@@ -55,15 +114,25 @@ angular
 
                     if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
+
                         logStartActivityAction(activityId, timeStamp);
+
+                        if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
+                            isQuiz = true;
+                            $rootScope.quizIdentifier = activityId.toString();
+                            $rootScope.quizUrl = url;
+                            $rootScope.openQuizModal();  // turns on robot
+                        }
                     }
 
-                    $location.path(url);
-
-                    if (sideToggle == "sideToggle")
+                    if (sideToggle == "sideToggle") {
                         $rootScope.sidebar = !$rootScope.sidebar;
-                }
+                    }
 
+                    if (!isQuiz) {
+                        $location.path(url);
+                    }
+                }
             };
 
             $scope.navigateToStageDashboard = function (url, sideToggle, activityId) {
@@ -110,11 +179,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'programWelcome.html',
-                    controller: function ($scope, $modalInstance) {
-                        $scope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
-                        };
-                    },
+                    controller: 'WelcomeAboardFromMenu',
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
@@ -164,7 +229,7 @@ angular
                 }
 
             };
-
+            
             $scope.toolbarOptionActive = function (path) {
 
                 if (path.constructor === Array) {
@@ -179,13 +244,16 @@ angular
                             classdisable = "active disabled";
                         }
                     }
+
                     return classdisable;
 
                 } else {
-                    if ($location.path().substr(0, path.length) === path)
+                    if ($location.path().substr(0, path.length) === path) {
                         return "active disabled";
-                    else
+                    } else {
                         return "";
+                    }
+
                 }
             };
 
@@ -208,10 +276,10 @@ angular
 
             /* Preloader default callbacks and listeners */
             var _showPreloader = function () {
-                $scope.loading = true;
+                $rootScope.loading = true;
             };
             var _hidePreloader = function () {
-                $scope.loading = false;
+                $rootScope.loading = false;
             };
             $scope.$on('ShowPreloader', _showPreloader);
             $scope.$on('HidePreloader', _hidePreloader);
@@ -232,23 +300,15 @@ angular
             };
 
             $scope.showChatNotification = function () {
-                var readChatNotification = localStorage.getItem('chatRead');
-                if ($scope.pageName == 'Chat' || readChatNotification == "true" || readChatNotification == undefined) {
+
+                var chatRead = localStorage.getItem('chatRead/' + localStorage.getItem("userId"));
+
+                if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {
                     return false;
                 } else {
-                    var userChat = JSON.parse(localStorage.getItem('userChat'));
-                    if (userChat && userChat.length >= 1) {
-                        var userId = localStorage.getItem('userId');
 
-                        var lastMessage = _.max(userChat, function (chat) {
-                            return chat.messagedate;
-                        });
-
-                        if (lastMessage.messagesenderid != userId) {
-                            return true;
-                        }
-                    } else {
-                        return false;
+                    if (chatRead == "false") {
+                        return true;
                     }
                 }
             };
@@ -260,6 +320,7 @@ angular
                 }
                 $rootScope.activityBlocked = _activityBlocked;
             };
+
             $scope.resetActivityBlockedStatus();
 
             $scope.leftVisible = false;
@@ -319,7 +380,7 @@ angular
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
-            }
+            };
 
 
             /* checks if user has internet connection */
@@ -336,4 +397,41 @@ angular
                     offlineCallback();
                 });
             };
-        } ]);
+
+            
+        } ]).controller('WelcomeAboardFromMenu', function ($scope, $modalInstance) {//To show Inclubot from MENU.
+    drupalFactory.Services.GetContent("robot-inclubot", function (data, key) {
+
+        if (data.node != null) {
+            $scope.title = data.node.titulo;
+            $scope.message = data.node.mensaje;
+        }
+    }, function () {}, false);
+
+    $scope.cancel = function () {
+        $scope.$emit('ShowPreloader');
+        $modalInstance.dismiss('cancel');
+    };
+}).controller('quizModalController', function ($scope, $rootScope, $modalInstance, $location, $timeout) {
+
+    drupalFactory.Services.GetContent($rootScope.quizIdentifier, function (data, key) {
+
+            if (data.node && data.node.titulo_quiz && data.node.instrucciones) {
+                $scope.title = data.node.titulo_quiz;
+                $scope.instructions = data.node.instrucciones;
+            }
+
+            _loadedResources = true;
+
+        }, function () {
+            _loadedResources = true;
+        }, false);
+
+    $scope.cancelModal = function () {
+        $modalInstance.dismiss('cancel');
+
+        $timeout(function(){
+            $location.path($rootScope.quizUrl);
+        }, 200);
+    };
+});

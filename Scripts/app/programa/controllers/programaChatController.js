@@ -1,5 +1,5 @@
 angular
-    .module('incluso.programa.chatcontroller', [])
+    .module('incluso.programa.chatcontroller', ['ngSanitize'])
     .controller('programaChatController', [
         '$q',
         '$scope',
@@ -10,218 +10,136 @@ angular
         '$http',
         '$anchorScroll',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {            
-            $scope.$emit('ShowPreloader'); 
-            
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            $scope.$emit('ShowPreloader');
+
+            //################################# ENTRY POINT ################################
             $scope.validateConnection(initController, offlineCallback);
-            
-            function offlineCallback() {
-                $timeout(function() { $location.path("/Offline"); }, 1000);
-            }
-            
+
             function initController() {
-                
-                console.log("initController");
 
-            _timeout = $timeout;
-            _httpFactory = $http;
-            var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
-            _setLocalStorageItem('chatRead', "true");
-            var userId = localStorage.getItem('userId');
-            var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
-            var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + userId));
-            var userCurrentStage = localStorage.getItem("currentStage");            
-            var messagesToRead = userCurrentStage * 2;
-            $scope.senderId = userId;
-            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            $scope.currentMessage = "";
-            $scope.setToolbar($location.$$path,"Cabina de Soporte");
-            $rootScope.showFooter = false; 
-            $rootScope.showFooterRocks = false;
-            $rootScope.showStage1Footer = false;
-            $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false; 
-            var interval = -1;
-            moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                
-            if ($location.hash() == 'top') {                
-            $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
-                $anchorScroll();
-            } 
-            else 
-            {                  
-                console.log("setInterval, 60000");
-                interval = setInterval(getMessages,60000);                                    
-            }
+                _timeout = $timeout;
+                _httpFactory = $http;
+                $scope.setToolbar($location.$$path, "Cabina de Soporte");
+                $rootScope.showFooter = false;
+                $rootScope.showFooterRocks = false;
+                $rootScope.showStage1Footer = false;
+                $rootScope.showStage2Footer = false;
+                $rootScope.showStage3Footer = false;
 
+                //var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
+                var userId = localStorage.getItem('userId');
+                var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
+                $scope.senderId = currentUser.userId;
+                $scope.messages = JSON.parse(localStorage.getItem('userChat/' + currentUser.userId));
+                $scope.currentMessage = "";
+                $location.hash("anchor-bottom");
 
-            $(".typing-section textarea").keypress(function() {
-                $(".typing-section textarea").focus();
-            });
+                var interval = setInterval(getMessages, 60000); //Poll Messages continuously.
 
+                $scope.$on('$routeChangeStart', function (next, current) {//If the user Leaves, kill setInterval.
+                    clearInterval(interval);
+                });
 
-            function getUserRefreshChatCallback() {
-                
-            $scope.$emit('HidePreloader'); //hide preloader
-                $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-                validateCabinaDeSoporte();
-
-                setTimeout(function() {
-                    $anchorScroll();
-                }, 1000);                
-            }
-
-
-            function validateCabinaDeSoporte(){                
-                 
-                var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + userId);
-                var zone = '/ZonaDeVuelo';                                                            
-
-                if(userCurrentStage == 2){
-                    zone = '/ZonaDeNavegacion';                                    
-                } 
-                else if (userCurrentStage == 3){
-                    zone = '/ZonaDeAterrizaje';                                    
+                function getMessages() {
+                    $scope.validateConnection(function () {
+                        moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
+                    }, function () {
+                    });
                 }
-                if(!finishCabinaSoporte){
-                    if(_startedActivityCabinaDeSoporte) {
-                    var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);    
 
-                        if (!currentActivity.status) {
-                            var dateStarted = new Date(_startedActivityCabinaDeSoporte.datestarted * 1000);
-                            
-                            var latestMessages =  _.filter($scope.messages, function(msg) {
-                                return (new Date(msg.messagedate)) > dateStarted;
-                            });
-                            
-                            var latestCoachAndSenderMessages = 0;
-                            for(var m = 0; m < latestMessages.length; m++) {
-                                var message = latestMessages[m];
-                                
-                                if(message.messagesenderid == $scope.senderId) {
-                                    var nextMessage = (m + 1) < latestMessages.length ? latestMessages[m + 1] : null;
-                                    
-                                    if(nextMessage && nextMessage.messagesenderid != $scope.senderId) {
-                                        latestCoachAndSenderMessages++;
-                                    }
-                                }
-                            }
+                $(".typing-section textarea").keypress(function () {
+                    $(".typing-section textarea").focus();
+                });
 
-                            if (latestCoachAndSenderMessages >= 2) {
-                                clearInterval(interval);
-                                localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
-                                _setLocalStorageItem("finishCabinaSoporte/" + userId, _startedActivityCabinaDeSoporte.activity_identifier);
-                                $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
-                            }
-                        }   
-                    }                
-                }
-                else{                    
-                    $location.path(zone +'/CabinaDeSoporte/' + finishCabinaSoporte);
-                }
-            }            
+                // Get Chat conversation
+                moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
 
-            function getMessages() {                
-                    
-                $scope.validateConnection(function() {
-                    
-                    var existingInterval = localStorage.getItem('Interval');
-                    if($location.$$path != "/Chat"){
-                        //Necesitamos volver a poner en marcha el refresh de notificaciones del chat
-                        if(!existingInterval){       
-                            clearInterval(interval);
-                            interval = setInterval(getUserChat,180000);          
-                            _setLocalStorageItem('Interval', interval);
-                        }                    
-                    } else {
-                        //Si ya existe un intervalo hay que borrarlo                    
-                       if(existingInterval) {
-                           clearInterval(parseInt(existingInterval));
-                           ClearLocalStorage("Interval");
-                       }                
+                function getUserRefreshChatCallback() {
+                    $scope.$emit('HidePreloader'); //hide preloader
+                    localStorage.setItem("chatRead/" + currentUser.userId, "true");   //Turn-off Chat Bubble.
+                    var messages = localStorage.getItem('userChat/' + currentUser.userId); //Get all messages posted.
 
-                        moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                                                                                            
+                    if (messages) {
+                        $scope.messages = JSON.parse(messages);
+                    } else {//null
+                        $scope.messages = [];
                     }
-                    
-                }, function() {});
-                    
-            }   
-            
-            $scope.back = function () {
-                var userCurrentStage = localStorage.getItem("currentStage");              
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4');
-            };
 
-            $scope.sendMessage = function() {
-                    
-                $scope.validateConnection(function() {
-                    
-                    if($scope.currentMessage.trim() != "") {                    
-                        triggerAndroidKeyboardHide();
-     
-                        var newMessage = {
-                        messagetext: $scope.currentMessage,
-                        messagesenderid: $scope.senderId,                    
-                        messagedate: new Date()
-                        };
-                    
-                        /* time out to avoid android lag on fully hiding keyboard */
-                        $timeout(function() {
-                            $scope.messages.push(newMessage);
-                            $scope.currentMessage = "";
-                            var newMessages = JSON.stringify($scope.messages);                
-                            _setLocalStorageItem('userChat',newMessages);
-                            $anchorScroll();
-                            
-                            moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
-                        }, 1000);
-                    }                
-                    
-                    
-                }, offlineCallback);        
-            };
-            
-            function getUserChat() {     
-                       
-                $scope.validateConnection(function() {
-                    
-                    moodleFactory.Services.GetUserChat(_getItem("userId"), currentUser.token, function() {
-                        
-                        var chat = JSON.parse(localStorage.getItem('userChat'));
-                        var userId = localStorage.getItem("userId");
-                        var messagesFlow = [];
-                        var messagesInterchange = 0;
-                        var messagesToRead = _getItem("currentStage") * 2;
-                        
-                        var chatAmount = _.countBy(chat,function(messages){
-                                messagesFlow.push(messages.messagesenderid != userId);
-                                return messages.messagesenderid != userId;
-                            });
-                                                        
-                        if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                            _setLocalStorageItem('chatRead',"false");
+                    _setLocalStorageItem('numMessages/' + currentUser.userId, $scope.messages.length);
+                }
+
+                // METHOD THAT RUNS WHEN USER SENDS A NEW CHAT POST
+                $scope.sendMessage = function () {
+                    var newMessage;
+
+                    $scope.validateConnection(function () {
+
+                        if ($scope.currentMessage.trim() != "") {//If there is currently some text...
+                            triggerAndroidKeyboardHide();
+
+                            // 1) Create Model for User Post...
+                            newMessage = {
+                                messagetext: $scope.currentMessage,
+                                messagesenderid: currentUser.userId,
+                                messagedate: new Date()
+                            };
+
+                            /* time out to avoid android lag on fully hiding keyboard */
+                            $timeout(function () {
+                                // 2) Save User Post in LS...
+                                $scope.messages.push(newMessage);
+                                $scope.currentMessage = ""; //Clean Text Area
+                                _setLocalStorageItem('userChat/' + currentUser.userId, JSON.stringify($scope.messages));
+                                $anchorScroll();
+
+                                // 3) Save User Post Remotely.
+                                moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+
+                                // 4) Create Model for Automated Message
+                                var firstTimeMessage = JSON.parse(localStorage.getItem("drupal/content/chat_generic_message")).node.chat_instructions;
+
+                                newMessage = {
+                                    messagetext: firstTimeMessage,
+                                    messagesenderid: currentUser.userId, //Dev  Prod:350
+                                    sendAsCouch: true,
+                                    messagedate: new Date()
+                                };
+
+                                /* time out to avoid android lag on fully hiding keyboard */
+                                $timeout(function () {
+                                    // 5) Save Generic Message in LS...
+                                    $scope.messages.push(newMessage);
+                                    _setLocalStorageItem('userChat/' + currentUser.userId, JSON.stringify($scope.messages));
+                                    $anchorScroll();
+
+                                    // 6) Save Automated Message Remotely.
+                                    moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                                }, 1000);
+
+                            }, 1000);
                         }
-    
-                        _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                        
-                    }, errorCallback, true);                
-                    
-                    
-                }, function() {});
-                           
-                                   
-            }
-            
-            function getUserChatCallback() {                
-            }
-            
-            function errorCallback() {   
+
+                    }, offlineCallback);
+                };
+
+                function getUserChatCallback() {
+                    _setLocalStorageItem('numMessages/' + currentUser.userId, $scope.messages.length);
+                }
+
+                function errorCallback() {
+                }
+
+                function triggerAndroidKeyboardHide() {
+                    angular.element('#chatMessages').trigger('tap');
+                    $anchorScroll();
+                }
             }
 
-            function triggerAndroidKeyboardHide() {
-                angular.element('#chatMessages').trigger('tap');
-                $anchorScroll();
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
             }
-                
-        }
         }
     ]);

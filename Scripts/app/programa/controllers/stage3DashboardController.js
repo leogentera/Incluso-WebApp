@@ -1,5 +1,5 @@
 angular
-    .module('incluso.stage.dashboardcontroller3', [])
+    .module('incluso.stage.dashboardcontroller3', ['ngSanitize'])
     .controller('stage3DashboardController', [
         '$q',
         '$scope',
@@ -20,6 +20,13 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
+            // ---- Update Chat Status -----------------------------------------------
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
+            }
+                    
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
@@ -38,7 +45,7 @@ angular
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
 
             var activity_identifier = "1000";
-            getContentResources(activity_identifier);
+            getContentResources(activity_identifier);  /* ENTRY POINT */
 
             setTimeout(function () {
                 var hits = 1;
@@ -128,7 +135,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: false,//$scope.animationsEnabled,
                     templateUrl: 'OpeningStageModal.html',
-                    controller: 'OpeningStageController',
+                    controller: 'OpeningStage3',
                     size: size,
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
@@ -194,8 +201,6 @@ angular
 
                 var challengeCompletedId = _closeChallenge($scope.idEtapa);
 
-                _coachNotification($scope.idEtapa);
-
                 //Exclude challenges initial and final from showing modal robot
                 var challengeExploracionInicial = 205;
                 var challengeExploracionFinal = 218;
@@ -209,13 +214,12 @@ angular
                 if (_tryCloseStage($scope.idEtapa)) {
                     _tryAssignAward();
                     $scope.openModal_CloseStage();
-
-                    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
                     moodleFactory.Services.PostGeolocation(3);
                 }
 
                 //Update progress
                 $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+                var fromLastQuiz = localStorage.getItem("fromLastQuiz/" + userid);
                 var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
                 $scope.model = progress.course;
                 _setLocalStorageJsonItem("usercourse", $scope.model);
@@ -223,6 +227,11 @@ angular
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
                 _progressNotification();
+
+                if ($scope.stageProgress === 100 && fromLastQuiz) {
+                    localStorage.removeItem("fromLastQuiz/" + userid);
+                    $location.path("/reconocimiento");
+                }
             }
 
             function getContentResources(activityIdentifierId) {
@@ -256,6 +265,9 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
+                var quizIdentifiers = ["3101", "3601"];
+                var isQuiz = false;
+
                 if (_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function (x) {
                     return x.id == activity.activity_identifier
@@ -270,7 +282,18 @@ angular
                         var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
                         logStartActivityAction(activityId, timeStamp);
-                        $location.path(url);
+
+                        if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
+                            isQuiz = true;
+                            $rootScope.quizIdentifier = activity.activity_identifier;
+                            $rootScope.quizUrl = url;
+                            $rootScope.openQuizModal();  // turns on Quiz Modal
+                        }
+
+                        if (!isQuiz) {
+                            $location.path(url);
+                        }
+
                     } else {
                         $scope.openUpdateAppModal();
                     }
@@ -326,14 +349,42 @@ angular
 
     $scope.actualMessage = challengeMessage;
 
+}).controller('OpeningStage3', function ($scope, $modalInstance) {//To show Opening Stage Robot
+    drupalFactory.Services.GetContent("1000", function (data, key) {
+
+        if (data.node != null) {
+            $scope.title = data.node.titulo_bienvenida_robot;
+            $scope.message = data.node.robot_stage_welcome;
+        }
+    }, function () {}, false);
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
 }).controller('closingStageThreeController', function ($scope, $modalInstance, $location) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
 
-    $scope.navigateToDashboard = function () {
+    drupalFactory.Services.GetContent("1000", function (data, key) {
+
+        if (data.node != null) {
+            $scope.title = data.node.titulo_cierre_robot;
+            $scope.message = data.node.robot_stage_close;
+        }
+    }, function () {
+
+    }, false);
+
+    $scope.navigateToReconocimiento = function () {
+
         $modalInstance.dismiss('cancel');
-        $location.path('/ProgramaDashboard');
+
+        if ($location.path() != "/reconocimiento") {
+            $location.path('/ProgramaDashboard');
+        }
     };
+
     _setLocalStorageItem('robotEndStageThreeShown', true);
 });

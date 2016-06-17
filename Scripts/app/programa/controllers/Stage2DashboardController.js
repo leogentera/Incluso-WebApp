@@ -1,5 +1,5 @@
 angular
-    .module('incluso.stage.dashboardcontroller2', [])
+    .module('incluso.stage.dashboardcontroller2', ['ngSanitize'])
     .controller('stage2DashboardController', [
         '$q',
         '$scope',
@@ -20,6 +20,15 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
+            // ---- Update Chat Status -----------------------------------------------
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
+            }
+
+            // --------------------------------------------------------------------------------------
+
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
@@ -129,7 +138,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: false,//$scope.animationsEnabled,
                     templateUrl: 'OpeningStageModal.html',
-                    controller: 'OpeningStageController',
+                    controller: 'OpeningStage2',
                     size: size,
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
@@ -194,7 +203,6 @@ angular
 
                 var challengeCompletedId = _closeChallenge($scope.idEtapa);
 
-                _coachNotification($scope.idEtapa);
 
                 //Exclude initial and final challenges from showing modal robot
                 var challengeExploracionInicial = 154;
@@ -208,8 +216,6 @@ angular
                 //Try to close stage. If stage is closed exactly in this attempt, show closing message.
                 if (_tryCloseStage($scope.idEtapa)) {
                     $scope.openModal_CloseStage();
-
-                    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
                     moodleFactory.Services.PostGeolocation(2);
                 }
 
@@ -245,6 +251,9 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
+                var quizIdentifiers = ["2001", "2007", "2016", "2023"];
+                var isQuiz = false;
+
                 if (_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function (x) {
                     return x.id == activity.activity_identifier
@@ -259,7 +268,18 @@ angular
                         var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
                         logStartActivityAction(activityId, timeStamp);
-                        $location.path(url);
+
+                        if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
+                            isQuiz = true;
+                            $rootScope.quizIdentifier = activity.activity_identifier;
+                            $rootScope.quizUrl = url;
+                            $rootScope.openQuizModal();  // turns on Quiz Modal
+                        }
+
+                        if (!isQuiz) {
+                            $location.path(url);
+                        }
+
                     } else {
                         $scope.openUpdateAppModal();
                     }
@@ -291,8 +311,6 @@ angular
 
 
             function showClosingChallengeRobot(challengeCompletedId) {
-
-                //console.log("show closing challengeRobot");
                 $scope.robotMessages = [
                     {
                         title: $scope.contentResources.robot_title_challenge_one,
@@ -329,7 +347,6 @@ angular
                 $scope.actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
                 if ($scope.actualMessage) {
                     _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
-                    //console.log($scope.actualMessage);
                     $scope.openModal_CloseChallenge();
                 }
             }
@@ -344,16 +361,32 @@ angular
 
         $scope.actualMessage = challengeMessage;
 
+    }).controller('OpeningStage2', function ($scope, $modalInstance) {//To show Opening Stage Robot
+        drupalFactory.Services.GetContent("2000", function (data, key) {
+
+            if (data.node != null) {
+                $scope.title = data.node.titulo_bienvenida_robot;
+                $scope.message = data.node.robot_stage_welcome;
+            }
+        }, function () {}, false);
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+
     })
     .controller('closingStageTwoController', function ($scope, $modalInstance, $location) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
 
-        $scope.robotMessages = {
-            title: "Zona de Navegación",
-            message: "¡Muy bien! Has reunido los elementos necesarios para salir de la lluvia de asteroides. Recuerda, creer en ti y en todo lo que puedes lograr, te llevará a avanzar en el camino que has elegido ¡Adelante!"
-        };
+        drupalFactory.Services.GetContent("2000", function (data, key) {
+
+            if (data.node != null) {
+                $scope.title = data.node.titulo_cierre_robot;
+                $scope.message = data.node.robot_stage_close;
+            }
+        }, function () {}, false);
 
         $scope.navigateToDashboard = function () {
             $modalInstance.dismiss('cancel');

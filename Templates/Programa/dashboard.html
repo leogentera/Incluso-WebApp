@@ -8,7 +8,7 @@
                 </h1>
 				<section class="component">
 					<div class="row bg-user-avatar">
-                        <div class="col-xs-8 col-xs-offset-2">
+                        <div class="col-xs-12">
                             <a>
                                 <div class="user-avatar">
                                     <figure class="user-avatar-">
@@ -133,7 +133,7 @@
                     <div class="current-user">
                         <div class="row">
                             <div class="col-xs-4 col-xs-offset-4">
-                                <a href="">
+                                <a>
                                     <div class="user-avatar">
                                         <figure class="user-avatar-">
                                             <img ng-src="{{user.profileimageurl}}" alt="avatar" ng-click="navigateTo('Perfil/' + user.id)" />
@@ -174,10 +174,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h3 class="subtitle centered">Bienvenido a bordo</h3>
-                    <p class="centered">Soy Inclubot y seré tu compañero en este viaje. Para poder llegar a nuestro destino, tendrás que poner en acción todas tus habilidades
-                        y completar con éxito cada una de las misiones.</p>
-                    <p class="centered">¡Comienza la aventura!</p>
+                    <h3 class="subtitle centered" ng-bind="title"></h3>
+                    <p class="centered" ng-bind-html="message"></p>
                 </div>
             </div>
         </script>

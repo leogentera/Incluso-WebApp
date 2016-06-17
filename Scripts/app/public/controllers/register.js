@@ -28,6 +28,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+            $scope.mobilecheck = _comboboxCompat;
 
             function offlineCallback() {
                 $timeout(function () {
@@ -40,6 +41,7 @@ angular
             $scope.countryItems = _getCatalogValuesBy("country");
             $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
             $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
+            $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
             $scope.showPlaceHolder = true;
 
             $scope.registerModel = {
@@ -56,6 +58,7 @@ angular
                 confirmPassword: undefined,
                 secretQuestion: "",
                 secretAnswer: "",
+                metThisAppBy: "",
                 termsAndConditions: false,
                 modelState: {
                     isValid: null,
@@ -160,7 +163,12 @@ angular
                 //Register.
                 localStorage.removeItem("Credentials");
 
+                $rootScope.totalLoads = 16;
+
                 if (validateModel()) {
+                    $rootScope.loaderForLogin = true;
+                    progressBar.set(0);
+                    $scope.loaderRandom();
                     $scope.$emit('ShowPreloader');
                     registerUser();
                 } else {
@@ -201,6 +209,9 @@ angular
                 if (!$scope.registerForm.secretAnswer.$valid) {
                     errors.push("Respuesta secreta inválida.");
                 }
+                if (!$scope.registerModel.metThisAppBy) {
+                    errors.push("Debe indicar cómo conoció esta app.")
+                }
                 if (!$scope.registerModel.termsAndConditions) {
                     errors.push("Debe aceptar los términos y condiciones.");
                 }
@@ -214,8 +225,69 @@ angular
                 return (errors.length === 0);
             }
 
+            var registerUser = function () {
+
+                $http({
+                    method: 'POST',
+                    url: API_RESOURCE.format("user"),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    data: $.param({
+                        username: $scope.registerModel.username.toString().toLowerCase(),
+                        firstname: $scope.registerModel.firstname,
+                        lastname: $scope.registerModel.lastname,
+                        mothername: $scope.registerModel.mothername,
+                        password: $scope.registerModel.password,
+                        email: $scope.registerModel.email,
+                        city: $scope.registerModel.city,
+                        country: $scope.registerModel.country,
+                        secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
+                        secretquestion: $scope.registerModel.secretQuestion,
+                        metThisAppBy: $scope.registerModel.metThisAppBy,
+                        birthday: dpValue,
+                        gender: $scope.registerModel.gender,
+                        autologin: true
+                    })
+                }).success(function (data, status, headers, config) {//Successfully register and logged in.
+                    $scope.incLoadedItem(); //1
+                    $scope.isRegistered = true;
+                    $scope.registerModel.modelState.isValid = true;
+                    $scope.$emit('scrollTop');
+                    $scope.autologin(data);
+
+                }).error(function (data, status, headers, config) {
+                    var errorMessage;
+
+                    if ((data != null && data.messageerror != null)) {
+                        errorMessage = window.atob(data.messageerror);
+                    } else {
+                        errorMessage = "Problema con la red; asegúrate de tener Internet e intenta de nuevo.";
+                    }
+
+                    $scope.registerModel.modelState.errorMessages = [errorMessage];
+                    $scope.$emit('HidePreloader');
+                    $scope.$emit('scrollTop');
+                });
+            };
+
             $scope.autologin = function (data) {
-                _loadDrupalResources();
+                //_loadDrupalResources();
+
+                /* loads drupal resources (content) */
+                _loadedDrupalResources = false;
+                _loadedDrupalResourcesWithErrors = false;
+                _loadedDrupalResources = false;
+                _loadedDrupalResources = false;
+                _loadedDrupalResourcesWithErrors = false;
+
+                drupalFactory.Services.GetDrupalContent(function () {
+                    _loadedDrupalResources = true;
+                    $scope.incLoadedItem(); //2
+                }, function () {
+                    _loadedDrupalResources = false;
+                    _loadedDrupalResourcesWithErrors = true;
+                }, true);
+                /*  */
+
                 $rootScope.OAUTH_ENABLED = false;
                 
                 //save token for further requests and autologin
@@ -223,87 +295,49 @@ angular
                 $scope.currentUserModel.token = data.token;
                 $scope.currentUserModel.userId = data.id;
 
-                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);                
                 _setLocalStorageJsonItem("Credentials", {
                     username: $scope.registerModel.username,
                     password: $scope.registerModel.password,
                     rememberCredentials: true
                 });
-                _setId(data.id);
 
+                _setId(data.id);
+                
                 moodleFactory.Services.PostGeolocation(-1);
 
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
+                    $scope.incLoadedItem(); //3
                     var course = moodleFactory.Services.GetCacheJson("course");
                     moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
+                        //Get Moodle Assets
+                        $scope.incLoadedItem(); //4
 
-                        //Load Quizzes assets ----------------------------------------------------------------------
-                        var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
-                        var i;
-                        var parentActivity;
-                        var childActivity = null;
+                        moodleFactory.Services.GetAsyncForumDiscussions(85, data.token, function () {
+                            $scope.incLoadedItem(); //5
+                        }, function () {}, true);
 
-                        for (i = 0; i < quizIdentifiers.length; i++) {
+                        moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
+                            $scope.incLoadedItem(); //6
+                        }, function () {}, true);
 
-                            parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
+                        moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
+                            $scope.incLoadedItem(); //7 y 8
+                        }, function(){}, true);
 
-                            if (parentActivity != null) {
+                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, quizesArray, data.token, function() {
+                            $scope.incLoadedItem(); //9
+                        }, function() {}, true);
 
-                                if (parentActivity.activities) {//The activity HAS a "child" activity
-
-                                    childActivity = parentActivity.activities[0];
-                                    $scope.coursemoduleid = childActivity.coursemoduleid;
-                                    $scope.activityname = childActivity.activityname;
-                                    $scope.activity_status = childActivity.status;
-
-                                } else {//The activity has no "child" activity
-                                    $scope.coursemoduleid = parentActivity.coursemoduleid;
-                                    $scope.activityname = parentActivity.activityname;
-                                    $scope.activity_status = parentActivity.status;
-                                }
-
-                                if ($scope.activity_status === 1) {//If the activity is currently finished
-                                    // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, function () {
-                                    }, function () {
-                                    }, true);
-
-                                } else {
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, function () {
-                                    }, function () {
-                                    }, true);
-                                }
-
-                            } else {
-                                $location.path('/');
-                            }
+                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        if (currentUser && currentUser.token) {
+                            var objectToken = {
+                                moodleAPI: API_RESOURCE.format(''),
+                                moodleToken: currentUser.token
+                            };
+                            cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
                         }
-
-                        var user = $scope.currentUserModel.userId;
-                        var token = $scope.currentUserModel.token;
-                        moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function () {}, true);
-                        moodleFactory.Services.GetAsyncForumDiscussions(85, token, function () {}, function () {}, true);
-                        moodleFactory.Services.GetAsyncForumDiscussions(91, token, function () {}, function () {}, true);
-                        moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
-                        var courseModuleIds = [{"id": 1039, "userInfo": true}, {"id": 2012, "userInfo": false}, {"id": 2017,"userInfo": true },
-                                                {"id": 3302, "userInfo": false}, {"id": 3402, "userInfo": true}];
-                        for (var i = 0; i < courseModuleIds.length; i++) {
-                            var courseModule = courseModuleIds[i];
-                            var parentActivity = getActivityByActivity_identifier(courseModule.id);
-                            if (parentActivity && parentActivity.activities && parentActivity.activities.length > 0) {
-                                for (var j = 0; j < parentActivity.activities.length; j++) {
-                                    var activity = parentActivity.activities[j];
-                                    moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid, token, function() {}, function() {}, true);
-                                    if (courseModule.userInfo) {
-                                        if (courseModule.id != 1039 || (courseModule.id == 1039 && activity.activityname.toLowerCase().indexOf("resultados") >= 0)) {
-                                            moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid + "?userid=" + user, token, function() {}, function() {}, true);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //-----------------------------------------------------------------------------------------------
-
+                        
                     }, function () {
 
                         $scope.$emit('HidePreloader');
@@ -330,15 +364,25 @@ angular
                 }, true);
             };
 
-            function change(time) {
-                var r = time.match(/^\s*([0-9]+)\s*-\s*([0-9]+)\s*-\s*([0-9]+)(.*)$/);
-                return r[2] + "-" + r[3] + "-" + r[1] + r[4];
-            }
-
             $scope.datePickerClick = function () {
                 if (window.mobilecheck()) {
                     cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);
                 }
+            };
+            
+             $scope.selectClick = function (items, field) {
+                var selectItems = items.slice();
+                selectItems.unshift(field);
+                if (window.mobilecheck()) {
+                    cordova.exec(function (data) {
+                            $("select[name='"+field+"'] option").eq(data.which).prop('selected', true);
+                            $timeout( function(){
+                                $("select[name='"+field+"'] option").change();
+                            }, 10);
+                        }, function(){}, "CallToAndroid", "showCombobox", selectItems);
+                }
+                
+                
             };
 
             function SuccessDatePicker(data) {
@@ -347,48 +391,6 @@ angular
 
             function FailureDatePicker(data) {
             }
-
-            var registerUser = function () {
-
-                $http({
-                    method: 'POST',
-                    url: API_RESOURCE.format("user"),
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    data: $.param({
-                        username: $scope.registerModel.username.toString().toLowerCase(),
-                        firstname: $scope.registerModel.firstname,
-                        lastname: $scope.registerModel.lastname,
-                        mothername: $scope.registerModel.mothername,
-                        password: $scope.registerModel.password,
-                        email: $scope.registerModel.email,
-                        city: $scope.registerModel.city,
-                        country: $scope.registerModel.country,
-                        secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
-                        secretquestion: $scope.registerModel.secretQuestion,
-                        birthday: dpValue,
-                        gender: $scope.registerModel.gender,
-                        autologin: true
-                    })
-                }).success(function (data, status, headers, config) {//Successfully register and logged in.
-                    $scope.isRegistered = true;
-                    $scope.registerModel.modelState.isValid = true;
-                    $scope.$emit('scrollTop');
-                    $scope.autologin(data);
-
-                }).error(function (data, status, headers, config) {
-                    var errorMessage;
-
-                    if ((data != null && data.messageerror != null)) {
-                        errorMessage = window.atob(data.messageerror);
-                    } else {
-                        errorMessage = "Problema con la red; asegúrate de tener Internet e intenta de nuevo.";
-                    }
-
-                    $scope.registerModel.modelState.errorMessages = [errorMessage];
-                    $scope.$emit('HidePreloader');
-                    $scope.$emit('scrollTop');
-                });
-            };
 
             function calculate_age() {
                 var birth_day = dpValue.substring(0, 2);
@@ -437,6 +439,7 @@ angular
                     $scope.countryItems = _getCatalogValuesBy("country");
                     $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
                     $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
+                    $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
                     $scope.$apply();
                 }
             }

@@ -1,5 +1,5 @@
 angular
-    .module('incluso.programa.dashboard', [])
+    .module('incluso.programa.dashboard', ['ngSanitize'])
     .controller('programaDashboardController', [
         '$q',
         '$scope',
@@ -15,12 +15,12 @@ angular
 
             var _loadedResources = false;
             var _pageLoaded = false;
-
+            $rootScope.spinnerAvatar = false; //Type avatar spinner
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-
+            
             var activity_identifier = "0000";
             var currentUserProfile = getCurrentUserProfile();
             
@@ -56,11 +56,10 @@ angular
 
             $scope.stageProgress = 0;
 
-            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
+            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
             if (!$scope.user.profileimageurl) {
                 $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
             }
-            
             
             var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
             if (profileData && profileData.stars) {
@@ -77,6 +76,7 @@ angular
 
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
             $scope.setToolbar($location.$$path, "Misión Incluso"); //set global toolbar properties
+
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true;
             $rootScope.showStage1Footer = false;
@@ -232,9 +232,11 @@ angular
                     _setLocalStorageItem("currentStage", $scope.currentStage);
 
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
+                        $scope.incLoadedItem(); //11
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         currentUserProfile = getCurrentUserProfile();
                         var images = [];
+
                         for(var i = 0; i < $scope.course.leaderboard.length; i++) {
                             var topuser = $scope.course.leaderboard[i];
                             
@@ -244,10 +246,14 @@ angular
                                 'downloadLink': topuser.profileimageurl
                             };
                         }
+
+                        images[images.length] = {
+                        'path': "assets/avatar",
+                        'name': "avatar_" + $scope.user.userId + ".png",
+                        'downloadLink': $scope.user.profileimageurl
+                         };
                         
                         saveLocalImages(images);
-                        
-                        
                         var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                         
                         if(profile) {
@@ -257,7 +263,7 @@ angular
                         }
                         
                         function profileCallback() {
-                            
+                            $scope.incLoadedItem(); //14
                             var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                             $timeout(function(){
                                 $scope.user.profileimageurl = profile != null ? profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
@@ -272,9 +278,15 @@ angular
                                 });
                             }, 1);
 
+                            moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
+                                $scope.incLoadedItem(); //16
+                            }, function () {}, true);
+
                             _pageLoaded = true;
-                            if (_loadedResources && _pageLoaded) {
-                                $scope.$emit('HidePreloader')
+                            if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
+                                $timeout(function(){
+                                    $scope.$emit('HidePreloader');
+                                }, 1000);
                             }
 
                             if (!profile.termsAndConditions) {
@@ -302,7 +314,6 @@ angular
                                     break;
                                 }
                             }
-                            
                         }
 
                     }, errorCallback, true);
@@ -387,53 +398,19 @@ angular
             function getUserNotifications(courseid) {
                 var courseId = courseid;
                 var userId = _getItem("userId");
+
                 moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {
-                    getUserChat();
-                }, errorCallback, true);
-            }
-
-            function getUserChat(callback) {
-                moodleFactory.Services.GetUserChat(_getItem("userId"), $scope.user.token, function () {
-                    if (callback) callback();
-                    var chat = JSON.parse(localStorage.getItem('userChat'));
-                    var userId = localStorage.getItem("userId");
-                    var messagesFlow = [];
-                    var messagesInterchange = 0;
-                    var messagesToRead = _getItem("currentStage") * 2;
-
-                    var chatAmount = _.countBy(chat, function (messages) {
-                        messagesFlow.push(messages.messagesenderid != userId);
-                        return messages.messagesenderid != userId;
-                    });
-
-                    _.each(messagesFlow, function (m, i) {
-                        if (i > 0 && m && m != messagesFlow[i - 1]) {
-                            messagesInterchange++;
-                        }
-                    });
-
-                    if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                        _setLocalStorageItem('chatRead', "false");
-                    }
-
-                    _setLocalStorageItem('chatAmountRead', chatAmount.true);
-
+                    $scope.incLoadedItem(); //10
                     getUserStarsByPoints();
                     getUserLikes();
-
+                    getUserChat();
                 }, errorCallback, true);
-            }
-
-            function getUserLikes() {
-                moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
-                    
-                    
-                },function(){},true);
             }
             
             function getUserStarsByPoints() {
 
                 moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token, function (dataStars) {
+                    $scope.incLoadedItem(); //12
                     if (dataStars.length > 0) {
                         localStorage.setItem("userStars", JSON.stringify(dataStars));
                     }
@@ -442,16 +419,57 @@ angular
                 }, true);
             }
 
+            function getUserChat() {
+                moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
+
+                    var messages = localStorage.getItem('userChat/' + $scope.user.userId); //Get all messages posted.
+
+                    if (messages) {
+                        messages = JSON.parse(messages);
+                    } else {
+                        messages = [];
+                    }
+
+                    var numMessages = localStorage.getItem('numMessages/' + $scope.user.userId); //Previous count of Messages
+
+                    if (numMessages === null) {
+                        numMessages = 0;
+                        _setLocalStorageItem("numMessages/" + $scope.user.userId, numMessages);
+                    } else {
+
+                        numMessages = parseInt(numMessages, 10);
+
+                        if (messages.length > numMessages) {//The Couch Posted Something...
+                            _setLocalStorageItem('chatRead/' + $scope.user.userId, "false"); //Turn on Chat Bubble
+                            _setLocalStorageItem('numMessages/' + $scope.user.userId, messages.length);  //Update count of Messages
+                        }
+                    }
+
+                }, errorCallback, true);
+            }
+
+            function getUserLikes() {
+                moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
+                    $scope.incLoadedItem(); //13
+
+                    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    if (currentUser) {
+                        moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){
+                            $scope.incLoadedItem(); //15
+                            getProfilePoints(currentUser);
+                        },function(data){
+                        },true);
+                    }
+
+                },function(){},true);
+            }
+
             //Open Welcome Message modal
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'programWelcome.html',
-                    controller: function ($scope, $modalInstance) {
-                        $scope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
-                        };
-                    },
+                    controller: 'WelcomeAboard',
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
@@ -475,7 +493,6 @@ angular
 
             }
 
-
             $scope.openTermsModal = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
@@ -497,4 +514,19 @@ angular
         }])
     .controller('videoCollapsiblePanelController', function ($scope) {
         $scope.isCollapsed = false;
+    })
+    .controller('WelcomeAboard', function ($scope, $modalInstance) {//To show Inclubot from CONTINUAR MISION button
+        drupalFactory.Services.GetContent("robot-inclubot", function (data, key) {
+
+            if (data.node != null) {
+                $scope.title = data.node.titulo;
+                $scope.message = data.node.mensaje;
+            }
+        }, function () {}, false);
+
+        $scope.cancel = function () {
+            $scope.$emit('ShowPreloader');
+            $modalInstance.dismiss('cancel');
+        };
+
     });
