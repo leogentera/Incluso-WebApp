@@ -59,7 +59,8 @@ angular
             }
             
             function getMessageFromId(messageId) {
-                return _.findWhere(perfilInclusoMessages, { id: messageId});
+                
+                return _.findWhere(perfilInclusoMessages, { id: parseInt(messageId)});
             }
             
             function getMessageForCurrentStage(currentStage, profileId, assertiveness, financialAbility) {
@@ -69,23 +70,23 @@ angular
                         if (!$scope.profile.messageStageOne) {
                             $scope.profile.messageStageOne = getRandomMessageId(profileId, assertiveness, financialAbility);                            
                         }
-                        $scope.messageProfile = getMessageFromId($scope.profile.messageStageOne);                        
+                        $scope.messageProfile = getMessageFromId($scope.profile.messageStageOne);
                         break;
                     case 2:
                         if (!$scope.profile.messageStageTwo) {
-                            $scope.profile.messageStageTwo = getRandomMessageId(profileId, assertiveness, financialAbility);                            
+                            $scope.profile.messageStageTwo = getRandomMessageId(profileId, assertiveness, financialAbility);
                         }
                         $scope.messageProfile = getMessageFromId($scope.profile.messageStageTwo);
                         break;
                     case 3:
                         if (!$scope.profile.messageStageThree) {
-                            $scope.profile.messageStageThree = getRandomMessageId(profileId, assertiveness, financialAbility);                            
+                            $scope.profile.messageStageThree = getRandomMessageId(profileId, assertiveness, financialAbility);
                         }
                         $scope.messageProfile = getMessageFromId($scope.profile.messageStageThree);
                         break;
                 }
             }
-                        
+
             function getProfile() {
                 var profileId = 0;
                 //var currentStage = localStorage.getItem("currentStage");
