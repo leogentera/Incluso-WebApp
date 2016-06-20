@@ -1371,24 +1371,6 @@ angular
                     $location.path("Perfil/" + $scope.userId);
                 };
 
-                //Array.prototype.compare = function (testArr) {
-                //    if (this.length != testArr.length) return false;
-                //
-                //    for (var i = 0; i < testArr.length; i++) {
-                //        if (this[i].compare) {
-                //            if (!this[i].comparre(testArr[i])) {
-                //                return false;
-                //            }
-                //        }
-                //
-                //        if (this[i].toLowerCase() !== testArr[i].toLowerCase()) {
-                //            return false;
-                //        }
-                //    }
-                //
-                //    return true;
-                //};
-
                 function arraysAreEqual(ary1, ary2) {
                     if (ary1.length !== ary2.length) {
                         return false;
