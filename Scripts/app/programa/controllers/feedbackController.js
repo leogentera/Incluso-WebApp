@@ -30,29 +30,66 @@ angular
             var retoMultipleActivityId = 139;
             var tuEligesActivityIdentifier = 2012;
             var multiplicaTuDineroActivityIdentifier = 3302;
-            
+            var currentStage = 0;
             switch ($routeParams.activityId) {
                 case "1002":
                     $scope.location = '/ZonaDeVuelo/Dashboard/1/5';
                     $rootScope.showStage1Footer = true;
+                    currentStage = 1;
                     break;
                 case "2022":
                     $scope.location = 'ZonaDeNavegacion/Dashboard/2/7';
                     $rootScope.showStage2Footer = true;
+                    currentStage = 2;
                     break;
                 case "3501":
                     $scope.location = "ZonaDeAterrizaje/Dashboard/3/6";
-                    $rootScope.showStage3Footer = true; 
+                    $rootScope.showStage3Footer = true;
+                    currentStage = 3;
                     break;
             }
             
             var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
-            var perfilIncluso = profileCatalogs.messages || [];
+            var perfilInclusoMessages = profileCatalogs.messages || [];
             
-                        
+            function getRandomMessageId(profileId, assertiveness, financialAbility) {
+                var possibleMessages = _.where(perfilInclusoMessages, {profileid: profileId, assertive : assertiveness, financialability: financialAbility });
+                var randomNum = _.random(0, possibleMessages.length - 1);
+                return possibleMessages[randomNum].id;
+            }
+            
+            function getMessageFromId(messageId) {
+                
+                return _.findWhere(perfilInclusoMessages, { id: parseInt(messageId)});
+            }
+            
+            function getMessageForCurrentStage(currentStage, profileId, assertiveness, financialAbility) {
+                
+                switch(currentStage){
+                    case 1:
+                        if (!$scope.profile.messageStageOne) {
+                            $scope.profile.messageStageOne = getRandomMessageId(profileId, assertiveness, financialAbility);                            
+                        }
+                        $scope.messageProfile = getMessageFromId($scope.profile.messageStageOne);
+                        break;
+                    case 2:
+                        if (!$scope.profile.messageStageTwo) {
+                            $scope.profile.messageStageTwo = getRandomMessageId(profileId, assertiveness, financialAbility);
+                        }
+                        $scope.messageProfile = getMessageFromId($scope.profile.messageStageTwo);
+                        break;
+                    case 3:
+                        if (!$scope.profile.messageStageThree) {
+                            $scope.profile.messageStageThree = getRandomMessageId(profileId, assertiveness, financialAbility);
+                        }
+                        $scope.messageProfile = getMessageFromId($scope.profile.messageStageThree);
+                        break;
+                }
+            }
+
             function getProfile() {
                 var profileId = 0;
-                var currentStage = localStorage.getItem("currentStage");
+                //var currentStage = localStorage.getItem("currentStage");
                 
                 var assertiveness = "-1";//Default null value
                 var financialAbility = "-1";//Default null value
@@ -69,21 +106,14 @@ angular
                 
                 if (!$scope.profile.inclusoprofile) {
                     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
-                    
                     profileId = getMaxProfile(profilePoints);
-                    
                     $scope.profile.inclusoprofile =  _.findWhere(profileCatalogs.profiles, { id: profileId}).profilename;
-                    
-                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (data) {},function (data) {});
-
                 }else{
                     profileId = _.findWhere(profileCatalogs.profiles, { profilename: $scope.profile.inclusoprofile}).id;
                 }
-                                
-                var possibleMessages = _.where(perfilIncluso, {profileid: profileId, assertive : assertiveness, financialability: financialAbility });
-                var randomNum = _.random(0, possibleMessages.length - 1);
-                $scope.messageProfile = possibleMessages[randomNum];
-
+                
+                getMessageForCurrentStage(currentStage, profileId, assertiveness, financialAbility);
+                            
                 if ($scope.messageProfile.description.indexOf("@nombre") > -1){
                     var name = $scope.profile.firstname;
                     $scope.messageProfile.description = $scope.messageProfile.description.replace("@nombre", name);
@@ -91,7 +121,7 @@ angular
                 
                 if ($scope.messageProfile.description.indexOf("@inteligencia-escudo") > -1){
                     var shield = $scope.profile.shield;
-                    $scope.messageProfile.description =  $scope.messageProfile.description.replace("@inteligencia-escudo", shield);
+                    $scope.messageProfile.description = $scope.messageProfile.description.replace("@inteligencia-escudo", shield);
                 }
 
             }
@@ -227,7 +257,7 @@ angular
             }
             
             $scope.finishActivity = function(){
-                
+
                 var endTime = moment().format('YYYY:MM:DD HH:mm:ss');
                 
                 var activityModel = {
@@ -241,9 +271,45 @@ angular
                     var updatedActivityOnUserCourse = updateActivityStatus($scope.activity.activity_identifier);
                     //Update local storage and activities status array
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);
+                    assignStars();
                 });
                 $location.path($scope.location);
             };
+            
+            function assignStars(){
+                var endTime = moment().format('YYYY:MM:DD HH:mm:ss');
+                
+                var data = {
+                        userId: currentUser.id,
+                        stars: $scope.activity.points,
+                        instance: $scope.activity.coursemoduleid,
+                        instanceType: 0,
+                        date: endTime,
+                        is_extra: false
+                    };
+                updateLocalStorageStars(data);
+                moodleFactory.Services.PutStars(data, $scope.profile, currentUser.token, function () {
+                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (data) {},function (data) {});
+                    }, function(){});
+            }
+            
+            function updateLocalStorageStars(data) {
+                var userStars = JSON.parse(localStorage.getItem("userStars"));
+
+                var localStorageStarsData = {
+                    dateissued: moment(Date.now()).unix(),
+                    instance: data.instance,
+                    instance_type: data.instanceType,
+                    message: "",
+                    is_extra: data.is_extra,
+                    points: data.stars,
+                    userid: parseInt(data.userId)
+                };
+
+                userStars.push(localStorageStarsData);
+                localStorage.setItem("userStars", JSON.stringify(userStars));
+            }
+            
             
         initialLoading();
         
