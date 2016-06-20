@@ -25,22 +25,34 @@ angular
             $scope.$emit('scrollTop');
             $scope.$emit('ShowPreloader');
             $scope.mobilecheck=_comboboxCompat;
+            $rootScope.loaderForLogin = false;
 
             $scope.passwordChanged = false;
 
-            $scope.selectClick = function (items, field) {
+            $scope.selectClick = function (items, field, listName) {
                 var selectItems = items.slice();
                 selectItems.unshift(field);
+
                 if (window.mobilecheck()) {
                     cordova.exec(function (data) {
                         var evaluate = '$scope.model.' + field + '="' + items [data.which - 1] + '"';
                         eval(evaluate);
+                        $scope.lookForNinguno(listName);
                         $scope.$digest();
                     }, function () {
                     }, "CallToAndroid", "showCombobox", selectItems);
                 }
 
 
+            };
+
+            $scope.myLabel = function(item, index) {
+                return index;
+                if ($scope.model.item[index] && $scope.model.item[index].length > 0) {
+                    return $scope.model.item[index];
+                } else {
+                    return "Deporte";
+                }
             };
 
             $scope.changePasswordModel = {
@@ -879,8 +891,11 @@ angular
                 };
 
                 $scope.edit = function () {
+                    $scope.loaderRandom();
                     $scope.$emit('ShowPreloader');
-                    $location.path("/Perfil/Editar/" + $scope.userId);
+                    $timeout(function(){
+                        $location.path("/Perfil/Editar/" + $scope.userId);
+                    }, 500);
                 };
 
                 $scope.privacySettings = function () {
@@ -1371,24 +1386,6 @@ angular
                     $location.path("Perfil/" + $scope.userId);
                 };
 
-                //Array.prototype.compare = function (testArr) {
-                //    if (this.length != testArr.length) return false;
-                //
-                //    for (var i = 0; i < testArr.length; i++) {
-                //        if (this[i].compare) {
-                //            if (!this[i].comparre(testArr[i])) {
-                //                return false;
-                //            }
-                //        }
-                //
-                //        if (this[i].toLowerCase() !== testArr[i].toLowerCase()) {
-                //            return false;
-                //        }
-                //    }
-                //
-                //    return true;
-                //};
-
                 function arraysAreEqual(ary1, ary2) {
                     if (ary1.length !== ary2.length) {
                         return false;
@@ -1630,7 +1627,6 @@ angular
                         }
                     }
 
-                    //////
                     $scope.accessedSubsection = false;
                     return showResultsPage;
                 }
@@ -1897,25 +1893,22 @@ angular
 
                         syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, 70);
                     }
-
-                        if (showResultsPage) {
-                            $scope.currentPage = 12; //Finally, show the results page.
-                        }
-
-                        //$scope.visitedSections = null; //Clean record of visited sections.
-                        ClearLocalStorage("originalProfile/");
-                    }
+                }
 
                 $scope.saveAccountSettings = function () {
                     saveUserProfile();
                 };
 
                 $scope.save = function () {
+                    $scope.loaderRandom();
+                    $scope.$emit('ShowPreloader');
 
-                    if (!$scope.accessedSubsection) {
-                        $location.path("Perfil/" + $scope.userId);
-                        return;
-                    }
+                    $timeout(function(){
+                        if (!$scope.accessedSubsection) {
+                            $location.path("Perfil/" + $scope.userId);
+                            return;
+                        }
+                    }, 500);
 
                     $scope.model.currentStudies = {}; //From "Socioeconómicos"
                     $scope.model.currentStudies.level = $scope.model.level;
@@ -1925,7 +1918,8 @@ angular
                     var validationResult = validateRestrictions();  //Valid if validateModel() returns true.
 
                     if (validationResult) {
-                        $scope.$emit('ShowPreloader');
+                        //$scope.loaderRandom();
+                        //$scope.$emit('ShowPreloader');
                         $timeout(function(){
                             $scope.model.modelState.isValid = true;
                             deleteRepeatedValues();   //Validates for required restrictions.
@@ -1933,6 +1927,7 @@ angular
                         }, 500);
 
                     } else {
+                        $scope.$emit('HidePreloader');
                         $scope.model.modelState.isValid = false;
                         $scope.$emit('scrollTop');
                     }
@@ -1952,6 +1947,8 @@ angular
                                 }
 
                                 //$scope.$emit('HidePreloader');
+                                ClearLocalStorage("originalProfile/");
+                                $scope.visitedSections = []; //Clean record of visited sections.
 
                                 if (showResultsPage) {
                                     $scope.currentPage = 12; //Finally, show the results page.
@@ -1968,7 +1965,7 @@ angular
                         function (obj) {
                             //Save profile fail...
                             $scope.$emit('HidePreloader');
-
+                            $scope.visitedSections = []; //Clean record of visited sections.
                             if (obj.statusCode == 408) {//Request Timeout
                                 $scope.openModal();
                             }
