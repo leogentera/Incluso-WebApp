@@ -3,7 +3,7 @@
     
     drupalFactory.NodeRelation = {
         "tutorial": 95, /* General - Tutorial */
-        "host":"http://moodlemysql01.cloudapp.net:803/drupal_mobile_staging/",
+        "host":"http://definityincluso.cloudapp.net/incluso-drupal",
         "0000": 57, /* Programa - Dashboard */
         "1002": 53, /* Zona de Vuelo - Cabina de Soporte - Chat */
         "1010": 46, /* Zona de Vuelo - Con�cete - Punto de Encuentro */
@@ -70,8 +70,8 @@
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
         "BadgeForumRobot": 101, /*General - Robot al ganar el badge de foros*/
         "robot-inclubot" : 56, /*Dashboard Programa - Robot Inclubot*/
-        "RetroalimentacionClosing" : 104,  /*Cierre de actividad Retroalimentación*/
-        "chat_generic_message" : 103  /*Mensaje genérico de Chat*/
+        "RetroalimentacionClosing" : 103,  /*Cierre de actividad Retroalimentación*/
+        "chat_generic_message" : 104  /*Mensaje genérico de Chat*/
     };
 
     drupalFactory.Services = (function () {

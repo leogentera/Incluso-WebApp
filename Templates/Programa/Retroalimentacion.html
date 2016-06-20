@@ -33,7 +33,7 @@
          <section class="txt-renglon pill">
             <div class="pull-left">{{::closingContent.earned_stars}}</div>
             <div class="pull-right sm-pill">
-               <span class="pull-left">{{::activityPoints}}</span>
+               <span class="pull-left">{{::activity.points}}</span>
                <span class="icomoon icon-star pull-right"></span>
             </div>
          </section>
@@ -41,7 +41,7 @@
             {{::closingContent.activity_rating_label}}
             <section class="txt-renglon txt-bigger clearfix">
                <div class="opinion">
-                  <input id="like" type="radio" value="1" name="like" ng-model="like_status">                        
+                  <input id="like" type="radio" value="1" name="like" ng-model="like_status">
                   <label for="like">{{::closingContent.like_label}}</label>
                </div>
                <div class="opinion">

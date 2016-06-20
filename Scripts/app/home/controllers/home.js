@@ -40,10 +40,12 @@ angular
             }
 
             $scope.incLoadedItem = function() {
-                var infValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
-                $rootScope.loadedItem++;
-                var upperValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
-                myLoop(infValue, upperValue);
+                if ($rootScope.loaderForLogin) {
+                    var infValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
+                    $rootScope.loadedItem++;
+                    var upperValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
+                    myLoop(infValue, upperValue);
+                }
             };
             
             // To handle page reloads
@@ -63,11 +65,13 @@ angular
                             $rootScope.spinnerShow = 0;
                     }, 200);
                 } else {//Pick another preloader, 1 - 4
-                    $rootScope.spinnerShow = Math.floor(Math.random() * 4) + 1;
+                    var rndIndex = Math.floor(Math.random() * 4) + 1;
+                    $rootScope.spinnerShow = rndIndex;
                     setInterval(function () {
                         if(!$("#spinner").is(':visible'))
-                            $rootScope.spinnerShow = Math.floor(Math.random() * 4) + 1;
-                    }, 200);                }
+                            $rootScope.spinnerShow = rndIndex;
+                    }, 200);
+                }
             };
 
             var classdisable;
@@ -187,8 +191,13 @@ angular
 
             /* redirect to profile */
             $scope.navigateToMyProfile = function () {
+                $rootScope.loaderForLogin = false;
+                $scope.loaderRandom();
                 $scope.$emit('ShowPreloader');
-                $location.path("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
+
+                $timeout(function(){
+                    $location.path("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
+                }, 500);
             };
 
             $scope.setToolbar = function (url, name) {

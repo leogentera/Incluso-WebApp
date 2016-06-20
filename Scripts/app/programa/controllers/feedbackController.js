@@ -271,11 +271,45 @@ angular
                     var updatedActivityOnUserCourse = updateActivityStatus($scope.activity.activity_identifier);
                     //Update local storage and activities status array
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);
-                    
-                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (data) {},function (data) {});
+                    assignStars();
                 });
                 $location.path($scope.location);
             };
+            
+            function assignStars(){
+                var endTime = moment().format('YYYY:MM:DD HH:mm:ss');
+                
+                var data = {
+                        userId: currentUser.id,
+                        stars: $scope.activity.points,
+                        instance: $scope.activity.coursemoduleid,
+                        instanceType: 0,
+                        date: endTime,
+                        is_extra: false
+                    };
+                updateLocalStorageStars(data);
+                moodleFactory.Services.PutStars(data, $scope.profile, currentUser.token, function () {
+                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (data) {},function (data) {});
+                    }, function(){});
+            }
+            
+            function updateLocalStorageStars(data) {
+                var userStars = JSON.parse(localStorage.getItem("userStars"));
+
+                var localStorageStarsData = {
+                    dateissued: moment(Date.now()).unix(),
+                    instance: data.instance,
+                    instance_type: data.instanceType,
+                    message: "",
+                    is_extra: data.is_extra,
+                    points: data.stars,
+                    userid: parseInt(data.userId)
+                };
+
+                userStars.push(localStorageStarsData);
+                localStorage.setItem("userStars", JSON.stringify(userStars));
+            }
+            
             
         initialLoading();
         

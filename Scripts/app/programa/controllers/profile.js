@@ -23,7 +23,7 @@ angular
             var quizMisCualidades = false;
             $scope.accessedSubsection = false;
             $scope.$emit('scrollTop');
-            //$scope.$emit('ShowPreloader');
+            $scope.$emit('ShowPreloader');
             $scope.mobilecheck=_comboboxCompat;
 
             $scope.passwordChanged = false;
@@ -1371,24 +1371,6 @@ angular
                     $location.path("Perfil/" + $scope.userId);
                 };
 
-                //Array.prototype.compare = function (testArr) {
-                //    if (this.length != testArr.length) return false;
-                //
-                //    for (var i = 0; i < testArr.length; i++) {
-                //        if (this[i].compare) {
-                //            if (!this[i].comparre(testArr[i])) {
-                //                return false;
-                //            }
-                //        }
-                //
-                //        if (this[i].toLowerCase() !== testArr[i].toLowerCase()) {
-                //            return false;
-                //        }
-                //    }
-                //
-                //    return true;
-                //};
-
                 function arraysAreEqual(ary1, ary2) {
                     if (ary1.length !== ary2.length) {
                         return false;
@@ -1926,9 +1908,12 @@ angular
 
                     if (validationResult) {
                         $scope.$emit('ShowPreloader');
-                        $scope.model.modelState.isValid = true;
-                        deleteRepeatedValues();   //Validates for required restrictions.
-                        saveUserProfile();
+                        $timeout(function(){
+                            $scope.model.modelState.isValid = true;
+                            deleteRepeatedValues();   //Validates for required restrictions.
+                            saveUserProfile();
+                        }, 500);
+
                     } else {
                         $scope.model.modelState.isValid = false;
                         $scope.$emit('scrollTop');
@@ -1948,12 +1933,14 @@ angular
                                     updateQuizes();
                                 }
 
-                                $scope.$emit('HidePreloader');
+                                //$scope.$emit('HidePreloader');
 
                                 if (showResultsPage) {
                                     $scope.currentPage = 12; //Finally, show the results page.
                                 } else {
-                                    $location.path("Perfil/" + $scope.userId);   //Return to Profile.
+                                    $timeout(function(){
+                                        $location.path("Perfil/" + $scope.userId);   //Return to Profile.
+                                    }, 500);
                                 }
 
                             } else {//The user comes from Configurar Privacidad
@@ -2506,26 +2493,26 @@ angular
                 };
 
                 function SuccessAvatar(data) {
-                    $rootScope.spinnerAvatar = true; //Type avatar spinner
-                    $rootScope.loading = true; //Start spinner
-
-                    $timeout(function () {
-                        if(!$("#spinner").is(':visible')) {
-                            $rootScope.spinnerAvatar = true;
-                        }
-                    }, 200);
-
-                    $timeout(function(){
-                        $rootScope.spinnerAvatar = false;
-                        $rootScope.loaderForLogin = false; //For Login Preloader
-                        $rootScope.loading = true;
-                        $scope.loaderRandom(); //For Generic Preloader
-
-                        $timeout(function(){
-                            $rootScope.spinnerAvatar = false;
-                            $rootScope.loading = false; //Hide spinner
-                        }, 2000);
-                    }, 1500);
+                    //$rootScope.spinnerAvatar = true; //Type avatar spinner
+                    //$rootScope.loading = true; //Start spinner
+                    //
+                    //$timeout(function () {
+                    //    if(!$("#spinner").is(':visible')) {
+                    //        $rootScope.spinnerAvatar = true;
+                    //    }
+                    //}, 200);
+                    //
+                    //$timeout(function(){
+                    //    $rootScope.spinnerAvatar = false;
+                    //    $rootScope.loaderForLogin = false; //For Login Preloader
+                    //    $rootScope.loading = true;
+                    //    $scope.loaderRandom(); //For Generic Preloader
+                    //
+                    //    $timeout(function(){
+                    //        $rootScope.spinnerAvatar = false;
+                    //        $rootScope.loading = false; //Hide spinner
+                    //    }, 2000);
+                    //}, 1500);
 
                     //the next fields should match the database in moodle
                     $scope.avatarInfo = [{
