@@ -15,7 +15,7 @@ angular
 
             var _loadedResources = false;
             var _pageLoaded = false;
-            $rootScope.spinnerAvatar = false; //Type avatar spinner
+            //$rootScope.spinnerAvatar = false; //Type avatar spinner
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.Math = window.Math;
