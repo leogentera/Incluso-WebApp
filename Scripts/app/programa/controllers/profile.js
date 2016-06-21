@@ -901,7 +901,11 @@ angular
                 };
 
                 $scope.privacySettings = function () {
-                    $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null);
+                    $scope.loaderRandom();
+                    $scope.$emit('ShowPreloader');
+                    $timeout(function(){
+                        $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null);
+                    }, 500);
                 };
 
                 $scope.navigateToDashboard = function () {
@@ -1898,7 +1902,11 @@ angular
                 }
 
                 $scope.saveAccountSettings = function () {
-                    saveUserProfile();
+                    $scope.loaderRandom();
+                    $scope.$emit('ShowPreloader');
+                    $timeout(function(){
+                        saveUserProfile();
+                    }, 500);
                 };
 
                 $scope.save = function () {
@@ -2510,6 +2518,7 @@ angular
                         });
                     }
                 };
+                
 
                 function SuccessAvatar(data) {
                     //the next fields should match the database in moodle

@@ -1278,7 +1278,12 @@ angular
             $scope.cancel = function () {
                 $scope.numOfMultichoiceQuestions = 0;
                 $scope.numOfOthers = 0;
-                $location.path(pathToRedirect());
+                $scope.loaderRandom();
+                $scope.$emit('ShowPreloader');
+
+                $timeout(function(){
+                    $location.path(pathToRedirect());
+                }, 500);
             };
 
             function pathToRedirect() {
