@@ -2645,7 +2645,7 @@ angular
                     };
 
                     try {
-                        $rootScope.loading = true; //Start spinner
+                        $scope.$emit("ShowPreloader"); //Start spinner
                         $timeout(function () {
                             cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                         }, 500);
