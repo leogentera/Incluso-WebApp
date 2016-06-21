@@ -59,7 +59,7 @@ angular
             var artisticActivities = [];
             var hobbies = [];
             var social = [];
-            var others = [];
+            var emprendedor = [];
 
             $scope.AnswersResult = { //For storing responses.
                 "userid": 0,
@@ -281,12 +281,12 @@ angular
                         social.push(answerLabel);
                     }
 
-                    //Load array for Others
+                    //Load array for Emprendor
                     question = $scope.activityObject.questions[4];  //First question
                     questionNumOfChoices = question.answers.length;  //Number of choices
                     for (i = 0; i < questionNumOfChoices; i++) {
                         answerLabel = question.answers[i].answer;
-                        others.push(answerLabel);
+                        emprendedor.push(answerLabel);
                     }
                 }
 
@@ -821,10 +821,10 @@ angular
                         $scope.userprofile.social.push($scope.OtroAnswers[3].answers[0]);
                     }
 
-                    //Update Others
+                    //Update Emprendedor
                     for (i = 0; i < $scope.answers[4].length - 1; i++) {
                         if ($scope.answers[4][i]) {
-                            $scope.userprofile.emprendedor.push(others[i]);
+                            $scope.userprofile.emprendedor.push(emprendedor[i]);
                         }
                     }
 
