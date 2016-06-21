@@ -667,6 +667,7 @@ angular
 
                                 getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
                                     $scope.model.profileimageurl = niceImageUrl;
+                                    $scope.$digest();
                                 });
 
                             });
