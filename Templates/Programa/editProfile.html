@@ -696,9 +696,9 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.favoriteSports[$index] == ''}"
-                                                                    ng-click="selectClick(favoritSportsList, 'favoriteSports['+$index+']')"
-                                                                    ng-show="mobilecheck()">{{model.favoriteSports[$index] || 'Deporte'}}</label>
+                                                                    ng-class="{'placeholder-1': model.favoriteSports[$index] == ''}"
+                                                                    ng-click="selectClick(favoritSportsList, 'favoriteSports[' + $index + ']', 'favoriteSports')"
+                                                                    ng-show="mobilecheck()" ng-bind="model.favoriteSports[$index] || 'Deporte'"></label>
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.favoriteSports[$index]"
                                                                             ng-change="lookForNinguno('favoriteSports')"
@@ -739,8 +739,8 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.artisticActivities[$index] == ''}"
-                                                                    ng-click="selectClick(artisticActivitiesList, 'artisticActivities['+$index+']')"
+                                                                    ng-class="{'placeholder-1': model.artisticActivities[$index] == ''}"
+                                                                    ng-click="selectClick(artisticActivitiesList, 'artisticActivities['+$index+']', 'artisticActivities')"
                                                                     ng-show="mobilecheck()">{{model.artisticActivities[$index] || 'Actividad'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.artisticActivities[$index]"
@@ -781,8 +781,8 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.hobbies[$index] == ''}"
-                                                                    ng-click="selectClick(cultureList, 'hobbies['+$index+']')"
+                                                                    ng-class="{'placeholder-1': model.hobbies[$index] == ''}"
+                                                                    ng-click="selectClick(cultureList, 'hobbies['+$index+']', 'hobbies')"
                                                                     ng-show="mobilecheck()">{{model.hobbies[$index] || 'Actividad'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.hobbies[$index]"
@@ -823,8 +823,8 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.social[$index] == ''}"
-                                                                    ng-click="selectClick(socialList, 'social['+$index+']')"
+                                                                    ng-class="{'placeholder-1': model.social[$index] == ''}"
+                                                                    ng-click="selectClick(socialList, 'social['+$index+']', 'social')"
                                                                     ng-show="mobilecheck()">{{model.social[$index] || 'Actividad'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.social[$index]"
@@ -865,8 +865,8 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.emprendedor[$index] == ''}"
-                                                                    ng-click="selectClick(othersList, 'emprendedor['+$index+']')"
+                                                                    ng-class="{'placeholder-1': model.emprendedor[$index] == ''}"
+                                                                    ng-click="selectClick(othersList, 'emprendedor['+$index+']', 'emprendedor')"
                                                                     ng-show="mobilecheck()">{{model.emprendedor[$index] || 'Actividad'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.emprendedor[$index]"
@@ -955,8 +955,8 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.talents[$index] == ''}"
-                                                                    ng-click="selectClick(habilitiesList, 'talents['+$index+']')"
+                                                                    ng-class="{'placeholder-1': model.talents[$index] == ''}"
+                                                                    ng-click="selectClick(habilitiesList, 'talents['+$index+']', 'talents')"
                                                                     ng-show="mobilecheck()">{{model.talents[$index] || 'Habilidades'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.talents[$index]"
@@ -997,8 +997,8 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.values[$index] == ''}"
-                                                                    ng-click="selectClick(destrezasList, 'values['+$index+']')"
+                                                                    ng-class="{'placeholder-1': model.values[$index] == ''}"
+                                                                    ng-click="selectClick(destrezasList, 'values['+$index+']', 'values')"
                                                                     ng-show="mobilecheck()">{{model.values[$index] || 'Destrezas'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.values[$index]"
@@ -1039,8 +1039,8 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.habilities[$index] == ''}"
-                                                                    ng-click="selectClick(actitudesList, 'habilities['+$index+']')"
+                                                                    ng-class="{'placeholder-1': model.habilities[$index] == ''}"
+                                                                    ng-click="selectClick(actitudesList, 'habilities['+$index+']', 'habilities')"
                                                                     ng-show="mobilecheck()">{{model.habilities[$index] || 'Actitudes'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.habilities[$index]"
