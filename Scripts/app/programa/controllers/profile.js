@@ -37,13 +37,15 @@ angular
                     cordova.exec(function (data) {
                         var evaluate = '$scope.model.' + field + '="' + items [data.which - 1] + '"';
                         eval(evaluate);
-                        $scope.lookForNinguno(listName);
+
+                        if (listName) {
+                            $scope.lookForNinguno(listName);
+                        }
+
                         $scope.$digest();
                     }, function () {
                     }, "CallToAndroid", "showCombobox", selectItems);
                 }
-
-
             };
 
             $scope.myLabel = function(item, index) {
@@ -1951,6 +1953,7 @@ angular
                                 $scope.visitedSections = []; //Clean record of visited sections.
 
                                 if (showResultsPage) {
+                                    $scope.$emit('HidePreloader');
                                     $scope.currentPage = 12; //Finally, show the results page.
                                 } else {
                                     $timeout(function(){
@@ -2483,6 +2486,7 @@ angular
                     };
 
                     try {
+                        $scope.loaderRandom();
                         $rootScope.loading = true; //Start spinner
                         $timeout(function () {
                             cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
@@ -2508,27 +2512,6 @@ angular
                 };
 
                 function SuccessAvatar(data) {
-                    //$rootScope.spinnerAvatar = true; //Type avatar spinner
-                    //$rootScope.loading = true; //Start spinner
-                    //
-                    //$timeout(function () {
-                    //    if(!$("#spinner").is(':visible')) {
-                    //        $rootScope.spinnerAvatar = true;
-                    //    }
-                    //}, 200);
-                    //
-                    //$timeout(function(){
-                    //    $rootScope.spinnerAvatar = false;
-                    //    $rootScope.loaderForLogin = false; //For Login Preloader
-                    //    $rootScope.loading = true;
-                    //    $scope.loaderRandom(); //For Generic Preloader
-                    //
-                    //    $timeout(function(){
-                    //        $rootScope.spinnerAvatar = false;
-                    //        $rootScope.loading = false; //Hide spinner
-                    //    }, 2000);
-                    //}, 1500);
-
                     //the next fields should match the database in moodle
                     $scope.avatarInfo = [{
                         "userid": data.userId,

@@ -152,7 +152,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.gender == ''}"
+                                                            ng-class="{'placeholder-1': model.gender == ''}"
                                                             ng-click="selectClick(genderItems, 'gender')"
                                                             ng-show="mobilecheck()">{{model.gender || 'Sexo'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -172,7 +172,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.birthCountry == ''}"
+                                                            ng-class="{'placeholder-1': model.birthCountry == ''}"
                                                             ng-click="selectClick(countryItems, 'birthCountry')"
                                                             ng-show="mobilecheck()">{{model.birthCountry || 'País de nacimiento'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -212,7 +212,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.maritalStatus == ''}"
+                                                            ng-class="{'placeholder-1': model.maritalStatus == ''}"
                                                             ng-click="selectClick(maritalStatusItems, 'maritalStatus')"
                                                             ng-show="mobilecheck()">{{model.maritalStatus || 'Estado civil'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -246,7 +246,7 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.studies[$index].school == ''}"
+                                                                    ng-class="{'placeholder-1': !model.studies[$index].school}"
                                                                     ng-click="selectClick(studiesList, 'studies['+$index+'].school')"
                                                                     ng-show="mobilecheck()">{{model.studies[$index].school || 'Nivel'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -264,7 +264,7 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.studies[$index].levelOfStudies == ''}"
+                                                                    ng-class="{'placeholder-1': !model.studies[$index].levelOfStudies}"
                                                                     ng-click="selectClick(educationStatusList, 'studies['+$index+'].levelOfStudies')"
                                                                     ng-show="mobilecheck()">{{model.studies[$index].levelOfStudies || 'Estado'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -345,7 +345,7 @@
 
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.address.country == ''}"
+                                                            ng-class="{'placeholder-1': model.address.country == ''}"
                                                             ng-click="selectClick(countryItems, 'address.country')"
                                                             ng-show="mobilecheck()">{{model.address.country || 'País'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -367,7 +367,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.address.city == ''}"
+                                                            ng-class="{'placeholder-1': model.address.city == ''}"
                                                             ng-click="selectClick(stateItems, 'address.city')"
                                                             ng-show="mobilecheck()">{{model.address.city || 'Estado'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -455,7 +455,7 @@
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.phones[$index].phone == ''}"
+                                                                    ng-class="{'placeholder-1': !model.phones[$index].phone}"
                                                                     ng-click="selectClick(phoneTypeList, 'phones['+$index+'].phone')"
                                                                     ng-show="mobilecheck()">{{model.phones[$index].phone || 'Tipo de teléfono'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -501,7 +501,7 @@
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.socialNetworks[$index].socialNetwork == ''}"
+                                                                    ng-class="{'placeholder-1': !model.socialNetworks[$index].socialNetwork}"
                                                                     ng-click="selectClick(socialNetworksList, 'socialNetworks['+$index+'].socialNetwork')"
                                                                     ng-show="mobilecheck()">{{model.socialNetworks[$index].socialNetwork || 'Red social'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -607,7 +607,7 @@
                                                                 </div>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.familiaCompartamos[$index].relationship == ''}"
+                                                                    ng-class="{'placeholder-1': !model.familiaCompartamos[$index].relationship}"
                                                                     ng-click="selectClick(familiaCompartamosList, 'familiaCompartamos['+$index+'].relationship')"
                                                                     ng-show="mobilecheck()">{{model.familiaCompartamos[$index].relationship || 'Parentesco'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1133,7 +1133,7 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.inspirationalCharacters[$index].characterType == ''}"
+                                                                    ng-class="{'placeholder-1': !model.inspirationalCharacters[$index].characterType}"
                                                                     ng-click="selectClick(inspirationalCharactersList, 'inspirationalCharacters['+$index+'].characterType')"
                                                                     ng-show="mobilecheck()">{{model.inspirationalCharacters[$index].characterType || 'Tipo de personaje'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1224,7 +1224,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.iLiveWith == ''}"
+                                                            ng-class="{'placeholder-1': model.iLiveWith == ''}"
                                                             ng-click="selectClick(iLiveWithList, 'iLiveWith')"
                                                             ng-show="mobilecheck()">{{model.iLiveWith || 'Vivo con'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1255,7 +1255,7 @@
                                                                     </button>
                                                                 </h5>
                                                                 <label class="form-control form-control-lg theme-form"
-                                                                ng-class="{'placeholder': model.mainActivity[$index] == ''}"
+                                                                ng-class="{'placeholder-1': model.mainActivity[$index] == ''}"
                                                                 ng-click="selectClick(mainActivityList, 'mainActivity['+$index+']')"
                                                                 ng-show="mobilecheck()">{{model.mainActivity[$index] || 'Actividad principal'}}</label>
                                                                 <select class="form-control form-control-lg theme-form"
@@ -1285,7 +1285,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.level == ''}"
+                                                            ng-class="{'placeholder-1': model.level == ''}"
                                                             ng-click="selectClick(levelList, 'level')"
                                                             ng-show="mobilecheck()">{{model.level || 'Nivel'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1302,7 +1302,7 @@
 
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.grade == ''}"
+                                                            ng-class="{'placeholder-1': model.grade == ''}"
                                                             ng-click="selectClick(gradeList, 'grade')"
                                                             ng-show="mobilecheck()">{{model.grade || 'Grado'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1319,7 +1319,7 @@
 
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.period == ''}"
+                                                            ng-class="{'placeholder-1': model.period == ''}"
                                                             ng-click="selectClick(periodList, 'period')"
                                                             ng-show="mobilecheck()">{{model.period || 'Periodo'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1391,7 +1391,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.children == ''}"
+                                                            ng-class="{'placeholder-1': model.children == ''}"
                                                             ng-click="selectClick(childrenList, 'children')"
                                                             ng-show="mobilecheck()">{{model.children || '¿Tengo hijos?'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1415,7 +1415,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.gotMoneyIncome == ''}"
+                                                            ng-class="{'placeholder-1': model.gotMoneyIncome == ''}"
                                                             ng-click="selectClick(gotMoneyIncomeList, 'gotMoneyIncome')"
                                                             ng-show="mobilecheck()">{{model.gotMoneyIncome || '¿Recibo ingresos?'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1447,7 +1447,7 @@
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.moneyIncome[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.moneyIncome[$index] == ''}"
                                                                     ng-click="selectClick(moneyIncomeList, 'moneyIncome['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.moneyIncome[$index] || 'Ingreso'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1478,7 +1478,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.medicalCoverage == ''}"
+                                                            ng-class="{'placeholder-1': model.medicalCoverage == ''}"
                                                             ng-click="selectClick(medicalCoverageList, 'medicalCoverage')"
                                                             ng-show="mobilecheck()">{{model.medicalCoverage || '¿Cuento con seguro médico?'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1496,7 +1496,7 @@
 
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.medicalInsurance == ''}"
+                                                            ng-class="{'placeholder-1': model.medicalInsurance == ''}"
                                                             ng-click="selectClick(medicalInsuranceList, 'medicalInsurance')"
                                                             ng-show="mobilecheck()">{{model.medicalInsurance || 'Mi seguro es:'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1579,7 +1579,7 @@
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.knownDevices[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.knownDevices[$index] == ''}"
                                                                     ng-click="selectClick(knownDevicesList, 'knownDevices['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.knownDevices[$index] || 'Dispositivos'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1618,7 +1618,7 @@
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.ownDevices[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.ownDevices[$index] == ''}"
                                                                     ng-click="selectClick(knownDevicesList, 'ownDevices['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.ownDevices[$index] || 'Dispositivos'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1657,7 +1657,7 @@
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.phoneUsage[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.phoneUsage[$index] == ''}"
                                                                     ng-click="selectClick(phoneUsageList, 'phoneUsage['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.phoneUsage[$index] || 'Actividad'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1735,7 +1735,7 @@
 
                                                     <div class="form-group-control custom-caret-wrapper">
                                                         <label class="form-control form-control-lg theme-form"
-                                                        ng-class="{'placeholder': model.playVideogames == ''}"
+                                                        ng-class="{'placeholder-1': model.playVideogames == ''}"
                                                         ng-click="selectClick(playVideoGamesList, 'playVideogames')"
                                                         ng-show="mobilecheck()">{{model.playVideogames || '¿Juegas videojuegos?'}}</label>
                                                         <select ng-model="model.playVideogames"
@@ -1757,7 +1757,7 @@
 
                                                     <div class="form-group-control custom-caret-wrapper">
                                                         <label class="form-control form-control-lg theme-form"
-                                                        ng-class="{'placeholder': model.videogamesFrecuency == ''}"
+                                                        ng-class="{'placeholder-1': model.videogamesFrecuency == ''}"
                                                         ng-click="selectClick(videoGamesFrecuencyList, 'videogamesFrecuency')"
                                                         ng-show="mobilecheck()">{{model.videogamesFrecuency || '¿Con qué frecuencia juegas?'}}</label>
                                                         <select ng-model="model.videogamesFrecuency"
@@ -1779,7 +1779,7 @@
 
                                                     <div class="form-group-control custom-caret-wrapper">
                                                         <label class="form-control form-control-lg theme-form"
-                                                        ng-class="{'placeholder': model.videogamesHours == ''}"
+                                                        ng-class="{'placeholder-1': model.videogamesHours == ''}"
                                                         ng-click="selectClick(videogamesHoursList, 'videogamesHours')"
                                                         ng-show="mobilecheck()">{{model.videogamesHours || '¿Cuántas horas juegas?'}}</label>
                                                         <select ng-model="model.videogamesHours"
@@ -1810,7 +1810,7 @@
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.kindOfVideogames[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.kindOfVideogames[$index] == ''}"
                                                                     ng-click="selectClick(kindOfVideoGamesList, 'kindOfVideogames['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.kindOfVideogames[$index] || '¿Qué videojuegos te gustan más?'}}</label>
                                                                     <select ng-model="model.kindOfVideogames[$index]"
