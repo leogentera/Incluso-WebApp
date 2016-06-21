@@ -667,6 +667,7 @@ angular
 
                                 getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
                                     $scope.model.profileimageurl = niceImageUrl;
+                                    $scope.$digest();
                                 });
 
                             });
@@ -705,6 +706,9 @@ angular
                         $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                         $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
                         $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                        $scope.socialList = $scope.socialList.concat($scope.model.social);
+                        $scope.othersList = $scope.othersList.concat($scope.model.emprendedor);
+
                         $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
                         $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
                         $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
@@ -712,6 +716,9 @@ angular
                         $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                         $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
                         $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
+                        $scope.socialList = deleteRepeatedEntries($scope.socialList);
+                        $scope.othersList = deleteRepeatedEntries($scope.othersList);
+
                         $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
                         $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
                         $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
@@ -786,6 +793,9 @@ angular
                             $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                             $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
                             $scope.cultureList = $scope.cultureList.concat($scope.model.hobbies);
+                            $scope.socialList = $scope.socialList.concat($scope.model.social);
+                            $scope.othersList = $scope.othersList.concat($scope.model.emprendedor);
+
                             $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.talents);
                             $scope.destrezasList = $scope.destrezasList.concat($scope.model.values);
                             $scope.actitudesList = $scope.actitudesList.concat($scope.model.habilities);
@@ -793,6 +803,9 @@ angular
                             $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
                             $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
                             $scope.cultureList = deleteRepeatedEntries($scope.cultureList);
+                            $scope.socialList = deleteRepeatedEntries($scope.socialList);
+                            $scope.othersList = deleteRepeatedEntries($scope.othersList);
+
                             $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
                             $scope.destrezasList = deleteRepeatedEntries($scope.destrezasList);
                             $scope.actitudesList = deleteRepeatedEntries($scope.actitudesList);
@@ -1390,24 +1403,6 @@ angular
                     $scope.$emit('ShowPreloader');
                     $location.path("Perfil/" + $scope.userId);
                 };
-
-                //Array.prototype.compare = function (testArr) {
-                //    if (this.length != testArr.length) return false;
-                //
-                //    for (var i = 0; i < testArr.length; i++) {
-                //        if (this[i].compare) {
-                //            if (!this[i].comparre(testArr[i])) {
-                //                return false;
-                //            }
-                //        }
-                //
-                //        if (this[i].toLowerCase() !== testArr[i].toLowerCase()) {
-                //            return false;
-                //        }
-                //    }
-                //
-                //    return true;
-                //};
 
                 function arraysAreEqual(ary1, ary2) {
                     if (ary1.length !== ary2.length) {
@@ -2632,7 +2627,7 @@ angular
                     if (!$scope.avatarInfo[0]) {
                         setEmptyAvatar();
                     }
-                    var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Ling��stica' : $scope.model.shield));
+                    var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield));
                     var avatarInfoForGameIntegration = {
                         "userId": "" + $scope.model.id,
                         "alias": $scope.model.username,
@@ -2651,7 +2646,7 @@ angular
                     };
 
                     try {
-                        $rootScope.loading = true; //Start spinner
+                        $scope.$emit("ShowPreloader"); //Start spinner
                         $timeout(function () {
                             cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                         }, 500);
