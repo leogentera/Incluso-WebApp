@@ -2627,7 +2627,7 @@ angular
                     if (!$scope.avatarInfo[0]) {
                         setEmptyAvatar();
                     }
-                    var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Ling��stica' : $scope.model.shield));
+                    var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield));
                     var avatarInfoForGameIntegration = {
                         "userId": "" + $scope.model.id,
                         "alias": $scope.model.username,
@@ -2646,7 +2646,7 @@ angular
                     };
 
                     try {
-                        $rootScope.loading = true; //Start spinner
+                        $scope.$emit("ShowPreloader"); //Start spinner
                         $timeout(function () {
                             cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                         }, 500);

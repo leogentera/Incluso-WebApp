@@ -1406,21 +1406,11 @@
                             };
                             var getCurrentPositionErrorCallback = function(error) {
                                 
-                                requestQueue[0].retryCount = 5;
-                                queue.retryCount = 5;
-                                
-                                
-                                if(moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null) {
-                                    postCurrentPosition();    
-                                }else {
-                                    requestQueue.shift();  
-                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                    if(requestQueue.length == 0 && _callback != null){
-                                        _callback();
-                                        _callback = null;
-                                    }
-                                    doRequestforCellphone();
-                                }
+                                 _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, { 
+                                    latitude: 0,
+                                    longitude: 0
+                                });
+                                postCurrentPosition();
                                 
                             };
                             navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
