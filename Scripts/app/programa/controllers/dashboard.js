@@ -274,7 +274,14 @@ angular
                          };
 
                         
-                        saveLocalImages(images);
+                        saveLocalImages(images, function(){
+                            var profileImageUrl = $scope.user.profileimageurl;
+                            getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", profileImageUrl, function(niceImageUrl) {                
+                                $scope.profileImage = niceImageUrl;
+                                $scope.$digest();
+                            });
+
+                        });
                         
                         
                         var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
