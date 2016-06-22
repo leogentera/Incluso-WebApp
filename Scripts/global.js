@@ -1841,14 +1841,16 @@ var _loadDrupalResources = function() {
 /* params:
    images - array of objects { path, name, downloadLink }
 */
-function saveLocalImages(images) {
+function saveLocalImages(images, callback) {
     
     _forceUpdateConnectionStatus(function() {
         
         if(window.mobilecheck()) {
         
             if(images.length > 0) {
-                cordova.exec(function() {}, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
+                cordova.exec(function() {
+                    callback();
+                  }, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
             }
         }
         
