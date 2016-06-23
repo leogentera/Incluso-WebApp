@@ -139,7 +139,7 @@ angular
 
             var errorCallback = function () {
                 $scope.$emit('HidePreloader');
-                $location.path('/ProgramaDashboard');
+                //$location.path('/ProgramaDashboard');
             };
 
             $scope.avatar = function () {
@@ -208,7 +208,8 @@ angular
             }
 
             function FailureAvatar(data) {
-                $location.path('/ProgramaDashboard');
+                 $scope.$emit('HidePreloader');
+                //$location.path('/ProgramaDashboard');
             }
 
             $scope.navigateToPage = function (pageNumber) {
