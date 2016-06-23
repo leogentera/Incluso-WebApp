@@ -65,6 +65,13 @@ angular
                 $scope.showAllCommentsByPost['id' + postId] = 1000000;
             };
             
+            $scope.urlify = function (text) {
+                var urlRegex = /(https?:\/\/[^\s]+)/g;
+                return text.replace(urlRegex, function(url) {
+                    return '<a class="urlify" href="' + url + '">' + url + '</a>';
+                });
+            };
+                
             var _readNotification = function (currentUserId, currentNotificationId, userNotifications) {
                 
                 var seen_date_now = new Date();
@@ -97,22 +104,17 @@ angular
                 
                 var existingPost = false;
                 
-                //var userLiked = element.likes.length;                
-                //if (userliked == 1) {
-                //    $scope.usersLiked = element.likes[0].username;
-                //}else if (userLiked > 1) {
-                //    $scope.userLiked = element.likes[0].username + "" + element.likes.length - 1
-                //}
-                
                 for(p = 0; p < $scope.posts.length; p++){
-                    if ($scope.posts[p].post_id === element.post_id) {
-                        $scope.posts[p] = element;
-                        existingPost = true;
-                        break;
+                        if ($scope.posts[p].post_id === element.post_id) {
+                            element.message = restoreHtmlTag(element.message);
+                            $scope.posts[p] = element;
+                            existingPost = true;
+                            break;
+                        }
                     }
-                }
                 
                 if (!existingPost) {
+                    element.message = restoreHtmlTag(element.message);
                     $scope.posts.push(element);
                 }
             };
