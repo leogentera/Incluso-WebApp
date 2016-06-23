@@ -12,7 +12,7 @@
                             <a>
                                 <div class="user-avatar">
                                     <figure class="user-avatar-">
-                                        <img ng-src="{{profileImage}}" alt="avatar" ng-click="navigateTo('Perfil/' + user.id)" />
+                                        <img ng-src="{{profileImage}}" class="home-avatar" alt="avatar" ng-click="navigateTo('Perfil/' + user.id)" />
                                         <h1 class="text-uppercase" ng-bind="user.alias"></h1>
                                          <figcaption class="points"><span ng-bind="user.stars ? user.stars : 0"></span> <i class="icomoon icon-star"></i></figcaption>
                                     </figure>
