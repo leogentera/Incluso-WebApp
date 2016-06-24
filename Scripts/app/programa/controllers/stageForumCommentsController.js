@@ -710,7 +710,6 @@ angular
                 };
 
                 $scope.showMore = function () {
-                        alert("console.log");
                     $scope.modelState.errorMessages = [];
 
                     $scope.validateConnection(function () {
