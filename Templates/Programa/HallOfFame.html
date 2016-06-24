@@ -86,6 +86,7 @@
         </section>
         <section class="filter-section form">
             <span class="icomoon icon-list"></span>
+            <span class="icomoon icon-arrow"></span>
             <label class="form-control form-control-lg theme-default"
             ng-class="{'placeholder': selectedCity == ''}"
 			ng-click="selectClick(cities, 'filter')"
@@ -95,7 +96,6 @@
                     ng-options="obj as obj for obj in cities" ng-change="updateByCity()" ng-show="!mobilecheck()">
                 <option value="" selected="true" disabled="disabled">Filtrar contenido por...</option>
             </select>
-            <span class="icomoon icon-arrow"></span>
         </section>
         <section class="component" id="top-users-detail">
             <div class="ranking-list">
