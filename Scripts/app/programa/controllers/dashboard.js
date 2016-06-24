@@ -15,27 +15,12 @@ angular
 
             var _loadedResources = false;
             var _pageLoaded = false;
-            //$rootScope.spinnerAvatar = false; //Type avatar spinner
+
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-            var notSendAgain1 = localStorage.getItem("notSendAgain1/" + localStorage.getItem("userId")); //Used for Chat
-            var notSendAgain2 = localStorage.getItem("notSendAgain2/" + localStorage.getItem("userId")); //Used for Chat
-            var notSendAgain3 = localStorage.getItem("notSendAgain3/" + localStorage.getItem("userId")); //Used for Chat
             $scope.profileImage = "";
-            
-            if (!notSendAgain1) {//Initialization
-                localStorage.setItem("notSendAgain1/" + localStorage.getItem("userId"), "false");
-            }
-
-            if (!notSendAgain2) {//Initialization
-                localStorage.setItem("notSendAgain2/" + localStorage.getItem("userId"), "false");
-            }
-
-            if (!notSendAgain3) {//Initialization
-                localStorage.setItem("notSendAgain3/" + localStorage.getItem("userId"), "false");
-            }
 
             var activity_identifier = "0000";
             var currentUserProfile = getCurrentUserProfile();
@@ -121,7 +106,7 @@ angular
             function getImageFromAssets() {
                 getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function(niceImageUrl) {                
                     $scope.profileImage = niceImageUrl;
-                     $scope.$digest();
+                     //$scope.$digest();
                 });
             }
             
