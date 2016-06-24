@@ -96,6 +96,88 @@ angular
                 false);
             }
 
+            function syncWithProfile(userKeysContent, obj, activityObject) {
+
+                var otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + $scope.coursemoduleid));
+                var questionId;
+
+                if (otherAnswerQuiz === null) {//Create this object if it doesn't exists...
+                    var otherAnswerQuiz = obj;
+                }
+
+                //Modify & save the new "answerQuiz/71" object.
+                var codedAnswers = [];
+                for (var i = 0; i < userKeysContent.length; i++) {
+                    codedAnswers.push([]);
+                }
+
+                var i, j;
+                for (i = 0; i < userKeysContent.length; i++) {
+                    var setOfLabels = [];
+                    var otherFound = false;
+                    var numAnswers = activityObject.questions[i].answers.length;
+
+                    for (j = 0; j < numAnswers; j++) {//Get the label for answers for each question.
+                        var label = activityObject.questions[i].answers[j].answer;
+
+                        if (label != "Otro") {//Not including the "Otro" label.
+                            setOfLabels.push(label);
+                        }
+                    }
+
+                    for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of userKeysContent[i]...
+                        if (userKeysContent[i].indexOf(setOfLabels[j]) > -1) {
+                            codedAnswers[i].push(1);  //Check the corresponding answer label.
+                        } else {
+                            codedAnswers[i].push(0); //Uncheck the answer label.
+                        }
+                    }
+
+                    for (j = 0; j < userKeysContent[i].length; j++) {//Check if jth-user talent is within setOfLabels...
+                        if (setOfLabels.indexOf((userKeysContent[i][j]).replace(/\r/g, " ").trim()) == -1) {//...if not, then that answer must be the "other" option value.
+                            //It must be the string for the "Other" option...
+                            otherFound = true;
+                            questionId = activityObject.questions[i].id;
+
+                            //Update the "answers" key that corresponds to this question, as defined by questionId.
+                            for (var k = 0; k < otherAnswerQuiz.length; k++) {
+                                if (otherAnswerQuiz[k].questionid == +questionId) {
+                                    otherAnswerQuiz[k].answers = [userKeysContent[i][j]];
+                                }
+                            }
+
+                            //otherAnswerQuiz[i].answers = [userKeysContent[i][j]];
+                            codedAnswers[i].push(1);
+                            activityObject.questions[i].userAnswer = userKeysContent[i].join("; ") + "; Otro";
+                            activityObject.questions[i].other = userKeysContent[i][j];
+                            break;
+                        }
+                    }
+
+                    if (!otherFound) {//The question has "other" option empty.
+                        otherAnswerQuiz[i].answers = [""];
+                        codedAnswers[i].push(0);
+                        activityObject.questions[i].userAnswer = userKeysContent[i].join("; ");
+                        activityObject.questions[i].other = "";
+                    }
+                }
+                console.log($scope.coursemoduleid, codedAnswers);
+                _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, codedAnswers);
+                _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.coursemoduleid, otherAnswerQuiz);
+                _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, activityObject);
+                $scope.activityObject = activityObject;
+            }
+
+            function getArrayForOther(activityObject) {
+                var obj = [];
+                for (var i = 0; i < activityObject.questions.length; i++) {
+                    if (activityObject.questions[i].questionType == "multichoice") {
+                        obj.push({"questionid": +activityObject.questions[i].id, "answers": []});
+                    }
+                }
+
+                return obj;
+            }
 
             function getDataAsync() {
                 // Quizes: 1001, 1005, 1006, 1007, 1009; 2001, 2009, 2025, 2023; 3101, 3601.
@@ -146,9 +228,9 @@ angular
 
                         if ($scope.activity_status && $scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
 
-                            localAnswers = JSON.parse(localStorage.getItem("answersQuiz/" + $scope.coursemoduleid));
+                            localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
 
-                            if (localAnswers) {
+                            if (localAnswers !== null) {
                                 $scope.answers = localAnswers;
                             }
 
@@ -157,6 +239,35 @@ angular
 
                         } else {
                             //The Quiz has not been finished yet.
+
+                            //Sync 'Mis Cualidades' and 'Mis Gustos' with "Perfil/nnn".
+                            if ($scope.activity_identifier === 1005 && activityObject !== null) { //Mis Cualidades.
+                                var keysToSync = ["talents", "values", "habilities"];
+                                var userKeysContent = [];
+
+                                //Get user items in keysToSync from Perfil/nnn.
+                                for (var i = 0; i < keysToSync.length; i++) {
+                                    userKeysContent[i] = $scope.userprofile[keysToSync[i]];
+                                }
+
+                                //Get questions Id's
+                                var objForOtherAnswer = getArrayForOther(activityObject);
+                                syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
+
+                            } else if ($scope.activity_identifier === 1006 && activityObject !== null) {//Mis Gustos.
+                                var keysToSync = ["favoriteSports", "artisticActivities", "hobbies", "social", "emprendedor"];
+                                var userKeysContent = [];
+
+                                //Get user items in keysToSync from Perfil/nnn.
+                                for (var i = 0; i < keysToSync.length; i++) {
+                                    userKeysContent[i] = $scope.userprofile[keysToSync[i]];
+                                }
+
+                                //Get questions Id's
+                                var objForOtherAnswer = getArrayForOther(activityObject);
+                                syncWithProfile(userKeysContent, objForOtherAnswer, activityObject);
+                            }
+
                             loadModelVariables();
                         }
 
@@ -1244,25 +1355,27 @@ angular
             }
 
             function addHeightEssay(elem) {
-                var elemHeight = angular.element("#" + elem + "> ul > li").height() + 12;
+                var elemWidth = $("#" + elem).find("li").width();
+                var elemHeight = $("#" + elem).find("li").height();
+                var containerWidth = angular.element("div.owl-wrapper-outer").width();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-                angular.element(".owl-wrapper-outer").css('height', containerHeight + elemHeight);
+                angular.element(".owl-wrapper-outer").css('height', containerHeight + 0.462*containerWidth);
             }
 
             function removeHeightEssay(elem) {
-                var elemHeight = angular.element("#" + elem + "> ul > li").height() + 12;
+                var containerWidth = angular.element("div.owl-wrapper-outer").width();
                 var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                angular.element("div.owl-wrapper-outer").css('height', containerHeight - elemHeight);
+                angular.element("div.owl-wrapper-outer").css('height', containerHeight -  0.462*containerWidth);
             }
 
             //This function is activated from Template, with ESSAY type questions
-            $scope.addAbility = function (elem, index) {
+            $scope.addItem = function (elem, index) {
                 addHeightEssay(elem);
                 $scope.answers[index].push("");
             };
 
             //This function is activated from Template, with ESSAY type questions
-            $scope.deleteAbility = function (elem, index, innerIndex) {
+            $scope.deleteItem = function (elem, index, innerIndex) {
                 removeHeightEssay(elem);
                 $scope.answers[index].splice(innerIndex, 1);
             };
@@ -1278,7 +1391,12 @@ angular
             $scope.cancel = function () {
                 $scope.numOfMultichoiceQuestions = 0;
                 $scope.numOfOthers = 0;
-                $location.path(pathToRedirect());
+                $scope.loaderRandom();
+                $scope.$emit('ShowPreloader');
+
+                $timeout(function(){
+                    $location.path(pathToRedirect());
+                }, 500);
             };
 
             function pathToRedirect() {

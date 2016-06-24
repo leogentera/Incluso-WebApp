@@ -15,12 +15,13 @@ angular
 
             var _loadedResources = false;
             var _pageLoaded = false;
-            //$rootScope.spinnerAvatar = false; //Type avatar spinner
+
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-            
+            $scope.profileImage = "";
+
             var activity_identifier = "0000";
             var currentUserProfile = getCurrentUserProfile();
             
@@ -57,9 +58,7 @@ angular
             $scope.stageProgress = 0;
 
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
-            if (!$scope.user.profileimageurl) {
-                $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
-            }
+            getImageFromAssets();
             
             var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
             if (profileData && profileData.stars) {
@@ -102,6 +101,14 @@ angular
             $scope.logout = function () {
                 logout($http, $scope, $location);
             };
+            
+            
+            function getImageFromAssets() {
+                getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function(niceImageUrl) {                
+                    $scope.profileImage = niceImageUrl;
+                     //$scope.$digest();
+                });
+            }
             
             function getCurrentUserProfile() {
                 
@@ -191,10 +198,8 @@ angular
                         $scope.course = JSON.parse(localStorage.getItem("course"));
                         $scope.currentStage = getCurrentStage();                    
                         _setLocalStorageItem("currentStage", $scope.currentStage);
-                        
-                        getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
-                            $scope.user.profileimageurl = niceImageUrl;
-                        });
+
+                        getImageFromAssets();
 
                         var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         for(var lb = 0; lb < leaderboard.length; lb++) {
@@ -252,8 +257,18 @@ angular
                         'name': "avatar_" + $scope.user.userId + ".png",
                         'downloadLink': $scope.user.profileimageurl
                          };
+
                         
-                        saveLocalImages(images);
+                        saveLocalImages(images, function(){
+                            var profileImageUrl = $scope.user.profileimageurl;
+                            getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", profileImageUrl, function(niceImageUrl) {                
+                                $scope.profileImage = niceImageUrl;
+                                $scope.$digest();
+                            });
+
+                        });
+                        
+                        
                         var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                         
                         if(profile) {
