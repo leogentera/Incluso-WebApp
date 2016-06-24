@@ -19,6 +19,7 @@
     </section>
     <section class="filter-section form">
         <span class="icomoon icon-list"></span>
+        <span class="icomoon icon-arrow"></span>
         <label class="form-control form-control-lg dual-control theme-default"
             ng-class="{'placeholder': filter.name == ''}"
             ng-click="selectClick(items, 'filter')"
@@ -27,7 +28,6 @@
                 class="form-control form-control-lg theme-default" ng-model="filter" ng-change="updateFilter();" ng-show="!mobilecheck()"> 
                 <option value="" selected="true" disabled="disabled">Filtrar contenido por...</option>
         </select>
-        <span class="icomoon icon-arrow"></span>
     </section>
     <section class="txt-renglon distribuido" ng-disabled="!hasCommunityAccess">
       <a href="" class="icon-circle" ng-click="collapseCommunityButtomsTrigger('isTextCollapsed')" ng-class="{'active': !communityModals['isTextCollapsed']}">
