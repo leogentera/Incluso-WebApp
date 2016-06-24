@@ -133,9 +133,10 @@ angular
                         $rootScope.sidebar = !$rootScope.sidebar;
                     }
 
-                    if (!isQuiz) {
-                        $location.path(url);
-                    }
+                    $location.path(url);
+                    //if (!isQuiz) {
+                    //    $location.path(url);
+                    //}
                 }
             };
 
@@ -438,9 +439,9 @@ angular
 
     $scope.cancelModal = function () {
         $modalInstance.dismiss('cancel');
-
-        $timeout(function(){
-            $location.path($rootScope.quizUrl);
-        }, 200);
+        //
+        //$timeout(function(){
+        //    $location.path($rootScope.quizUrl);
+        //}, 200);
     };
 });

@@ -7,7 +7,7 @@
                         <h3 ng-class="main-title">{{content.faqs_title}}</h3>
                         <p>{{content.faqs_content}}</p>
                         <ul class="list-group separate-items">
-                            <li class="list-group-item" ng-repeat="faqQuestion in FAQsContent">
+                            <li class="list-group-item" ng-repeat="faqQuestion in FAQsContent" id="{{'anchor' + $index}}">
                                 <a href="" ng-click="goToDetail($index)">
                                     <span>{{faqQuestion.question}}</span>
                                     <span class="icomoon icon-arrow-slim-right"></span>
@@ -25,11 +25,12 @@
                                 <p>
                                     {{faqDetail.answer}}
                                 </p>
-                                <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="showList()">{{content.faq_detail_button}}</a>
+                                <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="showList()" ng-bind="content.faq_detail_button"></a>
                             </section>
                         </div>
                     </div>
                 </div>
+                <a role="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="outsideDetails" ng-click="backToDashboard()" ng-bind="content.faq_detail_button"></a>
             </div>
         </section>
     </article>

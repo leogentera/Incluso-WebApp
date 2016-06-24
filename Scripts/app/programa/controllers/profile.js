@@ -25,22 +25,27 @@ angular
             $scope.$emit('scrollTop');
             $scope.$emit('ShowPreloader');
             $scope.mobilecheck=_comboboxCompat;
+            $rootScope.loaderForLogin = false;
 
             $scope.passwordChanged = false;
 
-            $scope.selectClick = function (items, field) {
+            $scope.selectClick = function (items, field, listName) {
                 var selectItems = items.slice();
                 selectItems.unshift(field);
+
                 if (window.mobilecheck()) {
                     cordova.exec(function (data) {
                         var evaluate = '$scope.model.' + field + '="' + items [data.which - 1] + '"';
                         eval(evaluate);
+
+                        if (listName) {
+                            $scope.lookForNinguno(listName);
+                        }
+
                         $scope.$digest();
                     }, function () {
                     }, "CallToAndroid", "showCombobox", selectItems);
                 }
-
-
             };
 
             $scope.changePasswordModel = {
@@ -511,7 +516,6 @@ angular
                         for (j = 0; j < n; j++) {
                             if (arr[j].replace(/\r?\n|\r/g, "").trim().toLowerCase() == orderedArr[i]) {
                                 finalArr.push(arr[j].replace(/\r?\n|\r/g, "").trim());
-
                             }
                         }
                     }
@@ -735,6 +739,7 @@ angular
 
                                 getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
                                     $scope.model.profileimageurl = niceImageUrl;
+                                    $scope.$digest();
                                 });
 
                             });
@@ -879,12 +884,19 @@ angular
                 };
 
                 $scope.edit = function () {
+                    $scope.loaderRandom();
                     $scope.$emit('ShowPreloader');
-                    $location.path("/Perfil/Editar/" + $scope.userId);
+                    $timeout(function(){
+                        $location.path("/Perfil/Editar/" + $scope.userId);
+                    }, 500);
                 };
 
                 $scope.privacySettings = function () {
-                    $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null);
+                    $scope.loaderRandom();
+                    $scope.$emit('ShowPreloader');
+                    $timeout(function(){
+                        $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null);
+                    }, 500);
                 };
 
                 $scope.navigateToDashboard = function () {
@@ -1484,135 +1496,134 @@ angular
                                     break;
                                 case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
 
-                                        if (!_.isEqual($scope.model.favoriteSports, originalProfile.favoriteSports)) {
-                                            edited = true;console.log("1 ****");
-                                            quizMisGustos = true;
-                                        }
+                                    if (!_.isEqual($scope.model.favoriteSports, originalProfile.favoriteSports)) {
+                                        edited = true;console.log("1 ****");
+                                        quizMisGustos = true;
+                                    }
 
-                                        if (!_.isEqual($scope.model.artisticActivities, originalProfile.artisticActivities)) {
-                                            edited = true;console.log("2 ****");
-                                            quizMisGustos = true;
-                                        }
+                                    if (!_.isEqual($scope.model.artisticActivities, originalProfile.artisticActivities)) {
+                                        edited = true;console.log("2 ****");
+                                        quizMisGustos = true;
+                                    }
 
-                                        if (!_.isEqual($scope.model.hobbies, originalProfile.hobbies)) {
-                                            edited = true;console.log("3 ****");
-                                            quizMisGustos = true;
-                                        }
+                                    if (!_.isEqual($scope.model.hobbies, originalProfile.hobbies)) {
+                                        edited = true;console.log("3 ****");
+                                        quizMisGustos = true;
+                                    }
 
-                                        if (!_.isEqual($scope.model.social, originalProfile.social)) {
-                                            edited = true;console.log("4 ****");
-                                            quizMisGustos = true;
-                                        }
+                                    if (!_.isEqual($scope.model.social, originalProfile.social)) {
+                                        edited = true;console.log("4 ****");
+                                        quizMisGustos = true;
+                                    }
 
-                                        if (!_.isEqual($scope.model.emprendedor, originalProfile.emprendedor)) {
-                                            edited = true;console.log("5 ****");
-                                            quizMisGustos = true;
-                                        }
+                                    if (!_.isEqual($scope.model.emprendedor, originalProfile.emprendedor)) {
+                                        edited = true;console.log("5 ****");
+                                        quizMisGustos = true;
+                                    }
 
-                                        if (!_.isEqual($scope.model.talents, originalProfile.talents)) {
-                                            edited = true;console.log("6 ****");
-                                            quizMisCualidades = true;
-                                        }
+                                    if (!_.isEqual($scope.model.talents, originalProfile.talents)) {
+                                        edited = true;console.log("6 ****");
+                                        quizMisCualidades = true;
+                                    }
 
-                                        if (!_.isEqual($scope.model.values, originalProfile.values)) {
-                                            edited = true;console.log("7 ****");
-                                            quizMisCualidades = true;
-                                        }
+                                    if (!_.isEqual($scope.model.values, originalProfile.values)) {
+                                        edited = true;console.log("7 ****");
+                                        quizMisCualidades = true;
+                                    }
 
-                                        if (!_.isEqual($scope.model.habilities, originalProfile.habilities)) {
-                                            edited = true;console.log("8 ****");
-                                            quizMisCualidades = true;
-                                        }
-                                        if (!arraysAreEqual($scope.model.inspirationalCharacters, originalProfile.inspirationalCharacters)) {
-                                            edited = true;
-                                        }
+                                    if (!_.isEqual($scope.model.habilities, originalProfile.habilities)) {
+                                        edited = true;console.log("8 ****");
+                                        quizMisCualidades = true;
+                                    }
+                                    if (!arraysAreEqual($scope.model.inspirationalCharacters, originalProfile.inspirationalCharacters)) {
+                                        edited = true;
+                                    }
 
-                                        if (edited && $scope.logOfSections[i].status == 1) {
-                                            $scope.logOfSections[i].visited = true;
-                                            showResultsPage = true;
-                                            edited = false;
-                                        }
+                                    if (edited && $scope.logOfSections[i].status == 1) {
+                                        $scope.logOfSections[i].visited = true;
+                                        showResultsPage = true;
+                                        edited = false;
+                                    }
 
-                                        break;
-                                    case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
-                                        if ($scope.model.iLiveWith !== originalProfile.iLiveWith) {
-                                            edited = true;
-                                        }
-                                        if (!_.isEqual($scope.model.mainActivity, originalProfile.mainActivity)) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.level !== originalProfile.currentStudies.level) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.grade !== originalProfile.currentStudies.grade) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.period !== originalProfile.currentStudies.period) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.children !== originalProfile.children) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.gotMoneyIncome !== originalProfile.gotMoneyIncome) {
-                                            edited = true;
-                                        }
-                                        if (!_.isEqual($scope.model.moneyIncome, originalProfile.moneyIncome)) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.medicalCoverage !== originalProfile.medicalCoverage) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.medicalInsurance !== originalProfile.medicalInsurance) {
-                                            edited = true;
-                                        }
+                                    break;
+                                case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
+                                    if ($scope.model.iLiveWith !== originalProfile.iLiveWith) {
+                                        edited = true;
+                                    }
+                                    if (!_.isEqual($scope.model.mainActivity, originalProfile.mainActivity)) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.level !== originalProfile.currentStudies.level) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.grade !== originalProfile.currentStudies.grade) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.period !== originalProfile.currentStudies.period) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.children !== originalProfile.children) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.gotMoneyIncome !== originalProfile.gotMoneyIncome) {
+                                        edited = true;
+                                    }
+                                    if (!_.isEqual($scope.model.moneyIncome, originalProfile.moneyIncome)) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.medicalCoverage !== originalProfile.medicalCoverage) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.medicalInsurance !== originalProfile.medicalInsurance) {
+                                        edited = true;
+                                    }
 
-                                        if (edited && $scope.logOfSections[i].status == 1) {
-                                            $scope.logOfSections[i].visited = true;
-                                            showResultsPage = true;
-                                            edited = false;
-                                        }
+                                    if (edited && $scope.logOfSections[i].status == 1) {
+                                        $scope.logOfSections[i].visited = true;
+                                        showResultsPage = true;
+                                        edited = false;
+                                    }
 
-                                        break;
-                                    case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
-                                        if (!_.isEqual($scope.model.knownDevices, originalProfile.knownDevices)) {
-                                            edited = true;
-                                        }
-                                        if (!_.isEqual($scope.model.ownDevices, originalProfile.ownDevices)) {
-                                            edited = true;
-                                        }
-                                        if (!_.isEqual($scope.model.phoneUsage, originalProfile.phoneUsage)) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.playVideogames !== originalProfile.playVideogames) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.videogamesFrecuency !== originalProfile.videogamesFrecuency) {
-                                            edited = true;
-                                        }
-                                        if ($scope.model.videogamesHours !== originalProfile.videogamesHours) {
-                                            edited = true;
-                                        }
-                                        if (!_.isEqual($scope.model.kindOfVideogames, originalProfile.kindOfVideogames)) {
-                                            edited = true;
-                                        }
-                                        if (!_.isEqual($scope.model.favoriteGames, originalProfile.favoriteGames)) {
-                                            edited = true;
-                                        }
+                                    break;
+                                case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
+                                    if (!_.isEqual($scope.model.knownDevices, originalProfile.knownDevices)) {
+                                        edited = true;
+                                    }
+                                    if (!_.isEqual($scope.model.ownDevices, originalProfile.ownDevices)) {
+                                        edited = true;
+                                    }
+                                    if (!_.isEqual($scope.model.phoneUsage, originalProfile.phoneUsage)) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.playVideogames !== originalProfile.playVideogames) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.videogamesFrecuency !== originalProfile.videogamesFrecuency) {
+                                        edited = true;
+                                    }
+                                    if ($scope.model.videogamesHours !== originalProfile.videogamesHours) {
+                                        edited = true;
+                                    }
+                                    if (!_.isEqual($scope.model.kindOfVideogames, originalProfile.kindOfVideogames)) {
+                                        edited = true;
+                                    }
+                                    if (!_.isEqual($scope.model.favoriteGames, originalProfile.favoriteGames)) {
+                                        edited = true;
+                                    }
 
-                                        if (edited && $scope.logOfSections[i].status == 1) {
-                                            $scope.logOfSections[i].visited = true;
-                                            showResultsPage = true;
-                                            edited = false;
-                                        }
+                                    if (edited && $scope.logOfSections[i].status == 1) {
+                                        $scope.logOfSections[i].visited = true;
+                                        showResultsPage = true;
+                                        edited = false;
+                                    }
 
-                                        break;
+                                    break;
                                 default:
                                     break;
                             }
                         }
                     }
 
-                    //////
                     $scope.accessedSubsection = false;
                     return showResultsPage;
                 }
@@ -1879,25 +1890,26 @@ angular
 
                         syncWithProfile(userKeysContent, activityObject, otherAnswerQuiz, 70);
                     }
-
-                        if (showResultsPage) {
-                            $scope.currentPage = 12; //Finally, show the results page.
-                        }
-
-                        //$scope.visitedSections = null; //Clean record of visited sections.
-                        ClearLocalStorage("originalProfile/");
-                    }
+                }
 
                 $scope.saveAccountSettings = function () {
-                    saveUserProfile();
+                    $scope.loaderRandom();
+                    $scope.$emit('ShowPreloader');
+                    $timeout(function(){
+                        saveUserProfile();
+                    }, 500);
                 };
 
                 $scope.save = function () {
+                    $scope.loaderRandom();
+                    $scope.$emit('ShowPreloader');
 
-                    if (!$scope.accessedSubsection) {
-                        $location.path("Perfil/" + $scope.userId);
-                        return;
-                    }
+                    $timeout(function(){
+                        if (!$scope.accessedSubsection) {
+                            $location.path("Perfil/" + $scope.userId);
+                            return;
+                        }
+                    }, 500);
 
                     $scope.model.currentStudies = {}; //From "Socioeconómicos"
                     $scope.model.currentStudies.level = $scope.model.level;
@@ -1907,7 +1919,8 @@ angular
                     var validationResult = validateRestrictions();  //Valid if validateModel() returns true.
 
                     if (validationResult) {
-                        $scope.$emit('ShowPreloader');
+                        //$scope.loaderRandom();
+                        //$scope.$emit('ShowPreloader');
                         $timeout(function(){
                             $scope.model.modelState.isValid = true;
                             deleteRepeatedValues();   //Validates for required restrictions.
@@ -1915,6 +1928,7 @@ angular
                         }, 500);
 
                     } else {
+                        $scope.$emit('HidePreloader');
                         $scope.model.modelState.isValid = false;
                         $scope.$emit('scrollTop');
                     }
@@ -1934,8 +1948,11 @@ angular
                                 }
 
                                 //$scope.$emit('HidePreloader');
+                                ClearLocalStorage("originalProfile/");
+                                $scope.visitedSections = []; //Clean record of visited sections.
 
                                 if (showResultsPage) {
+                                    $scope.$emit('HidePreloader');
                                     $scope.currentPage = 12; //Finally, show the results page.
                                 } else {
                                     $timeout(function(){
@@ -1950,7 +1967,7 @@ angular
                         function (obj) {
                             //Save profile fail...
                             $scope.$emit('HidePreloader');
-
+                            $scope.visitedSections = []; //Clean record of visited sections.
                             if (obj.statusCode == 408) {//Request Timeout
                                 $scope.openModal();
                             }
@@ -2068,6 +2085,7 @@ angular
                     }
                 }
 
+
                 function validateAllFieldsCompleted() {
                     if ($scope.userCourse && $scope.userCourse.activities) {
 
@@ -2115,6 +2133,7 @@ angular
                     });
                 };
 
+
                 function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                     var result = false;
 
@@ -2128,6 +2147,7 @@ angular
 
                     return result;
                 }
+
 
                 function assignmentMiPersonalidad() {
                     var result = false;
@@ -2352,6 +2372,7 @@ angular
 
                     if (canI) {
                         $scope.model[param].splice(index, 1);
+                        $scope.lookForNinguno(param);
                     }
                 };
 
@@ -2360,6 +2381,7 @@ angular
 
                     if (canI) {
                         $scope.model[param].splice(index, 1);
+                        $scope.lookForNinguno(param);
                     }
                 };
                 // **************** End of Section for for MIS GUSTOS & MIS CUALIDADES **************************
@@ -2373,19 +2395,8 @@ angular
                     $scope.model[param].splice(index, 1);
                 };
 
-                $scope.addEmail = function () {
-                    var existingEmail = $scope.model.email;
-                    if (existingEmail) {
-                        $scope.model.additionalEmails.push(new String());
-                    }
-                };
-
                 $scope.logout = function () {
                     logout($http, $scope, $location);
-                };
-
-                $scope.deleteAdditionalEmails = function (index) {
-                    $scope.model.additionalEmails.splice(index, 1);
                 };
 
                 encodeImageUri = function (imageUri, callback) {
@@ -2449,7 +2460,7 @@ angular
                     if (!$scope.avatarInfo[0]) {
                         setEmptyAvatar();
                     }
-                    var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Ling��stica' : $scope.model.shield));
+                    var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield));
                     var avatarInfoForGameIntegration = {
                         "userId": "" + $scope.model.id,
                         "alias": $scope.model.username,
@@ -2468,6 +2479,7 @@ angular
                     };
 
                     try {
+                        $scope.loaderRandom();
                         $rootScope.loading = true; //Start spinner
                         $timeout(function () {
                             cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
@@ -2492,28 +2504,8 @@ angular
                     }
                 };
 
-                function SuccessAvatar(data) {
-                    //$rootScope.spinnerAvatar = true; //Type avatar spinner
-                    //$rootScope.loading = true; //Start spinner
-                    //
-                    //$timeout(function () {
-                    //    if(!$("#spinner").is(':visible')) {
-                    //        $rootScope.spinnerAvatar = true;
-                    //    }
-                    //}, 200);
-                    //
-                    //$timeout(function(){
-                    //    $rootScope.spinnerAvatar = false;
-                    //    $rootScope.loaderForLogin = false; //For Login Preloader
-                    //    $rootScope.loading = true;
-                    //    $scope.loaderRandom(); //For Generic Preloader
-                    //
-                    //    $timeout(function(){
-                    //        $rootScope.spinnerAvatar = false;
-                    //        $rootScope.loading = false; //Hide spinner
-                    //    }, 2000);
-                    //}, 1500);
 
+                function SuccessAvatar(data) {
                     //the next fields should match the database in moodle
                     $scope.avatarInfo = [{
                         "userid": data.userId,
@@ -2533,7 +2525,6 @@ angular
                         "alias": $scope.model.username,
                         "escudo": $scope.model.shield
                     }];
-
                     uploadAvatar($scope.avatarInfo);
                     _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
                 }

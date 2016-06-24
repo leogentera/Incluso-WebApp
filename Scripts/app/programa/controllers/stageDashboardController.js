@@ -255,9 +255,10 @@ angular
                             $rootScope.openQuizModal();  // turns on Quiz Modal
                         }
 
-                        if (!isQuiz) {
-                            $location.path(url);
-                        }
+                        $location.path(url);
+                        //if (!isQuiz) {
+                        //    $location.path(url);
+                        //}
 
                     } else {
                         $scope.openUpdateAppModal();
