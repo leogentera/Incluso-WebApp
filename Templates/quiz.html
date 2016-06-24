@@ -133,7 +133,7 @@
                                             <div class="clearfix">
                                                 <span>{{placeholder[$parent.$index]}} {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)"
+                                                   ng-click="deleteItem('essay' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status >= 0">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
@@ -156,7 +156,7 @@
                             </ul>
                             <div class="txt-renglon">
                                 <a href="" class="btn btn-lg btn-block btn-add"
-                                   ng-click="addAbility('essay' + $index, $index)"
+                                   ng-click="addItem('essay' + $index, $index)"
                                    ng-hide="setReadOnly">
                                     <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
                                 </a>
@@ -174,7 +174,7 @@
                                             <div class="clearfix">
                                                 <span>{{placeholder[$parent.$index]}} {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deleteAbility('shortanswer' + $parent.$index, $parent.$index, $index)"
+                                                   ng-click="deleteItem('shortanswer' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status >= 0">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
@@ -197,7 +197,7 @@
                             </ul>
                             <div class="txt-renglon">
                                 <a href="" class="btn btn-lg btn-block btn-add"
-                                   ng-click="addAbility('shortanswer' + $index, $index)"
+                                   ng-click="addItem('shortanswer' + $index, $index)"
                                    ng-hide="setReadOnly">
                                     <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
                                 </a>
