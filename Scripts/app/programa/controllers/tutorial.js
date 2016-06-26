@@ -218,8 +218,10 @@ angular
             };
 
             if ($routeParams.retry) {
+                 $scope.$emit('ShowPreloader');
                 try {
                     document.addEventListener("deviceready", function () {
+                         $scope.$emit('ShowPreloader');
                         cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])
                     }, false);
                 }
