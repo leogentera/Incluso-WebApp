@@ -30,8 +30,13 @@ angular
             var userId = _getItem("userId");
                         
             function initialLoading(){
-                $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });
-                getPost();
+                if ($routeParams.usernotificationId == "undefined" || $routeParams.usernotificationId == "-1") {
+                    $scope.notification = _.find(userNotifications, function(not){return not.notificationid == $routeParams.notificationId;});                    
+                }else{
+                    $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId;});
+                    getPost();
+                }
+
             }
             
             function getPost() {
@@ -52,7 +57,7 @@ angular
 
                 moodleFactory.Services.GetUserNotification(userId, courseid, $scope.user.token, function () {
                     var userNotifications = JSON.parse(localStorage.getItem("notifications"));
-                    $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });
+                    $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId; });
                     _readNotification(userId, $routeParams.id, userNotifications);
                     getPost();
                 }, function(){}, true);
