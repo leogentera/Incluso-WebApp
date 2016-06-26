@@ -1355,25 +1355,27 @@ angular
             }
 
             function addHeightEssay(elem) {
-                var elemHeight = angular.element("#" + elem + "> ul > li").height() + 12;
+                var elemWidth = $("#" + elem).find("li").width();
+                var elemHeight = $("#" + elem).find("li").height();
+                var containerWidth = angular.element("div.owl-wrapper-outer").width();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-                angular.element(".owl-wrapper-outer").css('height', containerHeight + elemHeight);
+                angular.element(".owl-wrapper-outer").css('height', containerHeight + 0.462*containerWidth);
             }
 
             function removeHeightEssay(elem) {
-                var elemHeight = angular.element("#" + elem + "> ul > li").height() + 12;
+                var containerWidth = angular.element("div.owl-wrapper-outer").width();
                 var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                angular.element("div.owl-wrapper-outer").css('height', containerHeight - elemHeight);
+                angular.element("div.owl-wrapper-outer").css('height', containerHeight -  0.462*containerWidth);
             }
 
             //This function is activated from Template, with ESSAY type questions
-            $scope.addAbility = function (elem, index) {
+            $scope.addItem = function (elem, index) {
                 addHeightEssay(elem);
                 $scope.answers[index].push("");
             };
 
             //This function is activated from Template, with ESSAY type questions
-            $scope.deleteAbility = function (elem, index, innerIndex) {
+            $scope.deleteItem = function (elem, index, innerIndex) {
                 removeHeightEssay(elem);
                 $scope.answers[index].splice(innerIndex, 1);
             };

@@ -10,7 +10,8 @@ FAQsModule
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+        '$anchorScroll',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $anchorScroll) {
             var _loadedResources = false;
             var _pageLoaded = true;
 
@@ -24,6 +25,8 @@ FAQsModule
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+            $scope.outsideDetails = true;
+
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
             };
@@ -58,14 +61,23 @@ FAQsModule
                 $scope.showingList = false;
                 $scope.FAQsContent[index].showingDetail = true;
                 $scope.showingDetailIndex = index;
-            }
+                $scope.outsideDetails = false;
+            };
 
             $scope.showList = function()
             {
                 $scope.FAQsContent[$scope.showingDetailIndex].showingDetail = false;
                 $scope.showingDetailIndex = -1;
                 $scope.showingList = true;
-            }
+                $scope.outsideDetails = true;
+            };
 
-
+            $scope.backToDashboard = function()
+            {
+                $scope.loaderRandom();
+                $rootScope.loading = true; //Start spinner
+                $timeout(function(){
+                    $location.path('/ProgramaDashboard');
+                }, 200);
+            };
 }]);

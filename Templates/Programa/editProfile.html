@@ -15,7 +15,6 @@
             <div class="user-avatar">
                 <figure>
                     <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive"/>
-                    <!--figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption-->
                 </figure>
                 <a type="button" id="editProfile" ng-click="avatar()" class="btn">
                     <span class="icomoon icon-edit"></span>
@@ -150,21 +149,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <!--<div class="form-group theme-form">
-                                                        <div class="form-group-control">
-                                                            <input
-                                                            type="text"
-                                                            name="alias"
-                                                            class="form-control form-control-lg theme-form"
-                                                            placeholder="Alias"
-                                                            ng-model="model.alias" required />
-                                                        </div>
-                                                    </div>-->
-
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.gender == ''}"
+                                                            ng-class="{'placeholder-1': model.gender == ''}"
                                                             ng-click="selectClick(genderItems, 'gender')"
                                                             ng-show="mobilecheck()">{{model.gender || 'Sexo'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -181,27 +169,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <!--
-                                                    <div class="form-group theme-form">
-                                                        <div class="form-group-control custom-caret-wrapper">
-                                                            <select class="form-control form-control-lg theme-form"
-                                                                    ng-model="model.gender"
-                                                                    ng-options="item for item in genderItems"
-                                                                    ng-init="model.gender == null"
-                                                                    ng-class="{'selected': model.gender.length != 0 && model.gender != null}">
-                                                                <option value="" ng-disabled="!!model.gender">
-                                                                    Sexo
-                                                                </option>
-                                                            </select>
-                                                            <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                                        </div>
-                                                    </div>
-                                                    -->
-
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.birthCountry == ''}"
+                                                            ng-class="{'placeholder-1': model.birthCountry == ''}"
                                                             ng-click="selectClick(countryItems, 'birthCountry')"
                                                             ng-show="mobilecheck()">{{model.birthCountry || 'País de nacimiento'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -227,10 +198,6 @@
                                                                    ng-model="birthdate_Dateformat" minlength="10"
                                                                    maxlength="10" aria-describedby="birthDateAddOn"
                                                                    placeholder="Fecha de nacimiento" required/>
-
-                                                            <!-- ng-change="birthdayChanged(this)" -->
-                                                            <!-- <span class="{{showPlaceHolder == true ? 'custom-placeholder form-control-lg show' : 'custom-placeholder form-control-lg hidden'}}" >Fecha de nacimiento</span> -->
-
                                                         </div>
                                                     </div>
 
@@ -245,7 +212,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.maritalStatus == ''}"
+                                                            ng-class="{'placeholder-1': model.maritalStatus == ''}"
                                                             ng-click="selectClick(maritalStatusItems, 'maritalStatus')"
                                                             ng-show="mobilecheck()">{{model.maritalStatus || 'Estado civil'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -272,14 +239,14 @@
                                                                 <h5>
                                                                     <span>Estudio {{model.studies.indexOf(s) + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteStudy($index)">
+                                                                            ng-click="deleteItem('studies', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.studies[$index].school == ''}"
+                                                                    ng-class="{'placeholder-1': !model.studies[$index].school}"
                                                                     ng-click="selectClick(studiesList, 'studies['+$index+'].school')"
                                                                     ng-show="mobilecheck()">{{model.studies[$index].school || 'Nivel'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -297,7 +264,7 @@
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.studies[$index].levelOfStudies == ''}"
+                                                                    ng-class="{'placeholder-1': !model.studies[$index].levelOfStudies}"
                                                                     ng-click="selectClick(educationStatusList, 'studies['+$index+'].levelOfStudies')"
                                                                     ng-show="mobilecheck()">{{model.studies[$index].levelOfStudies || 'Estado'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -316,7 +283,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addStudy()">
+                                                            ng-click="addObject('studies')">
                                                         <span class="icomoon icon-plus"></span>Agregar nuevo estudio...
                                                     </button>
                                                 </section>
@@ -378,7 +345,7 @@
 
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.address.country == ''}"
+                                                            ng-class="{'placeholder-1': model.address.country == ''}"
                                                             ng-click="selectClick(countryItems, 'address.country')"
                                                             ng-show="mobilecheck()">{{model.address.country || 'País'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -400,7 +367,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.address.city == ''}"
+                                                            ng-class="{'placeholder-1': model.address.city == ''}"
                                                             ng-click="selectClick(stateItems, 'address.city')"
                                                             ng-show="mobilecheck()">{{model.address.city || 'Estado'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -482,13 +449,13 @@
                                                                 <h5>
                                                                     <span>Teléfono {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deletePhone($index)">
+                                                                            ng-click="deleteItem('phones', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.phones[$index].phone == ''}"
+                                                                    ng-class="{'placeholder-1': !model.phones[$index].phone}"
                                                                     ng-click="selectClick(phoneTypeList, 'phones['+$index+'].phone')"
                                                                     ng-show="mobilecheck()">{{model.phones[$index].phone || 'Tipo de teléfono'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -515,7 +482,7 @@
                                                     </ul>
 
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addPhone()">
+                                                            ng-click="addObject('phones')">
                                                         <span class="icomoon icon-plus"></span>Agregar número...
                                                     </button>
                                                 </section>
@@ -526,16 +493,15 @@
                                                         <li ng-repeat="sn in model.socialNetworks track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Red Social {{model.socialNetworks.indexOf(sn) + 1}}</span> -->
                                                                     <span>Red Social {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteSocialNetwork($index)">
+                                                                            ng-click="deleteItem('socialNetworks', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.socialNetworks[$index].socialNetwork == ''}"
+                                                                    ng-class="{'placeholder-1': !model.socialNetworks[$index].socialNetwork}"
                                                                     ng-click="selectClick(socialNetworksList, 'socialNetworks['+$index+'].socialNetwork')"
                                                                     ng-show="mobilecheck()">{{model.socialNetworks[$index].socialNetwork || 'Red social'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -561,7 +527,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addSocialNetwork()">
+                                                            ng-click="addObject('socialNetworks')">
                                                         <span class="icomoon icon-plus"></span>Agregar nueva red...
                                                     </button>
                                                 </section>
@@ -620,10 +586,9 @@
                                                         <li ng-repeat="fc in model.familiaCompartamos">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <!-- <span>Familiar Compartamos {{model.familiaCompartamos.indexOf(fc) + 1}}</span>  -->
                                                                     <span>Familiar Compartamos {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteFamiliaCompartamos($index)">
+                                                                            ng-click="deleteItem('familiaCompartamos', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -642,7 +607,7 @@
                                                                 </div>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.familiaCompartamos[$index].relationship == ''}"
+                                                                    ng-class="{'placeholder-1': !model.familiaCompartamos[$index].relationship}"
                                                                     ng-click="selectClick(familiaCompartamosList, 'familiaCompartamos['+$index+'].relationship')"
                                                                     ng-show="mobilecheck()">{{model.familiaCompartamos[$index].relationship || 'Parentesco'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -662,7 +627,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addFamiliaCompartamos()">
+                                                            ng-click="addObject('familiaCompartamos')">
                                                         <span class="icomoon icon-plus"></span>Agregar familiar...
                                                     </button>
                                                 </section>
@@ -724,7 +689,7 @@
                                                                 <h5>
                                                                     <span>Deporte {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteFavoriteSports($index)">
+                                                                            ng-click="removeItem70('favoriteSports', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -766,7 +731,7 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteArtisticActivities($index)">
+                                                                            ng-click="removeItem70('artisticActivities', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -807,7 +772,7 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteHobbies($index)">
+                                                                            ng-click="removeItem70('hobbies', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -848,7 +813,7 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteSocial($index)">
+                                                                            ng-click="removeItem70('social', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -889,7 +854,7 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteOthers($index)">
+                                                                            ng-click="removeItem70('emprendedor', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -969,7 +934,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <fieldset class="my-profile-form">
-                                                <h5>Mis cualidades</h5>
+                                                <h5>Mis habilidades</h5>
                                                 <section>
                                                     <h4>Habilidades</h4>
                                                     <ul class="block-list">
@@ -978,7 +943,7 @@
                                                                 <h5>
                                                                     <span>Habilidad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteTalents($index)">
+                                                                            ng-click="removeItem71('talents', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1019,7 +984,7 @@
                                                                 <h5>
                                                                     <span>Destreza {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteValue($index)">
+                                                                            ng-click="removeItem71('values', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1060,7 +1025,7 @@
                                                                 <h5>
                                                                     <span>Actitud {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteHabilitie($index)">
+                                                                            ng-click="removeItem71('habilities', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1153,14 +1118,14 @@
                                                                 <h5>
                                                                     <span>Personaje {{model.inspirationalCharacters.indexOf(p) + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteInspirationalCharacter($index)">
+                                                                            ng-click="deleteItem('inspirationalCharacters', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
 
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.inspirationalCharacters[$index].characterType == ''}"
+                                                                    ng-class="{'placeholder-1': !model.inspirationalCharacters[$index].characterType}"
                                                                     ng-click="selectClick(inspirationalCharactersList, 'inspirationalCharacters['+$index+'].characterType')"
                                                                     ng-show="mobilecheck()">{{model.inspirationalCharacters[$index].characterType || 'Tipo de personaje'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1188,7 +1153,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addInspirationalCharacter()">
+                                                            ng-click="addObject('inspirationalCharacters')">
                                                         <span class="icomoon icon-plus"></span>Agregar personaje...
                                                     </button>
 
@@ -1251,7 +1216,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.iLiveWith == ''}"
+                                                            ng-class="{'placeholder-1': model.iLiveWith == ''}"
                                                             ng-click="selectClick(iLiveWithList, 'iLiveWith')"
                                                             ng-show="mobilecheck()">{{model.iLiveWith || 'Vivo con'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1277,12 +1242,12 @@
                                                                 <h5>
                                                                     <span>Mi actividad principal {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteMainActivity($index)">
+                                                                            ng-click="deleteItem('mainActivity', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
                                                                 <label class="form-control form-control-lg theme-form"
-                                                                ng-class="{'placeholder': model.mainActivity[$index] == ''}"
+                                                                ng-class="{'placeholder-1': model.mainActivity[$index] == ''}"
                                                                 ng-click="selectClick(mainActivityList, 'mainActivity['+$index+']')"
                                                                 ng-show="mobilecheck()">{{model.mainActivity[$index] || 'Actividad principal'}}</label>
                                                                 <select class="form-control form-control-lg theme-form"
@@ -1299,7 +1264,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addMainActivity()">
+                                                            ng-click="addItem('mainActivity')">
                                                         <span class="icomoon icon-plus"></span>Agregar actividad
                                                         principal...
                                                     </button>
@@ -1312,7 +1277,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.level == ''}"
+                                                            ng-class="{'placeholder-1': model.level == ''}"
                                                             ng-click="selectClick(levelList, 'level')"
                                                             ng-show="mobilecheck()">{{model.level || 'Nivel'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1329,7 +1294,7 @@
 
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.grade == ''}"
+                                                            ng-class="{'placeholder-1': model.grade == ''}"
                                                             ng-click="selectClick(gradeList, 'grade')"
                                                             ng-show="mobilecheck()">{{model.grade || 'Grado'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1346,7 +1311,7 @@
 
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.period == ''}"
+                                                            ng-class="{'placeholder-1': model.period == ''}"
                                                             ng-click="selectClick(periodList, 'period')"
                                                             ng-show="mobilecheck()">{{model.period || 'Periodo'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1418,7 +1383,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.children == ''}"
+                                                            ng-class="{'placeholder-1': model.children == ''}"
                                                             ng-click="selectClick(childrenList, 'children')"
                                                             ng-show="mobilecheck()">{{model.children || '¿Tengo hijos?'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1442,7 +1407,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.gotMoneyIncome == ''}"
+                                                            ng-class="{'placeholder-1': model.gotMoneyIncome == ''}"
                                                             ng-click="selectClick(gotMoneyIncomeList, 'gotMoneyIncome')"
                                                             ng-show="mobilecheck()">{{model.gotMoneyIncome || '¿Recibo ingresos?'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1468,13 +1433,13 @@
                                                                 <h5>
                                                                     <span>Ingreso {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteMoneyIncome($index)">
+                                                                            ng-click="deleteItem('moneyIncome', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.moneyIncome[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.moneyIncome[$index] == ''}"
                                                                     ng-click="selectClick(moneyIncomeList, 'moneyIncome['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.moneyIncome[$index] || 'Ingreso'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1494,7 +1459,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addMoneyIncome()">
+                                                            ng-click="addItem('moneyIncome')">
                                                         <span class="icomoon icon-plus"></span>Agregar ingreso...
                                                     </button>
                                                 </section>
@@ -1505,7 +1470,7 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.medicalCoverage == ''}"
+                                                            ng-class="{'placeholder-1': model.medicalCoverage == ''}"
                                                             ng-click="selectClick(medicalCoverageList, 'medicalCoverage')"
                                                             ng-show="mobilecheck()">{{model.medicalCoverage || '¿Cuento con seguro médico?'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1523,7 +1488,7 @@
 
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <label class="form-control form-control-lg theme-form"
-                                                            ng-class="{'placeholder': model.medicalInsurance == ''}"
+                                                            ng-class="{'placeholder-1': model.medicalInsurance == ''}"
                                                             ng-click="selectClick(medicalInsuranceList, 'medicalInsurance')"
                                                             ng-show="mobilecheck()">{{model.medicalInsurance || 'Mi seguro es:'}}</label>
                                                             <select class="form-control form-control-lg theme-form"
@@ -1568,8 +1533,6 @@
                                                     <a class="btn btn-default btn-transparent btn-lg btn-block"
                                                        ng-click="cancelProfileEdition()">Cancelar</a>
                                                 </div>
-
-                                                <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOLD#CODEOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO  -->
                                             </fieldset>
                                         </div>
                                     </div>
@@ -1602,13 +1565,13 @@
                                                                 <h5>
                                                                     <span>Dispositivo {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteKnownDevice($index)">
+                                                                            ng-click="deleteItem('knownDevices', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.knownDevices[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.knownDevices[$index] == ''}"
                                                                     ng-click="selectClick(knownDevicesList, 'knownDevices['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.knownDevices[$index] || 'Dispositivos'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1628,7 +1591,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addKnownDevice()">
+                                                            ng-click="addItem('knownDevices')">
                                                         <span class="icomoon icon-plus"></span>Agregar dispositivo...
                                                     </button>
                                                 </section>
@@ -1641,13 +1604,13 @@
                                                                 <h5>
                                                                     <span>Dispositivo {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteOwnDevice($index)">
+                                                                            ng-click="deleteItem('ownDevices', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.ownDevices[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.ownDevices[$index] == ''}"
                                                                     ng-click="selectClick(knownDevicesList, 'ownDevices['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.ownDevices[$index] || 'Dispositivos'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1667,7 +1630,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addOwnDevice()">
+                                                            ng-click="addItem('ownDevices')">
                                                         <span class="icomoon icon-plus"></span>Agregar dispositivo...
                                                     </button>
                                                 </section>
@@ -1680,13 +1643,13 @@
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deletePhoneUsage($index)">
+                                                                            ng-click="deleteItem('phoneUsage', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.phoneUsage[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.phoneUsage[$index] == ''}"
                                                                     ng-click="selectClick(phoneUsageList, 'phoneUsage['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.phoneUsage[$index] || 'Actividad'}}</label>
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1706,7 +1669,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addPhoneUsage()">
+                                                            ng-click="addItem('phoneUsage')">
                                                         <span class="icomoon icon-plus"></span>Agregar actividad...
                                                     </button>
                                                 </section>
@@ -1738,7 +1701,6 @@
                                                     <a class="btn btn-default btn-transparent btn-lg btn-block"
                                                        ng-click="cancelProfileEdition()">Cancelar</a>
                                                 </div>
-                                                <!-- ##################OLD#CODE##################  -->
                                             </fieldset>
                                         </div>
                                     </div>
@@ -1765,7 +1727,7 @@
 
                                                     <div class="form-group-control custom-caret-wrapper">
                                                         <label class="form-control form-control-lg theme-form"
-                                                        ng-class="{'placeholder': model.playVideogames == ''}"
+                                                        ng-class="{'placeholder-1': model.playVideogames == ''}"
                                                         ng-click="selectClick(playVideoGamesList, 'playVideogames')"
                                                         ng-show="mobilecheck()">{{model.playVideogames || '¿Juegas videojuegos?'}}</label>
                                                         <select ng-model="model.playVideogames"
@@ -1787,7 +1749,7 @@
 
                                                     <div class="form-group-control custom-caret-wrapper">
                                                         <label class="form-control form-control-lg theme-form"
-                                                        ng-class="{'placeholder': model.videogamesFrecuency == ''}"
+                                                        ng-class="{'placeholder-1': model.videogamesFrecuency == ''}"
                                                         ng-click="selectClick(videoGamesFrecuencyList, 'videogamesFrecuency')"
                                                         ng-show="mobilecheck()">{{model.videogamesFrecuency || '¿Con qué frecuencia juegas?'}}</label>
                                                         <select ng-model="model.videogamesFrecuency"
@@ -1809,7 +1771,7 @@
 
                                                     <div class="form-group-control custom-caret-wrapper">
                                                         <label class="form-control form-control-lg theme-form"
-                                                        ng-class="{'placeholder': model.videogamesHours == ''}"
+                                                        ng-class="{'placeholder-1': model.videogamesHours == ''}"
                                                         ng-click="selectClick(videogamesHoursList, 'videogamesHours')"
                                                         ng-show="mobilecheck()">{{model.videogamesHours || '¿Cuántas horas juegas?'}}</label>
                                                         <select ng-model="model.videogamesHours"
@@ -1834,13 +1796,13 @@
                                                                 <h5>
                                                                     <span>Videojuego {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteKindOfVideoGame($index)">
+                                                                            ng-click="deleteItem('kindOfVideogames', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <label class="form-control form-control-lg theme-form"
-                                                                    ng-class="{'placeholder': model.kindOfVideogames[$index] == ''}"
+                                                                    ng-class="{'placeholder-1': model.kindOfVideogames[$index] == ''}"
                                                                     ng-click="selectClick(kindOfVideoGamesList, 'kindOfVideogames['+$index+']')"
                                                                     ng-show="mobilecheck()">{{model.kindOfVideogames[$index] || '¿Qué videojuegos te gustan más?'}}</label>
                                                                     <select ng-model="model.kindOfVideogames[$index]"
@@ -1861,7 +1823,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addKindOfVideoGame()">
+                                                            ng-click="addItem('kindOfVideogames')">
                                                         <span class="icomoon icon-plus"></span>Agregar videojuego...
                                                     </button>
                                                 </section>
@@ -1873,7 +1835,7 @@
                                                                 <h5>
                                                                     <span>Juego {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" type="button"
-                                                                            ng-click="deleteFavoriteGame($index)">
+                                                                            ng-click="deleteItem('favoriteGames', $index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -1885,7 +1847,7 @@
                                                         </li>
                                                     </ul>
                                                     <button type="button" class="btn btn-lg btn-block btn-add"
-                                                            ng-click="addFavoriteGame()">
+                                                            ng-click="addItem('favoriteGames')">
                                                         <span class="icomoon icon-plus"></span>Agregar juego...
                                                     </button>
                                                 </section>
@@ -1981,10 +1943,7 @@
 
                             </div>
                         </article>
-
                     </div>
-
-
                 </div>
             </form>
         </section>
