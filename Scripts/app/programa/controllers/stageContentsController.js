@@ -10,7 +10,8 @@ angular
         '$http',
         '$anchorScroll',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+        '$route',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $route) {
             var _loadedResources = false;
             var _pageLoaded = false;
             var currentUser;
@@ -219,11 +220,20 @@ angular
                     for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         var myActivity = $scope.fuenteDeEnergia.activities[i];
 
-                        if (!myActivity.activityContent) {
+                        $scope.validateConnection(function () {
                             myActivity.activityContent = data[i];
-
                             setResources(myActivity);
-                        }
+                        }, function(){
+                            if (!myActivity.activityContent) {
+                                myActivity.activityContent = data[i];
+                                setResources(myActivity);
+                                }
+                        });
+
+                        //if (!myActivity.activityContent) {
+                        //    myActivity.activityContent = data[i];
+                        //    setResources(myActivity);
+                        //}
                     }
                     _pageLoaded = true;
                     if (_loadedResources && _pageLoaded) {
@@ -599,6 +609,8 @@ angular
                             $scope.showMoreComments(contentId);
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {
                                     //Success
+                                    $scope.loaderRandom();
+                                    $route.reload();
                                 },
                                 function (obj) {//Error
                                     if (obj.statusCode == 408) {//Request Timeout
