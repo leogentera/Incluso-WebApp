@@ -185,24 +185,21 @@ angular
                             activitiesCompleted++;
                         }
                     }
-
+                    
                     if ($scope.IsComplete && activitiesCompleted == parentActivity.activities.length - 1) {
                         parentActivity.status = 1;
-                        
+
                         //update assertiveness on users profile
-                        if(data["calificación"] && data["calificación"] == "Aprobado"){
-                          var userid = localStorage.getItem("userId");
-                          var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+                        var userid = localStorage.getItem("userId");
+                        var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+                          
+                        if(data["calificación"] && (data["calificación"] == "Aprobado" || data["calificación"] == "Regular" )){
                           user.assertiveness = true;
-                          moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
-                        }else if (data["calificación"] && data["calificación"] == "Reprobado"){
-                          var userid = localStorage.getItem("userId");
-                          var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
-                          user.assertiveness = false;
-                          moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
+                        }else{
+                          user.assertiveness = false;                            
                         }
-                        
-                        _endActivity(parentActivity, function(){ });
+                        _endActivity(parentActivity, function(){});
+                        moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                         updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     }

@@ -242,16 +242,13 @@ angular
                     }
                     if ((activitiesCompleted == parentActivity.activities.length - 1) && $scope.IsComplete) {
                         parentActivity.status = 1;
-                        
+                        var userid = localStorage.getItem("userId");
+                        var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
                          //update assertiveness on users profile
-                        if(data["calificación"] && data["calificación"] == "Aprobado"){
-                          var userid = localStorage.getItem("userId");
-                          var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+                        if(data["calificación"] && (data["calificación"] == "Aprobado"  || data["calificación"] == "Regular") && user.financialAbility == "-1"){
                           user.financialAbility = true;
                           moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
-                        }else if (data["calificación"] && data["calificación"] == "Reprobado") {
-                          var userid = localStorage.getItem("userId");
-                          var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+                        }else if (data["calificación"] && data["calificación"] == "Reprobado" && user.financialAbility == "-1") {
                           user.financialAbility = false;
                           moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
                         }

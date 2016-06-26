@@ -292,8 +292,8 @@ angular
             controller: 'AlertsController'
         });
        
-        $routeProvider.when('/AlertsDetail/:id', { 
-            templateUrl: function(params){ return 'Templates/Programa/AlertsDetail.html?id=' + params.id; },
+        $routeProvider.when('/AlertsDetail/:notificationId/:usernotificationId', { 
+            templateUrl: function(params){ return 'Templates/Programa/AlertsDetail.html?notificationid=' + params.notificationId + '&usernotificationId=' + params.usernotificationId;},
             controller: 'programaNotificationController'
         });
             
