@@ -140,12 +140,14 @@
                                             </div>
                                             <div class="add">
                                                 <span class="icomoon icon-edit"></span>
-                                                <textarea id="{{'essay' + $parent.$index + $index}}"
+                                                <textarea id="{{'essay' + $parent.$index + '-' + $index}}"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="{{'essay' + $parent.$index + $index}}"
                                                           placeholder="{{placeholder[$parent.$index]}}"
+                                                          ng-keydown="checkCharacter($event, 'textarea', $parent.$index, $index);"
+                                                          ng-keyup="autoSize('essay', $parent.$index, $index);"
+                                                          ng-copy="autoSize('essay', $parent.$index, $index)"
                                                           ng-model="answers[$parent.$index][$index]"
-                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-readonly="setReadOnly">
                                                 </textarea>
                                             </div>
@@ -181,11 +183,13 @@
                                             </div>
                                             <div class="add">
                                                 <span class="icomoon icon-edit"></span>
-                                                <textarea id="{{'textarea' + $parent.$index}}"
+                                                <textarea id="{{'shortanswer' + $parent.$index + '-' + $index}}"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="{{'txtAbierto' + $index}}"
                                                           placeholder="{{placeholder[$parent.$index]}}"
-                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
+                                                          ng-keydown="checkCharacter($event, 'textarea', $parent.$index, $index)"
+                                                          ng-keyup="autoSize('shortanswer', $parent.$index, $index)"
+                                                          ng-copy="autoSize('shortanswer', $parent.$index, $index)"
                                                           ng-model="answers[$parent.$index][$index]"
                                                           ng-readonly="setReadOnly">
                                                 </textarea>
@@ -448,15 +452,46 @@
         owl.on('translated.owl.carousel', function (event) {
         });
 
+        var seen = false;
+
         $("#next").click(function (evt) {
+
+            if (!seen) {
+                var containerHeight = angular.element('div.owl-wrapper-outer');
+                containerHeight.css('height', 'auto');
+                var elem = $("ul textarea");
+
+                elem.each( function( index, element ){
+                    var scrollHeight = $(this).prop("scrollHeight");console.log(scrollHeight);
+                    $(this).height(scrollHeight);
+                });
+            }
+
+            seen = true;
             owl.trigger('owl.next');
             evt.preventDefault();
         });
 
         $("#prev").click(function (evt) {
+            if (!seen) {
+                var containerHeight = angular.element('div.owl-wrapper-outer');
+                containerHeight.css('height', 'auto');
+                var elem = $("ul textarea");
+
+                elem.each( function( index, element ){
+                    var scrollHeight = $(this).prop("scrollHeight");
+                    $(this).height(scrollHeight);
+                });
+            }
+
+            seen = true;
             owl.trigger('owl.prev');
             evt.preventDefault();
         });
+
+        function autoSize(ele, question, index) {
+            console.log(ele);
+        }
     });
 
 </script>
