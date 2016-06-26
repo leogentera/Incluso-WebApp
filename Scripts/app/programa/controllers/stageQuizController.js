@@ -280,7 +280,7 @@ angular
                 // Check if the Quiz is non editable (attempts == 1) AND it has been finished.
                 $scope.attempts = $scope.activityObject.attempts;
 
-                if ($scope.attempts === 1 && $scope.activity_status === 1) {
+                if ($scope.attempts == 1 && $scope.activity_status === 1) {
                     $scope.setReadOnly = true; //It will not be possible to edit answers.
                 }
 
@@ -1262,11 +1262,11 @@ angular
             }
 
             function addHeightEssay(elem) {
-                var elemWidth = $("#" + elem).find("li").width();
-                var elemHeight = $("#" + elem).find("li").height();
+                //var elemWidth = $("#" + elem).find("li").width();
+                //var elemHeight = $("#" + elem).find("li").height();
                 var containerWidth = angular.element("div.owl-wrapper-outer").width();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-                angular.element(".owl-wrapper-outer").css('height', containerHeight + 0.462*containerWidth);
+                angular.element(".owl-wrapper-outer").css('height', containerHeight + 0.462*containerWidth + 'px');
             }
 
             function removeHeightEssay(elem) {
@@ -1279,6 +1279,73 @@ angular
             $scope.addItem = function (elem, index) {
                 addHeightEssay(elem);
                 $scope.answers[index].push("");
+            };
+
+            //observe = function (element, event, handler) {
+            //    element.addEventListener(event, handler, false);
+            //};
+            //
+            //resize = function() {
+            //    elem.css('height', elem.prop('scrollHeight') + 'px');
+            //};
+            //
+            //function delayedResize () {
+            //    window.setTimeout(function() {
+            //        var containerHeight = angular.element('div.owl-wrapper-outer');
+            //        containerHeight.css('height', 'auto');
+            //    }, 0);
+            //}
+
+            $scope.checkCharacter = function(event, ele, question, index) {
+                var containerHeight = angular.element('div.owl-wrapper-outer');
+                var elem = $("#" + ele + question + "-" + index);
+
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                } else {
+                    //containerHeight.css('height', 'initial');
+                    $scope.oldHeight = elem.prop('scrollHeight');
+                }
+            };
+
+
+            $scope.autoSize = function(ele, question, index) {
+                var elem = $("#" + ele + question + "-" + index);
+                autosize(elem);
+
+                elem.on('autosize:resized', function(){
+                    console.log('textarea height updated');
+                    var containerHeight = angular.element('div.owl-wrapper-outer');
+                    var questionContainer = angular.element("#" + ele + question);
+                    var H = containerHeight.height();
+                    var h = elem.height();
+
+                    containerHeight.height(questionContainer.height() + 100);
+                    questionContainer.css('height', 'auto');
+                });
+                /*
+                var oldHeight = elem.prop('scrollHeight');
+                var newHeight = (elem.prop('scrollHeight') > $scope.oldHeight ? elem.prop('scrollHeight') : $scope.oldHeight);
+
+                console.log("New height = " + newHeight);
+
+                elem.css('height', newHeight + 'px');
+                var heightToAdd = elem.css('line-height'); //Get line-height value in pixels
+                //elem.css('height', 'auto');
+                if (newHeight > $scope.oldHeight) {
+                    var containerHeight = angular.element('div.owl-wrapper-outer').height();
+                    console.log("heightToAdd =" + parseInt(heightToAdd));
+                    var newContainerHeight = containerHeight + parseFloat(heightToAdd);
+                    angular.element("div.owl-wrapper-outer").css('height', newContainerHeight + "px");
+                }
+
+                if (newHeight < $scope.oldHeight) {
+                    var containerHeight = angular.element('div.owl-wrapper-outer').height();
+                    console.log("heightToRemove =" + parseInt(heightToAdd));
+                    var newContainerHeight = containerHeight - parseFloat(heightToAdd);
+                    angular.element("div.owl-wrapper-outer").css('height', newContainerHeight + "px");
+                }
+                */
             };
 
             //This function is activated from Template, with ESSAY type questions
