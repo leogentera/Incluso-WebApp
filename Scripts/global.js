@@ -639,7 +639,7 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
                           
             var wonDate = new Date();                        
             var dataModelNotification = {
-              notificationid : String(currentNotification.id),
+              notificationid : String(currentNotification.notificationid),
                 userid: currentUserId,
               wondate : wonDate
             };
