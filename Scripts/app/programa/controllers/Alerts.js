@@ -118,36 +118,38 @@ angular
                 $location.path('/ProgramaDashboard');
             };
             
-            $scope.showAlertDetail = function (notificationId) {
+            $scope.showAlertDetail = function (notificationId, usernotificationId) {
                 var userId = localStorage.getItem('userId');                
                 
                 var seen_date_now = new Date();
-                for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
-                    if (userNotifications[indexNotification].usernotificationid == notificationId) {
+                for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){
+                    if (userNotifications[indexNotification].notificationid == notificationId) {
                         userNotifications[indexNotification].seen_date = seen_date_now;
                     }
                 }
                 
                 
                 _setLocalStorageJsonItem("notifications", userNotifications);
-                _readNotification(userId,notificationId);
-                $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');
+                _readNotification(userId,notificationId, usernotificationId);
+                $scope.navigateTo('/AlertsDetail/' + notificationId + '/' + usernotificationId , 'null');
             
             }
             
-            var _readNotification = function (currentUserId, currentNotificationId) {
+            var _readNotification = function (currentUserId, notificationId, usernotificationId) {
                 var seen_date_now = new Date();
                 var data = {                    
-                    notificationid: currentNotificationId,
-                    seen_date: seen_date_now                    
+                    notificationid: notificationId,
+                    seen_date: seen_date_now,
+                    usernotificationid: usernotificationId
                 };
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function(){
-                    cordova.exec(function () {
-                        console.log("$scope.navigateTo inside cordova method");
-                        }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
-                    }
-                , function () {},true);
+                        if (usernotificationId != "-1") {
+                            cordova.exec(function () {
+                                console.log("$scope.navigateTo inside cordova method");
+                                }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
+                        };
+                    }, function () {},true);
             };
             
             
