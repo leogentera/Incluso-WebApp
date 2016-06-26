@@ -220,20 +220,11 @@ angular
                     for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         var myActivity = $scope.fuenteDeEnergia.activities[i];
 
-                        $scope.validateConnection(function () {
+                        if (!myActivity.activityContent) {
                             myActivity.activityContent = data[i];
-                            setResources(myActivity);
-                        }, function(){
-                            if (!myActivity.activityContent) {
-                                myActivity.activityContent = data[i];
-                                setResources(myActivity);
-                                }
-                        });
 
-                        //if (!myActivity.activityContent) {
-                        //    myActivity.activityContent = data[i];
-                        //    setResources(myActivity);
-                        //}
+                            setResources(myActivity);
+                        }
                     }
                     _pageLoaded = true;
                     if (_loadedResources && _pageLoaded) {
@@ -609,8 +600,8 @@ angular
                             $scope.showMoreComments(contentId);
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {
                                     //Success
-                                    $scope.loaderRandom();
-                                    $route.reload();
+                                    //$scope.loaderRandom();
+                                    //$route.reload();
                                 },
                                 function (obj) {//Error
                                     if (obj.statusCode == 408) {//Request Timeout
