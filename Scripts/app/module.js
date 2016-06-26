@@ -293,7 +293,7 @@ angular
         });
        
         $routeProvider.when('/AlertsDetail/:notificationId/:usernotificationId', { 
-            templateUrl: function(params){ return 'Templates/Programa/AlertsDetail.html?notificationid=' + params.notificationId + 'usernotificationId=' + params.usernotificationId;},
+            templateUrl: function(params){ return 'Templates/Programa/AlertsDetail.html?notificationid=' + params.notificationId + '&usernotificationId=' + params.usernotificationId;},
             controller: 'programaNotificationController'
         });
             
