@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <article class="blueprint evaluation">
+    <article class="blueprint evaluation quiz">
         <div class="pages">
             <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
 
@@ -191,7 +191,7 @@
                                                           ng-keyup="autoSize('shortanswer', $parent.$index, $index)"
                                                           ng-copy="autoSize('shortanswer', $parent.$index, $index)"
                                                           ng-model="answers[$parent.$index][$index]"
-                                                          ng-readonly="setReadOnly">
+                                                          ng-readonly="false">
                                                 </textarea>
                                             </div>
 
