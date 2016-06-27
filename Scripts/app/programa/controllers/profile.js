@@ -22,10 +22,13 @@ angular
             var quizMisGustos = false;
             var quizMisCualidades = false;
             $scope.accessedSubsection = false;
-            $scope.$emit('scrollTop');
-            $scope.$emit('ShowPreloader');
-            $scope.mobilecheck=_comboboxCompat;
             $rootScope.loaderForLogin = false;
+            $scope.$emit('scrollTop');
+            if (!$rootScope.loading) {//For When coming from change Avatar
+                $scope.$emit('ShowPreloader');
+            }
+
+            $scope.mobilecheck=_comboboxCompat;
 
             $scope.passwordChanged = false;
 
@@ -884,19 +887,19 @@ angular
                 };
 
                 $scope.edit = function () {
-                    $scope.loaderRandom();
-                    $scope.$emit('ShowPreloader');
-                    $timeout(function(){
+                    //$scope.loaderRandom();
+                    //$scope.$emit('ShowPreloader');
+                    //$timeout(function(){
                         $location.path("/Perfil/Editar/" + $scope.userId);
-                    }, 500);
+                    //}, 500);
                 };
 
                 $scope.privacySettings = function () {
-                    $scope.loaderRandom();
-                    $scope.$emit('ShowPreloader');
-                    $timeout(function(){
+                    //$scope.loaderRandom();
+                    //$scope.$emit('ShowPreloader');
+                    //$timeout(function(){
                         $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null);
-                    }, 500);
+                    //}, 500);
                 };
 
                 $scope.navigateToDashboard = function () {
@@ -1379,7 +1382,7 @@ angular
                 };
 
                 $scope.returnToProfile = function () {//After pressing "Terminar" button.
-                    $scope.$emit('ShowPreloader');
+                    //$scope.$emit('ShowPreloader');
                     $location.path("Perfil/" + $scope.userId);
                 };
 
@@ -1893,15 +1896,12 @@ angular
                 }
 
                 $scope.saveAccountSettings = function () {
-                    $scope.loaderRandom();
-                    $scope.$emit('ShowPreloader');
                     $timeout(function(){
                         saveUserProfile();
                     }, 500);
                 };
 
                 $scope.save = function () {
-                    $scope.loaderRandom();
                     $scope.$emit('ShowPreloader');
 
                     $timeout(function(){
@@ -1919,8 +1919,7 @@ angular
                     var validationResult = validateRestrictions();  //Valid if validateModel() returns true.
 
                     if (validationResult) {
-                        //$scope.loaderRandom();
-                        //$scope.$emit('ShowPreloader');
+
                         $timeout(function(){
                             $scope.model.modelState.isValid = true;
                             deleteRepeatedValues();   //Validates for required restrictions.
@@ -2479,8 +2478,7 @@ angular
                     };
 
                     try {
-                        $scope.loaderRandom();
-                        $rootScope.loading = true; //Start spinner
+                        $scope.$emit('ShowPreloader'); //Start spinner
                         $timeout(function () {
                             cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                         }, 500);
