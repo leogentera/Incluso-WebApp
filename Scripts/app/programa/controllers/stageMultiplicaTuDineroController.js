@@ -245,10 +245,10 @@ angular
                         var userid = localStorage.getItem("userId");
                         var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
                          //update assertiveness on users profile
-                        if(data["calificación"] && (data["calificación"] == "Aprobado" || data["calificación"] == "Regular" ) && (user.assertiveness == "-1" || !user.assertiveness)){
-                          user.assertiveness = true;
-                        }else if (data["calificación"] && data["calificación"] == "Reprobado" && (user.assertiveness == "-1" || !user.assertiveness)) {
-                          user.assertiveness = false;
+                        if(data["calificación"] && (data["calificación"] == "Aprobado" || data["calificación"] == "Regular" ) && (user.financialAbility == "-1" || !user.financialAbility)){
+                          user.financialAbility = 1;
+                        }else if (data["calificación"] && data["calificación"] == "Reprobado" && (user.financialAbility == "-1" || !user.financialAbility)) {
+                          user.financialAbility = 0;
                         }
                         _endActivity(parentActivity, function () {});
                         moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});

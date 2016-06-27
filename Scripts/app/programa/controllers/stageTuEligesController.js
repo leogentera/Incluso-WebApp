@@ -193,10 +193,10 @@ angular
                         //update assertiveness on users profile
                         if(data["calificación"] && (data["calificación"] == "Aprobado" || data["calificación"] == "Regular" ) &&
                            (user.assertiveness == "-1" || !user.assertiveness)){
-                          user.assertiveness = true;
+                          user.assertiveness = 1;
                         }else if (data["calificación"] && data["calificación"] == "Reprobado" &&
                                   (user.assertiveness == "-1" || !user.assertiveness)) {
-                          user.assertiveness = false;
+                          user.assertiveness = 0;
                         }
                         moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
                         _endActivity(parentActivity, function(){});
