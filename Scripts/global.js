@@ -3,7 +3,7 @@ var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/Res
 // var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-5/RestfulAPI/public/{0}"; //Azure Development environment
 var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:803/drupal_mobile_staging/rest/node/{0}"; //Azure Development environment
 var DRUPAL_CONTENT_RESOURCE = "http://moodlemysql01.cloudapp.net:803/proxy_drupal_staging/proxy.php";
-var SIGNALR_API_RESOURCE = "http://signalrchat-incluso.azurewebsites.net/realtime/echo"; //Azure Development environment
+//var SIGNALR_API_RESOURCE = "http://signalrchat-incluso.azurewebsites.net/realtime/echo"; //Azure Development environment
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
 //var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
@@ -1884,15 +1884,29 @@ var progressBar = {
 };
 
 /* Waits until page is loaded */
-$(document).ready(function(){
-    setTimeout(function() {
-    _updateDeviceVersionCache();
+$(document).ready(function () {
 
-    (function() {
-        /* Load catalogs */
-        var requestData = {"catalog": _catalogNames};
-        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { _catalogsLoaded = true; }, function(){ _catalogsLoaded = false; }, true);
-    })();
-    
+    setTimeout(function () {
+        _updateDeviceVersionCache();
+
+        (function () {
+            /* Load catalogs */
+            var requestData = { "catalog": _catalogNames };
+            moodleFactory.Services.GetAsyncCatalogs(requestData, function (key, data) { _catalogsLoaded = true; }, function () { _catalogsLoaded = false; }, true);
+
+            $("body").css({
+                "width": $(window).width(),
+                "min-height": $(window).height()
+            });
+
+            $(".app-preloader").css({
+                "width": $(window).width(),
+                "height": $(window).height()
+            });
+
+
+
+        })();
+
     }, 2000);
 });

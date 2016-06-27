@@ -19,6 +19,7 @@ angular
             });
             
             var sortedNotifications = _.sortBy(allNotifications,function(notif){
+                _loadedDrupalResources = true;
                 return notif.wondate;
             });
             

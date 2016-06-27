@@ -106,7 +106,12 @@ angular
             function getImageFromAssets() {
                 getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function(niceImageUrl) {                
                     $scope.profileImage = niceImageUrl;
-                    $scope.$digest();
+                    try {
+                        $scope.$digest();
+                    }catch (e) {
+
+                    }
+                    
                 });
             }
             
@@ -263,7 +268,11 @@ angular
                             var profileImageUrl = $scope.user.profileimageurl;
                             getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", profileImageUrl, function(niceImageUrl) {                
                                 $scope.profileImage = niceImageUrl;
-                                $scope.$digest();
+                                try {
+                                    $scope.$digest();
+                                }catch (e) {
+            
+                                }
                             });
 
                         });
