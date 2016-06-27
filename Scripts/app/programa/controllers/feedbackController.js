@@ -68,7 +68,7 @@ angular
                 switch(currentStage){
                     case 1:
                         if (!$scope.profile.messageStageOne) {
-                            $scope.profile.messageStageOne = getRandomMessageId(profileId, assertiveness, financialAbility);                            
+                            $scope.profile.messageStageOne = getRandomMessageId(profileId, assertiveness, financialAbility);
                         }
                         $scope.messageProfile = getMessageFromId($scope.profile.messageStageOne);
                         break;
@@ -104,12 +104,14 @@ angular
                     financialAbility = $scope.profile.financialAbility == true ? "1" : "0";
                 }
                 
-                if (!$scope.profile.inclusoprofile) {
+                if (!$scope.profile.inclusoprofile || $scope.profile.inclusoprofile == "") {
                     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
                     profileId = getMaxProfile(profilePoints);
-                    $scope.profile.inclusoprofile =  _.findWhere(profileCatalogs.profiles, { id: profileId}).profilename;
+                    var profileFromCatalogs = _.findWhere(profileCatalogs.profiles, { id: profileId});
+                    $scope.profile.inclusoprofile =  profileFromCatalogs.profilename;
                 }else{
-                    profileId = _.findWhere(profileCatalogs.profiles, { profilename: $scope.profile.inclusoprofile}).id;
+                    var profileIdFromCatalogs = _.findWhere(profileCatalogs.profiles, { profilename: $scope.profile.inclusoprofile});
+                    profileId = profileIdFromCatalogs.id;
                 }
                 
                 getMessageForCurrentStage(currentStage, profileId, assertiveness, financialAbility);

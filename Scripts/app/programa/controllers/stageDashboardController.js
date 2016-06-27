@@ -13,7 +13,7 @@ angular
         '$anchorScroll',
         '$window',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter, $anchorScroll, $window) {
-
+            $rootScope.dontShowRobot = false;
             var _loadedResources = false;
             var _pageLoaded = true;
             /* $routeParams.stageId */
@@ -31,6 +31,8 @@ angular
                 }, 1000);
             }
 
+            
+           
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
@@ -210,7 +212,6 @@ angular
                 "Conócete": "Juega y descubre tus inteligencias",
                 "Mis sueños": "Cada sueño en su lugar",
                 "Cabina de soporte": "Contacta a tu coach",
-                "Retroalimentación" : "Retroalimentaciónsssssssssss",
                 "Exploración final": "Explora qué tanto descubriste en la Zona de Vuelo"
             };
 
@@ -238,8 +239,6 @@ angular
                 var url = _.filter(_activityRoutes, function (x) {
                     return x.id == activity.activity_identifier
                 })[0].url;
-                //Store an Index of the chosen menu item.
-                _setLocalStorageJsonItem("owlIndex", parentIndex);
 
                 if (url) {
 
@@ -249,16 +248,18 @@ angular
                         logStartActivityAction(activityId, timeStamp);
 
                         if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
+                            $rootScope.cancelDisabled = true;
                             isQuiz = true;
                             $rootScope.quizIdentifier = activity.activity_identifier;
                             $rootScope.quizUrl = url;
                             $rootScope.openQuizModal();  // turns on Quiz Modal
                         }
 
-                        $location.path(url);
+                         $location.path(url);
                         //if (!isQuiz) {
                         //    $location.path(url);
                         //}
+
 
                     } else {
                         $scope.openUpdateAppModal();
@@ -279,6 +280,7 @@ angular
 
                 var challengeCompletedId = _closeChallenge($scope.idEtapa);
 
+                //_coachNotification($scope.idEtapa);
 
                 //Exclude challenges initial and final from showing modal robot
                 var challengeExploracionInicial = 140;
