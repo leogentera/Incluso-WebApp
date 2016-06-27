@@ -12,7 +12,7 @@ angular
         '$interval',
         '$route',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $interval, $route) {
-
+            $rootScope.dontShowRobot = false;
             var _loadedResources = false;
             var _pageLoaded = false;
 
