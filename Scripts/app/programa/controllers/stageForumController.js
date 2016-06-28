@@ -26,6 +26,8 @@ angular
 
             function initController() {
 
+                var moodleId;
+
                 $scope.scrollToTop();
                 var selectedDiscussionId = null;
 
@@ -275,32 +277,34 @@ angular
                     var moodleId = $routeParams.moodleId;
                     !moodleId ? moodleId = getMoodleIdFromTreeActivity($routeParams.activityId) : '';
 
-                    switch (parseInt(moodleId)) {
-                        case 64:
-                            $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
-                            break;
-                        case 73:
-                            $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
-                            break;
-                        case 147:
-                            $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $routeParams.activityId + "/" + discussionId + "/" + $routeParams.moodleId);
-                            break;
-                        case 148:
-                            $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $routeParams.activityId + "/" + discussionId + "/" + $routeParams.moodleId);
-                            break;
-                        case 179:
-                            $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
-                            break;
-                        case 85:
-                            $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
-                            break;
-                        case 93:
-                            $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
-                            break;
-                        case 91:
-                            $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
-                            break;
-                    }
+                    $timeout(function() {
+                        switch (parseInt(moodleId)) {
+                            case 64:
+                                $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                                break;
+                            case 73:
+                                $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                                break;
+                            case 147:
+                                $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $routeParams.activityId + "/" + discussionId + "/" + $routeParams.moodleId);
+                                break;
+                            case 148:
+                                $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $routeParams.activityId + "/" + discussionId + "/" + $routeParams.moodleId);
+                                break;
+                            case 179:
+                                $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                                break;
+                            case 85:
+                                $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                                break;
+                            case 93:
+                                $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                                break;
+                            case 91:
+                                $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                                break;
+                        }
+                    }, 10);
                 }
 
                 $scope.back = function (size) {
