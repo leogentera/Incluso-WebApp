@@ -1421,6 +1421,7 @@ var clearLocalStorage = function(location){
     localStorage.removeItem("likesByUser");    
     localStorage.removeItem("retoMultiplePartials");
     localStorage.removeItem("retoMultipleCompleted");
+    localStorage.removeItem("profilePoints");
     
     ClearLocalStorage("termsAndConditions");
     ClearLocalStorage("activity");
