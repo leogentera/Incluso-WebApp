@@ -17,18 +17,20 @@ angular
             var _pageLoaded = false;
             $scope.$emit('ShowPreloader');
 
-            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             $scope.validateConnection(initController, offlineCallback);
             
             function offlineCallback() {
-                $timeout(function() { $location.path("/Offline"); }, 1000);
+                $timeout(function() {
+                    $location.path("/Offline");
+                }, 1000);
             }
             
             function initController() {
                 
             _httpFactory = $http;
             _timeout = $timeout;
-            $rootScope.pageName = "Estación: Conócete"
+            $rootScope.pageName = "Estación: Conócete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
 
@@ -49,9 +51,9 @@ angular
                 $scope.modelState.isValid = (newValue.length === 0);
             });
             
-            var _userId = moodleFactory.Services.GetCacheObject("userId");
+            var _userId = currentUser.id;
 
-            $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
+            $scope.userToken = currentUser.token;
             $scope.liked = null;
             $scope.moodleId;
             Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId     : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
@@ -584,7 +586,9 @@ angular
                 $scope.posts.sort(function(a, b) { return Number(b.post_id) - Number(a.post_id); });
                     
                     _pageLoaded = true;
-                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
             }
 
             var initializeCommentsData = function(element, index, array){

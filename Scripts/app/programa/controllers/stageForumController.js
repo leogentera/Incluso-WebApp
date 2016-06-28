@@ -26,8 +26,6 @@ angular
 
             function initController() {
 
-                var moodleId;
-
                 $scope.scrollToTop();
                 var selectedDiscussionId = null;
 
@@ -304,7 +302,7 @@ angular
                                 $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                                 break;
                         }
-                    }, 10);
+                    }, 500);
                 }
 
                 $scope.back = function (size) {
