@@ -28,15 +28,15 @@
         <!-- Test commit 2 -->
     </head>
 
-    <body ng-controller="homeCtrl" class="incluso-app ng-scope has-sidebar-left" ng-class="{'sidebar-left-active': sidebar}">
+    <body ng-controller="homeCtrl" class="incluso-app ng-scope has-sidebar-left" ng-class="{'sidebar-left-active': sidebar, 'spinner-active-body': loading}">
         <!-- preloader -->
         <preloader-component></preloader-component>
 
         <!-- Main menu / sidebar -->
-        <menu-component></menu-component>
+        <menu-component ng-class="{'spinner-active': loading}"></menu-component>
         
         <!-- app wrapper -->
-        <div class="app">
+        <div class="app" ng-class="{'spinner-active': loading}">
             <a class="anchor-scroll" id="top"></a>
             
             <!-- toolbar for private views -->

@@ -1902,15 +1902,29 @@ function getcurrentVersion() {
 
 
 /* Waits until page is loaded */
-$(document).ready(function(){
-    setTimeout(function() {
-    _updateDeviceVersionCache();
+$(document).ready(function () {
 
-    (function() {
-        /* Load catalogs */
-        var requestData = {"catalog": _catalogNames};
-        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { _catalogsLoaded = true; }, function(){ _catalogsLoaded = false; }, true);
-    })();
-    
+    setTimeout(function () {
+        _updateDeviceVersionCache();
+
+        (function () {
+            /* Load catalogs */
+            var requestData = { "catalog": _catalogNames };
+            moodleFactory.Services.GetAsyncCatalogs(requestData, function (key, data) { _catalogsLoaded = true; }, function () { _catalogsLoaded = false; }, true);
+
+            $("body").css({
+                "width": $(window).width(),
+                "min-height": $(window).height()
+            });
+
+            $(".app-preloader").css({
+                "width": $(window).width(),
+                "height": $(window).height()
+            });
+
+
+
+        })();
+
     }, 2000);
 });

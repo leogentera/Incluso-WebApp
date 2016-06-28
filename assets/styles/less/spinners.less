@@ -137,11 +137,13 @@
 
 .spinner-svg.show {
     width: 25vw;
+    max-width: 90px;
     margin: auto;
     position: relative;
     
     &.planet {
         width: 35vw;
+        max-width: 126px;
     }
     
     .opacity {
@@ -164,17 +166,71 @@
     
     .points {
         width: 25vw;
+        max-width: 90px;
         display: block;
         height: 12vw;
+        max-height: 43px;
         position: relative;
         margin: auto;
     }
-    
+
+    &.incluso {
+        display: flex !important;
+        width: 100%;
+        max-width: initial;
+        margin: initial;
+        position: relative;
+        background-attachment: fixed;
+        background-image:url('@{url-images}/spinners/incluso/bg-incluso.png');
+        background-position: center;
+        background-size: cover;
+        
+        > div {
+            width: 80vw;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .loading-bar {
+            width: 70vw;
+            height: 1.5em;
+            background: rgba(0,0,0,.8);
+            margin: 6vw auto 0;
+            border-radius: 1em;
+            overflow: hidden;
+
+            .fill-bar {
+                width: 0;
+                height: 1.5em;
+                background: #DBE376;
+                -webkit-transition: all 10ms ease-in-out;
+                -moz-transition: all 10ms ease-in-out;
+                -o-transition: all 10ms ease-in-out;
+                transition: all 10ms ease-in-out;
+            }
+        }
+
+        .label-progress {
+            color: rgb(191, 211, 58);
+            text-align: center;
+            margin-top: 4vw;
+            font-size: 2em;
+            font-weight: 600;
+
+            span:first-child {
+                display: inline-block;
+                text-align: center;
+                width: 60px;
+            }
+        }
+    }
     .trail {
         width: 20vw;
+        max-width: 80px;
         display: block;
         margin: auto;
-        padding-top: 6vw;
+        padding-top: 20px;
     }
     
     .spinner-complement {
