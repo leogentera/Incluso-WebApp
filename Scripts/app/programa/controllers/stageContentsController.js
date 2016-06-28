@@ -601,6 +601,7 @@ angular
                             $scope.showMoreComments(contentId);
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {
                                     //Success
+                                    $rootScope.dontShowRobot = true;
                                     $route.reload();
                                 },
                                 function (obj) {//Error
