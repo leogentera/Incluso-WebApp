@@ -205,6 +205,9 @@ angular
                 }];
                 uploadAvatar($scope.avatarInfo);
                 _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                currentUser.haspicture = "1";
+                localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
             }
 
             function FailureAvatar(data) {

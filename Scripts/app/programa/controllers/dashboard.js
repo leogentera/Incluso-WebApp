@@ -58,6 +58,9 @@ angular
             $scope.stageProgress = 0;
 
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
+            if ($scope.user.haspicture != "1") {
+                $location.path('/Tutorial');
+            }
             getImageFromAssets();
             
             var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
