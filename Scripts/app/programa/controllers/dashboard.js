@@ -107,16 +107,20 @@ angular
             
             
             function getImageFromAssets() {
-                getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function(niceImageUrl) {                
-                    $scope.profileImage = niceImageUrl;
-                    try {
-                        $scope.$digest();
-                    }catch (e) {
-
-                    }
-                    
-                });
+                console.log("getImageFromAssets");
+                $timeout(function () {
+                    $scope.validateConnection(function () {
+                    }, function () {
+                        getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
+                            $scope.model.profileimageurl = niceImageUrl;
+                            $scope.$digest();
+                        });
+    
+                    });
+                }, 500);
             }
+             
+            
             
             function getCurrentUserProfile() {
                 
@@ -266,19 +270,21 @@ angular
                         'downloadLink': $scope.user.profileimageurl
                          };
 
-                        
-                        saveLocalImages(images, function(){
-                            var profileImageUrl = $scope.user.profileimageurl;
-                            getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", profileImageUrl, function(niceImageUrl) {                
-                                $scope.profileImage = niceImageUrl;
-                                try {
-                                    $scope.$digest();
-                                }catch (e) {
-            
+                        for(var i=0; i < images.length; i++){
+                            saveLocalImages(images[i], function(){
+                                if (i==($scope.course.leaderboard.lenght + 1)) {
+                                    getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
+                                        $scope.profileImage = niceImageUrl;
+                                        $scope.$digest();
+                                    });
+                                }else{
+                                    getImageOrDefault("assets/avatar/avatar_leaderboard_" + $scope.course.leaderboard[i].userId + ".png", $scope.course.leaderboard[i].profileimageurl, function(niceImageUrl) {
+                                        $scope.course.leaderboard[i].profileimageurl = niceImageUrl;
+                                        $scope.$digest();
+                                    });
                                 }
-                            });
-
-                        });
+                             });
+                        };
                         
                         
                         var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
