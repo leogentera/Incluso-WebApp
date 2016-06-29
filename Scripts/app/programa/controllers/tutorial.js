@@ -222,7 +222,6 @@ angular
                 try {
                     document.addEventListener("deviceready", function () {
                          $scope.$emit('ShowPreloader');
-                         _isCellphone = true;
                         cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])
                     }, false);
                 }
