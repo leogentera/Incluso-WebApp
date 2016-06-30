@@ -21,7 +21,7 @@ var _tutorial = false;
 
 /* Prototypes */
 window.mobilecheck = function() {
-  return true;
+  return false; 
 }
 
 var _comboboxCompat = function (){
@@ -1757,7 +1757,6 @@ function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
     if(window.mobilecheck()){
         cordova.exec(function(data) {
             _isDeviceOnline = data.online;
-
             callback();
         }, function() { errorIsOnlineCallback();}, "CallToAndroid", "isonline", []);
     }
@@ -1801,25 +1800,7 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
 var _loadedDrupalResources = false;
 var _loadedDrupalResourcesWithErrors = false;
 
-/* params:
-   images - array of objects { path, name, downloadLink }
-*/
-function saveLocalImages(images, callback) {
-    
-    _forceUpdateConnectionStatus(function() {
-        
-        if(window.mobilecheck()) {
-        
-            if(images.length > 0) {
-                cordova.exec(function() {
-                    callback();
-                  }, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
-            }
-        }
-        
-    }, function() {});
-    
-}
+
 
 function getImageOrDefault(localPath, imageUrl, getImageOrDefaultCallback) {
     
