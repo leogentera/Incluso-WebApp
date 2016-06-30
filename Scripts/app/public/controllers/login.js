@@ -15,8 +15,6 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
             _timeout = $timeout;
             _httpFactory = $http;
-            _isCellphone = false;
-            document.addEventListener("deviceready", function(){cordova.exec(function () {_isCellphone=true}, function () {},"CallToAndroid", "isCellphone", [])}, false);
             $scope.scrollToTop();
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;

@@ -389,11 +389,7 @@ angular
                 }
 
                 $scope.back = function () {
-                    $scope.$emit("ShowPreloader");
-
-                    $timeout(function () {
-                        $location.path('/' + stage + '/Dashboard/' + userCurrentStage + '/' + currentChallenge);
-                    }, 1000);
+                    $location.path('/' + stage + '/Dashboard/' + userCurrentStage + '/' + currentChallenge);
                 };
 
                 function getdate() {
@@ -605,7 +601,6 @@ angular
                             $scope.showMoreComments(contentId);
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {
                                     //Success
-                                    $scope.loaderRandom();
                                     $rootScope.dontShowRobot = true;
                                     $route.reload();
                                 },

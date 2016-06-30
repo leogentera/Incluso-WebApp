@@ -193,12 +193,10 @@ angular
             /* redirect to profile */
             $scope.navigateToMyProfile = function () {
                 $rootScope.loaderForLogin = false;
-                $scope.loaderRandom();
-                $scope.$emit('ShowPreloader');
 
                 $timeout(function(){
                     $location.path("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
-                }, 500);
+                }, 10);
             };
 
             $scope.setToolbar = function (url, name) {
@@ -286,6 +284,7 @@ angular
 
             /* Preloader default callbacks and listeners */
             var _showPreloader = function () {
+                $scope.loaderRandom();
                 $rootScope.loading = true;
             };
             var _hidePreloader = function () {

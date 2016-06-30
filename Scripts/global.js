@@ -18,11 +18,10 @@ var _isDeviceOnline = null;
 var _queuePaused = false;
 var _activityStatus = null;
 var _tutorial = false;
-var _isCellphone = false;
 
 /* Prototypes */
 window.mobilecheck = function() {
-  return _isCellphone;
+  return true;
 }
 
 var _comboboxCompat = function (){
@@ -1421,6 +1420,7 @@ var clearLocalStorage = function(location){
     localStorage.removeItem("likesByUser");    
     localStorage.removeItem("retoMultiplePartials");
     localStorage.removeItem("retoMultipleCompleted");
+    localStorage.removeItem("profilePoints");
     
     ClearLocalStorage("termsAndConditions");
     ClearLocalStorage("activity");
@@ -1884,15 +1884,29 @@ var progressBar = {
 };
 
 /* Waits until page is loaded */
-$(document).ready(function(){
-    setTimeout(function() {
-    _updateDeviceVersionCache();
+$(document).ready(function () {
 
-    (function() {
-        /* Load catalogs */
-        var requestData = {"catalog": _catalogNames};
-        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { _catalogsLoaded = true; }, function(){ _catalogsLoaded = false; }, true);
-    })();
-    
+    setTimeout(function () {
+        _updateDeviceVersionCache();
+
+        (function () {
+            /* Load catalogs */
+            var requestData = { "catalog": _catalogNames };
+            moodleFactory.Services.GetAsyncCatalogs(requestData, function (key, data) { _catalogsLoaded = true; }, function () { _catalogsLoaded = false; }, true);
+
+            $("body").css({
+                "width": $(window).width(),
+                "min-height": $(window).height()
+            });
+
+            $(".app-preloader").css({
+                "width": $(window).width(),
+                "height": $(window).height()
+            });
+
+
+
+        })();
+
     }, 2000);
 });
