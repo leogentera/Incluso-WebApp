@@ -348,12 +348,16 @@ angular
                     
                     IntervalFactory.StartUserNotificationWeeklyInterval();
 
-                    try {
-                        $scope.$emit('HidePreloader');
-                        $location.path('/Tutorial');
-                    } catch (e) {
-                        $location.path('/ProgramaDashboard');
-                    }
+                    $timeout(
+                        function () {
+                            try {
+                                $scope.$emit('HidePreloader');
+                                $location.path('/Tutorial');
+                            } catch (e) {
+                                $location.path('/ProgramaDashboard');
+                            }
+
+                        }, 1000);
 
                 }, function () {
 

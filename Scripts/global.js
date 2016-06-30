@@ -635,16 +635,16 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     for (var i = 0; i < allNotifications.length; i++) {
         var currentNotification = allNotifications[i];
           if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
-                          
-            var wonDate = new Date();                        
-            var dataModelNotification = {
-              notificationid : String(currentNotification.notificationid),
-                userid: currentUserId,
-              wondate : wonDate
-            };
-  
-            allNotifications[i].wondate = wonDate;
-            allNotifications[i].status = "won"
+
+              var wonDate = moment().format('YYYY:MM:DD HH:mm:ss');
+              var dataModelNotification = {
+                  notificationid : String(currentNotification.notificationid),
+                  userid: currentUserId,
+                  wondate : wonDate
+              };
+
+              allNotifications[i].wondate = new Date().getTime();
+            allNotifications[i].status = "won";
             localStorage.setItem("notifications",JSON.stringify(allNotifications));
             
             moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
