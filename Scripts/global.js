@@ -21,7 +21,7 @@ var _tutorial = false;
 
 /* Prototypes */
 window.mobilecheck = function() {
-  return false; 
+  return true; 
 }
 
 var _comboboxCompat = function (){
