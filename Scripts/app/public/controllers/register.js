@@ -17,7 +17,7 @@ angular
             _timeout = $timeout;
             _httpFactory = $http;
             var dpValue;
-            $scope.$emit('scrollTop');
+            $scope.$emit('scrollTop');  
 
             //var isConfirmedPasswordValid = false;
             $scope.currentPage = 1;
