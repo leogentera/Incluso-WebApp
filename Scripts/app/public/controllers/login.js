@@ -356,22 +356,22 @@ angular
 
                         //Came back from redirecting...                        
                         var course = moodleFactory.Services.GetCacheJson("course");
-                        moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
+                        moodleFactory.Services.GetAsyncUserPostCounter(userFacebook.token, course.courseid, function () {
                             $scope.incLoadedItem(); ////NOT FORCE REFRESH
                         }, function () {
                         }, false);
 
                         IntervalFactory.StartUserNotificationWeeklyInterval();
 
-                        moodleFactory.Services.GetAsyncForumDiscussions(85, data.token, function () {
+                        moodleFactory.Services.GetAsyncForumDiscussions(85, userFacebook.token, function () {
                             $scope.incLoadedItem(); //2
                         }, function () {}, true);
 
-                        moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
+                        moodleFactory.Services.GetAsyncForumDiscussions(91, userFacebook.token, function () {
                             $scope.incLoadedItem(); //3
                         }, function () {}, true);
 
-                        moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
+                        moodleFactory.Services.GetAsyncMultipleChallengeInfo(userFacebook.token, function(){
                             $scope.incLoadedItem(); //4 y 5
                         }, function(){}, true);
 
