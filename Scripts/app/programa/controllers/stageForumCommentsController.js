@@ -17,7 +17,7 @@ angular
             var _pageLoaded = false;
             $scope.$emit('ShowPreloader');
 
-            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             $scope.validateConnection(initController, offlineCallback);
 
             function offlineCallback() {
@@ -34,38 +34,38 @@ angular
                 $rootScope.navbarBlue = true;
                 $rootScope.showToolbar = true;
 
-                getContentResources($routeParams.activityId);
-                //$scope.setToolbar($location.$$path,"");
-                $rootScope.showFooter = true;
-                $rootScope.showFooterRocks = false;
-                $rootScope.showStage1Footer = false;
-                $rootScope.showStage2Footer = false;
-                $rootScope.showStage3Footer = false;
+            getContentResources($routeParams.activityId);
+            //$scope.setToolbar($location.$$path,"");
+            $rootScope.showFooter = true;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
+            
+            $scope.modelState = {
+                isValid: null,
+                errorMessages: []
+            };
+            /* Watchers */
+            $scope.$watch("modelState.errorMessages", function (newValue, oldValue) {
+                $scope.modelState.isValid = (newValue.length === 0);
+            });
+            
+            var _userId = currentUser.id;
 
-                $scope.modelState = {
-                    isValid: null,
-                    errorMessages: []
-                };
-                /* Watchers */
-                $scope.$watch("modelState.errorMessages", function (newValue, oldValue) {
-                    $scope.modelState.isValid = (newValue.length === 0);
-                });
-
-                var _userId = moodleFactory.Services.GetCacheObject("userId");
-
-                $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
-                $scope.liked = null;
-                $scope.moodleId;
-                Number($routeParams.activityId) == 1049 ? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
-                $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
-                $scope.currentDiscussionsIds = moodleFactory.Services.GetCacheJson("currentDiscussionIds");
-                $scope.currentDiscussionsExtraPoints;
-                var showMoreCounter = 1;
-                var postPager = {from: 0, to: 0};
-                $scope.morePendingPosts = true;
-                $scope.showAllCommentsByPost = new Array();
-                $scope.posts = new Array();
-                $scope.currentDate = new Date().getTime();
+            $scope.userToken = currentUser.token;
+            $scope.liked = null;
+            $scope.moodleId;
+            Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId     : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+            $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
+            $scope.currentDiscussionsIds = moodleFactory.Services.GetCacheJson("currentDiscussionIds");
+            $scope.currentDiscussionsExtraPoints;
+            var showMoreCounter = 1;
+            var postPager = { from: 0, to: 0 };
+            $scope.morePendingPosts = true;
+            $scope.showAllCommentsByPost = new Array();
+            $scope.posts = new Array();
+            $scope.currentDate = new Date().getTime();
 
                 $scope.scrollToTop();
 
