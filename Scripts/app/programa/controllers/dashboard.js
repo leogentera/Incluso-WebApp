@@ -330,7 +330,7 @@ angular
 
                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
                                 $scope.incLoadedItem(); //16
-                            }, function () {}, true);
+                            }, errorCallback, true);
 
                             _pageLoaded = true;
                             if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
@@ -507,11 +507,10 @@ angular
                         moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){
                             $scope.incLoadedItem(); //15
                             getProfilePoints(currentUser);
-                        },function(data){
-                        },true);
+                        }, errorCallback,true);
                     }
 
-                },function(){},true);
+                }, errorCallback,true);
             }
 
             //Open Welcome Message modal
