@@ -17,7 +17,7 @@ angular
             _timeout = $timeout;
             _httpFactory = $http;
             var dpValue;
-            $scope.$emit('scrollTop');
+            $scope.$emit('scrollTop');  
 
             //var isConfirmedPasswordValid = false;
             $scope.currentPage = 1;
@@ -348,12 +348,16 @@ angular
                     
                     IntervalFactory.StartUserNotificationWeeklyInterval();
 
-                    try {
-                        $scope.$emit('HidePreloader');
-                        $location.path('/Tutorial');
-                    } catch (e) {
-                        $location.path('/ProgramaDashboard');
-                    }
+                    $timeout(
+                        function () {
+                            try {
+                                $scope.$emit('HidePreloader');
+                                $location.path('/Tutorial');
+                            } catch (e) {
+                                $location.path('/ProgramaDashboard');
+                            }
+
+                        }, 1000);
 
                 }, function () {
 
