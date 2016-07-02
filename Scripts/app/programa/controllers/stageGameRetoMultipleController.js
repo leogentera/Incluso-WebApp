@@ -325,23 +325,25 @@ angular
                           var profilePoints = [];
                           for(var i= 0; i< $scope.user["strengths"].length; i++){
                               var intelligenceId = _.findWhere(profileCatalogs.intelligences, { name : $scope.user["strengths"][i] }).id;
+                              console.log("intelligence id " + intelligenceId);
                               var profilesByIntelligence = _.where(profileCatalogs.intelligences_profile, { intelligenceid : intelligenceId});
                               for (var j =0; j < profilesByIntelligence.length; j++) {
                                   var profileIntelligence = profilesByIntelligence[j];
-                                  var pointsByIntelligence = { "profileId": profileIntelligence.profileid , "score": 1 };
+                                  var pointsByIntelligence = { "profileid": profileIntelligence.profileid , "score": 1 };
                                   profilePoints.push(pointsByIntelligence);
                               };
                           };
 
-                           var groupedProfiles = _(profilePoints).groupBy('profileId');
+                           var groupedProfiles = _(profilePoints).groupBy('profileid');
                            var sumOfGroupedProfiles = _(groupedProfiles).map(function(g,key){
                               return {
-                                   profileId: key,
+                                   profileid: key,
                                    score: _(g).reduce(function(m,x){return m + x.score},0),
                                    moduleId : $scope.retosMultipleChallenge.coursemoduleid
                                };
                            });
-
+                           
+                          console.log(JSON.stringify(sumOfGroupedProfiles)); 
                           fillProfilePoints(sumOfGroupedProfiles);
                           
                           _setLocalStorageJsonItem("Perfil/" + $scope.user.id, $scope.user);
