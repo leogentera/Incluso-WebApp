@@ -212,10 +212,16 @@ angular
                         //Run queue
                         moodleFactory.Services.ExecuteQueue(function () {
                             //Preparing for syncAll. Succesful credentials
-
-                            moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
+                            var userId = _getItem("userId");
+                            moodleFactory.Services.GetAsyncUserCourse(userId, function () {
                                 $scope.incLoadedItem(); //3
+                                //var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
 
+                                //getImageOrDefault("assets/avatar/avatar_" + userId + ".png", currentUser.profileimageurl, function (niceImageUrl) {
+                                //    currentUser.profileimageurl = "assets/avatar/avatar_" + userId + ".png";
+                                //    localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+                                //});
+                                
                                 var course = moodleFactory.Services.GetCacheJson("course");
                                 moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
                                     $scope.incLoadedItem(); //4
@@ -450,7 +456,7 @@ angular
                     $scope.$emit('scrollTop');
                     localStorage.removeItem("offlineConnection");
                 }, 2000);
-            } if (localStorage.getItem("offlineConnection") == "othercause") {
+            }else if (localStorage.getItem("offlineConnection") == "othercause") {
                 $scope.$emit('HidePreloader');
                 $scope.$emit('scrollTop');
                 localStorage.removeItem("offlineConnection");
