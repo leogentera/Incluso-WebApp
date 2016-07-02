@@ -199,6 +199,7 @@ angular
                         }, function () {
                             _loadedDrupalResources = false;
                             _loadedDrupalResourcesWithErrors = true;
+                            offlineCallback();
                         }, true);
 
                         $timeout(
@@ -211,10 +212,16 @@ angular
                         //Run queue
                         moodleFactory.Services.ExecuteQueue(function () {
                             //Preparing for syncAll. Succesful credentials
-
-                            moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
+                            var userId = _getItem("userId");
+                            moodleFactory.Services.GetAsyncUserCourse(userId, function () {
                                 $scope.incLoadedItem(); //3
+                                //var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
 
+                                //getImageOrDefault("assets/avatar/avatar_" + userId + ".png", currentUser.profileimageurl, function (niceImageUrl) {
+                                //    currentUser.profileimageurl = "assets/avatar/avatar_" + userId + ".png";
+                                //    localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+                                //});
+                                
                                 var course = moodleFactory.Services.GetCacheJson("course");
                                 moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
                                     $scope.incLoadedItem(); //4
@@ -223,11 +230,15 @@ angular
 
                                     moodleFactory.Services.GetAsyncForumDiscussions(85, data.token, function () {
                                         $scope.incLoadedItem(); //5
-                                    }, function () {}, true);
+                                    }, function () {
+                                        offlineCallback();
+                                    }, true);
 
                                     moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
                                         $scope.incLoadedItem(); //6
-                                    }, function () {}, true);
+                                    }, function () {
+                                        offlineCallback();
+                                    }, true);
 
                                     //Load Quizzes assets
                                     loadQuizesAssets(data.id, data.token, function() {
@@ -236,12 +247,17 @@ angular
 
                                     moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
                                         $scope.incLoadedItem(); //8 y 9
-                                    }, function(){}, true);
+                                    }, function(){
+                                        offlineCallback();
+                                    }, true);
 
                                     $timeout(
                                         function () {
                                             //$scope.$emit('HidePreloader');
-                                            $location.path('/ProgramaDashboard');
+                                            if ($rootScope.loaderForLogin) {//To avoid redirect when there is a connection error.
+                                                $location.path('/ProgramaDashboard');
+                                            }
+
                                         }, 1000);
 
                                 }, function () {
@@ -357,21 +373,28 @@ angular
                         moodleFactory.Services.GetAsyncUserPostCounter(userFacebook.token, course.courseid, function () {
                             $scope.incLoadedItem(); ////NOT FORCE REFRESH
                         }, function () {
+                            offlineCallback();
                         }, false);
 
                         IntervalFactory.StartUserNotificationWeeklyInterval();
 
                         moodleFactory.Services.GetAsyncForumDiscussions(85, userFacebook.token, function () {
                             $scope.incLoadedItem(); //2
-                        }, function () {}, true);
+                        }, function () {
+                            offlineCallback();
+                        }, true);
 
                         moodleFactory.Services.GetAsyncForumDiscussions(91, userFacebook.token, function () {
                             $scope.incLoadedItem(); //3
-                        }, function () {}, true);
+                        }, function () {
+                            offlineCallback();
+                        }, true);
 
                         moodleFactory.Services.GetAsyncMultipleChallengeInfo(userFacebook.token, function(){
                             $scope.incLoadedItem(); //4 y 5
-                        }, function(){}, true);
+                        }, function(){
+                            offlineCallback();
+                        }, true);
 
                         //Load Quizzes assets
                         loadQuizesAssets(userFacebook.id, userFacebook.token, function() {
@@ -390,6 +413,7 @@ angular
 
 
                     }, function () {
+                        offlineCallback();
                     });
                 });
 
@@ -412,6 +436,12 @@ angular
             }
 
             function offlineCallback() {
+                $rootScope.loaderForLogin = false; //For Login Preloader
+                progressBar.set(0); //For Login Preloader
+                $scope.loaderRandom(); //For Login Preloader
+                localStorage.removeItem("Credentials");
+                $location.path('/'); //Return to login
+
                 $timeout(function () {
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
                     $scope.$emit('scrollTop');
@@ -426,6 +456,10 @@ angular
                     $scope.$emit('scrollTop');
                     localStorage.removeItem("offlineConnection");
                 }, 2000);
+            }else if (localStorage.getItem("offlineConnection") == "othercause") {
+                $scope.$emit('HidePreloader');
+                $scope.$emit('scrollTop');
+                localStorage.removeItem("offlineConnection");
             } else {
                 $scope.loadCredentials();
             }
