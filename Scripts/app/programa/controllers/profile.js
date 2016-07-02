@@ -137,10 +137,7 @@ angular
                             console.log("GetImageFromAssets Callback");
                             $scope.model.profileimageurl = niceImageUrl;
                             console.log($scope.model.profileimageurl);
-                            try {
-                                if(!$scope.$$phase) {
-                                    $scope.$digest();
-                                }
+                            try {$scope.$digest();
                             } catch(e) {
                                 console.log(e);
                             }
@@ -2418,28 +2415,35 @@ angular
                 };
 
                 uploadAvatar = function (avatarInfo) {
+                    console.log(avatarInfo[0].pathimagen);
                     var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                     encodeImageUri(pathimagen, function (b64) {
+                        console.log("avatar enconded successfully");
                         avatarInfo[0]["filecontent"] = b64;
                         moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function () {
-                            avatarUploaded("Éxito");
+                            avatarUploaded("Exito");
                         }, function () {
-                            avatarUploaded("Error");
+                            avatarUploaded("Error");                            
                         });
                     });
                 };
 
                 function avatarUploaded(message) {
-                    
-                    $timeout(function () {                     
+                    console.log(message);
+                    $timeout(function () {
+                            $scope.model.profileimageurl = "";
                             $scope.model.profileimageurl = "assets/avatar/default.png";
-                            $scope.$digest();
                             $timeout(function () {
                                 getImageOrDefault("assets/avatar/avatar_" + $scope.userId + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
                                     console.log("GetImageFromAssets Callback");
                                     $scope.model.profileimageurl = niceImageUrl;
-                                    $scope.$digest();
+                                    try {
+                                        $scope.$digest();
+                                    } catch(e) {
+                                        console.log(e);
+                                    }
                                     $scope.$emit('HidePreloader');
+                                    
                                 });                        
                             }, 500);
                     }, 500);
