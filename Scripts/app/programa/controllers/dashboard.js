@@ -58,6 +58,10 @@ angular
             $scope.stageProgress = 0;
 
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
+            if ($scope.user.userId) {
+                $scope.profileImage = "assets/avatar/avatar_" +  $scope.user.userId  + ".png";
+            }
+            
             if ($scope.user.haspicture != "1") {
                 $location.path('/Tutorial');
             }
@@ -228,9 +232,11 @@ angular
                         $scope.course.leaderboard = leaderboard;
                         
                         _pageLoaded = true;
-                        if (_loadedResources && _pageLoaded) {
-                            $scope.$emit('HidePreloader')
-                        }
+                        $timeout(function () {
+                            if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
+                                $scope.$emit('HidePreloader');
+                            }
+                        },3000);
 
                     });
                     
@@ -272,6 +278,9 @@ angular
                                 getImageOrDefault("assets/avatar/avatar_" +  $scope.user.userId  + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
                                     $scope.profileImage = niceImageUrl;
                                     $scope.$digest();
+                                    if (_loadedResources && _pageLoaded) {
+                                        $scope.$emit('HidePreloader');
+                                    }
                                 }); }, 50); });
                         
                         var image1 = [{ 
@@ -333,11 +342,11 @@ angular
                             }, errorCallback, true);
 
                             _pageLoaded = true;
-                            if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
-                                $timeout(function(){
-                                    $scope.$emit('HidePreloader');
-                                }, 1000);
-                            }
+                            //if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
+                            //    $timeout(function(){
+                            //        $scope.$emit('HidePreloader');
+                            //    }, 2000);
+                            //}
 
                             if (!profile.termsAndConditions) {
                                 $scope.openTermsModal();
