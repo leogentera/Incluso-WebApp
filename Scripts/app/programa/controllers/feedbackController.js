@@ -50,6 +50,7 @@ angular
             }
             
             var profileCatalogs = JSON.parse(localStorage.getItem("profileCatalogs"));
+            console.log(JSON.stringify(profileCatalogs));
             var perfilInclusoMessages = profileCatalogs.messages || [];
             
             function getRandomMessageId(profileId, assertiveness, financialAbility) {
@@ -106,9 +107,14 @@ angular
                 
                 if (!$scope.profile.inclusoprofile || $scope.profile.inclusoprofile == "") {
                     var profilePoints = JSON.parse(localStorage.getItem("profilePoints"));
+                    console.log("profilePoints");
+                    console.log(JSON.stringify(profilePoints));
                     profileId = getMaxProfile(profilePoints);
+                    console.log("profileId" + profileId);
                     var profileFromCatalogs = _.findWhere(profileCatalogs.profiles, { id: profileId});
+                    console.log(JSON.stringify(profileFromCatalogs));
                     $scope.profile.inclusoprofile =  profileFromCatalogs.profilename;
+                    console.log("profile.inclusoProfile " + $scope.profile.inclusoprofile);
                 }else{
                     var profileIdFromCatalogs = _.findWhere(profileCatalogs.profiles, { profilename: $scope.profile.inclusoprofile});
                     profileId = profileIdFromCatalogs.id;
@@ -135,25 +141,29 @@ angular
                     var currentProfileActivity = profilePoints[i];
                     for(var j = 0; j < profiles.length; j++) {
                         profiles[j].score = profiles[j].score != undefined ? profiles[j].score : 0;
-                        if (profiles[j].id == currentProfileActivity.profileid) {
+                        if (profiles[j].id == parseInt(currentProfileActivity.profileid)) {
                             profiles[j].score += currentProfileActivity.score;
                         }
                     };
                 };
                 
                 //gets the profile with highest score
+                console.log("profiles");
+                console.log(JSON.stringify(profiles));
                 var maxProfile = _.max(profiles, function(profile){ return profile.score; });
-                
+                console.log("maxProfile");
+                console.log(JSON.stringify(maxProfile));
                 //evaluates if another profile has the maximum score also
                 var tiedProfiles = _.filter(profiles, function(item){ return item.score == maxProfile.score; });
-
-
+                
+                    
                 if (tiedProfiles.length >= 4) { 
                     //If there are more than 4 profiles in draw sets Generic profile to it
+                    console.log("more than 4 tied profiles");
                     var genericProfile = _.findWhere(profiles, { profilename : "Generico"});
                     return genericProfile.id;
                 }else if (tiedProfiles.length > 1) {
-
+                    console.log("Tied profiles" + tiedProfiles.length);    
                     //Gets an array of the score obtained in the activity Mis Gustos
                     var misGustosActivities = _.filter(profilePoints,function(item){
                         for(var i = 0; i < tiedProfiles.length; i++){
@@ -163,7 +173,7 @@ angular
                             }
                         };
                     });
-
+                    console.log(JSON.stringify(misGustosActivities));
                     //Fills profiles with the score obtained in misGustosActivities
                     var misGustosProfiles = copyProfile( profileCatalogs.profiles);
                     for(var i=0; i < misGustosActivities.length; i++){
@@ -175,21 +185,23 @@ angular
                             }  
                         };
                     };
-                    
+                    console.log(JSON.stringify(misGustosProfiles));
                     //Gets the profile with the highest score from misGustosProfiles
                     var maxMisGustos = _.max(misGustosProfiles,function(item){ return item.score; });
                     //Evaluates if there are more than one profile with the same highest score of maxMisGustos
-                    var tiedMisGustos = _.filter(misGustosProfiles, function(item){ return item.score == maxMisGustos.score; }); 
-                
+                    console.log("max Misgustos");
+                    console.log(JSON.stringify(maxMisGustos));
+                    var tiedMisGustos = _.filter(misGustosProfiles, function(item){ return item.score == maxMisGustos.score; });
                     //If there is a tie in Mis Gustos Profiles goes to reto Multiple Activities
                     if (tiedMisGustos.length > 1) {
+                        console.log("TiedMisGustos" + tiedMisGustos.length);
                         var retoMultipleActivities = _.filter(profilePoints, function(item){
                             for(var i = 0; i < misGustosActivities.length; i++){
                                 var misGustosActivity = misGustosActivities[i];
                                 if (misGustosActivity.profileid == item.profileid) { return item.moduleid == retoMultipleActivityId; }
                             };
                         });
-                        
+                        console.log(JSON.stringify(retoMultipleActivities));
                         //Fill profiles with the score obtained in retoMultipleActivities
                         var retoMultipleProfiles = profileCatalogs.profiles;
                         for(var i= 0; i < retoMultipleProfiles.length; i++){

@@ -21,7 +21,7 @@ var _tutorial = false;
 
 /* Prototypes */
 window.mobilecheck = function() {
-  return true; 
+  return true;
 }
 
 var _comboboxCompat = function (){
@@ -1355,7 +1355,7 @@ var fillProfilePoints = function(pointsToAdd){
         profilePoints.push(item);
         
         var profileObject = {
-          "profileid" : item.profileId,
+          "profileid" : item.profileid,
           "moduleid" : item.moduleId,
           "score": item.score
           };
@@ -1364,11 +1364,11 @@ var fillProfilePoints = function(pointsToAdd){
     }
     
     var objectProfile = { "scores": scores};
-    
+    console.log(JSON.stringify(objectProfile));
      moodleFactory.Services.PostProfilePoints('',JSON.stringify(objectProfile),function(data){
-        console.log(data);
+        console.log(JSON.stringify(data));
       },function(data){
-          console.log(data);
+          console.log(JSON.stringify(data));
         });
      
     localStorage.setItem("profilePoints", JSON.stringify(profilePoints));

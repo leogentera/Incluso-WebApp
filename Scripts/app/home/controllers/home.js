@@ -60,17 +60,10 @@ angular
             $scope.loaderRandom = function () {
                 if ($rootScope.loaderForLogin) {//Show Login Preloader
                     $rootScope.spinnerShow = 0;
-                    setInterval(function () {
-                        if(!$("#spinner").is(':visible'))
-                            $rootScope.spinnerShow = 0;
-                    }, 200);
+
                 } else {//Pick another preloader, 1 - 4
                     var rndIndex = Math.floor(Math.random() * 4) + 1;
                     $rootScope.spinnerShow = rndIndex;
-                    setInterval(function () {
-                        if(!$("#spinner").is(':visible'))
-                            $rootScope.spinnerShow = rndIndex;
-                    }, 200);
                 }
             };
 

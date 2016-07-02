@@ -360,10 +360,18 @@ angular
                         }, 1000);
 
                 }, function () {
-
+                    $scope.registerModel.modelState.isValid = false;
+                    $scope.isRegistered = false;
+                    localStorage.removeItem("Credentials");
+                    localStorage.setItem("offlineConnection", "othercause");
                     $scope.$emit('HidePreloader');
-                    localStorage.setItem("offlineConnection", "offline");
-                    $location.path('/');
+
+                    $timeout(function () {
+                        $scope.registerModel.modelState.errorMessages = ["Hubo en fallo en la red. Intenta más tarde."];
+                        $scope.$emit('scrollTop');
+                    }, 1000);
+
+                    //$location.path('/');
 
                 }, true);
             };
