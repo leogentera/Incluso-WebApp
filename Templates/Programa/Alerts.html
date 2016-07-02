@@ -20,7 +20,7 @@
 	  </tab>
 	  <tab heading="No leídas" class="item">
 		<ul class="green-lantern-theme">
-		  <li class="list-item rounded-item highlight" ng-repeat="notif in notifications | orderBy: 'description' | filter: {seen_date: '!' }"
+		  <li class="list-item rounded-item highlight" ng-repeat="notif in notifications | filter: {seen_date: '!' }"
 			  ng-click="showAlertDetail(notif.notificationid, notif.usernotificationid)" ng-show="qty('UnRead')">
 			<span ng-class="setNotificationClass(notif)"></span>
 			<div class="pull-left">
@@ -37,7 +37,7 @@
 	  </tab>
 	  <tab heading="Leídas" class="item">
 		<ul class="green-lantern-theme">
-		  <li class="list-item rounded-item" ng-repeat="notif in notifications | orderBy: 'description' | filter: {seen_date : '!!' } "
+		  <li class="list-item rounded-item" ng-repeat="notif in notifications | filter: {seen_date : '!!' } "
 			  ng-click="showAlertDetail(notif.notificationid, notif.usernotificationid)" ng-show="qty('Read')">
 			<span ng-class="setNotificationClass(notif)"></span>
 			<div class="pull-left">

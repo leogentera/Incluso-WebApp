@@ -188,26 +188,25 @@ angular
                     
                     if ($scope.IsComplete && activitiesCompleted == parentActivity.activities.length - 1) {
                         parentActivity.status = 1;
-
-                        //update assertiveness on users profile
                         var userid = localStorage.getItem("userId");
                         var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
-                          
-                        if(data["calificación"] && (data["calificación"] == "Aprobado" || data["calificación"] == "Regular" )){
-                          user.assertiveness = true;
-                        }else{
-                          user.assertiveness = false;                            
+                        //update assertiveness on users profile
+                        if(data["calificación"] && (data["calificación"] == "Aprobado" || data["calificación"] == "Regular" ) &&
+                           (user.assertiveness == "-1" || !user.assertiveness)){
+                          user.assertiveness = 1;
+                        }else if (data["calificación"] && data["calificación"] == "Reprobado" &&
+                                  (user.assertiveness == "-1" || !user.assertiveness)) {
+                          user.assertiveness = 0;
                         }
-                        _endActivity(parentActivity, function(){});
                         moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
+                        _endActivity(parentActivity, function(){});
+
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                         updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     }
                 }
                 if (data["calificación"] && data["calificación"] == "Reprobado") {
                     $timeout(function(){
-
-
                         $scope.isReprobado = true;
                         _loadedResources = false;
                         _pageLoaded = true;

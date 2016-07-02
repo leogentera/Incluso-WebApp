@@ -18,11 +18,10 @@ var _isDeviceOnline = null;
 var _queuePaused = false;
 var _activityStatus = null;
 var _tutorial = false;
-var _isCellphone = false;
 
 /* Prototypes */
 window.mobilecheck = function() {
-  return _isCellphone;
+  return true;
 }
 
 var _comboboxCompat = function (){
@@ -636,16 +635,16 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     for (var i = 0; i < allNotifications.length; i++) {
         var currentNotification = allNotifications[i];
           if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
-                          
-            var wonDate = new Date();                        
-            var dataModelNotification = {
-              notificationid : String(currentNotification.notificationid),
-                userid: currentUserId,
-              wondate : wonDate
-            };
-  
-            allNotifications[i].wondate = wonDate;
-            allNotifications[i].status = "won"
+
+              var wonDate = moment().format('YYYY:MM:DD HH:mm:ss');
+              var dataModelNotification = {
+                  notificationid : String(currentNotification.notificationid),
+                  userid: currentUserId,
+                  wondate : wonDate
+              };
+
+              allNotifications[i].wondate = new Date().getTime();
+            allNotifications[i].status = "won";
             localStorage.setItem("notifications",JSON.stringify(allNotifications));
             
             moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
@@ -1356,7 +1355,7 @@ var fillProfilePoints = function(pointsToAdd){
         profilePoints.push(item);
         
         var profileObject = {
-          "profileid" : item.profileId,
+          "profileid" : item.profileid,
           "moduleid" : item.moduleId,
           "score": item.score
           };
@@ -1365,11 +1364,11 @@ var fillProfilePoints = function(pointsToAdd){
     }
     
     var objectProfile = { "scores": scores};
-    
+    console.log(JSON.stringify(objectProfile));
      moodleFactory.Services.PostProfilePoints('',JSON.stringify(objectProfile),function(data){
-        console.log(data);
+        console.log(JSON.stringify(data));
       },function(data){
-          console.log(data);
+          console.log(JSON.stringify(data));
         });
      
     localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
@@ -1421,6 +1420,7 @@ var clearLocalStorage = function(location){
     localStorage.removeItem("likesByUser");    
     localStorage.removeItem("retoMultiplePartials");
     localStorage.removeItem("retoMultipleCompleted");
+    localStorage.removeItem("profilePoints");
     
     ClearLocalStorage("termsAndConditions");
     ClearLocalStorage("activity");
@@ -1757,7 +1757,6 @@ function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
     if(window.mobilecheck()){
         cordova.exec(function(data) {
             _isDeviceOnline = data.online;
-
             callback();
         }, function() { errorIsOnlineCallback();}, "CallToAndroid", "isonline", []);
     }
@@ -1801,25 +1800,7 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
 var _loadedDrupalResources = false;
 var _loadedDrupalResourcesWithErrors = false;
 
-/* params:
-   images - array of objects { path, name, downloadLink }
-*/
-function saveLocalImages(images, callback) {
-    
-    _forceUpdateConnectionStatus(function() {
-        
-        if(window.mobilecheck()) {
-        
-            if(images.length > 0) {
-                cordova.exec(function() {
-                    callback();
-                  }, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
-            }
-        }
-        
-    }, function() {});
-    
-}
+
 
 function getImageOrDefault(localPath, imageUrl, getImageOrDefaultCallback) {
     
@@ -1884,15 +1865,29 @@ var progressBar = {
 };
 
 /* Waits until page is loaded */
-$(document).ready(function(){
-    setTimeout(function() {
-    _updateDeviceVersionCache();
+$(document).ready(function () {
 
-    (function() {
-        /* Load catalogs */
-        var requestData = {"catalog": _catalogNames};
-        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { _catalogsLoaded = true; }, function(){ _catalogsLoaded = false; }, true);
-    })();
-    
+    setTimeout(function () {
+        _updateDeviceVersionCache();
+
+        (function () {
+            /* Load catalogs */
+            var requestData = { "catalog": _catalogNames };
+            moodleFactory.Services.GetAsyncCatalogs(requestData, function (key, data) { _catalogsLoaded = true; }, function () { _catalogsLoaded = false; }, true);
+
+            $("body").css({
+                "width": $(window).width(),
+                "min-height": $(window).height()
+            });
+
+            $(".app-preloader").css({
+                "width": $(window).width(),
+                "height": $(window).height()
+            });
+
+
+
+        })();
+
     }, 2000);
 });

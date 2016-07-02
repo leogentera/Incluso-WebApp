@@ -58,7 +58,7 @@ angular
                 moodleFactory.Services.GetUserNotification(userId, courseid, $scope.user.token, function () {
                     var userNotifications = JSON.parse(localStorage.getItem("notifications"));
                     $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId; });
-                    _readNotification(userId, $routeParams.id, userNotifications);
+                    _readNotification(userId, $routeParams.notificationId, $routeParams.usernotificationId, userNotifications);
                     getPost();
                 }, function(){}, true);
             }
@@ -77,11 +77,12 @@ angular
                 });
             };
                 
-            var _readNotification = function (currentUserId, currentNotificationId, userNotifications) {
+            var _readNotification = function (currentUserId, notificationId,usernotificationId, userNotifications) {
                 
-                var seen_date_now = new Date();
+                
                 for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
-                    if (userNotifications[indexNotification].usernotificationid == currentNotificationId) {
+                    if (userNotifications[indexNotification].usernotificationid == usernotificationId) {
+                        var seen_date_now = new Date();
                         userNotifications[indexNotification].seen_date = seen_date_now;
                     }
                 }
@@ -89,12 +90,14 @@ angular
                 _setLocalStorageJsonItem("notifications", userNotifications);
                 
                 var data = {                    
-                    notificationid: currentNotificationId,
-                    seen_date: seen_date_now                    
+                    notificationid: notificationId,
+                    seen_date: seen_date_now,
+                    usernotificationid: usernotificationId
+                    
                 };
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
-                    cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
+                    cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
                 }, function () {
                 },true);
             };

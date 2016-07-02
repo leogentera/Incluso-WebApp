@@ -11,6 +11,7 @@ angular
         '$modal',
         '$filter',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+            $rootScope.dontShowRobot = false;
             var _loadedResources = false;
             var _pageLoaded = false;
             /* $routeParams.stageId */

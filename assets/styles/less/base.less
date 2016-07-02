@@ -78,6 +78,8 @@ body {
     display: block;
     width: 85vw;
     pointer-events: all;
+    transform: none!important;
+    transition: none !important;
     // Temporarily disabled for dev testing. DO NOT DELETE. Will be re-stablished
     // a.disabled,
     // a[disabled] {
@@ -145,6 +147,15 @@ body {
     max-width: 100vw;
     font-family: Play, Sans-serif, Arial;
 
+    .spinner-active {
+        opacity: 0!important;
+        background: #121b1c!important;
+    }
+    
+    &.spinner-active-body {
+        background: #121b1c!important;
+    }
+    
     a {
         &:hover {
             text-decoration: none;
@@ -2077,16 +2088,15 @@ body {
      Description: CSS class to represent a backdrop layer and an animation
     ****************************************************************************/
     .app-preloader {
-        overflow: hidden;
         display: block;
         position: fixed;
         top: 0;
         left: 0;
         z-index: 30;
-        width: 100vw;
-        height: 100vh;
-        .clr-blueDark(background-color, 0.9);
-        background: rgba(18, 27, 28, 0.9);
+        width: 100%;
+        height: 100%;
+        .clr-blueDark(background-color, 1);
+        background: rgba(18, 27, 28, 1);
         /*img {
             display:none;
             position: relative;

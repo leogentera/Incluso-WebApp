@@ -22,10 +22,13 @@ angular
             var quizMisGustos = false;
             var quizMisCualidades = false;
             $scope.accessedSubsection = false;
-            $scope.$emit('scrollTop');
-            $scope.$emit('ShowPreloader');
-            $scope.mobilecheck=_comboboxCompat;
             $rootScope.loaderForLogin = false;
+            $scope.$emit('scrollTop');
+            if (!$rootScope.loading) {//For When coming from change Avatar
+                $scope.$emit('ShowPreloader');
+            }
+
+            $scope.mobilecheck=_comboboxCompat;
 
             $scope.passwordChanged = false;
 
@@ -127,6 +130,25 @@ angular
                 var endingTime;
                 $scope.logOfSections = [];
 
+                function getImageFromAssets() {
+                    console.log("getImageFromAssets");
+                    $timeout(function () {
+                        getImageOrDefault("assets/avatar/avatar_" + $scope.userId + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
+                            console.log("GetImageFromAssets Callback");
+                            $scope.model.profileimageurl = niceImageUrl;
+                            console.log($scope.model.profileimageurl);
+                            try {
+                                if(!$scope.$$phase) {
+                                    $scope.$digest();
+                                }
+                            } catch(e) {
+                                console.log(e);
+                            }
+                            
+                        });                        
+                    }, 1000);
+                };
+                
                 getDataAsync(function () {
 
                     getContent();
@@ -527,6 +549,7 @@ angular
                     $location.path('/MyStars');
                 };
 
+                
                 function getDataAsync(callback) {
 
                     startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
@@ -721,9 +744,8 @@ angular
                     $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
 
                     if ($scope.model !== null) {// If profile exists in Local Storage, then...
-                        if ($scope.model.profileimageurl) {
-                            $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
-                        }
+                        
+                        getImageFromAssets();
 
                         //Save a oopy of the original data...
                         _setLocalStorageJsonItem("originalProfile/" + $scope.userId, $scope.model);
@@ -733,17 +755,6 @@ angular
                         callback();
                         //Get avatar info from Local Storage.
                         $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
-                        $timeout(function () {
-                            $scope.validateConnection(function () {
-                            }, function () {
-
-                                getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
-                                    $scope.model.profileimageurl = niceImageUrl;
-                                    $scope.$digest();
-                                });
-
-                            });
-                        }, 500);
 
                         $timeout(function () {
                             $scope.$emit('HidePreloader');
@@ -758,13 +769,7 @@ angular
                             //Save a oopy of the original data...
                             _setLocalStorageJsonItem("originalProfile/" + $scope.userId, $scope.model);
 
-                            if ($scope.model.profileimageurl) {
-                                $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
-                            }
-                            _forceUpdateConnectionStatus(function () {
-                                $scope.model.profileimageurl = (_isDeviceOnline ? $scope.model.profileimageurl : 'assets/avatar/default-2.png');
-                            }, function () {
-                            });
+                            getImageFromAssets();
 
                             $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
 
@@ -884,19 +889,19 @@ angular
                 };
 
                 $scope.edit = function () {
-                    $scope.loaderRandom();
-                    $scope.$emit('ShowPreloader');
-                    $timeout(function(){
+                    //$scope.loaderRandom();
+                    //$scope.$emit('ShowPreloader');
+                    //$timeout(function(){
                         $location.path("/Perfil/Editar/" + $scope.userId);
-                    }, 500);
+                    //}, 500);
                 };
 
                 $scope.privacySettings = function () {
-                    $scope.loaderRandom();
-                    $scope.$emit('ShowPreloader');
-                    $timeout(function(){
+                    //$scope.loaderRandom();
+                    //$scope.$emit('ShowPreloader');
+                    //$timeout(function(){
                         $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null);
-                    }, 500);
+                    //}, 500);
                 };
 
                 $scope.navigateToDashboard = function () {
@@ -1379,7 +1384,7 @@ angular
                 };
 
                 $scope.returnToProfile = function () {//After pressing "Terminar" button.
-                    $scope.$emit('ShowPreloader');
+                    //$scope.$emit('ShowPreloader');
                     $location.path("Perfil/" + $scope.userId);
                 };
 
@@ -1893,15 +1898,12 @@ angular
                 }
 
                 $scope.saveAccountSettings = function () {
-                    $scope.loaderRandom();
-                    $scope.$emit('ShowPreloader');
                     $timeout(function(){
                         saveUserProfile();
                     }, 500);
                 };
 
                 $scope.save = function () {
-                    $scope.loaderRandom();
                     $scope.$emit('ShowPreloader');
 
                     $timeout(function(){
@@ -1919,8 +1921,7 @@ angular
                     var validationResult = validateRestrictions();  //Valid if validateModel() returns true.
 
                     if (validationResult) {
-                        //$scope.loaderRandom();
-                        //$scope.$emit('ShowPreloader');
+
                         $timeout(function(){
                             $scope.model.modelState.isValid = true;
                             deleteRepeatedValues();   //Validates for required restrictions.
@@ -2429,14 +2430,21 @@ angular
                 };
 
                 function avatarUploaded(message) {
-                    $timeout(function () {
-                        $scope.$apply(function () {
-                            $location.path('/Perfil/' + $scope.userId);
-                            $route.reload();
-                        });
-                    }, 1000);
-                }
-
+                    
+                    $timeout(function () {                     
+                            $scope.model.profileimageurl = "assets/avatar/default.png";
+                            $scope.$digest();
+                            $timeout(function () {
+                                getImageOrDefault("assets/avatar/avatar_" + $scope.userId + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
+                                    console.log("GetImageFromAssets Callback");
+                                    $scope.model.profileimageurl = niceImageUrl;
+                                    $scope.$digest();
+                                    $scope.$emit('HidePreloader');
+                                });                        
+                            }, 500);
+                    }, 500);
+                };
+                
                 function setEmptyAvatar() {
                     $scope.avatarInfo = [{
                         "userid": $scope.model.UserId,
@@ -2477,14 +2485,17 @@ angular
                         "escudo": shield,
                         "avatarType": "Profile"
                     };
-
+                    console.log("avatarInfoForGameIntegration");
+                    console.log(JSON.stringify(avatarInfoForGameIntegration));
+                    
                     try {
-                        $scope.loaderRandom();
-                        $rootScope.loading = true; //Start spinner
+                        $scope.$emit('ShowPreloader'); //Start spinner
                         $timeout(function () {
                             cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                         }, 500);
                     } catch (e) {
+                        console.log("error on sendAvatar");
+                        console.log(e);
                         SuccessAvatar({
                             "userId": $scope.userId,
                             "actividad": "Mi Avatar",
@@ -2506,6 +2517,8 @@ angular
 
 
                 function SuccessAvatar(data) {
+                    console.log("successAvatar");
+                    console.log(JSON.stringify(data));
                     //the next fields should match the database in moodle
                     $scope.avatarInfo = [{
                         "userid": data.userId,
@@ -2525,7 +2538,9 @@ angular
                         "alias": $scope.model.username,
                         "escudo": $scope.model.shield
                     }];
-                    uploadAvatar($scope.avatarInfo);
+                    console.log("avatarInfo");
+                    console.log(JSON.stringify($scope.avatarInfo));
+                    uploadAvatar($scope.avatarInfo);                    
                     _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
                 }
 

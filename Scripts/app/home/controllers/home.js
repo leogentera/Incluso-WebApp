@@ -60,17 +60,10 @@ angular
             $scope.loaderRandom = function () {
                 if ($rootScope.loaderForLogin) {//Show Login Preloader
                     $rootScope.spinnerShow = 0;
-                    setInterval(function () {
-                        if(!$("#spinner").is(':visible'))
-                            $rootScope.spinnerShow = 0;
-                    }, 200);
+
                 } else {//Pick another preloader, 1 - 4
                     var rndIndex = Math.floor(Math.random() * 4) + 1;
                     $rootScope.spinnerShow = rndIndex;
-                    setInterval(function () {
-                        if(!$("#spinner").is(':visible'))
-                            $rootScope.spinnerShow = rndIndex;
-                    }, 200);
                 }
             };
 
@@ -193,12 +186,10 @@ angular
             /* redirect to profile */
             $scope.navigateToMyProfile = function () {
                 $rootScope.loaderForLogin = false;
-                $scope.loaderRandom();
-                $scope.$emit('ShowPreloader');
 
                 $timeout(function(){
                     $location.path("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
-                }, 500);
+                }, 10);
             };
 
             $scope.setToolbar = function (url, name) {
@@ -286,6 +277,7 @@ angular
 
             /* Preloader default callbacks and listeners */
             var _showPreloader = function () {
+                $scope.loaderRandom();
                 $rootScope.loading = true;
             };
             var _hidePreloader = function () {

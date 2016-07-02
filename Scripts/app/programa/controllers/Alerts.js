@@ -19,6 +19,7 @@ angular
             });
             
             var sortedNotifications = _.sortBy(allNotifications,function(notif){
+                _loadedDrupalResources = true;
                 return notif.wondate;
             });
             
@@ -69,7 +70,7 @@ angular
                         return this.$index < $scope.notificationsQuantityUnread;
                         break;
                 }
-            }
+            };
             
             
             $scope.showMore = function(type){                
@@ -84,7 +85,7 @@ angular
                         $scope.notificationsQuantityUnread = ($scope.notificationsQuantityUnread + notificationsQuantityInitial);
                         break;
                 }
-            }
+            };
             
             $scope.showLoadMoreBar = function(type){
                 switch(type){
@@ -97,7 +98,7 @@ angular
                     return !($scope.notificationsQuantityUnread >= _.where($scope.notifications, {seen_date: null }).length);
                     break;
                 }
-            }
+            };
 
             $scope.setNotificationClass = function (notification) {
                 switch (notification.type) {
@@ -110,7 +111,7 @@ angular
                         return "icomoon icon-antena pull-left no-padding pink";
                         break;
                 }
-            }
+            };
             
             $scope.$emit('HidePreloader');
             
@@ -128,12 +129,11 @@ angular
                     }
                 }
                 
-                
                 _setLocalStorageJsonItem("notifications", userNotifications);
                 _readNotification(userId,notificationId, usernotificationId);
                 $scope.navigateTo('/AlertsDetail/' + notificationId + '/' + usernotificationId , 'null');
             
-            }
+            };
             
             var _readNotification = function (currentUserId, notificationId, usernotificationId) {
                 var seen_date_now = new Date();
@@ -146,15 +146,10 @@ angular
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function(){
                         if (usernotificationId != "-1") {
                             cordova.exec(function () {
-                                console.log("$scope.navigateTo inside cordova method");
+
                                 }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
-                        };
+                        }
                     }, function () {},true);
             };
-            
-            
-            
-            
-            
         }
 ]);

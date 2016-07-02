@@ -896,20 +896,20 @@ angular
                         var profileId = questions[i].profileid;
                         if (profileId.length > 0) {
                             for (var j = 0; j < profileId.length; j++) {
-                                var pointsByAnswer = { "profileId": profileId[j], "score": 1 };
+                                var pointsByAnswer = { "profileid": profileId[j], "score": 1 };
                                 profilePoints.push(pointsByAnswer);
                             }
                         } else {
-                            var pointsByAnswer = { "profileId": profileId, "score": 1 };
+                            var pointsByAnswer = { "profileid": profileId, "score": 1 };
                             profilePoints.push(pointsByAnswer);
                         }
                     }
                 };
 
-                var groupedProfiles = _(profilePoints).groupBy('profileId');
+                var groupedProfiles = _(profilePoints).groupBy('profileid');
                 var sumOfGroupedProfiles = _(groupedProfiles).map(function (g, key) {
                     return {
-                        profileId: key,
+                        profileid: key,
                         score: _(g).reduce(function (m, x) { return m + x.score }, 0),
                         moduleId: $scope.coursemoduleid
                     };
@@ -1355,8 +1355,6 @@ angular
             }
 
             function addHeightEssay(elem) {
-                //var elemWidth = $("#" + elem).find("li").width();
-                //var elemHeight = $("#" + elem).find("li").height();
                 var containerWidth = angular.element("div.owl-wrapper-outer").width();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
                 angular.element(".owl-wrapper-outer").css('height', containerHeight + 0.462*containerWidth + 'px');
@@ -1374,71 +1372,23 @@ angular
                 $scope.answers[index].push("");
             };
 
-            //observe = function (element, event, handler) {
-            //    element.addEventListener(event, handler, false);
-            //};
-            //
-            //resize = function() {
-            //    elem.css('height', elem.prop('scrollHeight') + 'px');
-            //};
-            //
-            //function delayedResize () {
-            //    window.setTimeout(function() {
-            //        var containerHeight = angular.element('div.owl-wrapper-outer');
-            //        containerHeight.css('height', 'auto');
-            //    }, 0);
-            //}
-
             $scope.checkCharacter = function(event, ele, question, index) {
-                var containerHeight = angular.element('div.owl-wrapper-outer');
-                var elem = $("#" + ele + question + "-" + index);
-
                 if (event.keyCode == 13) {
                     event.preventDefault();
-                } else {
-                    //containerHeight.css('height', 'initial');
-                    $scope.oldHeight = elem.prop('scrollHeight');
                 }
             };
-
 
             $scope.autoSize = function(ele, question, index) {
                 var elem = $("#" + ele + question + "-" + index);
                 autosize(elem);
 
-                elem.on('autosize:resized', function(){
-                    console.log('textarea height updated');
+                elem.on('autosize:resized', function(){//This event fires when height changes
                     var containerHeight = angular.element('div.owl-wrapper-outer');
                     var questionContainer = angular.element("#" + ele + question);
-                    var H = containerHeight.height();
-                    var h = elem.height();
 
-                    containerHeight.height(questionContainer.height() + 100);
+                    containerHeight.height(questionContainer.height() + 0.27*$(window).width());
                     questionContainer.css('height', 'auto');
                 });
-                /*
-                var oldHeight = elem.prop('scrollHeight');
-                var newHeight = (elem.prop('scrollHeight') > $scope.oldHeight ? elem.prop('scrollHeight') : $scope.oldHeight);
-
-                console.log("New height = " + newHeight);
-
-                elem.css('height', newHeight + 'px');
-                var heightToAdd = elem.css('line-height'); //Get line-height value in pixels
-                //elem.css('height', 'auto');
-                if (newHeight > $scope.oldHeight) {
-                    var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                    console.log("heightToAdd =" + parseInt(heightToAdd));
-                    var newContainerHeight = containerHeight + parseFloat(heightToAdd);
-                    angular.element("div.owl-wrapper-outer").css('height', newContainerHeight + "px");
-                }
-
-                if (newHeight < $scope.oldHeight) {
-                    var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                    console.log("heightToRemove =" + parseInt(heightToAdd));
-                    var newContainerHeight = containerHeight - parseFloat(heightToAdd);
-                    angular.element("div.owl-wrapper-outer").css('height', newContainerHeight + "px");
-                }
-                */
             };
 
             //This function is activated from Template, with ESSAY type questions
@@ -1458,12 +1408,7 @@ angular
             $scope.cancel = function () {
                 $scope.numOfMultichoiceQuestions = 0;
                 $scope.numOfOthers = 0;
-                $scope.loaderRandom();
-                $scope.$emit('ShowPreloader');
-
-                $timeout(function(){
-                    $location.path(pathToRedirect());
-                }, 500);
+                $location.path(pathToRedirect());
             };
 
             function pathToRedirect() {
