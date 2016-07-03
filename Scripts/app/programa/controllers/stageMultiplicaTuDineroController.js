@@ -191,14 +191,7 @@ angular
 
             function successGame(data) {
                 
-                if (data.imageB64) {
-                    $scope.model.profileimageurl = 'data:image/png;base64,' + data.imageB64;
-                    
-                    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                    currentUser.base64Image = 'data:image/png;base64,' + data.imageB64;
-                    localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
-                };
-              
+
                 $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("multiplicaTuDineroQuestionMap"));
                 var logEntry = {
                     "userid": $scope.user.id,
