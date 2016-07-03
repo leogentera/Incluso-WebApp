@@ -206,7 +206,6 @@ angular
                     var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
 
                      if (data.imageB64) {
-                        $scope.model.profileimageurl = 'data:image/png;base64,' + data.imageB64;                    
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         currentUser.base64Image = 'data:image/png;base64,' + data.imageB64;
                         localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
