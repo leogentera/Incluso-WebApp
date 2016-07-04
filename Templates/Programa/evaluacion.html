@@ -198,19 +198,21 @@
 				<div class="pull-right sm-pill"><span class="pull-left">240&nbsp;&nbsp;</span><span class="icomoon icon-star pull-right"></span></div>
 			</section>
 			<section class="txt-renglon centered form">
-				¿Que opinas de ésta actividad?
-				<section class="txt-renglon txt-bigger clearfix">
-					<div class="opinion">
-						<input id="like" type="radio" value="option1" name="like">
-						<label for="like">Me gusta</label>
-					</div>
-					<div class="opinion">
-						<input id="dislike" type="radio" value="option2" name="like">
-						<label for="dislike">No me gusta</label>
-					</div>											
+				<p>¿Que opinas de ésta actividad?</p>
+
+                <div>
+                    <div class="opinion col-xs-6">
+                        <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                        <label for="like" class="no-margin text-left">Me gusta</label>
+                    </div>
+                    <div class="opinion col-xs-6">
+                        <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                        <label for="dislike" class="no-margin text-left">No me gusta</label>
+                    </div>
+                </div>   										
 				</section>																
-				<a class="btn btn-primary btn-lg btn-cnt">Terminar</a>
-			</section>
+				<p class="actions"><a class="btn btn-primary btn-lg btn-cnt">Terminar</a></p>
+
 		</div>
 	</article>
 	<footer class="footer">

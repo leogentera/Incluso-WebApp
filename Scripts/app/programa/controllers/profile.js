@@ -2446,6 +2446,7 @@ angular
                     if (!$scope.avatarInfo[0]) {
                         setEmptyAvatar();
                     }
+                    console.log($scope.model.gender);
                     var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield));
                     var avatarInfoForGameIntegration = {
                         "userId": "" + $scope.model.id,
@@ -2529,6 +2530,9 @@ angular
                     console.log(JSON.stringify($scope.avatarInfo));
                     uploadAvatar($scope.avatarInfo);                    
                     _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
+                    $timeout(function(){
+                        $scope.$emit('HidePreloader');
+                    }, 1000);
                 }
 
                 function FailureAvatar(data) {

@@ -261,60 +261,7 @@ angular
                         $scope.incLoadedItem(); //11
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         currentUserProfile = getCurrentUserProfile();
-
-                        //var imageProf = [{ 'path': "assets/avatar", 'name': "avatar_" + $scope.user.userId + ".png", 'downloadLink': $scope.user.profileimageurl }];
-                        //
-                        //getImageOrDefault("assets/avatar/avatar_" +  $scope.user.userId  + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
-                        //    if (niceImageUrl.indexOf("default") > -1) {
-                        //        saveLocalImages(imageProf, function(){
-                        //            $timeout(function () {
-                        //                getImageOrDefault("assets/avatar/avatar_" +  $scope.user.userId  + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
-                        //                    console.log("image successfully saved");
-                        //                    $scope.profileImage = niceImageUrl;
-                        //                    try {
-                        //                        $scope.$digest();    
-                        //                    } catch(e) {
-                        //                        console.log(e);
-                        //                    };
-                        //                }); }, 50); });
-                        //    }else{
-                        //        console.log("image exists in cellphone");
-                        //    }
-                        //    if (_loadedResources && _pageLoaded) {
-                        //        $scope.$emit('HidePreloader');
-                        //    }
-                        //})
                         
-                        //var image1 = [{ 
-                        //    'path': "assets/avatar",'name': "avatar_leaderboard_" + $scope.course.leaderboard[0].userId + ".png", 'downloadLink': $scope.course.leaderboard[0].profileimageurl}];
-                        //
-                        //saveLocalImages(image1, function(){
-                        //    $timeout(function () {
-                        //        getImageOrDefault("assets/avatar/avatar_leaderboard_" + $scope.course.leaderboard[0].userId + ".png", $scope.course.leaderboard[0].profileimageurl, function(niceImageUrl) {
-                        //            $scope.course.leaderboard[0].profileimageurl = niceImageUrl;
-                        //            $scope.$digest();
-                        //        }); }, 50); });
-                        //
-                        //var image2 = [{ 
-                        //    'path': "assets/avatar", 'name': "avatar_leaderboard_" + $scope.course.leaderboard[1].userId + ".png", 'downloadLink': $scope.course.leaderboard[1].profileimageurl}];
-                        //
-                        //saveLocalImages(image2, function(){
-                        //    $timeout(function () {
-                        //        getImageOrDefault("assets/avatar/avatar_leaderboard_" + $scope.course.leaderboard[1].userId + ".png", $scope.course.leaderboard[1].profileimageurl, function(niceImageUrl) {
-                        //            $scope.course.leaderboard[1].profileimageurl = niceImageUrl;
-                        //            $scope.$digest();
-                        //        }); }, 50); });
-                        //
-                        //var image3 = [{ 
-                        //    'path': "assets/avatar", 'name': "avatar_leaderboard_" + $scope.course.leaderboard[2].userId + ".png", 'downloadLink': $scope.course.leaderboard[2].profileimageurl}];
-                        //
-                        //saveLocalImages(image3, function(){
-                        //    $timeout(function () {
-                        //        getImageOrDefault("assets/avatar/avatar_leaderboard_" + $scope.course.leaderboard[2].userId + ".png", $scope.course.leaderboard[2].profileimageurl, function(niceImageUrl) {
-                        //            $scope.course.leaderboard[2].profileimageurl = niceImageUrl;
-                        //            $scope.$digest();
-                        //        }); }, 50); });
-
                         var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                         
                         if(profile) {
@@ -326,18 +273,6 @@ angular
                         function profileCallback() {
                             $scope.incLoadedItem(); //14
                             var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                            $timeout(function(){
-                                //$scope.user.profileimageurl = profile != null ? profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
-                                debugger;
-                                $scope.validateConnection(function () {
-                                }, function () {
-
-                                    //getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function (niceImageUrl) {
-                                    //    $scope.user.profileimageurl = niceImageUrl;
-                                    //});
-
-                                });
-                            }, 1);
 
                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
                                 $scope.incLoadedItem(); //16
