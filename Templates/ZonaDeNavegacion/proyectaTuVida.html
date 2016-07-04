@@ -163,26 +163,22 @@
                         </section>
 
 
-                        <section class="txt-renglon centered form">
-                            <div ng-show="activity_status == 0">
-                                {{closingContent.activity_rating_label}}
-                                <!--¿Que opinas de ésta actividad?-->
-                                <section class="txt-renglon txt-bigger clearfix">
-                                    <div class="opinion">
-                                        <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                                        <label for="like">{{closingContent.like_label}}</label>
-                                        <!--<label for="like">Me gusta</label>-->
-                                    </div>
-                                    <div class="opinion">
-                                        <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                                        <label for="dislike">{{closingContent.not_like_label}}</label>
-                                        <!--<label for="dislike">No me gusta</label>-->
-                                    </div>
-                                </section>
+                        <section class="txt-renglon centered form" ng-show="activity_status == 0">
+                            <p>{{closingContent.activity_rating_label}}</p>
+                            <!--¿Que opinas de ésta actividad?-->
+                            <div>
+                                <div class="opinion col-xs-6">
+                                    <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                                    <label for="like" class="no-margin text-left">{{::closingContent.like_label}}</label>
+                                </div>
+                                <div class="opinion col-xs-6">
+                                    <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                                    <label for="dislike" class="no-margin text-left">{{::closingContent.not_like_label}}</label>
+                                </div>
                             </div>
-                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</button>
-                            <!--<button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">Terminar</button>-->
                         </section>
+                        <p class="actions"><a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a></p>
+                        <!--<button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">Terminar</button>-->
                     </div>
                 </div>
             </div>        
