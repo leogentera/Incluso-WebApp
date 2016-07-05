@@ -630,7 +630,9 @@ angular
                 };
     
                 var SuccessAttachment = function (data) {
-                    $scope.postAttachmentValue = data;
+                    $scope.$apply(function () {
+                        $scope.postAttachmentValue = data;
+                    });
                 }
     
                 var FailureAttachment = function(data) {
