@@ -130,25 +130,6 @@ angular
                 var endingTime;
                 $scope.logOfSections = [];
 
-                function getImageFromAssets() {
-                    console.log("getImageFromAssets");
-                    $timeout(function () {
-                        getImageOrDefault("assets/avatar/avatar_" + $scope.userId + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
-                            console.log("GetImageFromAssets Callback");
-                            $scope.model.profileimageurl = niceImageUrl;
-                            console.log($scope.model.profileimageurl);
-                            try {
-                                if(!$scope.$$phase) {
-                                    $scope.$digest();
-                                }
-                            } catch(e) {
-                                console.log(e);
-                            }
-                            
-                        });                        
-                    }, 1000);
-                };
-                
                 getDataAsync(function () {
 
                     getContent();
@@ -744,8 +725,11 @@ angular
                     $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
 
                     if ($scope.model !== null) {// If profile exists in Local Storage, then...
-                        
-                        getImageFromAssets();
+
+                        console.log(JSON.stringify(currentUser));
+                        if (currentUser.base64Image) {
+                            $scope.model.profileimageurl = currentUser.base64Image;
+                        }
 
                         //Save a oopy of the original data...
                         _setLocalStorageJsonItem("originalProfile/" + $scope.userId, $scope.model);
@@ -766,11 +750,13 @@ angular
 
                             $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
 
+                            if (currentUser.base64Image) {
+                                $scope.model.profileimageurl = currentUser.base64Image;
+                            }
+                            
                             //Save a oopy of the original data...
                             _setLocalStorageJsonItem("originalProfile/" + $scope.userId, $scope.model);
-
-                            getImageFromAssets();
-
+                            
                             $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
 
                             callback();
@@ -2418,32 +2404,24 @@ angular
                 };
 
                 uploadAvatar = function (avatarInfo) {
+                    console.log(avatarInfo[0].pathimagen);
                     var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
+                    console.log(pathimagen);
                     encodeImageUri(pathimagen, function (b64) {
+                        console.log("avatar enconded successfully");
                         avatarInfo[0]["filecontent"] = b64;
                         moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function () {
-                            avatarUploaded("Éxito");
+                            console.log("Exito");
+                            //avatarUploaded("Exito");
+                            $scope.$emit('HidePreloader');
                         }, function () {
-                            avatarUploaded("Error");
+                            console.log("Error");
+                            $scope.$emit('HidePreloader');
+                            //avatarUploaded("Error");
                         });
                     });
                 };
 
-                function avatarUploaded(message) {
-                    
-                    $timeout(function () {                     
-                            $scope.model.profileimageurl = "assets/avatar/default.png";
-                            $scope.$digest();
-                            $timeout(function () {
-                                getImageOrDefault("assets/avatar/avatar_" + $scope.userId + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
-                                    console.log("GetImageFromAssets Callback");
-                                    $scope.model.profileimageurl = niceImageUrl;
-                                    $scope.$digest();
-                                    $scope.$emit('HidePreloader');
-                                });                        
-                            }, 500);
-                    }, 500);
-                };
                 
                 function setEmptyAvatar() {
                     $scope.avatarInfo = [{
@@ -2468,6 +2446,7 @@ angular
                     if (!$scope.avatarInfo[0]) {
                         setEmptyAvatar();
                     }
+                    console.log($scope.model.gender);
                     var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield));
                     var avatarInfoForGameIntegration = {
                         "userId": "" + $scope.model.id,
@@ -2520,6 +2499,15 @@ angular
                     console.log("successAvatar");
                     console.log(JSON.stringify(data));
                     //the next fields should match the database in moodle
+                    
+                    if (data.imageB64) {
+                        $scope.model.profileimageurl = 'data:image/png;base64,' + data.imageB64;
+                        
+                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        currentUser.base64Image = 'data:image/png;base64,' + data.imageB64;
+                        localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+                        
+                    };
                     $scope.avatarInfo = [{
                         "userid": data.userId,
                         "aplicacion": data.actividad,
@@ -2542,6 +2530,9 @@ angular
                     console.log(JSON.stringify($scope.avatarInfo));
                     uploadAvatar($scope.avatarInfo);                    
                     _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
+                    $timeout(function(){
+                        $scope.$emit('HidePreloader');
+                    }, 1000);
                 }
 
                 function FailureAvatar(data) {

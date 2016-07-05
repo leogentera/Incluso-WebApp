@@ -7,7 +7,7 @@
 			  ng-repeat="notif in notifications" ng-show="qty('All')" ng-click="showAlertDetail(notif.notificationid, notif.usernotificationid)">
 			<span ng-class="setNotificationClass(notif)"></span>
 			<div class="pull-left">
-			  <span class="date">{{ notif.wondate | date: 'fullDate'}}</span>
+			  <span class="date">{{ notif.wondate | date: 'fullDate'}}, {{notif.wondate | date :  "hh:mm:ss"}}</span>
 			  <span>{{ notif.name }}</span>
 			</div>
 			<span class="{{notif.seen_date != null ? 'icomoon icon-checked-join pull-right no-padding green' : 'icomoon icon-gauge pull-right no-padding gray'}}"></span>
@@ -24,7 +24,7 @@
 			  ng-click="showAlertDetail(notif.notificationid, notif.usernotificationid)" ng-show="qty('UnRead')">
 			<span ng-class="setNotificationClass(notif)"></span>
 			<div class="pull-left">
-			  <span class="date">{{ notif.wondate | date: 'fullDate'}}</span>
+			  <span class="date">{{ notif.wondate | date: 'fullDate'}}, {{notif.wondate | date :  "hh:mm:ss"}}</span>
 			  <span>{{ notif.name }}</span>
 			</div>
 			<span class="icomoon icon-gauge fl-right no-padding gray"></span>
@@ -41,7 +41,7 @@
 			  ng-click="showAlertDetail(notif.notificationid, notif.usernotificationid)" ng-show="qty('Read')">
 			<span ng-class="setNotificationClass(notif)"></span>
 			<div class="pull-left">
-			  <span class="date">{{ notif.wondate | date: 'fullDate'}}</span>
+			  <span class="date">{{ notif.wondate | date: 'fullDate'}}, {{notif.wondate | date :  "hh:mm:ss"}}</span>
 			  <span>{{ notif.name }}</span>
 			</div>
 			<span class="icomoon icon-checked-join pull-right no-padding green"></span>
