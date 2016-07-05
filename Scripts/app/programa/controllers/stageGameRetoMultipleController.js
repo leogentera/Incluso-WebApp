@@ -257,7 +257,8 @@ angular
                               "detallepuntaje": (activity.detallePuntaje ? JSON.stringify(activity.detallePuntaje) : ""),
                               "detalleaciertos": (activity.detalleAciertos ? JSON.stringify(activity.detalleAciertos) : ""),
                               "detallepreguntas":(activity.detallePreguntas ? JSON.stringify(activity.detallePreguntas) : ""),
-                              "detalletiempo": (activity.tiempoIntentos ? JSON.stringify(activity.tiempoIntentos) : "")
+                              "detalletiempo": (activity.tiempoIntentos ? JSON.stringify(activity.tiempoIntentos) : ""),
+                              "nivelmaximo": (activity.nivelInteligencia ? activity.nivelInteligencia : "0")
                           }
                           if (partialActivityIndex >= 0) {
                             partials.data.push(partialRequest);
