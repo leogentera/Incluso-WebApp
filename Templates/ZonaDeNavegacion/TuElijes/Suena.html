@@ -324,22 +324,22 @@
                             <span class="icomoon icon-star pull-right"></span>
                         </div>
                     </section>
-                    <section class="txt-renglon centered form">
-                        <div ng-show="activity_status >= 0">
-                            ¿Que opinas de ésta actividad?
-                            <section class="txt-renglon txt-bigger clearfix">
-                                <div class="opinion">
-                                    <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                                    <label for="like">Me gusta</label>
-                                </div>
-                                <div class="opinion">
-                                    <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                                    <label for="dislike">No me gusta</label>
-                                </div>
-                            </section>
-                        </div>
-                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>
+                    <section class="txt-renglon centered form" ng-show="activity_status >= 0">
+                        <p>¿Que opinas de ésta actividad?</p>
+                        <div>
+                            <div class="opinion col-xs-6">
+                                <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                                <label for="like" class="no-margin text-left">Me gusta</label>
+                            </div>
+                            <div class="opinion col-xs-6">
+                                <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                                <label for="dislike" class="no-margin text-left">No me gusta</label>
+                            </div>
+                        </div> 
                     </section>
+                    <p class="actions">
+                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>
+                    </p>
                 </div>
             </div>
         </div>

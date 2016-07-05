@@ -190,6 +190,8 @@ angular
             };
 
             function successGame(data) {
+                
+
                 $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("multiplicaTuDineroQuestionMap"));
                 var logEntry = {
                     "userid": $scope.user.id,

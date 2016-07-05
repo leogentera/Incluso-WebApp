@@ -205,6 +205,12 @@ angular
                     var parentActivityIdentifier = $routeParams.moodleid;
                     var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
 
+                     if (data.imageB64) {
+                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        currentUser.base64Image = 'data:image/png;base64,' + data.imageB64;
+                        localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+                     };
+                    
                     $scope.IsComplete = (data.actividadTerminada && data.actividadTerminada == "Si");
                     var partials = {"IsPartial":true, "data":[]};
                     var quizzes = [];
@@ -251,7 +257,8 @@ angular
                               "detallepuntaje": (activity.detallePuntaje ? JSON.stringify(activity.detallePuntaje) : ""),
                               "detalleaciertos": (activity.detalleAciertos ? JSON.stringify(activity.detalleAciertos) : ""),
                               "detallepreguntas":(activity.detallePreguntas ? JSON.stringify(activity.detallePreguntas) : ""),
-                              "detalletiempo": (activity.tiempoIntentos ? JSON.stringify(activity.tiempoIntentos) : "")
+                              "detalletiempo": (activity.tiempoIntentos ? JSON.stringify(activity.tiempoIntentos) : ""),
+                              "nivelmaximo": (activity.nivelInteligencia ? activity.nivelInteligencia : "0")
                           }
                           if (partialActivityIndex >= 0) {
                             partials.data.push(partialRequest);

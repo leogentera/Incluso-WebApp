@@ -58,16 +58,20 @@ angular
             $scope.stageProgress = 0;
 
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
-            if ($scope.user.userId) {
-                $scope.profileImage = "assets/avatar/avatar_" +  $scope.user.userId  + ".png";
-            }
+            if ($scope.user.base64Image) {
+                $scope.profileImage = $scope.user.base64Image;
+                $scope.user.profileimageurl = $scope.user.base64Image;
+            }else {
+                //Download Pictures
+                //$scope.profileImage = "assets/avatar/default.png";
+                var imageProf = [{ 'path': "assets/avatar", 'name': "avatar_" + $scope.user.userId + ".png", 'downloadLink': $scope.user.profileimageurl }];
+                saveLocalImages(imageProf);
+            };
             
             if ($scope.user.haspicture != "1") {
                 $location.path('/Tutorial');
             }
-            
-            getImageFromAssets();
-            
+
             var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
             if (profileData && profileData.stars) {
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
@@ -109,22 +113,6 @@ angular
             $scope.logout = function () {
                 logout($http, $scope, $location);
             };
-            
-            
-            function getImageFromAssets() {
-                $timeout(function () {
-                    $scope.validateConnection(function () {
-                    }, function () {
-                        console.log("validate connection" + new Date());
-                        getImageOrDefault("assets/avatar/avatar_" + $scope.user.id + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
-                            $scope.profileImage = niceImageUrl;
-                            $scope.$digest();
-                        });
-                    });
-                }, 50);
-            }
-             
-            
             
             function getCurrentUserProfile() {
                 
@@ -215,8 +203,6 @@ angular
                         $scope.currentStage = getCurrentStage();                    
                         _setLocalStorageItem("currentStage", $scope.currentStage);
 
-                        getImageFromAssets();
-
                         var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         for(var lb = 0; lb < leaderboard.length; lb++) {
                             
@@ -246,11 +232,16 @@ angular
                         /* params:
                images - array of objects { path, name, downloadLink }
             */
-            function saveLocalImages(images, callback) {
+            function saveLocalImages(images) {
                 _forceUpdateConnectionStatus(function() {
-                            cordova.exec(function() {
-                                callback();
-                              }, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
+                    cordova.exec(function(data) {
+                        if (data.files[0] && data.files[0].imageB64) {
+                            $scope.profileImage = 'data:image/png;base64,' + data.files[0].imageB64;
+                            $scope.user.profileimageurl = 'data:image/png;base64,' + data.files[0].imageB64;                            
+                            $scope.user.base64Image = 'data:image/png;base64,'  + data.files[0].imageB64;
+                            localStorage.setItem("CurrentUser", JSON.stringify($scope.user));
+                        };
+                      }, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
                 }, function() {});
                 
             }
@@ -270,49 +261,7 @@ angular
                         $scope.incLoadedItem(); //11
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         currentUserProfile = getCurrentUserProfile();
-
-                        var imageProf = [{ 'path': "assets/avatar", 'name': "avatar_" + $scope.user.userId + ".png", 'downloadLink': $scope.user.profileimageurl }];
                         
-                        saveLocalImages(imageProf, function(){
-                            $timeout(function () {
-                                getImageOrDefault("assets/avatar/avatar_" +  $scope.user.userId  + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
-                                    $scope.profileImage = niceImageUrl;
-                                    $scope.$digest();
-                                    if (_loadedResources && _pageLoaded) {
-                                        $scope.$emit('HidePreloader');
-                                    }
-                                }); }, 50); });
-                        
-                        var image1 = [{ 
-                            'path': "assets/avatar",'name': "avatar_leaderboard_" + $scope.course.leaderboard[0].userId + ".png", 'downloadLink': $scope.course.leaderboard[0].profileimageurl}];
-                        
-                        saveLocalImages(image1, function(){
-                            $timeout(function () {
-                                getImageOrDefault("assets/avatar/avatar_leaderboard_" + $scope.course.leaderboard[0].userId + ".png", $scope.course.leaderboard[0].profileimageurl, function(niceImageUrl) {
-                                    $scope.course.leaderboard[0].profileimageurl = niceImageUrl;
-                                    $scope.$digest();
-                                }); }, 50); });
-
-                        var image2 = [{ 
-                            'path': "assets/avatar", 'name': "avatar_leaderboard_" + $scope.course.leaderboard[1].userId + ".png", 'downloadLink': $scope.course.leaderboard[1].profileimageurl}];
-                        
-                        saveLocalImages(image2, function(){
-                            $timeout(function () {
-                                getImageOrDefault("assets/avatar/avatar_leaderboard_" + $scope.course.leaderboard[1].userId + ".png", $scope.course.leaderboard[1].profileimageurl, function(niceImageUrl) {
-                                    $scope.course.leaderboard[1].profileimageurl = niceImageUrl;
-                                    $scope.$digest();
-                                }); }, 50); });
-                        
-                        var image3 = [{ 
-                            'path': "assets/avatar", 'name': "avatar_leaderboard_" + $scope.course.leaderboard[2].userId + ".png", 'downloadLink': $scope.course.leaderboard[2].profileimageurl}];
-                        
-                        saveLocalImages(image3, function(){
-                            $timeout(function () {
-                                getImageOrDefault("assets/avatar/avatar_leaderboard_" + $scope.course.leaderboard[2].userId + ".png", $scope.course.leaderboard[2].profileimageurl, function(niceImageUrl) {
-                                    $scope.course.leaderboard[2].profileimageurl = niceImageUrl;
-                                    $scope.$digest();
-                                }); }, 50); });
-
                         var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                         
                         if(profile) {
@@ -324,29 +273,17 @@ angular
                         function profileCallback() {
                             $scope.incLoadedItem(); //14
                             var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                            $timeout(function(){
-                                $scope.user.profileimageurl = profile != null ? profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
-
-                                $scope.validateConnection(function () {
-                                }, function () {
-
-                                    getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function (niceImageUrl) {
-                                        $scope.user.profileimageurl = niceImageUrl;
-                                    });
-
-                                });
-                            }, 1);
 
                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
                                 $scope.incLoadedItem(); //16
                             }, errorCallback, true);
 
                             _pageLoaded = true;
-                            //if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
-                            //    $timeout(function(){
-                            //        $scope.$emit('HidePreloader');
-                            //    }, 2000);
-                            //}
+                            if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
+                                $timeout(function(){
+                                    $scope.$emit('HidePreloader');
+                                }, 1000);
+                            }
 
                             if (!profile.termsAndConditions) {
                                 $scope.openTermsModal();
