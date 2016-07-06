@@ -530,6 +530,17 @@ angular
                     $location.path('/MyStars');
                 };
 
+                //This function function must be used when we want to see another's person profile
+                function downloadProfileImage(images) {
+                    _forceUpdateConnectionStatus(function() {
+                        cordova.exec(function(data) {
+                            if (data.files[0] && data.files[0].imageB64) {
+                                $scope.model.profileimageurl= 'data:image/png;base64,' + data.files[0].imageB64;
+                            };
+                          }, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
+                    }, function() {});
+                    
+                }
                 
                 function getDataAsync(callback) {
 
@@ -726,11 +737,9 @@ angular
 
                     if ($scope.model !== null) {// If profile exists in Local Storage, then...
 
-                        console.log(JSON.stringify(currentUser));
                         if (currentUser.base64Image) {
-                            $scope.model.profileimageurl = currentUser.base64Image;
-                        }
-
+                                $scope.model.profileimageurl = currentUser.base64Image;
+                        }else{}
                         //Save a oopy of the original data...
                         _setLocalStorageJsonItem("originalProfile/" + $scope.userId, $scope.model);
 
@@ -745,13 +754,21 @@ angular
                         }, 2000);
 
                     } else {//Try to get user profile data from Service.
-
+                        
                         moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
-
+                            
+                            console.log("else");
                             $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
-
-                            if (currentUser.base64Image) {
-                                $scope.model.profileimageurl = currentUser.base64Image;
+                            console.log(JSON.stringify($scope.model));
+                            
+                            
+                            if($routeParams.id == moodleFactory.Services.GetCacheObject("userId")){
+                                if (currentUser.base64Image) {
+                                    $scope.model.profileimageurl = currentUser.base64Image;
+                                }else{};
+                            }else{
+                                var imageProf = [{ 'path': "assets/avatar", 'name': "avatar_" + $scope.userId + ".png", 'downloadLink': $scope.model.profileimageurl }];
+                                downloadProfileImage(imageProf);
                             }
                             
                             //Save a oopy of the original data...
@@ -765,13 +782,13 @@ angular
                                 _pageLoaded = true;
                                 if (_loadedResources && _pageLoaded) {
                                     $scope.$emit('HidePreloader');
-                                }
+                                }else{}
                             }, true);
 
                             if (!$scope.model) {
                                 $location.path('/');
                                 return "";
-                            }
+                            }else{}
 
                         }, function () {
                             $scope.model= {
@@ -780,7 +797,7 @@ angular
                                 'profileimageurl' : 'assets/avatar/default.png'
                             };
                         }, true);
-                    }
+                    };
 
                     $timeout(function () {
                         $scope.$emit('HidePreloader');
@@ -2538,6 +2555,9 @@ angular
                 function FailureAvatar(data) {
                     avatarUploaded("Error");
                 }
+
+
+                
 
                 var $selects = $('select.form-control');
                 $selects.change(function () {
