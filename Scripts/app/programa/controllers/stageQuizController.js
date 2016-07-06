@@ -206,7 +206,7 @@ angular
                     }
 
                     //Adaptation for the "Sueña" activity
-                    if ($scope.activityname == "Sueña") {
+                    if ($scope.activityname.toLowerCase() == "sueña") {
                         $scope.activityname = "Mi sueño es:";
                     }
 
@@ -1083,6 +1083,11 @@ angular
                 var index, b, i;
                 var numAnswered = 0;
                 var numQuestions = $scope.activityObject.questions.length;
+                
+                //Adaptation for the "Sueña" activity
+                if ($scope.activityname == "Mi sueño es:") {
+                    $scope.activityname = "Sueña";
+                }
 
                 for (index = 0; index < numQuestions; index++) {
 
