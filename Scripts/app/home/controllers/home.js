@@ -19,6 +19,7 @@ angular
             $rootScope.loaderForLogin = false;
             progressBar.set(0);
             var arrayForTimeouts = [];
+            $rootScope.globalTimeOut = 120000;
 
             function myLoop (inf, up) {//To fill the interval between download chunks.
                 var i;

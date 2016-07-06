@@ -1873,7 +1873,25 @@ $(document).ready(function () {
         (function () {
             /* Load catalogs */
             var requestData = { "catalog": _catalogNames };
-            moodleFactory.Services.GetAsyncCatalogs(requestData, function (key, data) { _catalogsLoaded = true; }, function () { _catalogsLoaded = false; }, true);
+            moodleFactory.Services.GetAsyncCatalogs(requestData,
+                function (key, data) {
+                    _catalogsLoaded = true;
+                },
+                function (obj) {
+                    _catalogsLoaded = false;
+                    //-
+
+                    if (obj.statusCode == 408) {//Request Timeout
+                        progressBar.set(0); //For Login Preloader
+                        localStorage.setItem("offlineConnection", "timeout");
+
+                    } else {//A different Error happened
+                        var errorMessage = [obj.messageerror];
+                        $scope.modelState.errorCode = obj.statusCode;
+                        $scope.modelState.errorMessages = errorMessage;
+                    }
+                    //-
+                }, true);
 
             $("body").css({
                 "width": $(window).width(),

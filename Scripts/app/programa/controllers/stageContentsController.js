@@ -602,6 +602,7 @@ angular
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {
                                     //Success
                                     $rootScope.dontShowRobot = true;
+                                    $rootScope.groupid = contentId;
                                     $route.reload();
                                 },
                                 function (obj) {//Error
@@ -641,7 +642,14 @@ angular
                 }
             };
 
-            $scope.showMoreComments = function (contentId) {
+            if ($rootScope.groupid) {
+                $timeout(function(){
+                    $scope.showMoreComments($rootScope.groupid);
+                    $rootScope.groupid = null;
+                }, 2000);
+            }
+
+            $scope.showMoreComments = function (contentId) {console.log(contentId);
                 for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                     if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                         $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = $scope.fuenteDeEnergia.activities[i].activityContent.comments.length;
