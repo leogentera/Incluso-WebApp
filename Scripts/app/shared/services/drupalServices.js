@@ -75,6 +75,8 @@
     };
 
     drupalFactory.Services = (function () {
+
+        var globalTimeOut = 120000;
         
         var _getContent = function (activityIdentifierId, successCallback, errorCallback, forceRefresh) {
             
@@ -129,9 +131,12 @@
                 return returnValue;
             }
 
+            var currentTime = new Date().getTime();
+
             _httpFactory({
                 method: 'POST',
                 url: url ,
+                timeout: globalTimeOut,
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
                 data:  JSON.stringify( drupalFactory.NodeRelation)
             }).success(function (data, status, headers, config) {
@@ -154,9 +159,34 @@
 
                 if (returnValue != null) {
                     successCallback(returnValue, key);
-                }else {
-                    errorCallback(data);
+                } else {
+                    //errorCallback(data);
                 }
+                //-
+                var finalTime = new Date().getTime();
+                var obj = {};
+
+                if (data) {
+                    if (data.messageerror) {
+                        obj.messageerror = data.messageerror;
+                        obj.statusCode = status;
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = status;
+                    }
+                } else {
+                    obj.messageerror = "Undefined Server Error";
+                    obj.statusCode = 500;
+                }
+
+                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                    obj.statusCode = 408;
+                    obj.messageerror = "Request Timeout";
+                }
+
+                errorCallback(obj);
+                //-
+
             });
         };
 

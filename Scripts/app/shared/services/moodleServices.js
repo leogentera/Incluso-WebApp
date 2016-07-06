@@ -4,6 +4,7 @@
     moodleFactory.Services = (function () {
 
         var globalTimeOut = 60000;
+        var longTimeOut = 120000;
 
         var _getAsyncProfile = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("Perfil/" + userId, API_RESOURCE.format('user/' + userId), token, successCallback, errorCallback, forceRefresh);
@@ -470,7 +471,7 @@
 
         var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
             _getDeviceVersionAsync();
-
+            var currentTime = new Date().getTime();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
@@ -483,6 +484,7 @@
             _httpFactory({
                 method: 'GET',
                 url: url,
+                timeout: longTimeOut,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': currentUser.token
@@ -491,7 +493,33 @@
                 createTree(data);
                 successCallback();
             }).error(function (data, status, headers, config) {
-                errorCallback(data);
+                //errorCallback(data);
+
+                var finalTime = new Date().getTime();
+                var obj = {};
+
+                if (data) {
+                    if (data.messageerror) {
+                        obj.messageerror = data.messageerror;
+                        obj.statusCode = status;
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = status;
+                    }
+                } else {
+                    obj.messageerror = "Undefined Server Error";
+                    obj.statusCode = 500;
+                }
+
+                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                    obj.statusCode = 408;
+                    obj.messageerror = "Request Timeout";
+                }
+
+                errorCallback(obj);
+
+
+
             });
         };
 
@@ -581,10 +609,13 @@
             console.log("Catalog!");
             _getDeviceVersionAsync();
 
+            var currentTime = new Date().getTime();
+
             _httpFactory({
                 method: 'POST',
                 url: url,
                 data: data,
+                timeout: globalTimeOut,
                 headers: {'Content-Type': 'application/json'}
             }).success(function (data, status, headers, config) {
 
@@ -600,11 +631,37 @@
 
             }).error(function (data, status, headers, config) {
 
-                if (typeof errorCb === "function") {
-                    errorCb();
+                //if (typeof errorCb === "function") {
+                //    errorCb();
+                //} else {
+                //    errorCallback();
+                //}
+
+                //-
+                var finalTime = new Date().getTime();
+                var obj = {};
+
+                if (data) {
+                    if (data.messageerror) {
+                        obj.messageerror = data.messageerror;
+                        obj.statusCode = status;
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = status;
+                    }
                 } else {
-                    errorCallback();
+                    obj.messageerror = "Undefined Server Error";
+                    obj.statusCode = 500;
                 }
+
+                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                    obj.statusCode = 408;
+                    obj.messageerror = "Request Timeout";
+                }
+
+                errorCb(obj);
+                //-
+
             });
         };
 
@@ -1682,7 +1739,7 @@
                     _callback();
                     _callback = null;
                 }
-            }, function () {
+            }, function () {  alert("OFFLINE !!");
             });
         }
 
