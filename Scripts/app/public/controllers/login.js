@@ -158,17 +158,29 @@ angular
                 }, offlineCallback);
             };
 
+            //Time Out Message modal
+            $scope.openModal = function (size) {
+                var modalInstance2 = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'timeOutModal.html',
+                    controller: 'timeOutLogin',
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-programa'
+                });
+            };
+
             function loginConnectedCallback() {
                 // reflect loading state at UI
 
                 if (validateModel()) {
 
                     //moodleFactory.Services.Authenticate($scope.userCredentialsModel.username.toLowerCase(), $scope.userCredentialsModel.password, successLoginConnectedCallback, errorLoginConnectedCallback);
-
+                    var currentTime = new Date().getTime();
                     $http(
                         {
                             method: 'POST',
                             url: API_RESOURCE.format("authentication"),
+                            timeout: $rootScope.globalTimeOut,
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                             data: $.param({
                                 username: $scope.userCredentialsModel.username.toString().toLowerCase(),
@@ -196,10 +208,31 @@ angular
                         drupalFactory.Services.GetDrupalContent(function () {
                             _loadedDrupalResources = true;
                             $scope.incLoadedItem(); //2
-                        }, function () {
+                        }, function (obj) {
                             _loadedDrupalResources = false;
                             _loadedDrupalResourcesWithErrors = true;
                             offlineCallback();
+
+                            //-
+                            $scope.$emit('HidePreloader');
+
+                            if (obj.statusCode == 408) {//Request Timeout
+                                progressBar.set(0); //For Login Preloader
+
+                                $timeout(function () {
+                                    $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                                    $scope.$emit('scrollTop');
+                                    //$scope.$emit('HidePreloader');
+                                }, 1);
+                                //$scope.openModal();
+
+                            } else {//A different Error happened
+                                var errorMessage = [obj.messageerror];
+                                $scope.modelState.errorCode = obj.statusCode;
+                                $scope.modelState.errorMessages = errorMessage;
+                            }
+                            //-
+
                         }, true);
 
                         $timeout(
@@ -264,8 +297,26 @@ angular
                                     offlineCallback();
                                 }, true);
 
-                            }, function () {
-                                offlineCallback();
+                            }, function (obj) {
+                                //-
+                                $scope.$emit('HidePreloader');
+
+                                if (obj.statusCode == 408) {//Request Timeout
+                                    progressBar.set(0); //For Login Preloader
+
+                                    $timeout(function () {
+                                        $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                                        $scope.$emit('scrollTop');
+
+                                    }, 1);
+                                    //$scope.openModal();
+
+                                } else {//A different Error happened
+                                    var errorMessage = [obj.messageerror];
+                                    $scope.modelState.errorCode = obj.statusCode;
+                                    $scope.modelState.errorMessages = errorMessage;
+                                }
+                                //-
                             });
                         });
 
@@ -274,17 +325,27 @@ angular
                     }).error(function (data, status, headers, config) {
                         $scope.userCredentialsModel.modelState.isValid = false;
                         var errorMessage = "";
+
                         if (data && data.messageerror) {
                             errorMessage = window.atob(data.messageerror);
                         } else {
                             errorMessage = "Se necesita estar conectado a Internet para continuar";
                         }
 
-                        $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
                         $scope.$emit('HidePreloader');
                         $scope.$emit('scrollTop');
                         $scope.isLogginIn = false;
                         clearLocalStorage();
+
+                        //-
+                        var finalTime = new Date().getTime();
+
+                        if (finalTime - currentTime > $rootScope.globalTimeOut && $rootScope.globalTimeOut > 0) {
+                            //$scope.openModal();
+                        }
+                        //-
+
+                        $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
                     });
 
                 } else {
@@ -343,10 +404,32 @@ angular
                 drupalFactory.Services.GetDrupalContent(function () {
                     _loadedDrupalResources = true;
                     $scope.incLoadedItem(); //1
-                }, function () {
-                    _loadedDrupalResources = false;
-                    _loadedDrupalResourcesWithErrors = true;
-                }, true);
+                }, function (obj) {
+                        _loadedDrupalResources = false;
+                        _loadedDrupalResourcesWithErrors = true;
+                        offlineCallback();
+
+                        //-
+                        $scope.$emit('HidePreloader');
+
+                        if (obj.statusCode == 408) {//Request Timeout
+                            progressBar.set(0); //For Login Preloader
+
+                            $timeout(function () {
+                                $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                                $scope.$emit('scrollTop');
+                                //$scope.$emit('HidePreloader');
+                            }, 1);
+                            //$scope.openModal();
+
+                        } else {//A different Error happened
+                            var errorMessage = [obj.messageerror];
+                            $scope.modelState.errorCode = obj.statusCode;
+                            $scope.modelState.errorMessages = errorMessage;
+                        }
+                        //-
+
+                    }, true);
                 /*******************  ******/
 
                 $rootScope.OAUTH_ENABLED = true;
@@ -360,10 +443,11 @@ angular
 
                 _setId(userFacebook.id);
 
+                validateconnection(ejecutarcola, error);
                 //Run queue
                 moodleFactory.Services.ExecuteQueue(function () {
                     //Preparing for syncAll...
-
+                    validateconnection(GetAsyncUserCourse, offline);
                     //succesful credentials
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
                         $scope.incLoadedItem(); //NOT FORCE REFRESH
@@ -411,9 +495,26 @@ angular
 
                             }, 1000);
 
+                    }, function (obj) {
+                        //-
+                        $scope.$emit('HidePreloader');
 
-                    }, function () {
-                        offlineCallback();
+                        if (obj.statusCode == 408) {//Request Timeout
+                            progressBar.set(0); //For Login Preloader
+
+                            $timeout(function () {
+                                $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                                $scope.$emit('scrollTop');
+
+                            }, 1);
+                            //$scope.openModal();
+
+                        } else {//A different Error happened
+                            var errorMessage = [obj.messageerror];
+                            $scope.modelState.errorCode = obj.statusCode;
+                            $scope.modelState.errorMessages = errorMessage;
+                        }
+                        //-
                     });
                 });
 
@@ -456,12 +557,24 @@ angular
                     $scope.$emit('scrollTop');
                     localStorage.removeItem("offlineConnection");
                 }, 2000);
-            }else if (localStorage.getItem("offlineConnection") == "othercause") {
+            } else if (localStorage.getItem("offlineConnection") == "othercause") {
                 $scope.$emit('HidePreloader');
                 $scope.$emit('scrollTop');
+                localStorage.removeItem("offlineConnection");
+            } else if (localStorage.getItem("offlineConnection") == "timeout") {
+                $scope.$emit('HidePreloader');
+                $scope.$emit('scrollTop');
+                $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
                 localStorage.removeItem("offlineConnection");
             } else {
                 $scope.loadCredentials();
             }
 
-        }]);
+        }]).controller('timeOutLogin', function ($scope, $modalInstance, $route) {//TimeOut Robot
+
+    $scope.ToDashboard = function () {
+        $scope.$emit('ShowPreloader');
+        $modalInstance.dismiss('cancel');
+        //$route.reload();
+    };
+});
