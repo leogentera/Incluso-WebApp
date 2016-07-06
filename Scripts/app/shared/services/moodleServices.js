@@ -1739,7 +1739,7 @@
                     _callback();
                     _callback = null;
                 }
-            }, function () {  alert("OFFLINE !!");
+            }, function () {  console.log("OFFLINE !!");
             });
         }
 
