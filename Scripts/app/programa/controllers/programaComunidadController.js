@@ -383,6 +383,29 @@ angular
                     });
                 };
                 
+                 function toDataUrl(url, callback) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = function() {
+                      var reader = new FileReader();
+                      reader.onloadend = function() {callback(reader.result);}
+                      reader.readAsDataURL(xhr.response);
+                    };
+                    xhr.open('GET', url);
+                    xhr.send();
+                };
+                
+                $scope.download = function(imageUrl) {                    
+                    var image = imageUrl + '?token=' + $scope.userToken;                    
+                    toDataUrl(image, function(base64Img) {                        
+                        var initialIndex = base64Img.indexOf("base64");
+                        var image64 = "data:image/png;" + base64Img.substring(initialIndex);                        
+                        reconocimientoSrc = [
+                            [image64.replace(/^data:image\/(png|jpg);base64,/, "")]
+                        ];
+                        cordova.exec(function () {}, function () {}, "CallToAndroid", "download", [reconocimientoSrc]);
+                    });
+                };
                 
                 $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex) {
                     
