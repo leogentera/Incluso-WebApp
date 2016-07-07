@@ -34,17 +34,20 @@ angular
             switch ($routeParams.activityId) {
                 case "1002":
                     $scope.location = '/ZonaDeVuelo/Dashboard/1/5';
+                    $scope.stageName = "Zona de vuelo";
                     $rootScope.showStage1Footer = true;
                     currentStage = 1;
                     break;
                 case "2022":
                     $scope.location = 'ZonaDeNavegacion/Dashboard/2/7';
                     $rootScope.showStage2Footer = true;
+                    $scope.stageName = "Zona de navegación";
                     currentStage = 2;
                     break;
                 case "3501":
                     $scope.location = "ZonaDeAterrizaje/Dashboard/3/6";
                     $rootScope.showStage3Footer = true;
+                    $scope.stageName = "Zona de aterrizaje";
                     currentStage = 3;
                     break;
             }
