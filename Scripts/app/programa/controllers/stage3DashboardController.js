@@ -11,6 +11,7 @@ angular
         '$modal',
         '$filter',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+            $rootScope.dontShowRobot = false;
             var _loadedResources = false;
             var _pageLoaded = true;
             /* $routeParams.stageId */
@@ -26,63 +27,7 @@ angular
                     $location.path("/Offline");
                 }, 1000);
             }
-
-            function getUserChatCallback() {
-                //Make the pop-up appear in Chat Icon.
-                console.log("POPs !!!");
-                localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "false"); //Turn-on chat pop-up.
-            }
-
-            function errorCallback() {
-                localStorage.setItem("notSendAgain3/" + localStorage.getItem("userId"), "false");   //Restore value.
-            }
-
-            var fireService = false;
-            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            if ($scope.messages && $scope.messages.length == 2) {
-                fireService = true;
-            }
-
-            var notSendAgain3 = localStorage.getItem("notSendAgain3/" + localStorage.getItem("userId"));
-
-            if (!$rootScope.activityBlocked["3501"].disabled && fireService && notSendAgain3 == "false") { //disabled = false for Cabina de Soporte in Stage 1.
-                // FIRING CHAT SERVICE STAGE 3
-                //Put Call to Remote Service.
-                $scope.validateConnection(function () {
-                    var currentUser = JSON.parse(localStorage.getItem('CurrentUser')); //Get chat conversations.
-                    var messageText = "Hola " + currentUser.firstname + ",\n\n";
-                    messageText += "En tu tercera aventura has logrado salir ";
-                    messageText += "de la lluvia de asteroides, ";
-                    messageText += "probablemente los retos fueron mayores ";
-                    messageText += "y por ello aprendiste que las mejores ";
-                    messageText += "decisiones te llevarán por rumbos ";
-                    messageText += "positivos; que existen ideas escondidas ";
-                    messageText += "dentro de ti que pueden impulsarte para ";
-                    messageText += "conquistar tus planes a corto, mediano y ";
-                    messageText += "largo plazo, siempre y cuando ";
-                    messageText += "mantengas un equilibrio en tu mapa de ";
-                    messageText += "vida.\n\n";
-                    messageText += "Capitán estás a punto de terminar la ";
-                    messageText += "zona de aterrizaje\n\n";
-                    messageText += "¡Sigue adelante!";
-
-                    var newMessage = {
-                        "messagetext": messageText,
-                        "sendAsCouch": true
-                    };
-
-                    /* time out to avoid android lag on fully hiding keyboard */
-                    $timeout(function () {
-                        $scope.messages.push(newMessage);
-                        _setLocalStorageItem('userChat', JSON.stringify($scope.messages));
-                        localStorage.setItem("notSendAgain3/" + localStorage.getItem("userId"), "true");   //Not repeat petition.
-                        moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
-                    }, 1000);
-
-                }, offlineCallback);
-            } else { console.log("Message has been written BEFORE for Stage 3");}
-            // --------------------------------------------------------------------------------------
-
+                    
             $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
@@ -101,7 +46,7 @@ angular
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
 
             var activity_identifier = "1000";
-            getContentResources(activity_identifier);
+            getContentResources(activity_identifier);  /* ENTRY POINT */
 
             setTimeout(function () {
                 var hits = 1;
@@ -257,8 +202,6 @@ angular
 
                 var challengeCompletedId = _closeChallenge($scope.idEtapa);
 
-                _coachNotification($scope.idEtapa);
-
                 //Exclude challenges initial and final from showing modal robot
                 var challengeExploracionInicial = 205;
                 var challengeExploracionFinal = 218;
@@ -277,6 +220,7 @@ angular
 
                 //Update progress
                 $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+                var fromLastQuiz = localStorage.getItem("fromLastQuiz/" + userid);
                 var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
                 $scope.model = progress.course;
                 _setLocalStorageJsonItem("usercourse", $scope.model);
@@ -284,6 +228,11 @@ angular
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
                 _progressNotification();
+
+                if ($scope.stageProgress === 100 && fromLastQuiz) {
+                    localStorage.removeItem("fromLastQuiz/" + userid);
+                    $location.path("/reconocimiento");
+                }
             }
 
             function getContentResources(activityIdentifierId) {
@@ -336,16 +285,16 @@ angular
                         logStartActivityAction(activityId, timeStamp);
 
                         if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
-                            $rootScope.cancelDisabled = true;
                             isQuiz = true;
                             $rootScope.quizIdentifier = activity.activity_identifier;
                             $rootScope.quizUrl = url;
                             $rootScope.openQuizModal();  // turns on Quiz Modal
                         }
 
-                        if (!isQuiz) {
-                            $location.path(url);
-                        }
+                        $location.path(url);
+                        //if (!isQuiz) {
+                        //    $location.path(url);
+                        //}
 
                     } else {
                         $scope.openUpdateAppModal();
@@ -430,9 +379,14 @@ angular
 
     }, false);
 
-    $scope.navigateToDashboard = function () {
+    $scope.navigateToReconocimiento = function () {
+
         $modalInstance.dismiss('cancel');
-        $location.path('/ProgramaDashboard');
+
+        if ($location.path() != "/reconocimiento") {
+            $location.path('/ProgramaDashboard');
+        }
     };
+
     _setLocalStorageItem('robotEndStageThreeShown', true);
 });

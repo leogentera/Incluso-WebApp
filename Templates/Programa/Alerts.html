@@ -3,10 +3,11 @@
 	<tabset class="notifications txt-renglon green-lantern-theme">          
 	  <tab heading="Todas" class="item">
 		<ul class="green-lantern-theme">
-		  <li class="{{notif.seen_date != null ? 'list-item rounded-item' : 'list-item rounded-item highlight'}}" ng-repeat="notif in notifications" ng-show="qty('All')" ng-click="showAlertDetail(notif.usernotificationid)">
+		  <li class="{{notif.seen_date != null ? 'list-item rounded-item' : 'list-item rounded-item highlight'}}"
+			  ng-repeat="notif in notifications" ng-show="qty('All')" ng-click="showAlertDetail(notif.notificationid, notif.usernotificationid)">
 			<span ng-class="setNotificationClass(notif)"></span>
 			<div class="pull-left">
-			  <span class="date">{{ notif.wondate | date: 'fullDate'}}</span>
+			  <span class="date">{{ notif.wondate | date: 'fullDate'}}, {{notif.wondate | date :  "hh:mm:ss"}}</span>
 			  <span>{{ notif.name }}</span>
 			</div>
 			<span class="{{notif.seen_date != null ? 'icomoon icon-checked-join pull-right no-padding green' : 'icomoon icon-gauge pull-right no-padding gray'}}"></span>
@@ -19,10 +20,11 @@
 	  </tab>
 	  <tab heading="No leídas" class="item">
 		<ul class="green-lantern-theme">
-		  <li class="list-item rounded-item highlight" ng-repeat="notif in notifications | orderBy: 'description' | filter: {seen_date: '!' }" ng-click="showAlertDetail(notif.usernotificationid)" ng-show="qty('UnRead')">
+		  <li class="list-item rounded-item highlight" ng-repeat="notif in notifications | filter: {seen_date: '!' }"
+			  ng-click="showAlertDetail(notif.notificationid, notif.usernotificationid)" ng-show="qty('UnRead')">
 			<span ng-class="setNotificationClass(notif)"></span>
 			<div class="pull-left">
-			  <span class="date">{{ notif.wondate | date: 'fullDate'}}</span>
+			  <span class="date">{{ notif.wondate | date: 'fullDate'}}, {{notif.wondate | date :  "hh:mm:ss"}}</span>
 			  <span>{{ notif.name }}</span>
 			</div>
 			<span class="icomoon icon-gauge fl-right no-padding gray"></span>
@@ -35,10 +37,11 @@
 	  </tab>
 	  <tab heading="Leídas" class="item">
 		<ul class="green-lantern-theme">
-		  <li class="list-item rounded-item" ng-repeat="notif in notifications | orderBy: 'description' | filter: {seen_date : '!!' } " ng-click="showAlertDetail(notif.usernotificationid)" ng-show="qty('Read')">
+		  <li class="list-item rounded-item" ng-repeat="notif in notifications | filter: {seen_date : '!!' } "
+			  ng-click="showAlertDetail(notif.notificationid, notif.usernotificationid)" ng-show="qty('Read')">
 			<span ng-class="setNotificationClass(notif)"></span>
 			<div class="pull-left">
-			  <span class="date">{{ notif.wondate | date: 'fullDate'}}</span>
+			  <span class="date">{{ notif.wondate | date: 'fullDate'}}, {{notif.wondate | date :  "hh:mm:ss"}}</span>
 			  <span>{{ notif.name }}</span>
 			</div>
 			<span class="icomoon icon-checked-join pull-right no-padding green"></span>

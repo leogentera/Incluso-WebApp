@@ -139,7 +139,7 @@ angular
 
             var errorCallback = function () {
                 $scope.$emit('HidePreloader');
-                $location.path('/ProgramaDashboard');
+                //$location.path('/ProgramaDashboard');
             };
 
             $scope.avatar = function () {
@@ -185,6 +185,9 @@ angular
             };
 
             function SuccessAvatar(data) {
+                
+                                      
+                        
                 $scope.avatarInfo = [{
                     "userid": $scope.model.id,
                     "aplicacion": data.actividad,
@@ -203,12 +206,21 @@ angular
                     "alias": $scope.model.alias,
                     "escudo": $scope.model.shield
                 }];
-                uploadAvatar($scope.avatarInfo);
+                
                 _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                if (data.imageB64) {
+                    currentUser.base64Image = 'data:image/png;base64,' + data.imageB64;
+                };
+                currentUser.haspicture = "1";
+                localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+                
+                uploadAvatar($scope.avatarInfo);
             }
 
             function FailureAvatar(data) {
-                $location.path('/ProgramaDashboard');
+                 $scope.$emit('HidePreloader');
+                //$location.path('/ProgramaDashboard');
             }
 
             $scope.navigateToPage = function (pageNumber) {
@@ -217,8 +229,10 @@ angular
             };
 
             if ($routeParams.retry) {
+                 $scope.$emit('ShowPreloader');
                 try {
                     document.addEventListener("deviceready", function () {
+                         $scope.$emit('ShowPreloader');
                         cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])
                     }, false);
                 }

@@ -137,7 +137,7 @@ Parallel work file for UI Developer 01
 
         .form {
             label {
-                font-size: 4.5vw;
+                font-size: 4.3vw;
                 padding-left: 8vw;
 
                 &::before {
@@ -285,7 +285,10 @@ Parallel work file for UI Developer 01
                         .opinion {
                             display: inline-block;
                             float: left;
-                            margin: 0 4.4vw;
+                            margin: 0;
+                        }
+                        .opinion:first-child{
+                            margin-right: 4.4vw;
                         }
 
                         label {
@@ -293,6 +296,10 @@ Parallel work file for UI Developer 01
                             margin: 0;
                             display: inline-block;
                         }
+                        &.txt-renglon > div {
+                            display: inline-block;
+                        }
+                        
                     }
 
                     .btn {
@@ -395,6 +402,14 @@ Parallel work file for UI Developer 01
             .question-parts {
                 margin: 8vw 0;
             }
+        }
+    
+        .form .yes-or-no label {
+            padding-left: 18vw;
+        } 
+        
+        .form .yes-or-no input[type="radio"] + label::before {
+            margin-left: 9vw;
         }
     }
     /******** evaluation ***********/

@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <article class="blueprint evaluation">
+    <article class="blueprint evaluation quiz">
         <div class="pages">
             <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
 
@@ -50,18 +50,24 @@
                                 <div ng-repeat="answerObject in question.answers track by $index">
 
                                     <div ng-show="answerObject.answer != 'Otro'">
-                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
+                                        <input id="{{'multichoice' + $parent.$index + $index}}"
+                                               type="checkbox"
                                                name="{{'multichoice' + $parent.$index + $index}}"
-                                               ng-true-value="1" ng-false-value="0"
+                                               ng-true-value="1"
+                                               ng-false-value="0"
                                                ng-click="updateOtherField($parent.$index, $index, answerObject.answer)"
-                                               ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
+                                               ng-model="answers[$parent.$index][$index]"
+                                               ng-disabled="setReadOnly || (profileDisabled[position[$parent.$index]] && answerObject.answer != 'Ninguno')"/>
                                         <label for="{{'multichoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
                                     </div>
                                     <div ng-show="answerObject.answer == 'Otro'">
-                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
+                                        <input id="{{'multichoice' + $parent.$index + $index}}"
+                                               type="checkbox"
                                                name="{{'multichoice' + $parent.$index + $index}}"
-                                               ng-true-value="1" ng-false-value="0"
-                                               ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
+                                               ng-true-value="1"
+                                               ng-false-value="0"
+                                               ng-model="answers[$parent.$index][$index]"
+                                               ng-disabled="setReadOnly"/>
                                         <label for="{{'multichoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
 
                                         <div class="form-group theme-form" ng-show="answers[$parent.$index][$index]">
@@ -127,19 +133,21 @@
                                             <div class="clearfix">
                                                 <span>{{placeholder[$parent.$index]}} {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)"
+                                                   ng-click="deleteItem('essay' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status >= 0">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
                                             <div class="add">
                                                 <span class="icomoon icon-edit"></span>
-                                                <textarea id="{{'essay' + $parent.$index + $index}}"
+                                                <textarea id="{{'essay' + $parent.$index + '-' + $index}}"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="{{'essay' + $parent.$index + $index}}"
                                                           placeholder="{{placeholder[$parent.$index]}}"
+                                                          ng-keydown="checkCharacter($event, 'textarea', $parent.$index, $index);"
+                                                          ng-keyup="autoSize('essay', $parent.$index, $index);"
+                                                          ng-copy="autoSize('essay', $parent.$index, $index)"
                                                           ng-model="answers[$parent.$index][$index]"
-                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-readonly="setReadOnly">
                                                 </textarea>
                                             </div>
@@ -150,7 +158,7 @@
                             </ul>
                             <div class="txt-renglon">
                                 <a href="" class="btn btn-lg btn-block btn-add"
-                                   ng-click="addAbility('essay' + $index, $index)"
+                                   ng-click="addItem('essay' + $index, $index)"
                                    ng-hide="setReadOnly">
                                     <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
                                 </a>
@@ -168,20 +176,22 @@
                                             <div class="clearfix">
                                                 <span>{{placeholder[$parent.$index]}} {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deleteAbility('shortanswer' + $parent.$index, $parent.$index, $index)"
+                                                   ng-click="deleteItem('shortanswer' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status >= 0">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
                                             <div class="add">
                                                 <span class="icomoon icon-edit"></span>
-                                                <textarea id="{{'textarea' + $parent.$index}}"
+                                                <textarea id="{{'shortanswer' + $parent.$index + '-' + $index}}"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="{{'txtAbierto' + $index}}"
                                                           placeholder="{{placeholder[$parent.$index]}}"
-                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
+                                                          ng-keydown="checkCharacter($event, 'textarea', $parent.$index, $index)"
+                                                          ng-keyup="autoSize('shortanswer', $parent.$index, $index)"
+                                                          ng-copy="autoSize('shortanswer', $parent.$index, $index)"
                                                           ng-model="answers[$parent.$index][$index]"
-                                                          ng-readonly="setReadOnly">
+                                                          ng-readonly="false">
                                                 </textarea>
                                             </div>
 
@@ -191,7 +201,7 @@
                             </ul>
                             <div class="txt-renglon">
                                 <a href="" class="btn btn-lg btn-block btn-add"
-                                   ng-click="addAbility('shortanswer' + $index, $index)"
+                                   ng-click="addItem('shortanswer' + $index, $index)"
                                    ng-hide="setReadOnly">
                                     <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
                                 </a>
@@ -221,7 +231,7 @@
                        ng-show="answerIndex == maxPages && (attempts == 0 || activity_status == 0)"
                        ng-click="validateQuiz()">GUARDAR</a>
 
-                    <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
+                    <div class="txt-renglon centered txt-bigger"><span ng-click="cancel()">Cancelar</span></div>
                 </section>
             </div>
 
@@ -406,26 +416,22 @@
                             <span class="icomoon icon-star pull-right"></span>
                         </div>
                     </section>
-                    <section class="txt-renglon centered form">
-                        <div ng-show="activity_status == 0">
-                            <!--¿Que opinas de ésta actividad?-->
-                            {{closingContent.activity_rating_label}}
-                            <section class="txt-renglon txt-bigger clearfix">
-                                <div class="opinion">
-                                    <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                                    <!--<label for="like">Me gusta</label>-->
-                                    <label for="like">{{closingContent.like_label}}</label>
-                                </div>
-                                <div class="opinion">
-                                    <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                                    <!--<label for="dislike">No me gusta</label>-->
-                                    <label for="dislike">{{closingContent.not_like_label}}</label>
-                                </div>
-                            </section>
+                    <section class="txt-renglon centered form" ng-show="activity_status == 0">
+                        <!--¿Que opinas de ésta actividad?-->
+                        <p>{{closingContent.activity_rating_label}}</p>
+                        <div>
+                            <div class="opinion col-xs-6">
+                                <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                                <label for="like" class="no-margin text-left">{{::closingContent.like_label}}</label>
+                            </div>
+                            <div class="opinion col-xs-6">
+                                <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                                <label for="dislike" class="no-margin text-left">{{::closingContent.not_like_label}}</label>
+                            </div>
                         </div>
-                        <!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>-->
-                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">{{closingContent.finish_button}}</a>
                     </section>
+                    <!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>-->
+                    <p class="actions"><a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">{{closingContent.finish_button}}</a></p>
                 </div>
             </div>
 
@@ -442,15 +448,46 @@
         owl.on('translated.owl.carousel', function (event) {
         });
 
+        var seen = false;
+
         $("#next").click(function (evt) {
+
+            if (!seen) {
+                var containerHeight = angular.element('div.owl-wrapper-outer');
+                containerHeight.css('height', 'auto');
+                var elem = $("ul textarea");
+
+                elem.each( function( index, element ){
+                    var scrollHeight = $(this).prop("scrollHeight");console.log(scrollHeight);
+                    $(this).height(scrollHeight);
+                });
+            }
+
+            seen = true;
             owl.trigger('owl.next');
             evt.preventDefault();
         });
 
         $("#prev").click(function (evt) {
+            if (!seen) {
+                var containerHeight = angular.element('div.owl-wrapper-outer');
+                containerHeight.css('height', 'auto');
+                var elem = $("ul textarea");
+
+                elem.each( function( index, element ){
+                    var scrollHeight = $(this).prop("scrollHeight");
+                    $(this).height(scrollHeight);
+                });
+            }
+
+            seen = true;
             owl.trigger('owl.prev');
             evt.preventDefault();
         });
+
+        function autoSize(ele, question, index) {
+            console.log(ele);
+        }
     });
 
 </script>

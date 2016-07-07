@@ -19,6 +19,7 @@
     </section>
     <section class="filter-section form">
         <span class="icomoon icon-list"></span>
+        <span class="icomoon icon-arrow"></span>
         <label class="form-control form-control-lg dual-control theme-default"
             ng-class="{'placeholder': filter.name == ''}"
             ng-click="selectClick(items, 'filter')"
@@ -27,7 +28,6 @@
                 class="form-control form-control-lg theme-default" ng-model="filter" ng-change="updateFilter();" ng-show="!mobilecheck()"> 
                 <option value="" selected="true" disabled="disabled">Filtrar contenido por...</option>
         </select>
-        <span class="icomoon icon-arrow"></span>
     </section>
     <section class="txt-renglon distribuido" ng-disabled="!hasCommunityAccess">
       <a href="" class="icon-circle" ng-click="collapseCommunityButtomsTrigger('isTextCollapsed')" ng-class="{'active': !communityModals['isTextCollapsed']}">
@@ -81,7 +81,7 @@
       <div id="openModal4" class="modalDialog" collapse="communityModals['isAttachmentCollapsed']">
         <div>
           <!--a href="#close" title="Close" class="close"></a-->
-          <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Adjuntar archivo..." value="" ng-model="postAttachmentValue" /></div>
+          <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Adjuntar archivo..." value="" ng-model="postAttachmentValue.fileName" /></div>
           <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postAttachment()" >Compartir</button>
         </div>
       </div>
@@ -111,7 +111,7 @@
                     <a ng-if="p.attachment.length > 1">
                       <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
                     </a>
-                    <a ng-if="p.attachment.length == 1" href="{{p.attachment[0].fileurl + '?token=' + userToken}}">
+                    <a ng-if="p.attachment.length == 1" ng-click="download(p.attachment[0].fileurl)">
                       <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
                     </a>
                   </figure>

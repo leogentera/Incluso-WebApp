@@ -30,8 +30,13 @@ angular
             var userId = _getItem("userId");
                         
             function initialLoading(){
-                $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });
-                getPost();
+                if ($routeParams.usernotificationId == "undefined" || $routeParams.usernotificationId == "-1") {
+                    $scope.notification = _.find(userNotifications, function(not){return not.notificationid == $routeParams.notificationId;});                    
+                }else{
+                    $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId;});
+                    getPost();
+                }
+
             }
             
             function getPost() {
@@ -52,8 +57,8 @@ angular
 
                 moodleFactory.Services.GetUserNotification(userId, courseid, $scope.user.token, function () {
                     var userNotifications = JSON.parse(localStorage.getItem("notifications"));
-                    $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.id; });
-                    _readNotification(userId, $routeParams.id, userNotifications);
+                    $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId; });
+                    _readNotification(userId, $routeParams.notificationId, $routeParams.usernotificationId, userNotifications);
                     getPost();
                 }, function(){}, true);
             }
@@ -65,11 +70,19 @@ angular
                 $scope.showAllCommentsByPost['id' + postId] = 1000000;
             };
             
-            var _readNotification = function (currentUserId, currentNotificationId, userNotifications) {
+            $scope.urlify = function (text) {
+                var urlRegex = /(https?:\/\/[^\s]+)/g;
+                return text.replace(urlRegex, function(url) {
+                    return '<a class="urlify" href="' + url + '">' + url + '</a>';
+                });
+            };
                 
-                var seen_date_now = new Date();
+            var _readNotification = function (currentUserId, notificationId,usernotificationId, userNotifications) {
+                
+                
                 for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
-                    if (userNotifications[indexNotification].usernotificationid == currentNotificationId) {
+                    if (userNotifications[indexNotification].usernotificationid == usernotificationId) {
+                        var seen_date_now = new Date();
                         userNotifications[indexNotification].seen_date = seen_date_now;
                     }
                 }
@@ -77,12 +90,14 @@ angular
                 _setLocalStorageJsonItem("notifications", userNotifications);
                 
                 var data = {                    
-                    notificationid: currentNotificationId,
-                    seen_date: seen_date_now                    
+                    notificationid: notificationId,
+                    seen_date: seen_date_now,
+                    usernotificationid: usernotificationId
+                    
                 };
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
-                    cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [currentNotificationId]);
+                    cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
                 }, function () {
                 },true);
             };
@@ -97,22 +112,17 @@ angular
                 
                 var existingPost = false;
                 
-                //var userLiked = element.likes.length;                
-                //if (userliked == 1) {
-                //    $scope.usersLiked = element.likes[0].username;
-                //}else if (userLiked > 1) {
-                //    $scope.userLiked = element.likes[0].username + "" + element.likes.length - 1
-                //}
-                
                 for(p = 0; p < $scope.posts.length; p++){
-                    if ($scope.posts[p].post_id === element.post_id) {
-                        $scope.posts[p] = element;
-                        existingPost = true;
-                        break;
+                        if ($scope.posts[p].post_id === element.post_id) {
+                            element.message = restoreHtmlTag(element.message);
+                            $scope.posts[p] = element;
+                            existingPost = true;
+                            break;
+                        }
                     }
-                }
                 
                 if (!existingPost) {
+                    element.message = restoreHtmlTag(element.message);
                     $scope.posts.push(element);
                 }
             };

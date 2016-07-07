@@ -10,130 +10,136 @@ angular
         '$http',
         '$anchorScroll',
         '$modal',
-        'SignalRFactory',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, SignalRFactory) {
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             $scope.$emit('ShowPreloader');
-            var _pageLoaded = true;
+
+            //################################# ENTRY POINT ################################
             $scope.validateConnection(initController, offlineCallback);
 
-            function offlineCallback() {
-                $timeout(function () {
-                    $location.path("/Offline");
-                }, 1000);
-            }
-
             function initController() {
-                console.log("*************  CHAT  *****************");
+
                 _timeout = $timeout;
                 _httpFactory = $http;
+                $scope.setToolbar($location.$$path, "Cabina de Soporte");
                 $rootScope.showFooter = false;
                 $rootScope.showFooterRocks = false;
                 $rootScope.showStage1Footer = false;
                 $rootScope.showStage2Footer = false;
                 $rootScope.showStage3Footer = false;
 
+                //var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
+                var userId = localStorage.getItem('userId');
                 var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
-                var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + currentUser.userId));
-                var userCurrentStage = localStorage.getItem("currentStage");
-                var messagesToRead = userCurrentStage * 2;
                 $scope.senderId = currentUser.userId;
+                $scope.messages = JSON.parse(localStorage.getItem('userChat/' + currentUser.userId));
                 $scope.currentMessage = "";
-                $scope.setToolbar($location.$$path, "Cabina de Soporte");
+                $location.hash("anchor-bottom");
 
-                $scope.isDisabled = true;
-                var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
+                var interval = setInterval(getMessages, 60000); //Poll Messages continuously.
 
-                if ($routeParams.moodleid) {
-                    var activityIdentifier = parseInt($routeParams.moodleid); //Call this View with a moodleid parameter
-                    getContentResources(activityIdentifier);
-                    var treeActivity = getActivityByActivity_identifier(activityIdentifier, _usercourse);  //Get activity object
-                    console.log("Activity / Coursemodule Id / Status : " + activityIdentifier + "/" + treeActivity.coursemoduleid + "/" + treeActivity.status);
+                $scope.$on('$routeChangeStart', function (next, current) {//If the user Leaves, kill setInterval.
+                    clearInterval(interval);
+                });
 
-                    $scope.resetActivityBlockedStatus(); //Copies last version of activity blocked status into model variable
-
-                    if (!$rootScope.activityBlocked[activityIdentifier].disabled && treeActivity.status === 0) { //disabled = false for Cabina de Soporte in Stage 1.
-                        $scope.isDisabled = false;  //Button "CONTINUAR" will be available.
-                    }
-                }
-
-                //Get Messages From Server.
-                moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
-
-                if ($location.hash() == 'top') {
-                    $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
-                    $anchorScroll();
+                function getMessages() {
+                    $scope.validateConnection(function () {
+                        moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
+                    }, function () {
+                    });
                 }
 
                 $(".typing-section textarea").keypress(function () {
                     $(".typing-section textarea").focus();
                 });
 
+                // Get Chat conversation
+                moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
+
                 function getUserRefreshChatCallback() {
-                    $timeout(function () {
-                        $scope.$emit('HidePreloader'); //hide preloader
-                        $scope.messages = JSON.parse(localStorage.getItem('userChat')); //Get all messages posted.
+                    $scope.$emit('HidePreloader'); //hide preloader
+                    localStorage.setItem("chatRead/" + currentUser.userId, "true");   //Turn-off Chat Bubble.
+                    var messages = localStorage.getItem('userChat/' + currentUser.userId); //Get all messages posted.
 
-                        localStorage.setItem("chatRead/" + localStorage.getItem("userId"), "true");   //Turn-off Chat warning popup.
+                    if (messages) {
+                        $scope.messages = JSON.parse(messages);
+                    } else {//null
+                        $scope.messages = [];
+                    }
 
-                        if ($location.hash() == 'top') {
-                            $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
-                            $anchorScroll();
-                        }
-                    }, 100);
+                    _setLocalStorageItem('numMessages/' + currentUser.userId, $scope.messages.length);
                 }
 
-                $scope.goToCloseScreen = function () {
+                // METHOD THAT RUNS WHEN USER SENDS A NEW CHAT POST
+                $scope.sendMessage = function () {
+                    var newMessage;
 
-                    var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + currentUser.userId);
-                    var zone = '/ZonaDeVuelo';
+                    $scope.validateConnection(function () {
 
-                    if (userCurrentStage == 2) {
-                        zone = '/ZonaDeNavegacion';
-                    }
+                        if ($scope.currentMessage.trim() != "") {//If there is currently some text...
+                            triggerAndroidKeyboardHide();
 
-                    if (userCurrentStage == 3) {
-                        zone = '/ZonaDeAterrizaje';
-                    }
+                            // 1) Create Model for User Post...
+                            newMessage = {
+                                messagetext: $scope.currentMessage,
+                                messagesenderid: currentUser.userId,
+                                messagedate: new Date()
+                            };
 
-                    if (!finishCabinaSoporte) {
-                        console.log("_startedActivityCabinaDeSoporte = " + _startedActivityCabinaDeSoporte);
-                        if (_startedActivityCabinaDeSoporte) {
-                            var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);
+                            /* time out to avoid android lag on fully hiding keyboard */
+                            $timeout(function () {
+                                // 2) Save User Post in LS...
+                                $scope.messages.push(newMessage);
+                                $scope.currentMessage = ""; //Clean Text Area
+                                _setLocalStorageItem('userChat/' + currentUser.userId, JSON.stringify($scope.messages));
+                                $anchorScroll();
 
-                            if (!currentActivity.status) {//The activity has not been finished.
-                                console.log("...Finishing Cabina de Soporte");
-                                localStorage.removeItem("startedActivityCabinaDeSoporte/" + currentUser.userId);
-                                _setLocalStorageItem("finishCabinaSoporte/" + currentUser.userId, _startedActivityCabinaDeSoporte.activity_identifier);
-                                $location.path(zone + '/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
-                            }
+                                // 3) Save User Post Remotely.
+                                moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+
+                                // 4) Create Model for Automated Message
+                                var firstTimeMessage = JSON.parse(localStorage.getItem("drupal/content/chat_generic_message")).node.chat_instructions;
+
+                                newMessage = {
+                                    messagetext: firstTimeMessage,
+                                    messagesenderid: currentUser.userId, //Dev  Prod:350
+                                    sendAsCouch: true,
+                                    messagedate: new Date()
+                                };
+
+                                /* time out to avoid android lag on fully hiding keyboard */
+                                $timeout(function () {
+                                    // 5) Save Generic Message in LS...
+                                    $scope.messages.push(newMessage);
+                                    _setLocalStorageItem('userChat/' + currentUser.userId, JSON.stringify($scope.messages));
+                                    $anchorScroll();
+
+                                    // 6) Save Automated Message Remotely.
+                                    moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                                }, 1000);
+
+                            }, 1000);
                         }
-                    } else {
-                        console.log("ELSE");
-                        $location.path(zone + '/CabinaDeSoporte/' + finishCabinaSoporte);
-                    }
+
+                    }, offlineCallback);
                 };
 
-                function errorCallback() { }
+                function getUserChatCallback() {
+                    _setLocalStorageItem('numMessages/' + currentUser.userId, $scope.messages.length);
+                }
+
+                function errorCallback() {
+                }
+
+                function triggerAndroidKeyboardHide() {
+                    angular.element('#chatMessages').trigger('tap');
+                    $anchorScroll();
+                }
             }
 
-
-            function getContentResources(activityIdentifierId) {
-                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
-                    _loadedResources = true;
-                    $scope.setToolbar($location.$$path, data.node.tool_bar_title);
-                    $scope.title = data.node.chat_title;
-                    $scope.welcome = data.node.chat_welcome;
-                    $scope.description = data.node.chat_instructions;
-                    if (_loadedResources && _pageLoaded) {
-                        $scope.$emit('HidePreloader');
-                    }
-
-                }, function () {
-                    _loadedResources = true;
-                    if (_loadedResources && _pageLoaded) {
-                        $scope.$emit('HidePreloader');
-                    }
-                }, false);
+            function offlineCallback() {
+                $timeout(function () {
+                    $location.path("/Offline");
+                }, 1000);
             }
         }
     ]);

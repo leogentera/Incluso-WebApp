@@ -181,16 +181,17 @@ angular
                             "actividad_completa": "Si",
                             "calificación": "Aprobado",
                             "gusta_actividad": "Si",
-                            "respuestas": [{"preguntaId": 1, "respuestaId": 2}, {"preguntaId": 2, "respuestaId": 6}, {"preguntaId": 3, "respuestaId": 8}, {"preguntaId": 4, "respuestaId": 11}, {"preguntaId": 10, "respuestaId": 29}, {
-                                "preguntaId": 11,
-                                "respuestaId": 33
-                            }, {"preguntaId": 15, "respuestaId": 44}, {"preguntaId": 18, "respuestaId": 52}]
-                        }
-                    );
+                            "respuestas": [
+                              {"preguntaId": 1, "respuestaId": 2}, {"preguntaId": 2, "respuestaId": 6},
+                              {"preguntaId": 3, "respuestaId": 8}, {"preguntaId": 4, "respuestaId": 11},
+                              {"preguntaId": 10, "respuestaId": 29},{"preguntaId": 11,"respuestaId": 33},
+                              {"preguntaId": 15, "respuestaId": 44}, {"preguntaId": 18, "respuestaId": 52}]});
                 }
             };
 
             function successGame(data) {
+                
+
                 $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("multiplicaTuDineroQuestionMap"));
                 var logEntry = {
                     "userid": $scope.user.id,
@@ -243,8 +244,17 @@ angular
                     }
                     if ((activitiesCompleted == parentActivity.activities.length - 1) && $scope.IsComplete) {
                         parentActivity.status = 1;
-                        _endActivity(parentActivity, function () {
-                        });
+                        var userid = localStorage.getItem("userId");
+                        var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+                         //update assertiveness on users profile
+                        if(data["calificación"] && (data["calificación"] == "Aprobado" || data["calificación"] == "Regular" ) && (user.financialAbility == "-1" || !user.financialAbility)){
+                          user.financialAbility = 1;
+                        }else if (data["calificación"] && data["calificación"] == "Reprobado" && (user.financialAbility == "-1" || !user.financialAbility)) {
+                          user.financialAbility = 0;
+                        }
+                        _endActivity(parentActivity, function () {});
+                        moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (data) {});
+                        
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                     }
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);

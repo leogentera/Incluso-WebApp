@@ -125,7 +125,6 @@ angular
                                                         
                     drupalFactory.Services.GetContent("BadgeForumRobot",function(data, key){
                         $scope.robotContentResources = data.node;
-                        console.log(data.node);                        
                         },function(){},false);
                     
                     moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, $scope.userToken, initCommunitySuccessCallback, initCommunityErrorCallback, true);
@@ -296,7 +295,6 @@ angular
                 
                 function countLikesByUser() {
                     var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
-                    console.log(userLikes);
                     if (userLikes && userLikes.likes == 30){
                             assignLikesBadge();
                     }
@@ -317,7 +315,6 @@ angular
                             showRobotForum();
                             
                             moodleFactory.Services.PostBadgeToUser(_currentUser.userId, badgeModel, function () {
-                                console.log("created badge successfully");
                             }, function () { });
                             
                         }                    
@@ -346,7 +343,6 @@ angular
                                 }
                             }
                         }
-                        console.log("PostCounter" +  postCounter);
                         if (postCounter >= 30 && badgeForum[0].status == "pending") {
                             
                             var badgeModel = {
@@ -387,6 +383,29 @@ angular
                     });
                 };
                 
+                 function toDataUrl(url, callback) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = function() {
+                      var reader = new FileReader();
+                      reader.onloadend = function() {callback(reader.result);}
+                      reader.readAsDataURL(xhr.response);
+                    };
+                    xhr.open('GET', url);
+                    xhr.send();
+                };
+                
+                $scope.download = function(imageUrl) {                    
+                    var image = imageUrl + '?token=' + $scope.userToken;                    
+                    toDataUrl(image, function(base64Img) {                        
+                        var initialIndex = base64Img.indexOf("base64");
+                        var image64 = "data:image/png;" + base64Img.substring(initialIndex);                        
+                        reconocimientoSrc = [
+                            [image64.replace(/^data:image\/(png|jpg);base64,/, "")]
+                        ];
+                        cordova.exec(function () {}, function () {}, "CallToAndroid", "download", [reconocimientoSrc]);
+                    });
+                };
                 
                 $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex) {
                     
@@ -634,7 +653,9 @@ angular
                 };
     
                 var SuccessAttachment = function (data) {
-                    $scope.postAttachmentValue = data;
+                    $scope.$apply(function () {
+                        $scope.postAttachmentValue = data;
+                    });
                 }
     
                 var FailureAttachment = function(data) {

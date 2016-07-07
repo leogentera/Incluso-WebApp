@@ -26,16 +26,16 @@ angular
                     var i;
                     $scope.contentResources = data.node;
                     $scope.fortalezas = _.filter($scope.retoMultipleActivities, function (a) {
-                        return a.score == "3"
+                        return a.score == "3";
                     });
                     $scope.fortalezas = _.sortBy($scope.fortalezas, function (f) {
                         if (f.name.slice(0, 4).toLowerCase().indexOf($scope.profile.shield.slice(0, 4).toLowerCase()) > -1) {
                             f.total_score *= 1000;
                         }
-                        return -f.total_score
+                        return -f.total_score;
                     });
                     $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function (a) {
-                        return a.score != "3" && a.score != "-1"
+                        return a.score != "3" && a.score != "-1";
                     });
 
                     //Las 8 inteligencias son: ["Linguística", "Matemática", "Espacial", "Musical", "Corporal", "Interpersonal", "Intrapersonal", "Naturalista"];

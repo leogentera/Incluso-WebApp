@@ -14,6 +14,40 @@ angular
         function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal, $timeout) {
             
             $rootScope.OAUTH_ENABLED = false;
+            $rootScope.loadedItem = 0;
+            $rootScope.totalLoads = 16;
+            $rootScope.loaderForLogin = false;
+            progressBar.set(0);
+            var arrayForTimeouts = [];
+            $rootScope.globalTimeOut = 120000;
+
+            function myLoop (inf, up) {//To fill the interval between download chunks.
+                var i;
+
+                for (i = inf; i < up; i++) {//Set the new cicles for the loader bar.
+                    arrayForTimeouts[i] = setTimeout(function() {
+                        progressBar.set(i); //Update progress
+
+                        if (i == 100) {//When load is complete.
+                            $timeout(function(){
+                                $scope.$emit('HidePreloader');
+                                $rootScope.loadedItem = 0;
+                                $rootScope.loaderForLogin = false;
+                                $scope.loaderRandom(); //Reinit Preloader
+                            }, 1000);
+                        }
+                    }, 10);
+                }
+            }
+
+            $scope.incLoadedItem = function() {
+                if ($rootScope.loaderForLogin) {
+                    var infValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
+                    $rootScope.loadedItem++;
+                    var upperValue = Math.floor($rootScope.loadedItem/$rootScope.totalLoads*100);
+                    myLoop(infValue, upperValue);
+                }
+            };
             
             // To handle page reloads
             _httpFactory = $http;
@@ -25,11 +59,13 @@ angular
             }
 
             $scope.loaderRandom = function () {
-                $scope.spinnerShow = Math.floor((Math.random() * 4));
-                setInterval(function () { 
-                    if(!$("#spinner").is(':visible'))
-                         $scope.spinnerShow = Math.floor((Math.random() * 4));
-                }, 200);
+                if ($rootScope.loaderForLogin) {//Show Login Preloader
+                    $rootScope.spinnerShow = 0;
+
+                } else {//Pick another preloader, 1 - 4
+                    var rndIndex = Math.floor(Math.random() * 4) + 1;
+                    $rootScope.spinnerShow = rndIndex;
+                }
             };
 
             var classdisable;
@@ -57,7 +93,7 @@ angular
                     $scope.$emit('ShowPreloader');
                     $timeout(function () {
                         $scope.$emit('HidePreloader');
-                    }, 1000);
+                    }, 1500);
                 });
             };
 
@@ -77,40 +113,9 @@ angular
                     if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
 
-                        if (activityId == "chat") {//The user pressed the Chat icon on Top bar.
-
-                            var currentStage = parseInt(localStorage.getItem("currentStage")); //Last Stage attained by the user.
-                            var pref;
-                            switch (currentStage) {
-                                case 1:
-                                    activityId = "1002";
-                                    pref = "/ZonaDeVuelo/";
-                                    break;
-                                case 2:
-                                    activityId = "2022";
-                                    pref = "/ZonaDeNavegacion/";
-                                    break;
-                                case 3:
-                                    activityId = "3501";
-                                    pref = "/ZonaDeAterrizaje/";
-                                    break;
-                                default:
-                                    activityId = "1002";  //For a new user.
-                                    pref = "/ZonaDeNavegacion/";
-                            }
-
-                            url = pref + "CabinaDeSoporte/" + activityId;
-
-                            //Check if CabinaDeSoporte activity is blocked...
-                            if ($rootScope.activityBlocked[activityId].disabled) {//The Activity is Blcoked
-                                activityId = "null";  //To avoid starting activity when the user goes to Chat from top bar.
-                            }
-                        }
-
                         logStartActivityAction(activityId, timeStamp);
 
                         if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
-                            $rootScope.cancelDisabled = true;
                             isQuiz = true;
                             $rootScope.quizIdentifier = activityId.toString();
                             $rootScope.quizUrl = url;
@@ -122,13 +127,10 @@ angular
                         $rootScope.sidebar = !$rootScope.sidebar;
                     }
 
-                    if (!isQuiz) {
-                        $location.path(url);
-                    }
-
-                    //$timeout(function(){
+                    $location.path(url);
+                    //if (!isQuiz) {
                     //    $location.path(url);
-                    //}, 100);
+                    //}
                 }
             };
 
@@ -184,8 +186,11 @@ angular
 
             /* redirect to profile */
             $scope.navigateToMyProfile = function () {
-                $scope.$emit('ShowPreloader');
-                $location.path("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
+                $rootScope.loaderForLogin = false;
+
+                $timeout(function(){
+                    $location.path("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
+                }, 10);
             };
 
             $scope.setToolbar = function (url, name) {
@@ -273,6 +278,7 @@ angular
 
             /* Preloader default callbacks and listeners */
             var _showPreloader = function () {
+                $scope.loaderRandom();
                 $rootScope.loading = true;
             };
             var _hidePreloader = function () {
@@ -297,6 +303,7 @@ angular
             };
 
             $scope.showChatNotification = function () {
+
                 var chatRead = localStorage.getItem('chatRead/' + localStorage.getItem("userId"));
 
                 if ($scope.pageName == 'Chat' || chatRead == "true" || chatRead == undefined) {
@@ -394,24 +401,7 @@ angular
                 });
             };
 
-            $scope.getUserChat = function () {
-                $timeout(function () {                
-                    _setLocalStorageItem('chatRead/' + localStorage.getItem("userId"), "false");
-
-                    var chat = JSON.parse(localStorage.getItem('userChat'));
-                    $scope.messages = chat;
-                
-                    var userId = localStorage.getItem("userId");
-                        
-                    var chatAmount = _.countBy(chat,function(messages){                                
-                        return messages.messagesenderid != userId;
-                    });
-                                                        
-                    _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                    $scope.showChatNotification();
-
-                }, 100);                        
-            }
+            
         } ]).controller('WelcomeAboardFromMenu', function ($scope, $modalInstance) {//To show Inclubot from MENU.
     drupalFactory.Services.GetContent("robot-inclubot", function (data, key) {
 
@@ -429,7 +419,7 @@ angular
 
     drupalFactory.Services.GetContent($rootScope.quizIdentifier, function (data, key) {
 
-            if (data.node != null) {
+            if (data.node && data.node.titulo_quiz && data.node.instrucciones) {
                 $scope.title = data.node.titulo_quiz;
                 $scope.instructions = data.node.instrucciones;
             }
@@ -442,11 +432,9 @@ angular
 
     $scope.cancelModal = function () {
         $modalInstance.dismiss('cancel');
-
-        $timeout(function(){
-            $location.path($rootScope.quizUrl);
-            //$rootScope.cancelDisabled = false;
-            //$scope.$apply();
-        }, 200);
+        //
+        //$timeout(function(){
+        //    $location.path($rootScope.quizUrl);
+        //}, 200);
     };
 });

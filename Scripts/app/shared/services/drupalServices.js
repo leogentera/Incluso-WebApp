@@ -69,11 +69,14 @@
         "fuenteDeEnergiaRequirements": 99,
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
         "BadgeForumRobot": 101, /*General - Robot al ganar el badge de foros*/
-        "robot-inclubot" : 56 /*Dashboard Programa - Robot Inclubot*/
+        "robot-inclubot" : 56, /*Dashboard Programa - Robot Inclubot*/
+        "RetroalimentacionClosing" : 103,  /*Cierre de actividad Retroalimentación*/
+        "chat_generic_message" : 104  /*Mensaje genérico de Chat*/
     };
-    
 
     drupalFactory.Services = (function () {
+
+        var globalTimeOut = 120000;
         
         var _getContent = function (activityIdentifierId, successCallback, errorCallback, forceRefresh) {
             
@@ -128,9 +131,12 @@
                 return returnValue;
             }
 
+            var currentTime = new Date().getTime();
+
             _httpFactory({
                 method: 'POST',
                 url: url ,
+                timeout: globalTimeOut,
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
                 data:  JSON.stringify( drupalFactory.NodeRelation)
             }).success(function (data, status, headers, config) {
@@ -153,9 +159,34 @@
 
                 if (returnValue != null) {
                     successCallback(returnValue, key);
-                }else {
-                    errorCallback(data);
+                } else {
+                    //errorCallback(data);
                 }
+                //-
+                var finalTime = new Date().getTime();
+                var obj = {};
+
+                if (data) {
+                    if (data.messageerror) {
+                        obj.messageerror = data.messageerror;
+                        obj.statusCode = status;
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = status;
+                    }
+                } else {
+                    obj.messageerror = "Undefined Server Error";
+                    obj.statusCode = 500;
+                }
+
+                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                    obj.statusCode = 408;
+                    obj.messageerror = "Request Timeout";
+                }
+
+                errorCallback(obj);
+                //-
+
             });
         };
 

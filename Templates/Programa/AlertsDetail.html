@@ -10,7 +10,7 @@
         <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')">Regresar</a>
       </p>
     </section>
-    <section class="wall txt-renglon" ng-show="notification.postid != null">
+    <section class="wall" ng-show="notification.postid != null">
       <div id="item{{$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
         <div class="part post">
           <div class="author">
@@ -22,19 +22,23 @@
               <div>{{::p.created * 1000 | date: "dd MMMM yyyy"}}</div>
             </div>
           </div>
-          <div class="block">
+          <div class="block-not post-contents">
             <div ng-switch="p.post_type">
-              <span ng-switch-default>{{:: p.message }}</span>
-              <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>              
-              <span ng-switch-when="3"><a ng-href="{{::p.message}}"><span class="icomoon icon-video-file"></span></a></span>
+              <!--<span ng-switch-default>{{:: p.message }}</span>-->
+              <div ng-switch-default ng-bind-html="urlify(p.message)"></div>
+              <!--<span ng-switch-default ng-bind-html="p.message"></span>-->
+              <!--<span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>              
+              <span ng-switch-when="3"><a ng-href="{{::p.message}}"><span class="icomoon icon-video-file"></span></a></span>-->              
+              <p ng-switch-when="2"><span class="urlify" ng-bind-html="p.message | linky"></span></p>              
+              <p ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></p>
               <div ng-switch-when="4">
-                <p ng-bind="p.message"></p>
+                <p ng-bind-html="p.message"></p>
                 <div class="achievement-badge">
                   <figure>
                     <a ng-if="p.attachment.length > 1">
                       <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"/>
                     </a>
-                    <a ng-if="p.attachment.length == 1" href="{{::p.attachment[0].fileurl + '?token=' + userToken}}">
+                    <a ng-if="p.attachment.length == 1" ng-click="download(p.attachment[0].fileurl)">
                       <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}" />
                     </a>
                   </figure>
@@ -69,10 +73,9 @@
           </div>
         </div>
       </div>
-
-        <p class="actions">
-          <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')">Regresar</a>
-        </p>
+      <p class="actions">
+        <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')">Regresar</a>
+      </p>
     </section>
     
   </article>

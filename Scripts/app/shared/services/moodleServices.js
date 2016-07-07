@@ -3,6 +3,9 @@
 
     moodleFactory.Services = (function () {
 
+        var globalTimeOut = 60000;
+        var longTimeOut = 120000;
+
         var _getAsyncProfile = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("Perfil/" + userId, API_RESOURCE.format('user/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
@@ -11,10 +14,10 @@
             _putAsyncData("Perfil/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
 
-        var _putAsyncAcceptTermsAndConditions = function (userId, data, successCallback, errorCallback, forceRefresh){
+        var _putAsyncAcceptTermsAndConditions = function (userId, data, successCallback, errorCallback, forceRefresh) {
             _putAsyncData("termsAndConditions/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
-        
+
         var _putAsyncAward = function (userId, data, successCallback, errorCallback) {
             _putAsyncData("usercourseaward", data, API_RESOURCE.format('usercourse/' + userId), successCallback, errorCallback);
         };
@@ -39,30 +42,40 @@
         var _getAsyncForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
-        
+
+        var _getProfileCatalogs = function (token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("profileCatalogs", API_RESOURCE.format('feedbackprofile'), token, successCallback, errorCallback, forceRefresh);
+
+        };
+
+        var _getProfilePoints = function (userId, courseId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("profilePoints", API_RESOURCE.format('feedbackprofile/' + userId), token, successCallback, errorCallback, forceRefresh);
+        };
+
+
         var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
         };
-                        
-        var _getAsyncUserPostCounter = function(token, courseId, successCallback, errorCallback, forceRefresh) {
-          var key = "postcounter/" + courseId;
-          var url = API_RESOURCE.format("postcounter/" + courseId);
-          
-          _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh);
+
+        var _getAsyncUserPostCounter = function (token, courseId, successCallback, errorCallback, forceRefresh) {
+            var key = "postcounter/" + courseId;
+            var url = API_RESOURCE.format("postcounter/" + courseId);
+
+            _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh);
         };
-        
-        var _getAsyncDiscussionPosts = function(token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
+
+        var _getAsyncDiscussionPosts = function (token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
             var key = "discussion/" + token + discussionId + discussion + forumId + sinceId + maxId + first + filter;
             var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&sinceid=" + sinceId + "&maxid=" + maxId + "&first=" + first + "&filter=" + filter);
-            
+
             _getAsyncForumDiscussionsData(key, url, token, successCallback, errorCallback, forceRefresh);
         };
-        
-        var _getAsyncDiscussionDetail = function(postId,token,successCallback,errorCallback,forceRefresh){
+
+        var _getAsyncDiscussionDetail = function (postId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncForumDiscussionsData("forumDetail/" + postId, API_RESOURCE.format('discussion/' + postId), token, successCallback, errorCallback, forceRefresh);
             //_getAsyncData("forumDetail/" + postId, API_RESOURCE.format('discussion/' + postId), token, successCallback, errorCallback, forceRefresh);
         }
-        
+
         var _putAsyncActivityInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId), successCallback, errorCallback);
         };
@@ -71,17 +84,15 @@
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityQuizInfo = function (activityId, userId, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh) {
             if (userId != -1) {
-                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
-            } else {
-                _getAsyncData2("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), userId, token, successCallback, errorCallback, forceRefresh);
+                _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh);
             }
         };
-        
-        var _postBadgeToUser = function(userId,badgeModel,successCallback,errroCallback){
-                        
-            _putAsyncData("badges", badgeModel, API_RESOURCE.format('badges/' + userId), successCallback, errorCallback);            
+
+        var _postBadgeToUser = function (userId, badgeModel, successCallback, errroCallback) {
+
+            _putAsyncData("badges", badgeModel, API_RESOURCE.format('badges/' + userId), successCallback, errorCallback);
         };
 
         var _getAsyncActivityForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
@@ -96,19 +107,19 @@
             _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncHallOfFame = function (courseId,city,token,successCallback,errorCallback,forceRefresh){
+        var _getAsyncHallOfFame = function (courseId, city, token, successCallback, errorCallback, forceRefresh) {
             var url = 'leaderboard/{0}?type=1'.format(courseId);
-            if(city != "Ver Todo")
+            if (city != "Ver Todo")
                 url = url + "&city=" + city;
-            _getAsyncData("halloffame", API_RESOURCE.format(url), token, successCallback, errorCallback,forceRefresh);
+            _getAsyncData("halloffame", API_RESOURCE.format(url), token, successCallback, errorCallback, forceRefresh);
         }
 
-        var _getAsyncCatalogs = function(data, succesCb, errorCb, forceRefresh) {
+        var _getAsyncCatalogs = function (data, succesCb, errorCb, forceRefresh) {
             _postAsyncCatalogs("catalogs", data, API_RESOURCE.format('catalog'), succesCb, errorCb);
         };
 
-        var _getAsyncCatalog = function (catalogname,token,successCallback,errorCallback,forceRefresh) {
-            _getAsyncData(catalogname,API_RESOURCE.format('catalog?catalogname='+catalogname),token,successCallback,errorCallback,forceRefresh);
+        var _getAsyncCatalog = function (catalogname, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData(catalogname, API_RESOURCE.format('catalog?catalogname=' + catalogname), token, successCallback, errorCallback, forceRefresh);
         }
 
         var _putAsyncQuiz = function (activityId, data, successCallback, errorCallback, forceRefresh) {
@@ -119,16 +130,20 @@
             _getAsyncData("notifications", API_RESOURCE.format('notification/' + userId + '?courseid=' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _postUserNotifications = function ( data, successCallback, errorCallback, forceRefresh) {
+        var _postUserNotifications = function (data, successCallback, errorCallback, forceRefresh) {
             _postAsyncData("", data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
         var _postAsyncForumPost = function (key, data, successCallback, errorCallback, addToQueue, updatePostCounter) {
             _postAsyncForumPostData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback, updatePostCounter, addToQueue);
         };
-        
+
         var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
             _postAsyncData(key, data, API_RESOURCE.format('reportabuse'), successCallback, errorCallback);
+        };
+
+        var _postProfilePoints = function (key, data, successCallback, errorCallback) {
+            _postAsyncData(key, data, API_RESOURCE.format('feedbackprofile'), successCallback, errorCallback);
         };
 
         var _putUserNotificationRead = function (userId, data, successCallback, errorCallback, forceRefresh) {
@@ -136,7 +151,7 @@
         };
 
         var _getUserChat = function (userId, token, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId), token, successCallback, errorCallback, forceRefresh);
+            _getAsyncData("userChat/" + userId, API_RESOURCE.format('messaging/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putUserChat = function (userId, data, successCallback, errorCallback) {
@@ -144,7 +159,6 @@
         };
 
         var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
-
             _putAsyncStars("Perfil/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
@@ -152,20 +166,20 @@
             _endActivity("activitiesCache/" + activityModel.activity_identifier, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
         };
 
-        var _postAsyncAvatar = function (data, successCallback, errorCallback){
-            _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
+        var _postAsyncAvatar = function (data, successCallback, errorCallback) {
+            _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);
         };
 
-		var _getAsyncMultipleChallengeInfo = function(token, successCallback, errorCallback, forceRefresh){
-            _getAsyncData("retoMultiplePartials" , API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh);
-            _getAsyncData("retoMultipleCompleted" , API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh);
+        var _getAsyncMultipleChallengeInfo = function (token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("retoMultiplePartials", API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh);
+            _getAsyncData("retoMultipleCompleted", API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh);
         }
 
-        var _putMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
+        var _putMultipleActivities = function (key, data, userCourseModel, url, successCallback, errorCallback) {
             _putAsyncData(key, data, API_RESOURCE.format('partialactivities/' + data.moduleid), successCallback, errorCallback, userCourseModel);
         }
 
-        var _postMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
+        var _postMultipleActivities = function (key, data, userCourseModel, url, successCallback, errorCallback) {
             _postAsyncDataOffline(key, data, API_RESOURCE.format(url), successCallback, errorCallback, userCourseModel);
         };
 
@@ -180,35 +194,35 @@
         var _getAsyncAlbum = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
-        
-        var _postCommentActivity = function(activityId,data,successCallback,errorCallback){
-            _postAsyncCommentToActivity('activityComment/' + activityId,data, API_RESOURCE.format('comment'), successCallback, errorCallback );
-        };
-        
-        var _getCommentByActivity = function(activityId, first,since,to,count, token,successCallback, errorCallback){
-            
-            var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId,first,since,to,count);
-            _getAsyncData('comment', API_RESOURCE.format(url), token, successCallback, errorCallback,true);
+
+        var _postCommentActivity = function (activityId, data, successCallback, errorCallback) {
+            _postAsyncCommentToActivity('activityComment/' + activityId, data, API_RESOURCE.format('comment'), successCallback, errorCallback);
         };
 
-        var _getAsyncStars = function(userId, token, successCallback, errorCallback, forceRefresh){            
-            _getAsyncData("userStars", API_RESOURCE.format('stars/'+ userId), token, successCallback, errorCallback, forceRefresh);
-        };
-        
-        var _countLikesByUser = function(courseId, token, successCallback, errorCallback, forceRefresh){
-            _getAsyncData("likesByUser", API_RESOURCE.format('postcounter/'+ courseId + '?likes=true'), token, successCallback, errorCallback, forceRefresh);
+        var _getCommentByActivity = function (activityId, first, since, to, count, token, successCallback, errorCallback) {
+
+            var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId, first, since, to, count);
+            _getAsyncData('comment', API_RESOURCE.format(url), token, successCallback, errorCallback, true);
         };
 
-        var _getServerDate = function(successCallback){
+        var _getAsyncStars = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("userStars", API_RESOURCE.format('stars/' + userId), token, successCallback, errorCallback, forceRefresh);
+        };
+
+        var _countLikesByUser = function (courseId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("likesByUser", API_RESOURCE.format('postcounter/' + courseId + '?likes=true'), token, successCallback, errorCallback, forceRefresh);
+        };
+
+        var _getServerDate = function (successCallback) {
             _httpFactory({
-                    method: 'GET',
-                    url: API_RESOURCE.format('date'),
-                    headers: { 'Content-Type': 'application/json'}
-                }).success(function (data) {                                        
-                    successCallback(data);
-                });            
+                method: 'GET',
+                url: API_RESOURCE.format('date'),
+                headers: {'Content-Type': 'application/json'}
+            }).success(function (data) {
+                successCallback(data);
+            });
         };
-        
+
         var _getCacheObject = function (key) {
             return localStorage.getItem(key);
         };
@@ -222,36 +236,35 @@
             }
         };
 
-        var _getAsyncData2 = function (key, url, userId, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh) {
 
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
-                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                _timeout(function () {
+                    successCallback(returnValue, key)
+                }, 1000);
                 return returnValue;
             }
-            else if (forceRefresh){
+            else if (forceRefresh) {
                 if (token) {
-                    _getAsyncForumDiscussions(85, token, function () {}, function () {}, true);
-                    _getAsyncForumDiscussions(91, token, function () {}, function () {}, true);
-                    moodleFactory.Services.GetAsyncMultipleChallengeInfo(token, function(){}, function(){}, true);
                     _httpFactory({
                         method: 'POST',
-                        data: {"userid": userId, "activities":[150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96, 257, 57, 58, 59, 60, 61, 62, 105, 106, 255, 258, 170, 242, 243, 244, 245, 246, 211, 250, 251, 252, 253, 249]},
+                        data: {"userid": userId, "activities": activitiesArray},
                         url: url,
-                        headers: { 'Content-Type': 'application/json' , 'Authorization': token}
+                        headers: {'Content-Type': 'application/json', 'Authorization': token}
                     }).success(function (data, status, headers, config) {
-                        var proc = setInterval(function() {//Get & save each activity object.
+
+                        var proc = setInterval(function () {//Get & save each activity object.
                             if (data.length > 0) {
                                 var activity = data.shift();
                                 var activitiesToConvert = [75, 89, 96, 170, 211, 150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96];
 
                                 if (activity && activity.data[0]) {
-                                    var keyName = "activity/" + activity.coursemoduleid;
 
-                                    if ( activitiesToConvert.indexOf(parseInt(activity.coursemoduleid)) > -1 ) {
-                                        // ------    Change format of 'answers' key from Object to Array.
+                                    if (activitiesToConvert.indexOf(parseInt(activity.coursemoduleid)) > -1) {
+                                        // -- Change format of 'answers' key from Object to Array.
                                         for (i = 0; i < activity.data[0].questions.length; i++) {
                                             var newAnswer = [];
                                             for (var key in activity.data[0].questions[i].answers) {
@@ -264,7 +277,8 @@
                                         }
                                     }
 
-                                    _setLocalStorageJsonItem(keyName, activity.data[0]);//Save converted Activity.
+                                    //Save converted Activity.
+                                    _setLocalStorageJsonItem("activity/" + activity.coursemoduleid, activity.data[0]);
                                 }
 
                             } else {
@@ -278,28 +292,28 @@
                     });
                 }
             } else {
-                if(token){
+                if (token) {
                     addRequestToQueue(key, {
                         type: "httpRequest",
                         data: {
                             method: 'GET',
                             url: url,
-                            headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                            headers: {'Content-Type': 'application/json', 'Authorization': token}
                         }
                     });
                 }
-                else{
+                else {
                     addRequestToQueue(key, {
                         type: "httpRequest",
                         data: {
                             method: 'GET',
                             url: url,
-                            headers: { 'Content-Type': 'application/json'}
+                            headers: {'Content-Type': 'application/json'}
                         }
                     });
                 }
 
-                if(successCallback){
+                if (successCallback) {
                     successCallback();
                 }
             }
@@ -309,90 +323,125 @@
         var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+            var currentTime = new Date().getTime();
+            var timeOfExpiration;
 
             if (returnValue) {
-                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                _timeout(function () {
+                    successCallback(returnValue, key)
+                }, 1000);
                 return returnValue;
             }
-            else if(forceRefresh){
+            else if (forceRefresh) {
                 if (token) {
+
+                    if (key == "halloffame") {
+                        timeOfExpiration = globalTimeOut;
+                    } else {
+                        timeOfExpiration = 0;
+                    }
+
                     _httpFactory({
                         method: 'GET',
                         url: url,
-                        headers: { 'Content-Type': 'application/json' , 'Authorization': token}
+                        timeout: timeOfExpiration,
+                        headers: {'Content-Type': 'application/json', 'Authorization': token}
+                    }).success(function (data, status, headers, config) {
+                        _setLocalStorageJsonItem(key, data);
+                        successCallback(data, key);
+                    }).error(function (data, status, headers, config) {
+                        var finalTime = new Date().getTime();
+                        var obj = {};
+
+                        if (data) {
+                            if (data.messageerror) {
+                                obj.messageerror = data.messageerror;
+                                obj.statusCode = status;
+                            } else {
+                                obj.messageerror = "Undefined Server Error";
+                                obj.statusCode = status;
+                            }
+                        } else {
+                            obj.messageerror = "Undefined Server Error";
+                            obj.statusCode = 500;
+                        }
+
+                        if (finalTime - currentTime > timeOfExpiration && timeOfExpiration > 0) {
+                            obj.statusCode = 408;
+                            obj.messageerror = "Request Timeout";
+                        }
+
+                        errorCallback(obj);
+                    });
+                } else {
+                    _httpFactory({
+                        method: 'GET',
+                        url: url,
+                        headers: {'Content-Type': 'application/json'}
                     }).success(function (data, status, headers, config) {
                         _setLocalStorageJsonItem(key, data);
                         successCallback(data, key);
                     }).error(function (data, status, headers, config) {
                         errorCallback(data);
-                    });            
-                }else{
-                    _httpFactory({
-                        method: 'GET',
-                        url: url,
-                        headers: { 'Content-Type': 'application/json'}
-                    }).success(function (data, status, headers, config) {
-                        _setLocalStorageJsonItem(key, data);
-                        successCallback(data, key);
-                    }).error(function (data, status, headers, config) {
-                        errorCallback(data);
-                    });                                 
-                } 
+                    });
+                }
             }
-            else{                
-                if(token){
+            else {
+                if (token) {
                     addRequestToQueue(key, {
                         type: "httpRequest",
                         data: {
                             method: 'GET',
                             url: url,
-                            headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                            headers: {'Content-Type': 'application/json', 'Authorization': token}
                         }
                     });
                 }
-                else{
+                else {
                     addRequestToQueue(key, {
                         type: "httpRequest",
                         data: {
                             method: 'GET',
                             url: url,
-                            headers: { 'Content-Type': 'application/json'}
+                            headers: {'Content-Type': 'application/json'}
                         }
-                    });   
+                    });
                 }
 
-                if(successCallback){
-                    successCallback(); 
+                if (successCallback) {
+                    successCallback();
                 }
-            } 
-                        
+            }
+
         };
-        
+
         var _getAsyncForumDiscussionsData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
             _getDeviceVersionAsync();
-            
+
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
-                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                _timeout(function () {
+                    successCallback(returnValue, key)
+                }, 1000);
                 return returnValue;
             }
-            
+
             _httpFactory({
                 method: 'GET',
                 url: url,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                headers: {'Content-Type': 'application/json', 'Authorization': token}
             }).success(function (data, status, headers, config) {
-                
+
                 var posts = createPostsTree(data.posts);
                 data.posts = posts;
                 _setLocalStorageJsonItem(key, data);
                 successCallback(data, key);
-                
+
             }).error(function (data, status, headers, config) {
                 errorCallback(data);
             });
-            
+
         };
 
         var _getForumAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
@@ -401,132 +450,227 @@
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
-                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                _timeout(function () {
+                    successCallback(returnValue, key)
+                }, 1000);
                 return returnValue;
             }
 
             _httpFactory({
                 method: 'GET',
                 url: url,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token },
+                headers: {'Content-Type': 'application/json', 'Authorization': token},
             }).success(function (data, status, headers, config) {
                 var forum = createForumTree(data);
-                _setLocalStorageJsonItem(key,forum);
+                _setLocalStorageJsonItem(key, forum);
                 successCallback(data);
             }).error(function (data, status, headers, config) {
                 errorCallback(data);
             });
         };
-            
+
         var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
             _getDeviceVersionAsync();
-            
+            var currentTime = new Date().getTime();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
-                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                _timeout(function () {
+                    successCallback(returnValue, key)
+                }, 1000);
                 return returnValue;
             }
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             _httpFactory({
                 method: 'GET',
                 url: url,
-                headers: { 'Content-Type': 'application/json',
-                            'Authorization': currentUser.token }
+                timeout: longTimeOut,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': currentUser.token
+                }
             }).success(function (data, status, headers, config) {
                 createTree(data);
                 successCallback();
             }).error(function (data, status, headers, config) {
-                errorCallback(data);
+                //errorCallback(data);
+
+                var finalTime = new Date().getTime();
+                var obj = {};
+
+                if (data) {
+                    if (data.messageerror) {
+                        obj.messageerror = data.messageerror;
+                        obj.statusCode = status;
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = status;
+                    }
+                } else {
+                    obj.messageerror = "Undefined Server Error";
+                    obj.statusCode = 500;
+                }
+
+                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                    obj.statusCode = 408;
+                    obj.messageerror = "Request Timeout";
+                }
+
+                errorCallback(obj);
+
+
+
             });
         };
 
         var _postAsyncData = function (key, data, url, successCb, errorCb) {
             _getDeviceVersionAsync();
-            
+
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-            
+
             _httpFactory({
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json',
-                           'Authorization': currentUser.token },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': currentUser.token
+                },
             }).success(function (data, status, headers, config) {
 
                 if (key != null) {
-                    _setLocalStorageJsonItem(key,data);
+                    _setLocalStorageJsonItem(key, data);
                 }
-                
+
                 if (typeof successCb === "function") {
                     successCb(key, data);
-                }else{
+                } else {
                     successCallback(key, data);
                 }
-                
+
             }).error(function (data, status, headers, config) {
 
                 if (typeof errorCb === "function") {
                     errorCb();
-                }else {
+                } else {
                     errorCallback();
                 }
             });
         };
 
-        var _postAsyncCommentToActivity = function(key,data,url,successCallback,errorCallback){
+        var _postAsyncCommentToActivity = function (key, data, url, successCallback, errorCallback) {
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-          _httpFactory({
+            var currentTime = new Date().getTime();
+
+            _httpFactory({
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: {'Content-Type': 'application/json',
-                    'Authorization': currentUser.token},
-          }).success(function(){                
+                timeout: globalTimeOut,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': currentUser.token
+                },
+            }).success(function (data, status, headers, config) {
                 if (key != null) {
-                    _setLocalStorageJsonItem(key,data);
+                    _setLocalStorageJsonItem(key, data);
                 }
-                successCallback();                
-            }).error(function(){            
-                errorCallback();
+
+                successCallback();
+
+            }).error(function (data, status, headers, config) {
+
+                var finalTime = new Date().getTime();
+                var obj = {};
+
+                if (data) {
+                    if (data.messageerror) {
+                        obj.messageerror = data.messageerror;
+                        obj.statusCode = status;
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = status;
+                    }
+                } else {
+                    obj.messageerror = "Undefined Server Error";
+                    obj.statusCode = 500;
+                }
+
+                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                    obj.statusCode = 408;
+                    obj.messageerror = "Request Timeout";
+                }
+
+                errorCallback(obj);
             });
         };
-        
+
         var _postAsyncCatalogs = function (key, data, url, successCb, errorCb) {
+            console.log("Catalog!");
             _getDeviceVersionAsync();
-            
+
+            var currentTime = new Date().getTime();
+
             _httpFactory({
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json' }
+                timeout: globalTimeOut,
+                headers: {'Content-Type': 'application/json'}
             }).success(function (data, status, headers, config) {
 
                 if (key != null) {
-                    _setLocalStorageJsonItem(key,data);
+                    _setLocalStorageJsonItem(key, data);
                 }
-                
+
                 if (typeof successCb === "function") {
                     successCb(key, data);
-                }else{
+                } else {
                     successCallback(key, data);
                 }
-                
+
             }).error(function (data, status, headers, config) {
 
-                if (typeof errorCb === "function") {
-                    errorCb();
-                }else {
-                    errorCallback();
+                //if (typeof errorCb === "function") {
+                //    errorCb();
+                //} else {
+                //    errorCallback();
+                //}
+
+                //-
+                var finalTime = new Date().getTime();
+                var obj = {};
+
+                if (data) {
+                    if (data.messageerror) {
+                        obj.messageerror = data.messageerror;
+                        obj.statusCode = status;
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = status;
+                    }
+                } else {
+                    obj.messageerror = "Undefined Server Error";
+                    obj.statusCode = 500;
                 }
+
+                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                    obj.statusCode = 408;
+                    obj.messageerror = "Request Timeout";
+                }
+
+                errorCb(obj);
+                //-
+
             });
         };
 
         var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback, needUpdatePostCounter, addToQueue) {
             _getDeviceVersionAsync();
-            
+            var currentTime = new Date().getTime();
             var discussionid = data.discussionid;
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+
             if (addToQueue) {
                 addRequestToQueue(key, {
                     type: "httpRequest",
@@ -534,59 +678,104 @@
                         method: 'POST',
                         url: url,
                         data: data,
-                        headers: { 'Content-Type': 'application/json',
-                               'Authorization': currentUser.token }
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': currentUser.token
+                        }
                     }
                 });
+
                 _setLocalStorageJsonItem(key, data);
+
                 if (successCallback) {
                     successCallback();
                 }
-            }else{
+
+            } else {
                 _httpFactory({
                     method: 'POST',
                     url: url,
                     data: data,
-                    headers: { 'Content-Type': 'application/json',
-                               'Authorization': currentUser.token },
+                    timeout: globalTimeOut,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': currentUser.token
+                    }
                 }).success(function (data, status, headers, config) {
 
                     if (key != null) {
-                        _setLocalStorageJsonItem(key,data);
+                        _setLocalStorageJsonItem(key, data);
                     }
 
-                    if(needUpdatePostCounter == true){
+                    if (needUpdatePostCounter == true) {
                         updatePostCounter(discussionid);
-                    }else{}
+                    }
 
                     successCallback();
                 }).error(function (data, status, headers, config) {
-                    data.statusCode = status;
-                    _setLocalStorageJsonItem(key,data);
-                    errorCallback(data);
+                    var finalTime = new Date().getTime();
+                    var obj = {};
+
+                    if (data) {
+                        if (data.messageerror) {
+                            obj.messageerror = data.messageerror;
+                            obj.statusCode = status;
+                        } else {
+                            obj.messageerror = "Undefined Server Error";
+                            obj.statusCode = status;
+                        }
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = 500;
+                    }
+
+                    if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                        obj.statusCode = 408;
+                        obj.messageerror = "Request Timeout";
+                    }
+
+                    errorCallback(obj);
                 });
             }
         };
-        
-        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback,otherDataModel) {
+
+        var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback, otherDataModel) {
             _getDeviceVersionAsync();
-            
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            var timeOfExpiration;
+            var errCallback;
+
+            if (key && key.indexOf("Perfil") > -1) {
+                timeOfExpiration = globalTimeOut;
+                errCallback = errorCallback;
+            } else {
+                timeOfExpiration = 0;
+                errCallback = null;
+            }
+
             addRequestToQueue(key, {
                 type: "httpRequest",
                 data: {
                     method: 'PUT',
                     url: url,
                     data: dataModel,
-                    headers: { 'Content-Type': 'application/json' ,
-                               'Authorization': currentUser.token }
+                    timeout: timeOfExpiration,
+                    errCallback: errCallback,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': currentUser.token
+                    }
                 }
             });
-			dataModel = !otherDataModel ? dataModel : otherDataModel;
-            _setLocalStorageJsonItem(key,dataModel);
 
-            if(successCallback){
-                successCallback(); 
+            dataModel = !otherDataModel ? dataModel : otherDataModel;
+
+            if (key) {
+                _setLocalStorageJsonItem(key, dataModel);
+            }
+
+            if (successCallback) {
+                successCallback();
             }
         };
 
@@ -599,28 +788,32 @@
                     method: 'POST',
                     url: url,
                     data: dataModel,
-                    headers: { 'Content-Type': 'application/json' ,
-                               'Authorization': currentUser.token }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': currentUser.token
+                    }
                 }
             });
             dataModel = (key == "avatarInfo" ? [dataModel] : (!otherDataModel ? dataModel : otherDataModel) );
-            _setLocalStorageJsonItem(key,dataModel);
+            _setLocalStorageJsonItem(key, dataModel);
 
-            if(successCallback){
-                successCallback(); 
+            if (successCallback) {
+                successCallback();
             }
         };
 
         var _putDataNoCache = function (data, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
-            
+
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             _httpFactory({
                 method: 'PUT',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json',
-                           'Authorization': currentUser.token },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': currentUser.token
+                },
             }).success(function (data, status, headers, config) {
                 successCallback();
             }).error(function (data, status, headers, config) {
@@ -633,41 +826,41 @@
 
             //avoid sending null stars
             dataModel["stars"] = dataModel.stars ? dataModel.stars : 0;
-            
+
             addRequestToQueue(key, {
                 type: "httpRequest",
                 data: {
                     method: 'PUT',
                     url: url,
                     data: dataModel,
-                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                    headers: {'Content-Type': 'application/json', 'Authorization': token}
                 }
             });
 
-            _setLocalStorageJsonItem(key,profile);
-            if(successCallback){
-                successCallback(); 
+            _setLocalStorageJsonItem(key, profile);
+            if (successCallback) {
+                successCallback();
             }
         };
-        
+
         var _putAsyncFirstTimeInfo = function (userId, dataModel, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-            
+
             addRequestToQueue(null, {
                 type: "httpRequest",
                 data: {
                     method: 'PUT',
                     url: API_RESOURCE.format('usercourse/' + userId),
                     data: dataModel,
-                    headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
+                    headers: {'Content-Type': 'application/json', 'Authorization': currentUser.token}
                 }
             });
 
-            if(successCallback) {
-                successCallback(); 
+            if (successCallback) {
+                successCallback();
             }
-            
+
         };
 
         var _putAsyncFirstTimeInfoForForums = function (userId, currentUserToken, dataModel, successCallback, errorCallback) {
@@ -688,55 +881,55 @@
                 errorCallback();
             });
         };
-        
+
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
             _getDeviceVersionAsync();
-            
+
             addRequestToQueue(key, {
                 type: "httpRequest",
                 data: {
                     method: 'PUT',
                     url: url,
                     data: data,
-                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                    headers: {'Content-Type': 'application/json', 'Authorization': token}
                 }
             });
 
-            _setLocalStorageJsonItem(key,userCourseModel);
-            if(successCallback){
+            _setLocalStorageJsonItem(key, userCourseModel);
+            if (successCallback) {
                 successCallback(data);
             }
         };
 
         var _startActivity = function (data, activityModel, token, successCallback, errorCallback) {
             _getDeviceVersionAsync();
-            
+
             addRequestToQueue('activity/' + activityModel.coursemoduleid, {
                 type: "httpRequest",
                 data: {
                     method: 'PUT',
                     url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),
                     data: data,
-                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                    headers: {'Content-Type': 'application/json', 'Authorization': token}
                 }
             });
-            if(successCallback){
+            if (successCallback) {
                 successCallback();
-            }            
+            }
         };
 
-        var createPostsTree = function(posts) {
+        var createPostsTree = function (posts) {
             var postsTree = new Array();
-            
-            for(var p = 0; p < posts.length; p++) {
+
+            for (var p = 0; p < posts.length; p++) {
                 var post = posts[p];
-                
+
                 if (isLegalPost(post, posts)) {
                     var comments = new Array();
-                    
-                    for(var np = 0; np < posts.length; np++) {
+
+                    for (var np = 0; np < posts.length; np++) {
                         var nextPost = posts[np];
-                        
+
                         if ((post["post_id"] != nextPost["post_id"]) && post["post_id"] === nextPost["post_parent"]) {
                             comments.push(nextPost);
                         }
@@ -745,52 +938,56 @@
                     postsTree.push(post);
                 }
             }
-            
+
             return postsTree;
         };
-        
-        var isLegalPost = function(post, posts) {
+
+        var isLegalPost = function (post, posts) {
             var isLegalPost = true;
-            
-            
+
+
             if (posts.length > 1) {
-                
-                for(var p = 0; p < posts.length; p++) {
+
+                for (var p = 0; p < posts.length; p++) {
                     var currentPost = posts[p];
-                    
+
                     if (post["post_id"] != currentPost["post_id"]) {
                         isLegalPost = !(post["post_parent"] == currentPost["post_id"]);
-                    
+
                         if (!isLegalPost) {
                             break;
                         }
                     }
                 }
             }
-            
+
             return isLegalPost;
         };
-        
+
         var createForumTree = function (posts) {
 
             var forum = {
                 activityType: "forum"
             };
 
-            forum["discussions"] = _.filter(posts, function (p) { return p.post_parent == "0" });
+            forum["discussions"] = _.filter(posts, function (p) {
+                return p.post_parent == "0"
+            });
 
             if (forum["discussions"]) {
                 for (i = 0; i < forum["discussions"].length; i++) {
                     forum["discussions"][i]["posts"] = [];
                     forum["discussions"][i]["posts"].push({
-                        replies: _.filter(posts, function (p) { return p.post_parent == forum.discussions[i].post_id }),
+                        replies: _.filter(posts, function (p) {
+                            return p.post_parent == forum.discussions[i].post_id
+                        }),
                     });
 
                     for (j = 0; j < forum["discussions"][i]["posts"][0].replies.length; j++) {
                         var reply = forum["discussions"][i]["posts"][0].replies[j];
                         if (reply && reply.has_attachment == "1") {
                             reply["attachments"] = [];
-                            reply["attachments"].push({ filename: reply.filename, fileurl: reply.fileurl, mimetype: reply.mimetype });
+                            reply["attachments"].push({filename: reply.filename, fileurl: reply.fileurl, mimetype: reply.mimetype});
                         }
                         reply["replies"] = _.filter(posts, function (p) {
                             return p.post_parent == reply.post_id;
@@ -810,7 +1007,7 @@
             if (usercourse.stages) {
                 for (i = 0; i < usercourse.stages.length; i++) {
                     //stages
-                    if(usercourse.stages[i].activityname != "General"){    
+                    if (usercourse.stages[i].activityname != "General") {
                         var stageActivities = 0;
                         var stageCompletedActivities = 0;
 
@@ -843,16 +1040,16 @@
                             usercourse.stages[i].stageProgress = 100;
                             globalPointsAchieved += usercourse.stages[i].points;
                         }
-                        
-                        globalProgress = globalProgress + usercourse.stages[i].stageProgress; 
+
+                        globalProgress = globalProgress + usercourse.stages[i].stageProgress;
                     }
                 }
             }
-            usercourse.globalProgress = Math.floor(100*globalProgress/300);
+            usercourse.globalProgress = Math.floor(100 * globalProgress / 300);
             if (user) {
                 user.stars = globalPointsAchieved;
             }
-            return { course: usercourse, user: user };
+            return {course: usercourse, user: user};
         }
 
         var createTree = function (activities) {
@@ -873,7 +1070,9 @@
                     stages: _.filter(activities, function (a) {
                         return a.parentsection == activities[0].section && a.section != activities[0].section && a.activity_type == 'ActivityManager'
                     }),
-                    activities: _.filter(activities, function (a) { return a.activity_type == 'assign' && a.parentsection == 0 })
+                    activities: _.filter(activities, function (a) {
+                        return a.activity_type == 'assign' && a.parentsection == 0
+                    })
                 };
 
                 var assign = null;
@@ -885,8 +1084,11 @@
                     course.stages[i].stageStatus = course.stages[i].status;
 
                     course.stages[i]["challenges"] = _.filter(activities, function (a) {
-                        return a.parentsection == course.stages[i].section && a.section != course.stages[i].section && a.activity_type == 'ActivityManager'
+                        return a.parentsection == course.stages[i].section &&
+                            a.section != course.stages[i].section && a.activity_type == 'ActivityManager' && a.activityname != "CABINA DE SOPORTE"
                     });
+
+                    //course.stages[i]["challenges"] = [];
 
                     assign = _.find(activities, function (a) {
                         return a.parentsection == course.stages[i].parentsection &&
@@ -918,16 +1120,18 @@
                             course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
                         }
 
-                        if (course.stages[i].challenges[j].activity_type == "ActivityManager") {                            
+                        if (course.stages[i].challenges[j].activity_type == "ActivityManager" && course.stages[i].challenges[j].activityname != "CABINA DE SOPORTE") {
                             activityManagers.push(course.stages[i].challenges[j]);
                         }
 
                         course.stages[i].challenges[j]["activities"] = _.filter(activities, function (a) {
-                            return a.parentsection == course.stages[i].challenges[j].section && a.section != course.stages[i].challenges[j].section && a.activity_type == 'ActivityManager'
+                            return a.parentsection == course.stages[i].challenges[j].section &&
+                                a.section != course.stages[i].challenges[j].section && a.activity_type == 'ActivityManager' && a.activityname != "CABINA DE SOPORTE"
                         });
 
                         var childrenActivities = _.filter(activities, function (a) {
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' &&
+                                (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Retroalimentación'))
                         });
 
                         for (k = 0; k < childrenActivities.length; k++) {
@@ -936,7 +1140,7 @@
 
                         //activities
                         for (k = 0; k < course.stages[i].challenges[j].activities.length; k++) {
-                                                    
+
                             if (course.stages[i].challenges[j].activities[k].activity_type == 'ActivityManager') {
 
                                 activityManagers.push(course.stages[i].challenges[j].activities[k]);
@@ -954,6 +1158,7 @@
                                     course.stages[i].challenges[j].activities[k].activity_identifier = assign.activity_identifier;
                                     course.stages[i].challenges[j].activities[k].last_status_update = assign.last_status_update;
                                     course.stages[i].challenges[j].activities[k].status = assign.status;
+                                    course.stages[i].challenges[j].activities[k].modifieddate = assign.modifieddate;
                                 }
 
                                 course.stages[i].challenges[j].activities[k]["activities"] = _.filter(activities, function (a) {
@@ -978,36 +1183,36 @@
                     }
                 }
 
-                /* Conocete - reto m�ltiple */ 
-                var multipleChallengeActivityId = _.filter(_activityRoutes, function (ar){
+                /* Conocete - reto m�ltiple */
+                var multipleChallengeActivityId = _.filter(_activityRoutes, function (ar) {
                     return ar.name == "Reto Multiple";
                 });
-                
-                var multipleChallengeActivity = _.filter(activities, function (a){
+
+                var multipleChallengeActivity = _.filter(activities, function (a) {
                     return a.activity_identifier == multipleChallengeActivityId[0].id;
                 });
-                
-                var multipleChallenges = _.filter(activities, function (a){
-                    return  a.section == multipleChallengeActivity[0].section;
+
+                var multipleChallenges = _.filter(activities, function (a) {
+                    return a.section == multipleChallengeActivity[0].section;
                 });
-                
+
                 var multipleChallengesArray = new Array();
-                for(var mc = 0; mc < multipleChallenges.length; mc++) {
+                for (var mc = 0; mc < multipleChallenges.length; mc++) {
                     multipleChallengesArray.push({
                         "name": multipleChallenges[mc].activityname,
                         "description": multipleChallenges[mc].activityintro
                     });
                 }
-                
+
                 /* General Community */
-                var communityActivityId = _.filter(_activityRoutes, function (ar){
+                var communityActivityId = _.filter(_activityRoutes, function (ar) {
                     return ar.name == "Comunidad General";
                 });
-                
-                var generalCommunity = _.filter(activities, function (a){
+
+                var generalCommunity = _.filter(activities, function (a) {
                     return a.activity_identifier == communityActivityId[0].id;
                 })[0];
-                
+
                 var community = {
                     activity_identifier: generalCommunity.activity_identifier,
                     activity_type: generalCommunity.activity_type,
@@ -1022,7 +1227,7 @@
                     datestarted: generalCommunity.datestarted,
                     started: generalCommunity.started
                 };
-                
+
 
                 var user = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                 var progress = refreshProgress(course, user);
@@ -1031,16 +1236,16 @@
                 course.multipleChallenges = multipleChallengesArray;
                 course.isMultipleChallengeActivityFinished = (multipleChallengeActivity[0].status === 1);
                 user = progress.user;
-                _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"),user);
-                _setLocalStorageJsonItem("usercourse",course);
+                _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), user);
+                _setLocalStorageJsonItem("usercourse", course);
                 //reload activty status dictionary
                 _loadActivityStatus();
                 //load activity accessibility flags
                 _loadActivityBlockStatus();
                 //set stages as completed in local storage, as this is not set by the back-end
-                _setStagesStatus();                
-                _setLocalStorageJsonItem("course",course);
-                _setLocalStorageJsonItem("activityManagers",activityManagers);
+                _setStagesStatus();
+                _setLocalStorageJsonItem("course", course);
+                _setLocalStorageJsonItem("activityManagers", activityManagers);
 
             }
         };
@@ -1057,14 +1262,14 @@
                     var challengeActivitiesCount = challenge.activities.length;
                     for (k = 0; k < challengeActivitiesCount; k++) {
                         var activity = challenge.activities[k];
-                        if(activity.status) {
+                        if (activity.status) {
                             activityStatus[activity.activity_identifier] = activity.status;
                         }
                     }
 
                 }
             }
-            _setLocalStorageJsonItem("activityStatus",activityStatus);
+            _setLocalStorageJsonItem("activityStatus", activityStatus);
             _activityStatus = activityStatus;
         };
 
@@ -1072,7 +1277,7 @@
         var _setStagesStatus = function () {
 
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-            if(!userCourse) return;
+            if (!userCourse) return;
             for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
                 var currentStage = userCourse.stages[stageIndex];
                 if (currentStage.status == 0 && currentStage.sectionname != "General") {
@@ -1086,28 +1291,30 @@
             _setLocalStorageJsonItem("usercourse", userCourse);
 
         };
-        
+
         var _getAsyncPostCounter = function (token, key, url, successCallback, errorCallback, forceRefresh) {
             _getDeviceVersionAsync();
-            
+
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
-                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                _timeout(function () {
+                    successCallback(returnValue, key)
+                }, 1000);
                 return returnValue;
             }
 
             _httpFactory({
                 method: 'GET',
                 url: url,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                headers: {'Content-Type': 'application/json', 'Authorization': token}
             }).success(function (data, status, headers, config) {
-                
+
                 var obj = {
                     forums: data,
                     totalExtraPoints: 0
                 };
-                
+
                 _calculateForumExtraPoints(obj);
                 _setLocalStorageJsonItem(key, obj);
                 successCallback(data, key);
@@ -1115,17 +1322,17 @@
                 errorCallback(data);
             });
         };
-        
-        var _postGeolocation = function(moduleId) {
+
+        var _postGeolocation = function (moduleId) {
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-            
+
             addRequestToQueue("userPosition/" + currentUser.userId, {
                 type: "geolocation",
                 data: {
                     method: 'POST',
                     url: API_RESOURCE.format('geolocation'),
-                    data: { moduleid: moduleId },
-                    headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
+                    data: {moduleid: moduleId},
+                    headers: {'Content-Type': 'application/json', 'Authorization': currentUser.token}
                 }
             });
         };
@@ -1143,127 +1350,156 @@
                 errorCallback();
             });
         };
-        
-        var _calculateForumExtraPoints = function(data) {
-            
+
+        var _calculateForumExtraPoints = function (data) {
+
             var totalExtraPoints = 0;
-            
-            for(var fo = 0; fo < data.forums.length; fo++) {
-                
+
+            for (var fo = 0; fo < data.forums.length; fo++) {
+
                 var extraPoints = 0;
-                
+
                 if (data.forums[fo].status == "1") {
-                    
-                    _.each(data.forums[fo].discussion, function(element, index, list) {
-                            extraPoints = extraPoints + (Number(element.total) - 2);
-                        });
+
+                    _.each(data.forums[fo].discussion, function (element, index, list) {
+                        extraPoints = extraPoints + (Number(element.total) - 2);
+                    });
                 }
-                
+
                 totalExtraPoints += extraPoints;
             }
-            
+
             data.totalExtraPoints = totalExtraPoints;
         }
-        
+
         var _callback;
         var _currentUser;
 
-        var _executeQueue = function(callback){
+        var _executeQueue = function (callback) {
             _callback = callback;
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-            
-            if(window.mobilecheck()){                    
-                    doRequestforCellphone();                     
-            }                
-            else{
-                doRequestforWeb(); 
-            }                
-            
+
+            if (window.mobilecheck()) {
+                doRequestforCellphone();
+            }
+            else {
+                doRequestforWeb();
+            }
+
         }
 
         function addRequestToQueue(key, queue) {
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
-            var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);            
-            if(cacheQueue instanceof Array){
+            var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+            if (cacheQueue instanceof Array) {
                 requestQueue = cacheQueue;
-            } 
+            }
             queue.retryCount = 0;
-            queue.userID = _currentUser.userId // Necesitamos guardar el request en la cola con el usuario actual
+            queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;
             requestQueue.push(queue);
             _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-            if(requestQueue.length==1 || _queuePaused){
-                if(window.mobilecheck()){                    
-                        doRequestforCellphone();
-                }                
-                else{
-                    doRequestforWeb(); 
-                }                
+
+            if (requestQueue.length == 1 || _queuePaused) {
+                if (window.mobilecheck()) {
+                    doRequestforCellphone(queue.data.errCallback);
+                }
+                else {
+                    doRequestforWeb(queue.data.errCallback);
+                }
             }
         }
 
 
-        function doRequestforWeb() {     
+        function doRequestforWeb(errCallback) {
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-            
-            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0) {
+
+            if (navigator.onLine && _httpFactory && requestQueue && requestQueue.length > 0) {
                 var queue = requestQueue[0];
-                
+
                 //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
-                if(queue.userID == _currentUser.userId) {
-                    
-                    if(queue.type === "httpRequest") {
-                        if(queue.retryCount<5) {
-                        
+                if (queue.userID == _currentUser.userId) {
+
+                    if (queue.type === "httpRequest") {
+
+                        if (queue.retryCount < 5) {
+
                             //Reemplazamos el token con el token actual
                             queue.data.headers.Authorization = _currentUser.token;
-                            _httpFactory(queue.data)
-                            .success(function (response) {
+                            var currentTime = new Date().getTime();
 
-                                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                                requestQueue.shift();
-                                if(queue.data.method == 'GET') {
-                                    if(queue.key) {
-                                        _setLocalStorageJsonItem(queue.key, response);    
+                            _httpFactory(queue.data)
+                                .success(function (data, status, headers, config) {
+
+                                    requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                    requestQueue.shift();
+                                    if (queue.data.method == 'GET') {
+                                        if (queue.key) {
+                                            _setLocalStorageJsonItem(queue.key, data);
+                                        }
+                                    }
+
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                    if (requestQueue.length == 0 && _callback != null) {
+                                        _callback();
+                                        _callback = null;
+                                    }
+                                    doRequestforWeb();
+                                }).error(function (data, status, headers, config) {
+
+                                var finalTime = new Date().getTime();
+                                var obj = {};
+
+                                if (data) {
+                                    if (data.messageerror) {
+                                        obj.messageerror = data.messageerror;
+                                        obj.statusCode = status;
+                                    } else {
+                                        obj.messageerror = "Undefined Server Error";
+                                        obj.statusCode = status;
+                                    }
+                                } else {
+                                    obj.messageerror = "Undefined Server Error";
+                                    obj.statusCode = 500;
+                                }
+
+                                if (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0) {
+                                    obj.statusCode = 408;
+                                    obj.messageerror = "Request Timeout";
+
+                                    if (errCallback) {
+                                        errCallback(obj);
                                     }
                                 }
 
-                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
-                                if(requestQueue.length == 0 && _callback != null) {
-                                    _callback();
-                                    _callback = null;
-                                }   
-                                doRequestforWeb();                                 
-                            }).error(function (response) {
-
-                                if(navigator.onLine) {
-                                   requestQueue[0].retryCount++;                               
+                                if (navigator.onLine) {
+                                    requestQueue[0].retryCount++;
                                     _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                                     doRequestforWeb();
-                                }                        
+                                }
                             });
                         }
                         else {
 
-                            requestQueue.shift();  
+                            requestQueue.shift();
                             _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                            if(requestQueue.length == 0 && _callback != null) {
+                            if (requestQueue.length == 0 && _callback != null) {
                                 _callback();
                                 _callback = null;
                             }
                             doRequestforWeb();
-                        }   
-                    } else if(queue.type === "geolocation") {
-                        
-                        var getCurrentPositionSuccesCallback = function(pos) {
-                            _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, { 
+                        }
+                    } else if (queue.type === "geolocation") {
+
+                        var getCurrentPositionSuccesCallback = function (pos) {
+                            _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, {
                                 latitude: pos.coords.latitude,
                                 longitude: pos.coords.longitude
                             });
                             postCurrentPosition();
                         };
-                        var getCurrentPositionErrorCallback = function() {
+                        var getCurrentPositionErrorCallback = function () {
                             requestQueue[0].retryCount = 5;
                             queue.retryCount = 5;
                             postCurrentPosition();
@@ -1272,50 +1508,50 @@
                             enableHighAccuracy: true,
                             maximumAge: 6000,
                             timeout: 10000
-                          });
-                        
-                        var postCurrentPosition = function() {
-                            
-                            if(queue.retryCount < 5 || (queue.retryCount === 5 && moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null)) {
-                                
+                        });
+
+                        var postCurrentPosition = function () {
+
+                            if (queue.retryCount < 5 || (queue.retryCount === 5 && moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null)) {
+
                                 var coords = moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId);
-                               
+
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
                                 queue.data.data.latitude = coords.latitude;
                                 queue.data.data.longitude = coords.longitude;
-                                    
+
                                 _httpFactory(queue.data)
-                                .success(function (response) {
+                                    .success(function (response) {
 
-                                    requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                                    requestQueue.shift();
+                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                        requestQueue.shift();
 
-                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
-                                    if(requestQueue.length == 0 && _callback != null) {
-                                        _callback();
-                                        _callback = null;
-                                    }   
-                                    doRequestforWeb();                                 
-                                }).error(function (response) {
+                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                        if (requestQueue.length == 0 && _callback != null) {
+                                            _callback();
+                                            _callback = null;
+                                        }
+                                        doRequestforWeb();
+                                    }).error(function (response) {
 
-                                    if(navigator.onLine) {
-                                       requestQueue[0].retryCount++;                               
+                                    if (navigator.onLine) {
+                                        requestQueue[0].retryCount++;
                                         _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                                         doRequestforWeb();
                                     }
                                 });
                             } else {
 
-                                requestQueue.shift();  
+                                requestQueue.shift();
                                 _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                if(requestQueue.length == 0 && _callback != null) {
+                                if (requestQueue.length == 0 && _callback != null) {
                                     _callback();
                                     _callback = null;
                                 }
                                 doRequestforWeb();
                             }
-                            
+
                         };
                     }
                 }
@@ -1326,79 +1562,108 @@
             }
         }
 
-        function doRequestforCellphone(){            
-            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);        
+        function doRequestforCellphone(errCallback) {
+            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
 
-            _updateConnectionStatus(function(){                
-                if(_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length>0) {
-                    
+            _updateConnectionStatus(function () {
+                if (_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length > 0) {
+
                     var queue = requestQueue[0];
-                    
+
                     //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
-                    if(queue.userID == _currentUser.userId) {
-                        
-                        if(queue.type === "httpRequest") {
-                            
+                    if (queue.userID == _currentUser.userId) {
+
+                        if (queue.type === "httpRequest") {
+
                             _queuePaused = false;
-                        
-                            if(queue.retryCount < 5) {
+
+                            if (queue.retryCount < 5) {
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
 
-                                function finalExecution(){
-                                    _httpFactory(queue.data)
-                                    .success(function (response) {
-
+                                function finalExecution() {
+                                    var currentTime = new Date().getTime();
+                                    _httpFactory(queue.data).success(function (response) {
                                         requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
                                         requestQueue.shift();
-                                        if(queue.data.method == 'GET') {
-                                            if(queue.key) {
+
+                                        if (queue.data.method == 'GET') {
+                                            if (queue.key) {
                                                 _setLocalStorageJsonItem(queue.key, response);
                                             }
                                         }
 
-
                                         _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                        if(requestQueue.length == 0 && _callback != null) {
+
+                                        if (requestQueue.length == 0 && _callback != null) {
                                             _callback();
                                             _callback = null;
                                         }
+
                                         doRequestforCellphone();
-                                    }).error(function (response) {
-                                        if(_isDeviceOnline){
-                                           requestQueue[0].retryCount++;
+
+                                    }).error(function (data, status, header, config) {
+
+                                        var finalTime = new Date().getTime();
+                                        var obj = {};
+
+                                        if (data) {
+                                            if (data.messageerror) {
+                                                obj.messageerror = data.messageerror;
+                                                obj.statusCode = status;
+                                            } else {
+                                                obj.messageerror = "Undefined Server Error";
+                                                obj.statusCode = status;
+                                            }
+                                        } else {
+                                            obj.messageerror = "Undefined Server Error";
+                                            obj.statusCode = 500;
+                                        }
+
+                                        if (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0) {
+                                            obj.statusCode = 408;
+                                            obj.messageerror = "Request Timeout";
+
+                                            if (errCallback) {
+                                                errCallback(obj);
+                                            }
+                                        }
+
+                                        if (_isDeviceOnline) {
+                                            requestQueue[0].retryCount++;
                                             _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                           doRequestforCellphone();
+                                            doRequestforCellphone();
                                         }
                                     });
                                 }
+
                                 if (queue.data && queue.data.data && queue.data.data.hasfilecontent) {
-                                    encodeImageWithUri(queue.data.data.imageuri, queue.data.data.datatype, function(b64){
+                                    encodeImageWithUri(queue.data.data.imageuri, queue.data.data.datatype, function (b64) {
                                         console.log('imageencodedsuccessfully')
                                         queue.data.data.filecontent = b64;
                                         finalExecution();
                                     });
-                                }else{
+                                } else {
                                     finalExecution();
                                 }
                             }
-                            else{
-                                requestQueue.shift();  
+                            else {
+                                requestQueue.shift();
                                 _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                if(requestQueue.length == 0 && _callback != null){
+                                if (requestQueue.length == 0 && _callback != null) {
                                     _callback();
                                     _callback = null;
                                 }
                                 doRequestforCellphone();
                             }
-                            
-                            
-                        } else if(queue.type === "geolocation") {
-                            
+
+
+                        } else if (queue.type === "geolocation") {
+
                             _queuePaused = false;
-                            
-                            var getCurrentPositionSuccesCallback = function(pos) {
-                                _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, { 
+
+                            var getCurrentPositionSuccesCallback = function (pos) {
+                                _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, {
                                     latitude: pos.coords.latitude,
                                     longitude: pos.coords.longitude
                                 });
@@ -1413,15 +1678,16 @@
                                 postCurrentPosition();
                                 
                             };
+
                             navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
                                 enableHighAccuracy: true,
                                 maximumAge: 6000,
                                 timeout: 10000
-                              });
+                            });
 
-                            var postCurrentPosition = function() {
+                            var postCurrentPosition = function () {
 
-                                if(queue.retryCount < 5 || (queue.retryCount === 5 && moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null)) {
+                                if (queue.retryCount < 5 || (queue.retryCount === 5 && moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null)) {
 
                                     var coords = moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId);
 
@@ -1431,30 +1697,30 @@
                                     queue.data.data.longitude = coords.longitude;
 
                                     _httpFactory(queue.data)
-                                    .success(function (response) {
+                                        .success(function (response) {
 
-                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                                        requestQueue.shift();
+                                            requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                            requestQueue.shift();
 
-                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
-                                        if(requestQueue.length == 0 && _callback != null) {
-                                            _callback();
-                                            _callback = null;
-                                        }   
-                                        doRequestforCellphone();                                 
-                                    }).error(function (response) {
-
-                                        if(_isDeviceOnline){
-                                           requestQueue[0].retryCount++;                               
                                             _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                           doRequestforCellphone();
-                                        } 
+                                            if (requestQueue.length == 0 && _callback != null) {
+                                                _callback();
+                                                _callback = null;
+                                            }
+                                            doRequestforCellphone();
+                                        }).error(function (response) {
+
+                                        if (_isDeviceOnline) {
+                                            requestQueue[0].retryCount++;
+                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                            doRequestforCellphone();
+                                        }
                                     });
                                 } else {
 
-                                    requestQueue.shift();  
+                                    requestQueue.shift();
                                     _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                    if(requestQueue.length == 0 && _callback != null){
+                                    if (requestQueue.length == 0 && _callback != null) {
                                         _callback();
                                         _callback = null;
                                     }
@@ -1462,20 +1728,20 @@
                                 }
 
                             };
-                            
+
                         }
-                    }                                
+                    }
                 }
-                else if(!_isDeviceOnline){
+                else if (!_isDeviceOnline) {
                     _queuePaused = true;
                 }
-                else if (_callback != null){
+                else if (_callback != null) {
                     _callback();
                     _callback = null;
                 }
-            }, function(){                           
-            });            
-        }    
+            }, function () {  console.log("OFFLINE !!");
+            });
+        }
 
         return {
             GetAsyncProfile: _getAsyncProfile,
@@ -1497,7 +1763,7 @@
             PostUserNotifications: _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
             PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
-            PutAsyncFirstTimeInfoForForums : _putAsyncFirstTimeInfoForForums,
+            PutAsyncFirstTimeInfoForForums: _putAsyncFirstTimeInfoForForums,
             GetAsyncLeaderboard: _getAsyncLeaderboard,
             GetAsyncHallOfFame: _getAsyncHallOfFame,
             GetAsyncCatalog: _getAsyncCatalog,
@@ -1529,7 +1795,10 @@
             PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
             DesactivateUser: _desactivateUser,
-            GetAsyncDiscussionDetail: _getAsyncDiscussionDetail
+            GetAsyncDiscussionDetail: _getAsyncDiscussionDetail,
+            GetProfileCatalogs: _getProfileCatalogs,
+            PostProfilePoints: _postProfilePoints,
+            GetProfilePoints: _getProfilePoints
         };
     })();
 }).call(this);

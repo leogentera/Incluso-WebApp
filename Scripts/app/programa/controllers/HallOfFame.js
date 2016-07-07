@@ -15,7 +15,7 @@ hallOfFameModule
             var _pageLoaded = false;
 
             $scope.$emit('ShowPreloader');
-            var citiesCatalogKey = "citiescatalog";
+            //var citiesCatalogKey = "citiescatalog";
             $scope.validateConnection(initController, offlineCallback);
             $scope.mobilecheck = _comboboxCompat;
             $scope.selectClick = function (items, field) {
@@ -23,15 +23,13 @@ hallOfFameModule
                 selectItems.unshift(field);
                 if (window.mobilecheck()) {
                     cordova.exec(function (data) {
-                            $("select[name='"+field+"'] option").eq(data.which).prop('selected', true);
-                            $timeout( function(){
-                                $("select[name='"+field+"'] option").change();
-                            }, 10);
-                        }, function(){}, "CallToAndroid", "showCombobox", selectItems);
+                        $("select[name='" + field + "'] option").eq(data.which).prop('selected', true);
+                        $timeout(function () {
+                            $("select[name='" + field + "'] option").change();
+                        }, 10);
+                    }, function () {
+                    }, "CallToAndroid", "showCombobox", selectItems);
                 }
-                
-                
-                
             };
 
             function offlineCallback() {
@@ -75,14 +73,18 @@ hallOfFameModule
                 $scope.cities = _.find(moodleFactory.Services.GetCacheJson("catalogs"), function (object) {
                     return object.catalog == "citiesCatalog";
                 }).values;
+
                 $scope.cities.unshift("Ver Todo");
                 $scope.default = true;
+
+                //############# ENTRY POINT  ################
                 getTop5("Ver Todo");
+                //###########################################
 
                 if (profile.profileimageurl) {
                     profile.profileimageurl = profile.profileimageurl + "?rnd=" + new Date().getTime();
                 }
-                
+
                 var userStats = {
                     profileImageUrl: profile.profileimageurl,
                     alias: profile.alias,
@@ -93,10 +95,6 @@ hallOfFameModule
                         return (value !== undefined && value.status === "won")
                     }).length
                 };
-                
-                
-                 
-                
 
                 if (!userStats.stars) {
                     userStats.stars = 0;
@@ -116,20 +114,11 @@ hallOfFameModule
                     $scope.userProgressBars.push(classObject);
                 }
 
-
-                function getTop5(city) {
-                    $scope.validateConnection(function () {
-                        moodleFactory.Services.GetAsyncHallOfFame($scope.usercourse.courseid, city, $scope.user.token, getTop5Callback, function (data) {
-                            console.log(data)
-                        }, true);
-                    }, offlineCallback);
-                }
-
-                function getCitiesCatalogCallback() {
-                    $scope.cities = moodleFactory.Services.GetCacheJson(citiesCatalogKey);
-                    $scope.cities.unshift("Ver Todo");
-                   
-                }
+                //function getCitiesCatalogCallback() {
+                //    $scope.cities = moodleFactory.Services.GetCacheJson(citiesCatalogKey);
+                //    $scope.cities.unshift("Ver Todo");
+                //
+                //}
 
                 function getTop5Callback() {
                     var allTop5 = moodleFactory.Services.GetCacheJson("halloffame");
@@ -157,16 +146,48 @@ hallOfFameModule
                     }, 1000);
                 }
 
+                //Time Out Message modal
+                $scope.openModal = function (size) {
+                    var modalInstance = $modal.open({
+                        animation: $scope.animationsEnabled,
+                        templateUrl: 'timeOutModal.html',
+                        controller: 'timeOutFame',
+                        size: size,
+                        windowClass: 'user-help-modal dashboard-programa'
+                    });
+                };
+
+                function getTop5(city) {
+                    $scope.validateConnection(function () {
+                        moodleFactory.Services.GetAsyncHallOfFame($scope.usercourse.courseid, city, $scope.user.token,
+                            getTop5Callback, //Success
+                            function (obj) {//Error
+
+                                if (obj.statusCode == 408) {//Request Timeout
+                                    $scope.$emit('HidePreloader');
+                                    $scope.openModal();
+                                }
+
+                            }, true);
+                    }, offlineCallback);
+                }
+
                 $scope.updateByCity = function () {
                     if ($scope.selectedCity != "Ver Todo" || !$scope.default) {
                         $scope.$emit('ShowPreloader');
                         getTop5($scope.selectedCity);
                         $scope.default = false;
                     }
-
                 }
             }
         }]);
+
+hallOfFameModule.controller('timeOutFame', function ($scope, $modalInstance, $route) {//TimeOut Robot
+    $scope.ToDashboard = function () {
+        $modalInstance.dismiss('cancel');
+        //$route.reload();
+    };
+});
 
 hallOfFameModule.directive('progressBar', function ($compile) {
         var directDefObject =
