@@ -60,10 +60,9 @@ angular
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
             if ($scope.user.base64Image) {
                 $scope.profileImage = $scope.user.base64Image;
-                $scope.user.profileimageurl = $scope.user.base64Image;
             }else {
-                //Download Pictures
-                //$scope.profileImage = "assets/avatar/default.png";
+                //Download profile Images
+                $scope.profileImage = "assets/avatar/default.png";
                 var imageProf = [{ 'path': "assets/avatar", 'name': "avatar_" + $scope.user.userId + ".png", 'downloadLink': $scope.user.profileimageurl }];
                 saveLocalImages(imageProf);
             };
@@ -237,7 +236,6 @@ angular
                     cordova.exec(function(data) {
                         if (data.files[0] && data.files[0].imageB64) {
                             $scope.profileImage = 'data:image/png;base64,' + data.files[0].imageB64;
-                            $scope.user.profileimageurl = 'data:image/png;base64,' + data.files[0].imageB64;                            
                             $scope.user.base64Image = 'data:image/png;base64,'  + data.files[0].imageB64;
                             localStorage.setItem("CurrentUser", JSON.stringify($scope.user));
                         };
@@ -525,3 +523,4 @@ angular
         };
 
     });
+    

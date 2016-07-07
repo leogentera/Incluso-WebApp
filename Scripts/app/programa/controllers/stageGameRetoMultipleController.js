@@ -204,7 +204,8 @@ angular
                     var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                     var parentActivityIdentifier = $routeParams.moodleid;
                     var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
-
+                     console.log("return game");
+                     console.log(JSON.stringify(data));
                      if (data.imageB64) {
                         var currUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         currUser.base64Image = 'data:image/png;base64,' + data.imageB64;
