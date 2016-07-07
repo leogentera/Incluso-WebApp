@@ -201,6 +201,7 @@ angular
               $timeout(function(){
                 $scope.$apply(function() {
                   if (data) {
+                      $rootScope.retoMultipleTerminado = data.actividadTerminada;
                     var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                     var parentActivityIdentifier = $routeParams.moodleid;
                     var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
