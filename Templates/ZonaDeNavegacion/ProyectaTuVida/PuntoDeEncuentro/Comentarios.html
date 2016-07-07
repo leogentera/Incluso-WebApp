@@ -115,7 +115,7 @@
                                         <a ng-if="p.attachment.length > 1">
                                             <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}" alt="post"/>
                                         </a>
-                                        <a ng-if="p.attachment.length == 1" href="{{p.attachment[0].fileurl + '?token=' + userToken}}">
+                                        <a ng-if="p.attachment.length == 1" ng-click="download(p.attachment[0].fileurl)">
                                             <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}" alt="post"/>
                                         </a>
                                     </figure>
