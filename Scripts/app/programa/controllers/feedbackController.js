@@ -157,7 +157,7 @@ angular
                 var tiedProfiles = _.filter(profiles, function(item){ return item.score == maxProfile.score; });
                 
                     
-                if (tiedProfiles.length >= 4) { 
+                if (tiedProfiles.length >= 4) {
                     //If there are more than 4 profiles in draw sets Generic profile to it
                     console.log("more than 4 tied profiles");
                     var genericProfile = _.findWhere(profiles, { profilename : "Generico"});
@@ -168,7 +168,7 @@ angular
                     var misGustosActivities = _.filter(profilePoints,function(item){
                         for(var i = 0; i < tiedProfiles.length; i++){
                             var profileTied = tiedProfiles[i];
-                            if (profileTied.id == item.profileid) {
+                            if (profileTied.id == parseInt(item.profileid)) {
                                 return item.moduleid == misGustosActivityId;
                             }
                         };
@@ -180,7 +180,7 @@ angular
                         var misGustosActivity = misGustosActivities[i];                        
                         for(var j=0; j < misGustosProfiles.length; j++){
                             misGustosProfiles[j].score = misGustosProfiles[j].score != undefined ? misGustosProfiles[j].score : 0;
-                            if(misGustosActivities[i].profileid == misGustosProfiles[j].id){
+                            if(misGustosActivities[i].profileid == parseInt(misGustosProfiles[j].id)){
                                 misGustosProfiles[j].score += misGustosActivities[i].score;
                             }  
                         };
@@ -198,7 +198,9 @@ angular
                         var retoMultipleActivities = _.filter(profilePoints, function(item){
                             for(var i = 0; i < misGustosActivities.length; i++){
                                 var misGustosActivity = misGustosActivities[i];
-                                if (misGustosActivity.profileid == item.profileid) { return item.moduleid == retoMultipleActivityId; }
+                                if (misGustosActivity.profileid == parseInt(item.profileid)){
+                                    return item.moduleid == retoMultipleActivityId;
+                                }
                             };
                         });
                         console.log(JSON.stringify(retoMultipleActivities));
@@ -207,8 +209,8 @@ angular
                         for(var i= 0; i < retoMultipleProfiles.length; i++){
                             retoMultipleProfiles[i].score = retoMultipleProfiles[i].score || 0;
                             for(j=0;j < retoMultipleActivities.length;j++){
-                                if(retoMultipleActivities[j].profileid == retoMultipleProfiles[i].id){
-                                    retoMultipleProfiles[i].score += retoMultipleActivities[j].score; }    
+                                if(retoMultipleActivities[j].profileid == parseInt(retoMultipleProfiles[i].id)){
+                                    retoMultipleProfiles[i].score += retoMultipleActivities[j].score; }
                             };
                         };
                         //Gets the profile with the highest score from retoMultipleProfiles
