@@ -205,11 +205,12 @@ angular
                     var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                     var parentActivityIdentifier = $routeParams.moodleid;
                     var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
-
+                     console.log("return game");
+                     console.log(JSON.stringify(data));
                      if (data.imageB64) {
-                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        currentUser.base64Image = 'data:image/png;base64,' + data.imageB64;
-                        localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+                        var currUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        currUser.base64Image = 'data:image/png;base64,' + data.imageB64;
+                        localStorage.setItem("CurrentUser", JSON.stringify(currUser));
                      };
                     
                     $scope.IsComplete = (data.actividadTerminada && data.actividadTerminada == "Si");

@@ -325,7 +325,6 @@ angular
                     }).error(function (data, status, headers, config) {
                         $scope.userCredentialsModel.modelState.isValid = false;
                         var errorMessage = "";
-
                         if (data && data.messageerror) {
                             errorMessage = window.atob(data.messageerror);
                         } else {
@@ -443,11 +442,10 @@ angular
 
                 _setId(userFacebook.id);
 
-                validateconnection(ejecutarcola, error);
                 //Run queue
                 moodleFactory.Services.ExecuteQueue(function () {
                     //Preparing for syncAll...
-                    validateconnection(GetAsyncUserCourse, offline);
+
                     //succesful credentials
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
                         $scope.incLoadedItem(); //NOT FORCE REFRESH
