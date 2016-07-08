@@ -341,18 +341,14 @@ angular
 
                 }
 
-                $timeout(function () {
-                    $scope.validateConnection(function () {
-                        $scope.$apply(function () {
-                            $scope.album.profileimageurl = _userProfile.profileimageurl + "?rnd=" + new Date().getTime();
-                        });
-                    }, function () {
-                        getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", _userProfile.profileimageurl, function (niceImageUrl) {
-                            $scope.album.profileimageurl = niceImageUrl;
-                            $scope.$apply();
-                        });
-                    });
-                }, 1000);
+                if (currentUser.base64Image) {
+                    $scope.album.profileimageurl = currentUser.base64Image;
+                }else {
+                    //Download profile Images                                
+                    var imageProf = [{ 'path': "assets/avatar", 'name': "avatar_" + _getItem("userId") + ".png", 'downloadLink': $scope.album.profileimageurl }];
+                    saveLocalImages(imageProf);
+                };
+                
 
                 $scope.album.shield = _userProfile.shield;
                 $scope.album.myStrengths = _userProfile.strengths;
@@ -362,6 +358,19 @@ angular
                 $scope.album.badges = badgesWon;
             }
 
+            function saveLocalImages(images) {
+                _forceUpdateConnectionStatus(function() {
+                    cordova.exec(function(data) {                        
+                        if (data.files[0] && data.files[0].imageB64) {
+                            $scope.album.profileimageurl = 'data:image/png;base64,' + data.files[0].imageB64;
+                            currentUser.base64Image = 'data:image/png;base64,'  + data.files[0].imageB64;
+                            localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+                        };
+                      }, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
+                }, function() {});
+                
+            }
+            
             function loadPostDataToAlbum() {
                 var postCounter = moodleFactory.Services.GetCacheJson("postcounter/" + _userProfile.course);
                 var communityPosts = 0;
@@ -875,7 +884,6 @@ angular
                 }, 500);
 
             };
-
 
             function printBadge(position, column, row, callback) {
                 var myBadges = $scope.album.badges;
