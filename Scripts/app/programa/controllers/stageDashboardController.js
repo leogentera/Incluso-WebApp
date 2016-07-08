@@ -24,6 +24,10 @@ angular
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus(); //Copies last version of activity blocked status into model variable
 
+            if($rootScope.retoMultipleTerminado == "No") {
+                $rootScope.activityBlocked[1049].disabled = true;
+            }else{}
+
             // ---- Update Chat Status -----------------------------------------------
             function offlineCallback() {
                 $timeout(function () {

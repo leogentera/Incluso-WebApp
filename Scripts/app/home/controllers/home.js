@@ -322,6 +322,9 @@ angular
                     _activityBlocked = moodleFactory.Services.GetCacheJson("activityblocked");
                 }
                 $rootScope.activityBlocked = _activityBlocked;
+                if($rootScope.retoMultipleTerminado == "No") {
+                    $rootScope.activityBlocked[1049].disabled = true;
+                }
             };
 
             $scope.resetActivityBlockedStatus();
