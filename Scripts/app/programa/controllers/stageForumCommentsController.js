@@ -452,7 +452,7 @@ angular
                                 if (obj.statusCode == 408) {//Request Timeout
                                     $scope.openModal();
                                 } else {//A different Error happened
-                                    var errorMessage = [obj.messageerror];
+                                    var errorMessage = [window.atob(obj.messageerror)];
                                     $scope.modelState.errorCode = obj.statusCode;
                                     $scope.modelState.errorMessages = errorMessage;
                                 }
