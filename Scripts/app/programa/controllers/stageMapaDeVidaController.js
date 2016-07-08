@@ -452,7 +452,16 @@ angular
                                                 postToForum();
                                             });
                                         } else {
-                                            postToForum();
+
+                                            encodeImageUri($scope.pathImagenFicha, function (b64) {
+                                                requestData.filecontent = b64;
+                                                postToForum();
+                                                $scope.$emit('HidePreloader');
+                                                $timeout(function () {
+                                                    $location.path('/Offline');
+                                                }, 1000);
+
+                                            });
                                         }
                                     }, function () {
                                     });
@@ -470,6 +479,7 @@ angular
                                 }
                             }
                         }, function () {
+                            postToForum();
                         });
                     }
                 });
