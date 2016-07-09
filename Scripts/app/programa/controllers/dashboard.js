@@ -58,9 +58,13 @@ angular
             $scope.stageProgress = 0;
 
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
-            if ($scope.user.base64Image) {
+            if ($scope.user.retoMultipleAvatar) {
+                $scope.profileImage = $scope.user.retoMultipleAvatar;
+                $scope.user.base64Image = $scope.user.retoMultipleAvatar;
+            }else if($scope.user.base64Image) {
                 $scope.profileImage = $scope.user.base64Image;
-            }else {
+            }else{
+                console.log("it does not exists");
                 //Download profile Images
                 $scope.profileImage = "assets/avatar/default.png";
                 var imageProf = [{ 'path': "assets/avatar", 'name': "avatar_" + $scope.user.userId + ".png", 'downloadLink': $scope.user.profileimageurl }];

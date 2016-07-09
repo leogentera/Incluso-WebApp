@@ -911,7 +911,7 @@ angular
                     return {
                         profileid: key,
                         score: _(g).reduce(function (m, x) { return m + x.score }, 0),
-                        moduleId: $scope.coursemoduleid
+                        moduleid: $scope.coursemoduleid
                     };
                 });
 
