@@ -29,6 +29,15 @@ angular
                 }, 1000);
             }
 
+            $scope.modelState = {
+                isValid: null,
+                errorMessages: []
+            };
+            /* Watchers */
+            $scope.$watch("modelState.errorMessages", function (newValue, oldValue) {
+                $scope.modelState.isValid = (newValue.length === 0);
+            });
+
             $scope.mobilecheck = _comboboxCompat;
 
             $scope.selectClick = function (items, field) {
@@ -545,7 +554,7 @@ angular
 
                 $scope.validateConnection(function () {
 
-                    for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                    for ( i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                             var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;
                             var currentUserId = currentUser.userId;
@@ -568,43 +577,52 @@ angular
                                 picture_comment_author: profile.profileimageurl
                             };
 
-                            // update model
-                            $scope.fuenteDeEnergia.activities[i].activityContent.comments.unshift(newCommentObject);
-                            $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
-                            $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = 3;
 
-                            // update cache
-                            var fuenteDeEnergiaCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $routeParams.moodleid));
-
-                            if (fuenteDeEnergiaCache) {
-                                if (!fuenteDeEnergiaCache.activities[i].activityContent) {
-                                    fuenteDeEnergiaCache.activities[i].activityContent = {};
-                                }
-                                if (!fuenteDeEnergiaCache.activities[i].activityContent.comments) {
-                                    fuenteDeEnergiaCache.activities[i].activityContent.comments = [];
-                                }
-
-                                fuenteDeEnergiaCache.activities[i].activityContent.comments.unshift(newCommentObject);
-                                fuenteDeEnergiaCache.activities[i].activityContent.newComment = "";
-                                fuenteDeEnergiaCache.activities[i].activityContent.commentsQty = 3;
-
-                                _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, fuenteDeEnergiaCache);
-
-
-                            } else {
-                                _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, $scope.fuenteDeEnergia);
-                            }
 
                             $scope.showMoreComments(contentId);
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {
+
+                                    // update model
+                                    $scope.fuenteDeEnergia.activities[i].activityContent.comments.unshift(newCommentObject);
+                                    $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
+                                    $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = 3;
+
+                                    // update cache
+                                    var fuenteDeEnergiaCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $routeParams.moodleid));
+
+                                    if (fuenteDeEnergiaCache) {
+                                        if (!fuenteDeEnergiaCache.activities[i].activityContent) {
+                                            fuenteDeEnergiaCache.activities[i].activityContent = {};
+                                        }
+                                        if (!fuenteDeEnergiaCache.activities[i].activityContent.comments) {
+                                            fuenteDeEnergiaCache.activities[i].activityContent.comments = [];
+                                        }
+
+                                        fuenteDeEnergiaCache.activities[i].activityContent.comments.unshift(newCommentObject);
+                                        fuenteDeEnergiaCache.activities[i].activityContent.newComment = "";
+                                        fuenteDeEnergiaCache.activities[i].activityContent.commentsQty = 3;
+
+                                        _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, fuenteDeEnergiaCache);
+
+
+                                    } else {
+                                        _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, $scope.fuenteDeEnergia);
+                                    }
+
                                     //Success
                                     $rootScope.dontShowRobot = true;
                                     $rootScope.groupid = contentId;
                                     $route.reload();
                                 },
                                 function (obj) {//Error
+                                    console.log('Error!!');
                                     if (obj.statusCode == 408) {//Request Timeout
                                         $scope.openModalFE();
+                                    } else {//A different Error happened
+                                        var errorMessage = [window.atob(obj.messageerror)];
+                                        $scope.modelState.errorCode = obj.statusCode;
+                                        $scope.modelState.errorMessages = errorMessage;
+                                        $scope.scrollToTop();
                                     }
                                 });
                         }

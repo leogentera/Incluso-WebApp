@@ -208,9 +208,11 @@ angular
                      console.log("return game");
                      console.log(JSON.stringify(data));
                      if (data.imageB64) {
-                        var currUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        currUser.base64Image = 'data:image/png;base64,' + data.imageB64;
-                        localStorage.setItem("CurrentUser", JSON.stringify(currUser));
+                        //var currUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        console.log(data.imageB64);
+                        currentUser.base64Image = 'data:image/png;base64,' + data.imageB64;
+                        currentUser.retoMultipleAvatar = 'data:image/png;base64,' + data.imageB64;
+                        localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
                      };
                     
                     $scope.IsComplete = (data.actividadTerminada && data.actividadTerminada == "Si");
