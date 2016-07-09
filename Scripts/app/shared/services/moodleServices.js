@@ -6,6 +6,54 @@
         var globalTimeOut = 60000;
         var longTimeOut = 120000;
 
+        function timeOutCallback(data, currentTime, finalTime) {
+            var obj = {};
+
+            if (data) {
+                if (data.messageerror) {
+                    obj.messageerror = data.messageerror;
+                    obj.statusCode = status;
+                } else {
+                    obj.messageerror = "Undefined Server Error";
+                    obj.statusCode = status;
+                }
+            } else {
+                obj.messageerror = "Undefined Server Error";
+                obj.statusCode = 500;
+            }
+
+            if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                obj.statusCode = 408;
+                obj.messageerror = "Request Timeout";
+            }
+
+            return obj;
+        }
+
+        function timeOutCallback2(data, currentTime, finalTime) {
+            var obj = {};
+
+            if (data) {
+                if (data.messageerror) {
+                    obj.messageerror = data.messageerror;
+                    obj.statusCode = status;
+                } else {
+                    obj.messageerror = "Undefined Server Error";
+                    obj.statusCode = status;
+                }
+            } else {
+                obj.messageerror = "Undefined Server Error";
+                obj.statusCode = 500;
+            }
+
+            if (finalTime - currentTime > 10 && globalTimeOut > 0) {
+                obj.statusCode = 408;
+                obj.messageerror = "Request Timeout";
+            }
+
+            return obj;
+        }
+
         var _getAsyncProfile = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("Perfil/" + userId, API_RESOURCE.format('user/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
@@ -155,7 +203,7 @@
         };
 
         var _putUserChat = function (userId, data, successCallback, errorCallback) {
-            _putAsyncData(null, data, API_RESOURCE.format('messaging/' + userId), successCallback, errorCallback);
+            _putAsyncData("putUserChat", data, API_RESOURCE.format('messaging/' + userId), successCallback, errorCallback);
         };
 
         var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
@@ -214,12 +262,18 @@
         };
 
         var _getServerDate = function (successCallback) {
+            var currentTime = new Date().getTime();
+
             _httpFactory({
                 method: 'GET',
                 url: API_RESOURCE.format('date'),
+                timeout: globalTimeOut,
                 headers: {'Content-Type': 'application/json'}
             }).success(function (data) {
                 successCallback(data);
+            }).error(function (data, status, headers, config) {
+                var finalTime = new Date().getTime();
+                errorCallback(timeOutCallback(data, currentTime, finalTime));
             });
         };
 
@@ -240,6 +294,7 @@
 
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+            var currentTime = new Date().getTime();
 
             if (returnValue) {
                 _timeout(function () {
@@ -253,6 +308,7 @@
                         method: 'POST',
                         data: {"userid": userId, "activities": activitiesArray},
                         url: url,
+                        timeout: longTimeOut,
                         headers: {'Content-Type': 'application/json', 'Authorization': token}
                     }).success(function (data, status, headers, config) {
 
@@ -288,7 +344,8 @@
 
                         successCallback();
                     }).error(function (data, status, headers, config) {
-                        errorCallback(data);
+                        var finalTime = new Date().getTime();
+                        errorCallback(timeOutCallback(data, currentTime, finalTime));
                     });
                 }
             } else {
@@ -298,6 +355,7 @@
                         data: {
                             method: 'GET',
                             url: url,
+                            timeout: longTimeOut,
                             headers: {'Content-Type': 'application/json', 'Authorization': token}
                         }
                     });
@@ -308,6 +366,7 @@
                         data: {
                             method: 'GET',
                             url: url,
+                            timeout: longTimeOut,
                             headers: {'Content-Type': 'application/json'}
                         }
                     });
@@ -338,7 +397,15 @@
                     if (key == "halloffame") {
                         timeOfExpiration = globalTimeOut;
                     } else {
-                        timeOfExpiration = 0;
+                        timeOfExpiration = longTimeOut;
+                    }
+
+                    if (key.indexOf("Perfil") > -1) {
+                        //timeOfExpiration = 100;
+                    }
+
+                    if (key == "userChat/") {
+                        //timeOfExpiration = 10;
                     }
 
                     _httpFactory({
@@ -351,27 +418,7 @@
                         successCallback(data, key);
                     }).error(function (data, status, headers, config) {
                         var finalTime = new Date().getTime();
-                        var obj = {};
-
-                        if (data) {
-                            if (data.messageerror) {
-                                obj.messageerror = data.messageerror;
-                                obj.statusCode = status;
-                            } else {
-                                obj.messageerror = "Undefined Server Error";
-                                obj.statusCode = status;
-                            }
-                        } else {
-                            obj.messageerror = "Undefined Server Error";
-                            obj.statusCode = 500;
-                        }
-
-                        if (finalTime - currentTime > timeOfExpiration && timeOfExpiration > 0) {
-                            obj.statusCode = 408;
-                            obj.messageerror = "Request Timeout";
-                        }
-
-                        errorCallback(obj);
+                        errorCallback(timeOutCallback(data, currentTime, finalTime));
                     });
                 } else {
                     _httpFactory({
@@ -419,6 +466,7 @@
             _getDeviceVersionAsync();
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+            var currentTime = new Date().getTime();
 
             if (returnValue) {
                 _timeout(function () {
@@ -430,6 +478,7 @@
             _httpFactory({
                 method: 'GET',
                 url: url,
+                timeout: globalTimeOut,
                 headers: {'Content-Type': 'application/json', 'Authorization': token}
             }).success(function (data, status, headers, config) {
 
@@ -439,7 +488,8 @@
                 successCallback(data, key);
 
             }).error(function (data, status, headers, config) {
-                errorCallback(data);
+                var finalTime = new Date().getTime();
+                errorCallback(timeOutCallback(data, currentTime, finalTime));
             });
 
         };
@@ -448,6 +498,7 @@
             _getDeviceVersionAsync();
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+            var currentTime = new Date().getTime();
 
             if (returnValue) {
                 _timeout(function () {
@@ -459,13 +510,16 @@
             _httpFactory({
                 method: 'GET',
                 url: url,
+                timeout: globalTimeOut,
                 headers: {'Content-Type': 'application/json', 'Authorization': token},
             }).success(function (data, status, headers, config) {
                 var forum = createForumTree(data);
                 _setLocalStorageJsonItem(key, forum);
                 successCallback(data);
             }).error(function (data, status, headers, config) {
-                errorCallback(data);
+
+                var finalTime = new Date().getTime();
+                errorCallback(timeOutCallback(data, currentTime, finalTime));
             });
         };
 
@@ -527,15 +581,17 @@
             _getDeviceVersionAsync();
 
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            var currentTime = new Date().getTime();
 
             _httpFactory({
                 method: 'POST',
                 url: url,
                 data: data,
+                timeout: globalTimeOut,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': currentUser.token
-                },
+                }
             }).success(function (data, status, headers, config) {
 
                 if (key != null) {
@@ -550,11 +606,14 @@
 
             }).error(function (data, status, headers, config) {
 
-                if (typeof errorCb === "function") {
-                    errorCb();
-                } else {
-                    errorCallback();
-                }
+                //if (typeof errorCb === "function") {
+                //    errorCb();
+                //} else {
+                //    errorCallback();
+                //}
+
+                var finalTime = new Date().getTime();
+                errorCb(timeOutCallback(data, currentTime, finalTime));
             });
         };
 
@@ -581,27 +640,7 @@
             }).error(function (data, status, headers, config) {
 
                 var finalTime = new Date().getTime();
-                var obj = {};
-
-                if (data) {
-                    if (data.messageerror) {
-                        obj.messageerror = data.messageerror;
-                        obj.statusCode = status;
-                    } else {
-                        obj.messageerror = "Undefined Server Error";
-                        obj.statusCode = status;
-                    }
-                } else {
-                    obj.messageerror = "Undefined Server Error";
-                    obj.statusCode = 500;
-                }
-
-                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
-                    obj.statusCode = 408;
-                    obj.messageerror = "Request Timeout";
-                }
-
-                errorCallback(obj);
+                errorCallback(timeOutCallback(data, currentTime, finalTime));
             });
         };
 
@@ -639,27 +678,7 @@
 
                 //-
                 var finalTime = new Date().getTime();
-                var obj = {};
-
-                if (data) {
-                    if (data.messageerror) {
-                        obj.messageerror = data.messageerror;
-                        obj.statusCode = status;
-                    } else {
-                        obj.messageerror = "Undefined Server Error";
-                        obj.statusCode = status;
-                    }
-                } else {
-                    obj.messageerror = "Undefined Server Error";
-                    obj.statusCode = 500;
-                }
-
-                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
-                    obj.statusCode = 408;
-                    obj.messageerror = "Request Timeout";
-                }
-
-                errorCb(obj);
+                errorCb(timeOutCallback(data, currentTime, finalTime));
                 //-
 
             });
@@ -714,27 +733,7 @@
                     successCallback();
                 }).error(function (data, status, headers, config) {
                     var finalTime = new Date().getTime();
-                    var obj = {};
-
-                    if (data) {
-                        if (data.messageerror) {
-                            obj.messageerror = data.messageerror;
-                            obj.statusCode = status;
-                        } else {
-                            obj.messageerror = "Undefined Server Error";
-                            obj.statusCode = status;
-                        }
-                    } else {
-                        obj.messageerror = "Undefined Server Error";
-                        obj.statusCode = 500;
-                    }
-
-                    if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
-                        obj.statusCode = 408;
-                        obj.messageerror = "Request Timeout";
-                    }
-
-                    errorCallback(obj);
+                    errorCallback(timeOutCallback(data, currentTime, finalTime));
                 });
             }
         };
@@ -749,33 +748,56 @@
                 timeOfExpiration = globalTimeOut;
                 errCallback = errorCallback;
             } else {
-                timeOfExpiration = 0;
+                timeOfExpiration = longTimeOut;
                 errCallback = null;
             }
 
-            addRequestToQueue(key, {
-                type: "httpRequest",
-                data: {
+            if (key == "putUserChat") {//For Chat - not to queue.
+                timeOfExpiration = globalTimeOut;
+                var currentTime = new Date().getTime();
+
+                _httpFactory({
                     method: 'PUT',
                     url: url,
                     data: dataModel,
                     timeout: timeOfExpiration,
-                    errCallback: errCallback,
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': currentUser.token
                     }
+                }).success(function (data, status, headers, config) {
+                    _setLocalStorageJsonItem(key, data);
+                    successCallback(data, key);
+                }).error(function (data, status, headers, config) {
+                    var finalTime = new Date().getTime();
+                    errorCallback(timeOutCallback(data, currentTime, finalTime));
+                });
+            } else {
+                addRequestToQueue(key, {
+                    name: "MyChat",
+                    type: "httpRequest",
+                    data: {
+                        method: 'PUT',
+                        url: url,
+                        data: dataModel,
+                        timeout: timeOfExpiration,
+                        errCallback: errCallback,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': currentUser.token
+                        }
+                    }
+                });
+
+                dataModel = !otherDataModel ? dataModel : otherDataModel;
+
+                if (key) {
+                    _setLocalStorageJsonItem(key, dataModel);
                 }
-            });
 
-            dataModel = !otherDataModel ? dataModel : otherDataModel;
-
-            if (key) {
-                _setLocalStorageJsonItem(key, dataModel);
-            }
-
-            if (successCallback) {
-                successCallback();
+                if (successCallback) {
+                    successCallback();
+                }
             }
         };
 
@@ -788,6 +810,7 @@
                     method: 'POST',
                     url: url,
                     data: dataModel,
+                    timeout: globalTimeOut,
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': currentUser.token
@@ -804,20 +827,23 @@
 
         var _putDataNoCache = function (data, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
+            var currentTime = new Date().getTime();
 
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             _httpFactory({
                 method: 'PUT',
                 url: url,
                 data: data,
+                timeout: globalTimeOut,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': currentUser.token
-                },
+                }
             }).success(function (data, status, headers, config) {
                 successCallback();
             }).error(function (data, status, headers, config) {
-                errorCallback();
+                var finalTime = new Date().getTime();
+                errorCallback(timeOutCallback(data, currentTime, finalTime));
             });
         };
 
@@ -832,6 +858,7 @@
                 data: {
                     method: 'PUT',
                     url: url,
+                    timeout: globalTimeOut,
                     data: dataModel,
                     headers: {'Content-Type': 'application/json', 'Authorization': token}
                 }
@@ -853,6 +880,7 @@
                     method: 'PUT',
                     url: API_RESOURCE.format('usercourse/' + userId),
                     data: dataModel,
+                    timeout: globalTimeOut,
                     headers: {'Content-Type': 'application/json', 'Authorization': currentUser.token}
                 }
             });
@@ -866,11 +894,13 @@
         var _putAsyncFirstTimeInfoForForums = function (userId, currentUserToken, dataModel, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             //var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+            var currentTime = new Date().getTime();
+
             _httpFactory({
                 method: 'PUT',
                 url: API_RESOURCE.format('usercourse/' + userId),
                 data: dataModel,
-
+                timeout: globalTimeOut,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': currentUserToken
@@ -878,7 +908,8 @@
             }).success(function (data, status, headers, config) {
                 successCallback();
             }).error(function (data, status, headers, config) {
-                errorCallback();
+                var finalTime = new Date().getTime();
+                errorCallback(timeOutCallback(data, currentTime, finalTime));
             });
         };
 
@@ -891,6 +922,7 @@
                     method: 'PUT',
                     url: url,
                     data: data,
+                    timeout: globalTimeOut,
                     headers: {'Content-Type': 'application/json', 'Authorization': token}
                 }
             });
@@ -910,6 +942,7 @@
                     method: 'PUT',
                     url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),
                     data: data,
+                    timeout: globalTimeOut,
                     headers: {'Content-Type': 'application/json', 'Authorization': token}
                 }
             });
@@ -1296,6 +1329,7 @@
             _getDeviceVersionAsync();
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+            var currentTime = new Date().getTime();
 
             if (returnValue) {
                 _timeout(function () {
@@ -1307,6 +1341,7 @@
             _httpFactory({
                 method: 'GET',
                 url: url,
+                timeout: longTimeOut,
                 headers: {'Content-Type': 'application/json', 'Authorization': token}
             }).success(function (data, status, headers, config) {
 
@@ -1319,7 +1354,8 @@
                 _setLocalStorageJsonItem(key, obj);
                 successCallback(data, key);
             }).error(function (data, status, headers, config) {
-                errorCallback(data);
+                var finalTime = new Date().getTime();
+                errorCallback(timeOutCallback(data, currentTime, finalTime));
             });
         };
 
@@ -1331,6 +1367,7 @@
                 data: {
                     method: 'POST',
                     url: API_RESOURCE.format('geolocation'),
+                    timeout: globalTimeOut,
                     data: {moduleid: moduleId},
                     headers: {'Content-Type': 'application/json', 'Authorization': currentUser.token}
                 }
@@ -1395,6 +1432,7 @@
             if (cacheQueue instanceof Array) {
                 requestQueue = cacheQueue;
             }
+
             queue.retryCount = 0;
             queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;

@@ -122,24 +122,36 @@ angular
 
             var successCallback = function () {
                 _tutorial = true;
+
                 if ($routeParams.retry) {
                     _forceUpdateConnectionStatus(function () {
                         if (_isDeviceOnline) {
                             moodleFactory.Services.ExecuteQueue();
                         }
-                    }, function () {
+                    }, function (obj) {
+                        if (obj.statusCode == 408) {//Request Timeout
+                            $timeout(function () {
+                                $location.path('/Offline');
+                            }, 1000);
+                        }
                     });
                 }
+
                 $timeout(function () {
                     _loadedDrupalResources = true;
-                    $scope.$emit('HidePreloader');
                     $location.path('/ProgramaDashboard');
-                }, 1000);
+                }, 500);
             };
 
-            var errorCallback = function () {
+            var errorCallback = function (obj) {
                 $scope.$emit('HidePreloader');
                 //$location.path('/ProgramaDashboard');
+
+                if (obj.statusCode == 408) {//Request Timeout
+                    $timeout(function () {
+                        $location.path('/Offline');
+                    }, 1000);
+                }
             };
 
             $scope.avatar = function () {
@@ -159,7 +171,7 @@ angular
                     "escudo": "",
                     "avatarType": "Tutorial"
                 };
-                $scope.$emit('ShowPreloader');
+
                 try {
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch (e) {
@@ -185,37 +197,41 @@ angular
             };
 
             function SuccessAvatar(data) {
-                
-                                      
-                        
-                $scope.avatarInfo = [{
-                    "userid": $scope.model.id,
-                    "aplicacion": data.actividad,
-                    "genero": data.genero,
-                    "rostro": data.rostro,
-                    "color_de_piel": data.colorPiel,
-                    "estilo_cabello": data.estiloCabello,
-                    "color_cabello": data.colorCabello,
-                    "traje_color_principal": data.trajeColorPrincipal,
-                    "traje_color_secundario": data.trajeColorSecundario,
-                    "imagen_recortada": data.genero,
-                    "ultima_modificacion": data["fechaModificación"],
-                    "Te_gusto_la_actividad": data.gustaActividad,
-                    "pathimagen": data.pathImagen,
-                    "estrellas": "100",
-                    "alias": $scope.model.alias,
-                    "escudo": $scope.model.shield
-                }];
-                
-                _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
-                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                if (data.imageB64) {
-                    currentUser.base64Image = 'data:image/png;base64,' + data.imageB64;
-                };
-                currentUser.haspicture = "1";
-                localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
-                
-                uploadAvatar($scope.avatarInfo);
+
+                $rootScope.loaderForLogin = false;//-
+                $scope.loaderRandom(); //Reinit Preloader//-
+                $scope.$emit('ShowPreloader');
+
+                $timeout(function(){
+                    $scope.avatarInfo = [{
+                        "userid": $scope.model.id,
+                        "aplicacion": data.actividad,
+                        "genero": data.genero,
+                        "rostro": data.rostro,
+                        "color_de_piel": data.colorPiel,
+                        "estilo_cabello": data.estiloCabello,
+                        "color_cabello": data.colorCabello,
+                        "traje_color_principal": data.trajeColorPrincipal,
+                        "traje_color_secundario": data.trajeColorSecundario,
+                        "imagen_recortada": data.genero,
+                        "ultima_modificacion": data["fechaModificación"],
+                        "Te_gusto_la_actividad": data.gustaActividad,
+                        "pathimagen": data.pathImagen,
+                        "estrellas": "100",
+                        "alias": $scope.model.alias,
+                        "escudo": $scope.model.shield
+                    }];
+
+                    _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
+                    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    if (data.imageB64) {
+                        currentUser.base64Image = 'data:image/png;base64,' + data.imageB64;
+                    };
+                    currentUser.haspicture = "1";
+                    localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+
+                    uploadAvatar($scope.avatarInfo);
+                }, 500);
             }
 
             function FailureAvatar(data) {
@@ -264,7 +280,6 @@ angular
                     $scope.contentResources = data.node;
                 }, function () {
                 }, false);
-
             }
 
             getContentResources();
