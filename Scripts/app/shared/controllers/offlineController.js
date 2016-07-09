@@ -33,4 +33,15 @@ angular
         $scope.$on("$destroy", function() {
             $("#offlineModal").removeClass("show");
         });
+
+        $('#OfflineRedirect').click(function () {
+            $scope.navigateToDashboard();
+        });
+
+        $scope.navigateToDashboard = function () {
+            $("#offlineModal").removeClass("show");
+            $location.path('/ProgramaDashboard');
+        };
+
+
     }]);
