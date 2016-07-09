@@ -19,7 +19,11 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.Math = window.Math;
-            $scope.$emit('ShowPreloader'); //show preloader
+
+            if (!$rootScope.loading) {
+                $scope.$emit('ShowPreloader'); //show preloader
+            }
+
             $scope.profileImage = "";
 
             var activity_identifier = "0000";
@@ -182,7 +186,15 @@ angular
                 };
 
                 moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
-                }, function () {
+                }, function (obj) {
+                    //-
+                    if (obj.statusCode == 408) {//Request Timeout
+                        $scope.$emit('HidePreloader');
+                        $timeout(function () {
+                            $location.path('/Offline');
+                        }, 1000);
+                    }
+                    //-
                 });
             };
 
@@ -195,6 +207,7 @@ angular
                 
                 $timeout(function () {
                     $scope.validateConnection(function () {
+                        //Get the 'usercourse' object
                         moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
                     }, function () {
                         
@@ -345,7 +358,15 @@ angular
                 $scope.stageProgress = Math.floor((stageProgressBuffer / stageTotalActivities) * 100);
             }
 
-            function errorCallback(data) {
+            function errorCallback(obj) {
+
+                //-
+                if (obj.statusCode == 408) {//Request Timeout
+                    progressBar.set(0); //For Login Preloader
+                    localStorage.setItem("offlineConnection", "offline");  //For login can know what happened
+                    console.log("TIMEOUT DETECTED...");
+                }
+                //-
                 
                 if(localStorage.getItem("course") == null) {
                     $scope.$emit('HidePreloader');
@@ -359,6 +380,9 @@ angular
                     $scope.$emit('HidePreloader');
                     localStorage.setItem("offlineConnection", "offline");
                     $location.path('/');
+                } else if (localStorage.getItem("offlineConnection")) {console.log("TAKING TIMEOUT ACTION...");
+                    $scope.$emit('HidePreloader');
+                    $location.path('/Offline');
                 }
                 
                 _pageLoaded = true;
@@ -410,8 +434,9 @@ angular
                     if (dataStars.length > 0) {
                         localStorage.setItem("userStars", JSON.stringify(dataStars));
                     }
-                }, function () {
+                }, function (obj) {
                     $scope.activitiesCompleted = [];
+                    errorCallback(obj);
                 }, true);
             }
 
@@ -452,7 +477,13 @@ angular
                     if (currentUser) {
                         moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){
                             $scope.incLoadedItem(); //15
-                            getProfilePoints(currentUser);
+                            //getProfilePoints(currentUser);
+                            var userCourse = JSON.parse(localStorage.getItem('usercourse'));
+
+                            moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(data){
+
+                            }, errorCallback,true);
+
                         }, errorCallback,true);
                     }
 
