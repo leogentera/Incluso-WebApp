@@ -34,7 +34,7 @@ angular
                                 $rootScope.loadedItem = 0;
                                 $rootScope.loaderForLogin = false;
                                 $scope.loaderRandom(); //Reinit Preloader
-                            }, 5000);
+                            }, 1000);
                         }
                     }, 10);
                 }

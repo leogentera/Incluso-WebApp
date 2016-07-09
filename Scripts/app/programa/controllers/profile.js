@@ -100,6 +100,10 @@ angular
                 $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
+                if (!$scope.loggedUser) {//Update userid for the selected user.
+                    $scope.userId = $routeParams.id;
+                }
+
                 $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
                 $scope.myStrengths = [];
                 $scope.myWindowOfOpportunities = [];
@@ -735,7 +739,7 @@ angular
                     //Try to get user profile data from Local Storage.
                     $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
 
-                    if ($scope.model !== null) {// If profile exists in Local Storage, then...
+                    if ($scope.model !== null && $scope.loggedUser) {// If profile exists in Local Storage, then...
 
                         if (currentUser.base64Image) {
                                 $scope.model.profileimageurl = currentUser.base64Image;
@@ -756,11 +760,8 @@ angular
                     } else {//Try to get user profile data from Service.
                         
                         moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
-                            
-                            console.log("else");
+
                             $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
-                            console.log(JSON.stringify($scope.model));
-                            
                             
                             if($routeParams.id == moodleFactory.Services.GetCacheObject("userId")){
                                 if (currentUser.base64Image) {
@@ -1636,7 +1637,7 @@ angular
                     return showResultsPage;
                 }
 
-                function updateQuizes() {console.log("UPDATING QUIZES...............");
+                function updateQuizes() {
                     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     var keysToSync;
@@ -1655,7 +1656,7 @@ angular
                     var answerLabel;
 
                     if (quizMisCualidades) {// :::::::::: If "Mis Cualidades" section has been modified, make check.
-                        console.log("EDITED MIS CUALIDADES");
+
                         parentActivity = getActivityByActivity_identifier(1005);
                         activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
                         keysToSync = ["talents", "values", "habilities"];
@@ -1777,7 +1778,7 @@ angular
                     }
 
                     if (quizMisGustos) {//If:::::::::: "Mis Gustos" section has been modified, save.
-                        console.log("Edited Mis Gustos");
+
                         parentActivity = getActivityByActivity_identifier(1006);
                         activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
                         keysToSync = ["favoriteSports", "artisticActivities", "hobbies", "social", "emprendedor"];
