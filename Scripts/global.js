@@ -485,7 +485,16 @@ var _tryAssignAward = function() {
           "award": true,
           "dataissued": moment().format("YYYY/MM/DD h:mm:ss")
       };
-      moodleFactory.Services.PutAsyncAward(userid, awardData, function(){}, function(){});
+      moodleFactory.Services.PutAsyncAward(userid, awardData, function(){}, function(obj){
+          //-
+          if (obj.statusCode == 408) {//Request Timeout
+              $scope.$emit('HidePreloader');
+              $timeout(function () {
+                  $location.path('/Offline');
+              }, 1000);
+          }
+          //-
+      });
       
       // update profile
       var awards = _getAwards();
@@ -608,8 +617,16 @@ var logStartActivityAction = function(activityId, timeStamp) {
             var triggerActivity = 1;
             _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
-        }, function () {
+        }, function (obj) {
             console.log('Error callback');
+            //-
+            if (obj.statusCode == 408) {//Request Timeout
+                $scope.$emit('HidePreloader');
+                $timeout(function () {
+                    $location.path('/Offline');
+                }, 1000);
+            }
+            //-
         });
     }
 }
@@ -747,7 +764,13 @@ var successCallback = function (data) {
 };
 
 /* function to prevent broken code when calling a service */
-var errorCallback = function (data) {
+var errorCallback = function (obj) {
+    if (obj.statusCode == 408) {//Request Timeout
+        $scope.$emit('HidePreloader');
+        $timeout(function () {
+            $location.path('/Offline');
+        }, 1000);
+    }
 };
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
@@ -1100,11 +1123,16 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
         localStorage.setItem("userStars", JSON.stringify(userStars));    
         
         moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){
-          
-          
-                   
-          
-          }, function(){});
+          }, function(obj){
+            //-
+            if (obj.statusCode == 408) {//Request Timeout
+                $scope.$emit('HidePreloader');
+                $timeout(function () {
+                    $location.path('/Offline');
+                }, 1000);
+            }
+            //-
+        });
         _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile)
         _setLocalStorageJsonItem("CurrentUser", currentUser)
         
@@ -1330,9 +1358,17 @@ var getProfilePoints = function(currentUser){
   var userCourse = JSON.parse(localStorage.getItem('usercourse'));
 
   moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(data){
-    
-    },function(data){
+      console.log(JSON.stringify(data));
+    },function(obj){
       console.log(data);
+      //-
+      if (obj.statusCode == 408) {//Request Timeout
+          $scope.$emit('HidePreloader');
+          $timeout(function () {
+              $location.path('/Offline');
+          }, 1000);
+      }
+    //-
       },true);
   
 };
@@ -1363,8 +1399,16 @@ var fillProfilePoints = function(pointsToAdd){
     console.log(JSON.stringify(objectProfile));
      moodleFactory.Services.PostProfilePoints('',JSON.stringify(objectProfile),function(data){
         console.log(JSON.stringify(data));
-      },function(data){
+      },function(obj){
           console.log(JSON.stringify(data));
+         //-
+         if (obj.statusCode == 408) {//Request Timeout
+             $scope.$emit('HidePreloader');
+             $timeout(function () {
+                 $location.path('/Offline');
+             }, 1000);
+         }
+        //-
         });
      
     localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
@@ -1377,7 +1421,16 @@ var getProfileCatalogs = function(){
     
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
     if (currentUser) {
-      moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){},function(data){},true);    
+      moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){},function(obj){
+          //-
+          if (obj.statusCode == 408) {//Request Timeout
+              $scope.$emit('HidePreloader');
+              $timeout(function () {
+                  $location.path('/Offline');
+              }, 1000);
+          }
+        //-
+      },true);
     }
 };
 
