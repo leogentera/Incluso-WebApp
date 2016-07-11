@@ -154,13 +154,15 @@
                             <img src="assets/images/img-error-msg.svg" alt="...">
                             <div class="modal-body">
                                 <h3 class="subtitle text-center text-uppercase">Error en la conexión</h3>
-                                <p class="txt-renglon centered">
-                                    No puedes seguir con tu aventura, porque actualmente no estás conectado a la internet.
-                                </p>
-                                <p class="txt-renglon centered">
-                                    Asegúrate de restablecer tu conexión para continuar con tu aventura, en Misión Incluso.                          
-                                </p>                              
-                                <div id="OfflineRedirect" class="btn btn-primary btn-lg btn-block" role="button">CONTINUAR</div>                                                    
+                                <div>
+                                    <p class="txt-renglon centered">
+                                        No puedes seguir con tu aventura, porque actualmente no estás conectado a la internet.
+                                    </p>
+                                    <p class="txt-renglon centered">
+                                        Asegúrate de restablecer tu conexión para continuar con tu aventura, en Misión Incluso.                          
+                                    </p>
+                                </div>
+                                <a role="button" id="OfflineRedirect" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">CONTINUAR</a>                                                   
                             </div>
                               
                         </div>

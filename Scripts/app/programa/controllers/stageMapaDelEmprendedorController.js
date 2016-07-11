@@ -391,7 +391,14 @@ angular
                                                 postToForum();
                                             });
                                         }else{
-                                            postToForum();
+                                            encodeImageUri($scope.pathImagenFicha, function (b64) {
+                                                requestData.filecontent = b64;
+                                                postToForum();
+                                                $scope.$emit('HidePreloader');
+                                                $timeout(function () {
+                                                    $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                                }, 1000);
+                                            });
                                         }
                                     }, function(){});
                                 } else {
