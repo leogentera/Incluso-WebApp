@@ -128,9 +128,8 @@
 
                                             <div ng-if="activity.activity_type == 'resource'" class="image-container">
                                                 <a href="{{::activity.activityContent.content[0].fileurl}}" target="blank">
-                                                    <img ng-click="updateStatus(activity.groupid)"
-                                                         ng-src="{{activity.status && activity.activityContent.content[0].fileurl || 'assets/images/svg/img_placeholder-01.svg'}}"
-                                                         class="image-element'">
+                                                  <img ng-click="updateStatus(activity.groupid)" ng-src="{{activity.activityContent.content[0].fileurl}}" ng-show="activity.status" class="image-element'">
+                                                  <img ng-click="updateStatus(activity.groupid)" ng-src="assets/images/svg/img_placeholder-01.svg" ng-hide="activity.status" class="image-element'">
                                                 </a>
                                             </div>
                                             <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'"
@@ -146,7 +145,8 @@
                                                                 <span class="glyphicon glyphicon-play"></span>
                                                             </a>
                                                             <figure class="poster">
-                                                                <img ng-src="{{activity.status && activity.activityContent.thumbnail || 'assets/images/svg/img_placeholder-01.svg'}}" alt="video"/>
+                                                                <img ng-src="{{activity.activityContent.thumbnail}}" ng-show="activity.status"/>
+                                                                <img ng-src="assets/images/svg/img_placeholder-01.svg" ng-hide="activity.status"/>
                                                             </figure>
                                                         </div>
                                                     </div>
