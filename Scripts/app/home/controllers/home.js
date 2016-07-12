@@ -156,7 +156,15 @@ angular
                     };
 
                     moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
-                    }, function () {
+                    }, function (obj) {
+                        //-
+                        if (obj.statusCode == 408) {//Request Timeout
+                            $scope.$emit('HidePreloader');
+                            $timeout(function () {
+                                $location.path('/Offline');
+                            }, 1000);
+                        }
+                        //-
                     });
                 }
 

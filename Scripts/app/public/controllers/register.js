@@ -17,7 +17,7 @@ angular
             _timeout = $timeout;
             _httpFactory = $http;
             var dpValue;
-            $scope.$emit('scrollTop');  
+            $scope.$emit('scrollTop');
 
             //var isConfirmedPasswordValid = false;
             $scope.currentPage = 1;
@@ -163,12 +163,13 @@ angular
                 //Register.
                 localStorage.removeItem("Credentials");
 
-                $rootScope.totalLoads = 16;
+                $rootScope.totalLoads = 8; //Number of Login requests.
+                $rootScope.comeFromRegister = true;
 
                 if (validateModel()) {
                     $rootScope.loaderForLogin = true;
                     progressBar.set(0);
-                    $scope.loaderRandom();
+                    //- $scope.loaderRandom();
                     $scope.$emit('ShowPreloader');
                     registerUser();
                 } else {
@@ -227,9 +228,12 @@ angular
 
             var registerUser = function () {
 
+                var currentTime = new Date().getTime();
+
                 $http({
                     method: 'POST',
                     url: API_RESOURCE.format("user"),
+                    timeout: $rootScope.globalTimeOut,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     data: $.param({
                         username: $scope.registerModel.username.toString().toLowerCase(),
@@ -263,9 +267,18 @@ angular
                         errorMessage = "Problema con la red; asegúrate de tener Internet e intenta de nuevo.";
                     }
 
-                    $scope.registerModel.modelState.errorMessages = [errorMessage];
                     $scope.$emit('HidePreloader');
                     $scope.$emit('scrollTop');
+
+                    //-
+                    var finalTime = new Date().getTime();
+
+                    if (finalTime - currentTime > $rootScope.globalTimeOut && $rootScope.globalTimeOut > 0) {
+                        //$scope.openModal();
+                    }
+                    //-
+
+                    $scope.registerModel.modelState.errorMessages = [errorMessage];
                 });
             };
 
@@ -315,19 +328,28 @@ angular
 
                         moodleFactory.Services.GetAsyncForumDiscussions(85, data.token, function () {
                             $scope.incLoadedItem(); //5
-                        }, function () {}, true);
+                        }, errorByTimeOut, true);
 
                         moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
                             $scope.incLoadedItem(); //6
-                        }, function () {}, true);
+                        }, errorByTimeOut, true);
 
                         moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
                             $scope.incLoadedItem(); //7 y 8
-                        }, function(){}, true);
+                        }, errorByTimeOut, true);
 
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, quizesArray, data.token, function() {
                             $scope.incLoadedItem(); //9
-                        }, function() {}, true);
+                        }, function(obj) {
+                            //-
+                            if (obj.statusCode == 408) {//Request Timeout
+                                $scope.$emit('HidePreloader');
+                                $timeout(function () {
+                                    $location.path('/Offline');
+                                }, 1000);
+                            }
+                            //-
+                        }, true);
 
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         if (currentUser && currentUser.token) {
@@ -351,7 +373,7 @@ angular
                     $timeout(
                         function () {
                             try {
-                                $scope.$emit('HidePreloader');
+                                //- $scope.$emit('HidePreloader');
                                 $location.path('/Tutorial');
                             } catch (e) {
                                 $location.path('/ProgramaDashboard');
@@ -359,22 +381,21 @@ angular
 
                         }, 1000);
 
-                }, function () {
-                    $scope.registerModel.modelState.isValid = false;
-                    $scope.isRegistered = false;
-                    localStorage.removeItem("Credentials");
-                    localStorage.setItem("offlineConnection", "othercause");
-                    $scope.$emit('HidePreloader');
-
-                    $timeout(function () {
-                        $scope.registerModel.modelState.errorMessages = ["Hubo en fallo en la red. Intenta más tarde."];
-                        $scope.$emit('scrollTop');
-                    }, 1000);
-
-                    //$location.path('/');
-
-                }, true);
+                }, errorByTimeOut, true);
             };
+
+            function errorByTimeOut(obj) {
+                $scope.registerModel.modelState.isValid = false;
+                $scope.isRegistered = false;
+                localStorage.removeItem("Credentials");
+                localStorage.setItem("offlineConnection", "othercause");
+                $scope.$emit('HidePreloader');
+
+                $timeout(function () {
+                    $scope.registerModel.modelState.errorMessages = ["Hubo en fallo en la red. Intenta más tarde."];
+                    $scope.$emit('scrollTop');
+                }, 1000);
+            }
 
             $scope.datePickerClick = function () {
                 if (window.mobilecheck()) {
