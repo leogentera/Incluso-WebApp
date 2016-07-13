@@ -237,11 +237,25 @@ angular
                     }
                 }
 
-                function getActivityErrorCallback() {
+                function getActivityErrorCallback(obj) {
                     _pageLoaded = true;
                     if (_loadedResources && _pageLoaded) {
                         $scope.$emit('HidePreloader')
                     }
+
+                    //-
+                    $scope.$emit('HidePreloader');
+
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                        }, 1000);
+                    } else {//Another kind of Error happened
+                        $timeout(function () {
+                            $location.path('/Offline');
+                        }, 1000);
+                    }
+                    //-
                 }
 
                 function setResources(myActivity) {
@@ -334,7 +348,20 @@ angular
                                     var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
                                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
                                     _setLocalStorageJsonItem("activityManagers", activitymanagers);
-                                    _endActivity($scope.fuenteDeEnergia.activities[i]);
+                                    _endActivity($scope.fuenteDeEnergia.activities[i], function() {}, null,
+                                        function(obj) {//Error handler
+                                        $scope.$emit('HidePreloader');
+
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                            $timeout(function () {
+                                                $location.path('/Offline'); //This behavior could change
+                                            }, 1000);
+                                        } else {//Another kind of Error happened
+                                            $timeout(function () {
+                                                $location.path('/Offline');
+                                            }, 1000);
+                                        }
+                                    } );
                                     if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                         $scope.statusObligatorios += 1;
                                         starsMandatory += 50;
@@ -420,8 +447,20 @@ angular
                     _updateRewardStatus();
                 }
 
-                function errorCallback() {
+                function errorCallback(obj) {
+                    //-
+                    $scope.$emit('HidePreloader');
 
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                        }, 1000);
+                    } else {//Another kind of Error happened
+                        $timeout(function () {
+                            $location.path('/Offline');
+                        }, 1000);
+                    }
+                    //-
                 }
 
                 function successEndFuente() {
@@ -458,8 +497,19 @@ angular
                             $scope.fuenteDeEnergia.status = 1;
                             // update activity status dictionary used for blocking activity links
                             updateActivityStatusDictionary($scope.fuenteDeEnergia.activity_identifier);
-                            moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, successEndFuente, function () {
+                            moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, successEndFuente, function (obj) {
                                 $scope.$emit('HidePreloader');
+                                //-
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                    $timeout(function () {
+                                        $location.path('/Offline'); //This behavior could change
+                                    }, 1000);
+                                } else {//Another kind of Error happened
+                                    $timeout(function () {
+                                        $location.path('/Offline');
+                                    }, 1000);
+                                }
+                                //-
                             });
                         }, 1000);
 
@@ -529,7 +579,20 @@ angular
                                         moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,
                                             function (data) {
                                             },
-                                            function (data) {
+                                            function (obj) {
+                                                //-
+                                                $scope.$emit('HidePreloader');
+
+                                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                                    $timeout(function () {
+                                                        $location.path('/Offline'); //This behavior could change
+                                                    }, 1000);
+                                                } else {//Another kind of Error happened
+                                                    $timeout(function () {
+                                                        $location.path('/Offline');
+                                                    }, 1000);
+                                                }
+                                                //-
                                             });
                                     }
 

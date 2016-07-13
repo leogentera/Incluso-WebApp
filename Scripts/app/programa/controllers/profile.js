@@ -621,11 +621,23 @@ angular
 
                                     },
 
-                                    function () {//The request was not successfull.
+                                    function (obj) {//The request was not successfull.
                                         $scope.model.modelState.isValid = false;
                                         $scope.model.modelState.errorMessages = ["Intente de nuevo más tarde."];
                                         $scope.$emit('scrollTop');
                                         $scope.$emit('HidePreloader');
+
+                                        //-
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                            $timeout(function () {
+                                                $location.path('/Offline'); //This behavior could change
+                                            }, 1000);
+                                        } else {//Another kind of Error happened
+                                            $timeout(function () {
+                                                $location.path('/Offline');
+                                            }, 1000);
+                                        }
+                                        //-
                                     });
 
                             } else {//The password is empty...
@@ -779,11 +791,25 @@ angular
 
                             callback();
 
-                            moodleFactory.Services.GetAsyncAvatar($scope.userId, currentUser.token, getAvatarInfoCallback, function () {
+                            moodleFactory.Services.GetAsyncAvatar($scope.userId, currentUser.token, getAvatarInfoCallback, function (obj) {
                                 _pageLoaded = true;
                                 if (_loadedResources && _pageLoaded) {
                                     $scope.$emit('HidePreloader');
-                                }else{}
+                                }
+                                //-
+                                $scope.$emit('HidePreloader');
+
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                    $timeout(function () {
+                                        $location.path('/Offline'); //This behavior could change
+                                    }, 1000);
+                                } else {//Another kind of Error happened
+                                    $timeout(function () {
+                                        $location.path('/Offline');
+                                    }, 1000);
+                                }
+                                //-
+
                             }, true);
 
                             if (!$scope.model) {
@@ -791,14 +817,28 @@ angular
                                 return "";
                             }else{}
 
-                        }, function () {
+                        }, function (obj) {
                             $scope.model= {
                                 'alias' : $routeParams.useralias == undefined ? 'Usuario Inactivo' : $routeParams.useralias,
                                 'stars' : 'No definidas',
                                 'profileimageurl' : 'assets/avatar/default.png'
                             };
+
+                            //-
+                            $scope.$emit('HidePreloader');
+
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                }, 1000);
+                            } else {//Another kind of Error happened
+                                $timeout(function () {
+                                    $location.path('/Offline');
+                                }, 1000);
+                            }
+                            //-
                         }, true);
-                    };
+                    }
 
                     $timeout(function () {
                         $scope.$emit('HidePreloader');
@@ -1756,7 +1796,19 @@ angular
                                 activityModel.coursemoduleid = parentActivity.coursemoduleid;
                                 activityModel.activityType = "Quiz";
                                 _endActivity(activityModel, function () {
-                                }, "");
+                                }, "", function(obj) {//Error handler
+                                    $scope.$emit('HidePreloader');
+
+                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                        $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                        }, 1000);
+                                    } else {//Another kind of Error happened
+                                        $timeout(function () {
+                                            $location.path('/Offline');
+                                        }, 1000);
+                                    }
+                                });
                             }
                         }
 
@@ -1879,7 +1931,19 @@ angular
                                 activityModel.coursemoduleid = parentActivity.coursemoduleid;
                                 activityModel.activityType = "Quiz";
                                 _endActivity(activityModel, function () {
-                                }, "");
+                                }, "", function(obj) {//Error handler
+                                    $scope.$emit('HidePreloader');
+
+                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                        $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                        }, 1000);
+                                    } else {//Another kind of Error happened
+                                        $timeout(function () {
+                                            $location.path('/Offline');
+                                        }, 1000);
+                                    }
+                                });
                             }
                         }
 
@@ -2061,7 +2125,20 @@ angular
                                 profile.stars = newPoints;  //Update the 'stars' key.
 
                                 _setLocalStorageJsonItem("Perfil/" + $scope.userId, profile); //Save updated profile to Local Storage.
-                                updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
+                                updateUserStarsUsingExternalActivity(activity.activity_identifier,
+                                    function(obj) {//Error handler
+                                    $scope.$emit('HidePreloader');
+
+                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                        $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                        }, 1000);
+                                    } else {//Another kind of Error happened
+                                        $timeout(function () {
+                                            $location.path('/Offline');
+                                        }, 1000);
+                                    }
+                                }); //Update profile in Moodle.
 
                                 endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
@@ -2078,6 +2155,18 @@ angular
                                 //Finish Activity.
                                 _endActivity(activityModel, function () {
                                     validateAllFieldsCompleted();
+                                }, null, function(obj) {//Error handler
+                                    $scope.$emit('HidePreloader');
+
+                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                        $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                        }, 1000);
+                                    } else {//Another kind of Error happened
+                                        $timeout(function () {
+                                            $location.path('/Offline');
+                                        }, 1000);
+                                    }
                                 });
 
                                 sectionFieldsAreOk = false;  //Restore 'sectionFieldsAreOk' value
@@ -2112,7 +2201,20 @@ angular
                             localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
                             showRobotProfile();
                             moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () {
-                            }, function () {
+                            }, function (obj) {
+                                //-
+                                $scope.$emit('HidePreloader');
+
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                    $timeout(function () {
+                                        $location.path('/Offline'); //This behavior could change
+                                    }, 1000);
+                                } else {//Another kind of Error happened
+                                    $timeout(function () {
+                                        $location.path('/Offline');
+                                    }, 1000);
+                                }
+                                //-
                             });
                         }
                     }
@@ -2432,10 +2534,22 @@ angular
                             console.log("Exito");
                             //avatarUploaded("Exito");
                             $scope.$emit('HidePreloader');
-                        }, function () {
+                        }, function (obj) {
                             console.log("Error");
                             $scope.$emit('HidePreloader');
                             //avatarUploaded("Error");
+
+                            //-
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                }, 1000);
+                            } else {//Another kind of Error happened
+                                $timeout(function () {
+                                    $location.path('/Offline');
+                                }, 1000);
+                            }
+                            //-
                         });
                     });
                 };
@@ -2586,11 +2700,23 @@ angular
 
                                 postAchievement();
 
-                            }, function (data) {
+                            }, function (obj) {
                                 $scope.shareAchievementMessage = "";
                                 $scope.showShareAchievementMessage = false;
                                 $scope.showSharedAchievement = true;
                                 $scope.$emit('HidePreloader');
+
+                                //-
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                    $timeout(function () {
+                                        $location.path('/Offline'); //This behavior could change
+                                    }, 1000);
+                                } else {//Another kind of Error happened
+                                    $timeout(function () {
+                                        $location.path('/Offline');
+                                    }, 1000);
+                                }
+                                //-
 
                             }, true);
                         } else {
@@ -2629,12 +2755,24 @@ angular
 
                             $scope.$emit('HidePreloader');
                         },
-                        function () {
+                        function (obj) {
                             $scope.shareAchievementMessage = "";
                             $scope.showShareAchievementMessage = false;
                             $scope.showSharedAchievement = false;
 
                             $scope.$emit('HidePreloader');
+
+                            //-
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                }, 1000);
+                            } else {//Another kind of Error happened
+                                $timeout(function () {
+                                    $location.path('/Offline');
+                                }, 1000);
+                            }
+                            //-
                         }
                     );
                 }

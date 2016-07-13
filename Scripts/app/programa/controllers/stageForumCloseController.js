@@ -84,6 +84,20 @@ angular
                             if (activities[i].coursemoduleid == $routeParams.moodleId) {
                                 moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
                                     endParentActivity();
+                                }, function(obj) {
+                                    //-
+                                    $scope.$emit('HidePreloader');
+
+                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                        $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                        }, 1000);
+                                    } else {//Another kind of Error happened
+                                        $timeout(function () {
+                                            $location.path('/Offline');
+                                        }, 1000);
+                                    }
+                                    //-
                                 });
                             }
                             
@@ -94,6 +108,20 @@ angular
                                 if (finishChildCounter == activities.length) {
                                     endParentActivity();
                                 }
+                            }, function(obj) {
+                                //-
+                                $scope.$emit('HidePreloader');
+
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                    $timeout(function () {
+                                        $location.path('/Offline'); //This behavior could change
+                                    }, 1000);
+                                } else {//Another kind of Error happened
+                                    $timeout(function () {
+                                        $location.path('/Offline');
+                                    }, 1000);
+                                }
+                                //-
                             });
                         }
                     }
@@ -146,12 +174,38 @@ angular
 
                                     updateUserForumStars($routeParams.activityId, extraPoints,true, function (){
                                         successPutStarsCallback();
+                                    }, function(obj) {//Error handler
+                                        $scope.$emit('HidePreloader');
+
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                            $timeout(function () {
+                                                $location.path('/Offline'); //This behavior could change
+                                            }, 1000);
+                                        } else {//Another kind of Error happened
+                                            $timeout(function () {
+                                                $location.path('/Offline');
+                                            }, 1000);
+                                        }
                                     });
                                 }
                                 
                                 var course = moodleFactory.Services.GetCacheJson("course");
                                 var user = moodleFactory.Services.GetCacheJson("CurrentUser");
-                                moodleFactory.Services.GetAsyncUserPostCounter(user.token, course.courseid, function(){}, function() {}, true);
+                                moodleFactory.Services.GetAsyncUserPostCounter(user.token, course.courseid, function(){}, function(obj) {
+                                    //-
+                                    $scope.$emit('HidePreloader');
+
+                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                        $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                        }, 1000);
+                                    } else {//Another kind of Error happened
+                                        $timeout(function () {
+                                            $location.path('/Offline');
+                                        }, 1000);
+                                    }
+                                    //-
+                                }, true);
                                 
                                 localStorage.removeItem("starsToAssignedAfterFinishActivity");
   
@@ -168,7 +222,7 @@ angular
   
                             }, errorCallback);
                       },
-                      function(){
+                      function(obj){
                           var activityId = Number($routeParams.activityId);
                           if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
                               $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
@@ -177,6 +231,20 @@ angular
                           } else if(activityId == 3304 || activityId == 3404){
                               $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                           }
+
+                          //-
+                          $scope.$emit('HidePreloader');
+
+                          if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                              $timeout(function () {
+                                  $location.path('/Offline'); //This behavior could change
+                              }, 1000);
+                          } else {//Another kind of Error happened
+                              $timeout(function () {
+                                  $location.path('/Offline');
+                              }, 1000);
+                          }
+                          //-
                       });
                 }
 

@@ -76,7 +76,8 @@
 
     drupalFactory.Services = (function () {
 
-        var globalTimeOut = 120000;
+        var globalTimeOut = 60000;
+        var longTimeOut = 120000;
         
         var _getContent = function (activityIdentifierId, successCallback, errorCallback, forceRefresh) {
             
@@ -92,19 +93,42 @@
                 return returnValue;
             }
 
+            var currentTime = new Date().getTime();
+
             _httpFactory({
                 method: 'GET',
                 url: url,
+                timeout: globalTimeOut,
                 headers: { 'Content-Type': 'application/json'}
             }).success(function (data, status, headers, config) {
                 _setLocalStorageJsonItem(key, data);
                 successCallback(data, key);
             }).error(function (data, status, headers, config) {
-                
+                var finalTime = new Date().getTime();
+
                 if (returnValue != null) {
                     successCallback(returnValue, key);
-                }else {
-                    errorCallback(data);   
+                } else {
+                    var obj = {};
+
+                    if (data) {
+                        if (data.messageerror) {
+                            obj.messageerror = data.messageerror;
+                        } else {
+                            obj.messageerror = "Undefined Server Error";
+                        }
+
+                    } else {
+                        obj.messageerror = "Undefined Server Error";
+                        obj.statusCode = 500;
+                    }
+
+                    if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                        obj.statusCode = 408;
+                        obj.messageerror = "Request Timeout";
+                    }
+
+                    errorCallback(obj);
                 }
             });
         };
@@ -118,11 +142,11 @@
             }
         };
 
-        var _getDrupalContent = function ( successCallback, errorCallback, forceRefresh) {
+        var _getDrupalContent = function ( successCallback, errorCallback, forceRefresh, timeOutFlag) {
 
-            _getAsyncDataDrupal(DRUPAL_CONTENT_RESOURCE, successCallback, errorCallback, forceRefresh);
+            _getAsyncDataDrupal(DRUPAL_CONTENT_RESOURCE, successCallback, errorCallback, forceRefresh, timeOutFlag);
         };
-        var _getAsyncDataDrupal = function (url, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncDataDrupal = function (url, successCallback, errorCallback, forceRefresh, timeOutFlag) {
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
@@ -133,10 +157,15 @@
 
             var currentTime = new Date().getTime();
 
+            var timeOut = globalTimeOut;
+            if (timeOutFlag) {//Calling from login/register
+                timeOut = longTimeOut;
+            }
+
             _httpFactory({
                 method: 'POST',
                 url: url ,
-                timeout: globalTimeOut,
+                timeout: timeOut,
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
                 data:  JSON.stringify( drupalFactory.NodeRelation)
             }).success(function (data, status, headers, config) {
@@ -160,7 +189,7 @@
                 if (returnValue != null) {
                     successCallback(returnValue, key);
                 } else {
-                    //errorCallback(data);
+                    //- errorCallback(data);
                 }
                 //-
                 var finalTime = new Date().getTime();
@@ -169,17 +198,15 @@
                 if (data) {
                     if (data.messageerror) {
                         obj.messageerror = data.messageerror;
-                        obj.statusCode = status;
                     } else {
                         obj.messageerror = "Undefined Server Error";
-                        obj.statusCode = status;
                     }
                 } else {
                     obj.messageerror = "Undefined Server Error";
                     obj.statusCode = 500;
                 }
 
-                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+                if (finalTime - currentTime > timeOut && timeOut > 0) {
                     obj.statusCode = 408;
                     obj.messageerror = "Request Timeout";
                 }

@@ -96,8 +96,19 @@ angular
                         $scope.forumId = data.forumid;
                         callback();
 
-                    }, function (data) {
+                    }, function (obj) {
                         $scope.$emit('HidePreloader');
+                        //-
+                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                            $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                            }, 1000);
+                        } else {//Another kind of Error happened
+                            $timeout(function () {
+                                $location.path('/Offline');
+                            }, 1000);
+                        }
+                        //-
                     }, true);
                 }
 

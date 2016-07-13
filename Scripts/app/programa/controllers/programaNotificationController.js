@@ -49,7 +49,21 @@ angular
                    moodleFactory.Services.GetAsyncDiscussionDetail($scope.notification.postid, $scope.user.token,function(data){
                         var posts = data.posts;
                         posts.forEach(initializeCommentsData);
-                    },function(data){},true );
+                    },function(obj){
+                       //-
+                       $scope.$emit('HidePreloader');
+
+                       if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                           $timeout(function () {
+                               $location.path('/Offline'); //This behavior could change
+                           }, 1000);
+                       } else {//Another kind of Error happened
+                           $timeout(function () {
+                               $location.path('/Offline');
+                           }, 1000);
+                       }
+                        //-
+                   },true );
                 }
             }
             
@@ -60,7 +74,19 @@ angular
                     $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId; });
                     _readNotification(userId, $routeParams.notificationId, $routeParams.usernotificationId, userNotifications);
                     getPost();
-                }, function(){}, true);
+                }, function(obj){
+                    $scope.$emit('HidePreloader');
+
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                        }, 1000);
+                    } else {//Another kind of Error happened
+                        $timeout(function () {
+                            $location.path('/Offline');
+                        }, 1000);
+                    }
+                }, true);
             }
             
             initialLoading();
@@ -98,7 +124,18 @@ angular
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
                     cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
-                }, function () {
+                }, function (obj) {
+                    $scope.$emit('HidePreloader');
+
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                        }, 1000);
+                    } else {//Another kind of Error happened
+                        $timeout(function () {
+                            $location.path('/Offline');
+                        }, 1000);
+                    }
                 },true);
             };
             
