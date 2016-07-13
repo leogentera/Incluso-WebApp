@@ -376,19 +376,22 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
 };
 
 /* ends an activity */
-var _endActivity = function (activityModel, callback, errorCallback2, pathCh) {
+
+var _endActivity = function (activityModel, callback, pathCh, errorCallback) {
+
     //trigger activity type 2 is sent when the activity ends.
     var triggerActivity = 2;
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var currentUserId = currentUser.userId;
     var activityId = activityModel.coursemoduleid;
     callback = callback || successCallback;
-    errorCallback = errorCallback2 || errorCallback;
+    var errorCallbackScope = errorCallback || errorCallbackNoScope;
+
     //create notification
-    _activityNotification(activityId, triggerActivity);
+    _activityNotification(activityId, triggerActivity, errorCallbackScope);
     if (activityModel.activityType == "Quiz") {
         _endActivityCurrentChallenge = pathCh;
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallbackScope);
     }
     else if (activityModel.activityType == "Assign") {
         var data = { userid: currentUserId };
@@ -401,7 +404,7 @@ var _endActivity = function (activityModel, callback, errorCallback2, pathCh) {
             data.onlymodifieddate = activityModel.onlymodifieddate;
             data.modifieddate = activityModel.modifieddate;
         }
-        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
+        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallbackScope);
     } else {
         var data = { userid: currentUserId };
         if (activityModel.hasOwnProperty('onlymodifieddate')) {
@@ -412,7 +415,7 @@ var _endActivity = function (activityModel, callback, errorCallback2, pathCh) {
 
         // update activity status dictionary used for blocking activity links
         updateActivityStatusDictionary(activityModel.activity_identifier);
-        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallback);
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallbackScope);
     }
 };
 
@@ -516,11 +519,13 @@ var _tryAssignAward = function () {
     }
 };
 
-var _closeChallenge = function (stageId) {
+var _closeChallenge = function (stageId, errorCallback) {
+
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var stageIndex = stageId;
     var currentStage = userCourse.stages[stageIndex];
+    var errorCallbackScope = errorCallback || errorCallbackNoScope;
 
     for (var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++) {
         var currentChallenge = currentStage.challenges[challengeIndex];
@@ -539,7 +544,7 @@ var _closeChallenge = function (stageId) {
                 var activitymodel = {
                     activity_identifier: currentChallenge.activity_identifier
                 };
-                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
+                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallbackScope);
                 success = currentActivityModuleId;
                 return success;
             } else {
@@ -592,10 +597,10 @@ var _updateRewardStatus = function () {
     localStorage.setItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
-var logStartActivityAction = function (activityId, timeStamp) {
-
-    if (Number(activityId) == 50000 || activityId == 'null' || !activityId) {
-        return false;
+var logStartActivityAction = function(activityId, timeStamp, errorCallback) {
+    
+    if( Number(activityId) == 50000 || activityId == 'null' || !activityId){
+            return false;
     } else {
 
         var userCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -616,33 +621,24 @@ var logStartActivityAction = function (activityId, timeStamp) {
         moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
 
             var triggerActivity = 1;
-            _activityNotification(treeActivity.coursemoduleid, triggerActivity);
+            _activityNotification(treeActivity.coursemoduleid, triggerActivity, errorCallback);
 
-        }, function (obj) {
-            console.log('Error callback');
-            //-
-            if (obj.statusCode == 408) {//Request Timeout
-                $scope.$emit('HidePreloader');
-                $timeout(function () {
-                    $location.path('/Offline');
-                }, 1000);
-            }
-            //-
-        });
+        }, errorCallback);
     }
 }
 
 
-var _activityNotification = function (courseModuleId, triggerActivity) {
+var _activityNotification = function (courseModuleId, triggerActivity, errorCallback) {
 
     currentUserId = localStorage.getItem("userId");
 
     var allNotifications = JSON.parse(localStorage.getItem("notifications"));
 
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-
-    var activity = _getActivityByCourseModuleId(courseModuleId, userCourse);
-
+    
+    var activity = _getActivityByCourseModuleId(courseModuleId, userCourse );
+    var errorCallbackScope = errorCallback || errorCallbackNoScope;
+    
     if (activity && allNotifications) {
         //code
 
@@ -662,7 +658,7 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
                 localStorage.setItem("notifications", JSON.stringify(allNotifications));
 
                 moodleFactory.Services.PostUserNotifications(dataModelNotification, function () {
-                }, errorCallback, true);
+                }, errorCallbackScope, true);
 
             } else {
 
@@ -673,7 +669,7 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
 
 
 
-function updateUserStarsUsingExternalActivity(activity_identifier) {
+function updateUserStarsUsingExternalActivity(activity_identifier, errorCallback) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getExtActivityByActivity_identifier(activity_identifier);
@@ -687,6 +683,7 @@ function updateUserStarsUsingExternalActivity(activity_identifier) {
     };
 
     var userStars = JSON.parse(localStorage.getItem("userStars"));
+    var errorCallbackScope = errorCallback || errorCallbackNoScope;
 
     var localStorageStarsData = {
         dateissued: moment(Date.now()).unix(),
@@ -702,23 +699,29 @@ function updateUserStarsUsingExternalActivity(activity_identifier) {
 
     localStorage.setItem("userStars", JSON.stringify(userStars));
 
-    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
-}
+    
+    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallbackScope);
+        }
 
 
-var _progressNotification = function () {
+
+
+
+var _progressNotification = function(errorCallback){
 
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
     var notifications = JSON.parse(localStorage.getItem("notifications"));
 
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    var profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.id));
+    var errorCallbackScope = errorCallback || errorCallbackNoScope;
+    
+    if(profile && notifications){
+      
+        for(i = 0; i < notifications.length; i++){
 
-    var profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.id))
-
-    if (profile && notifications) {
-
-        for (i = 0; i < notifications.length; i++) {
             var currentNotification = notifications[i];
 
             //{rangeId : 1, progressMin: 0, progressMax:0},
@@ -747,8 +750,9 @@ var _progressNotification = function () {
                     notifications[i].status = "won";
                     localStorage.setItem("notifications", JSON.stringify(notifications));
 
-                    moodleFactory.Services.PostUserNotifications(dataModelNotification, function () {
-                    }, errorCallback, true);
+                    moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
+                    }, errorCallbackScope, true);
+                    
 
                 }
             }
@@ -765,18 +769,11 @@ var successCallback = function (data) {
 };
 
 /* function to prevent broken code when calling a service */
-var errorCallback = function (obj) {
-    console.log("Entro callback")
-    $scope.$emit('HidePreloader');
 
+var errorCallbackNoScope = function (obj) {
 
-    if (obj.statusCode == 408) {//Request Timeout
-        $scope.$emit('HidePreloader');
-        $timeout(function () {
-            $location.path('/Offline');
-        }, 1000);
-    }
 };
+
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
     console.log("GetActivityByActivityIDentifier");
@@ -1088,9 +1085,10 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
     return theUserCourse;
 }
 
-function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
+function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock, errorCallback) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+    var errorCallbackScope = errorCallback || errorCallbackNoScope;
     var stars = 0;
     for (var i = 0; i < parentActivity.activities.length; i++) {
         for (var j = 0; j < subactivitiesCourseModuleId.length; j++) {
@@ -1124,20 +1122,11 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
         };
 
         userStars.push(localStorageStarsData);
+        localStorage.setItem("userStars", JSON.stringify(userStars));    
+        
+        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){
+          }, errorCallbackScope);
 
-        localStorage.setItem("userStars", JSON.stringify(userStars));
-
-        moodleFactory.Services.PutStars(data, profile, currentUser.token, function () {
-        }, function (obj) {
-            //-
-            if (obj.statusCode == 408) {//Request Timeout
-                $scope.$emit('HidePreloader');
-                $timeout(function () {
-                    $location.path('/Offline');
-                }, 1000);
-            }
-            //-
-        });
         _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile)
         _setLocalStorageJsonItem("CurrentUser", currentUser)
 
@@ -1179,10 +1168,11 @@ var getForumExtraPointsCounter = function (discussionIds) {
     return tempDiscussions;
 };
 
-function updateUserStars(activityIdentifier, extraPoints) {
+function updateUserStars(activityIdentifier, extraPoints, errorCallback) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
+    var errorCallbackScope = errorCallback || errorCallbackNoScope;
 
     extraPoints ? '' : extraPoints = 0;
 
@@ -1222,13 +1212,14 @@ function updateUserStars(activityIdentifier, extraPoints) {
 
     localStorage.setItem("userStars", JSON.stringify(userStars));
 
-    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
+    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallbackScope);
 }
 
-function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
+function updateUserForumStars(activityIdentifier, points, isExtra, callback, errorCallback) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
+    var errorCallbackScope = errorCallback || errorCallbackNoScope;
 
     profile.stars = Number(profile.stars) + Number(points);
 
@@ -1253,11 +1244,12 @@ function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
         userid: parseInt(data.userId)
     };
 
-    userStars.push(localStorageStarsData);
 
-    localStorage.setItem("userStars", JSON.stringify(userStars));
+        userStars.push(localStorageStarsData);
+        localStorage.setItem("userStars", JSON.stringify(userStars)); 
+        
+    moodleFactory.Services.PutStars(data, profile, currentUser.token, callback, errorCallbackScope);
 
-    moodleFactory.Services.PutStars(data, profile, currentUser.token, callback, errorCallback);
 }
 
 
@@ -1358,25 +1350,28 @@ var logout = function ($scope, $location) {
     clearLocalStorage($location);
 };
 
-var getProfilePoints = function (currentUser) {
 
-    var userCourse = JSON.parse(localStorage.getItem('usercourse'));
+/*  ESTE MÉTODO NO PARECE ESTAR USÁNDOSE COMENTADO POR CARLOS EL 12/07
+var getProfilePoints = function(currentUser){
+  
+  var userCourse = JSON.parse(localStorage.getItem('usercourse'));
 
-    moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function (data) {
-        console.log(JSON.stringify(data));
-    }, function (obj) {
-        console.log(data);
-        //-
-        if (obj.statusCode == 408) {//Request Timeout
-            $scope.$emit('HidePreloader');
-            $timeout(function () {
-                $location.path('/Offline');
-            }, 1000);
-        }
-        //-
-    }, true);
+  moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(data){
+      console.log(JSON.stringify(data));
+    },function(obj){
+      console.log(data);
+      //-
+      if (obj.statusCode == 408) {//Request Timeout
+          $scope.$emit('HidePreloader');
+          $timeout(function () {
+              $location.path('/Offline');
+          }, 1000);
+      }
+    //-
+      },true);
 
 };
+*/
 
 
 var fillProfilePoints = function (pointsToAdd) {
@@ -1422,8 +1417,15 @@ var fillProfilePoints = function (pointsToAdd) {
 
 
 
+/*
+ESTA FUNCIÓN NO PARECE ESTARSE USANDO COMENTADA POR CARLOS EL 12/07/2016
+var getProfileCatalogs = function(){
+    
+=======
+
 var getProfileCatalogs = function () {
 
+>>>>>>> d-v-1.2
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
     if (currentUser) {
         moodleFactory.Services.GetProfileCatalogs(currentUser.token, function (data) { }, function (obj) {
@@ -1438,6 +1440,7 @@ var getProfileCatalogs = function () {
         }, true);
     }
 };
+*/
 
 
 

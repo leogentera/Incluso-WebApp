@@ -65,8 +65,10 @@ angular
 
             function loadQuizesAssets(userId, userToken, successCallback) {
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, quizesArray, userToken, successCallback, function () {
-                }, true);
+                moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, quizesArray, userToken,
+                    successCallback,
+                    offlineCallback,
+                    true, true);
             }
 
             $scope.loadCredentials = function () {
@@ -211,18 +213,18 @@ angular
                         }, function (obj) {
                             _loadedDrupalResources = false;
                             _loadedDrupalResourcesWithErrors = true;
-                            offlineCallback();
+                            offlineCallback(obj);
 
                             //-
-                            $scope.$emit('HidePreloader');
+                            /*
+                            $scope.$emit('HidePreloader'); Comentado por carlos el 11 julio
 
-                            if (obj.statusCode == 408) {//Request Timeout
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
                                 progressBar.set(0); //For Login Preloader
 
                                 $timeout(function () {
                                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
                                     $scope.$emit('scrollTop');
-                                    //$scope.$emit('HidePreloader');
                                 }, 1);
                                 //$scope.openModal();
 
@@ -231,9 +233,10 @@ angular
                                 $scope.modelState.errorCode = obj.statusCode;
                                 $scope.modelState.errorMessages = errorMessage;
                             }
+                            */
                             //-
 
-                        }, true);
+                        }, true, true);
 
                         $timeout(
                             function () {
@@ -263,14 +266,14 @@ angular
 
                                     moodleFactory.Services.GetAsyncForumDiscussions(85, data.token, function () {
                                         $scope.incLoadedItem(); //5
-                                    }, function () {
-                                        offlineCallback();
-                                    }, true);
+                                    }, function (obj) {
+                                        offlineCallback(obj);
+                                    }, true, true);
 
                                     moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
                                         $scope.incLoadedItem(); //6
-                                    }, function () {
-                                        offlineCallback();
+                                    }, function (obj) {
+                                        offlineCallback(obj);
                                     }, true);
 
                                     //Load Quizzes assets
@@ -280,9 +283,9 @@ angular
 
                                     moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
                                         $scope.incLoadedItem(); //8 y 9
-                                    }, function(){
-                                        offlineCallback();
-                                    }, true);
+                                    }, function(obj){
+                                        offlineCallback(obj);
+                                    }, true, true);
 
                                     $timeout(
                                         function () {
@@ -293,15 +296,15 @@ angular
 
                                         }, 1000);
 
-                                }, function () {
-                                    offlineCallback();
-                                }, true);
+                                }, function (obj) {
+                                    offlineCallback(obj);
+                                }, true, true);
 
                             }, function (obj) {
                                 //-
                                 $scope.$emit('HidePreloader');
 
-                                if (obj.statusCode == 408) {//Request Timeout
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
                                     progressBar.set(0); //For Login Preloader
 
                                     $timeout(function () {
@@ -406,18 +409,17 @@ angular
                 }, function (obj) {
                         _loadedDrupalResources = false;
                         _loadedDrupalResourcesWithErrors = true;
-                        offlineCallback();
+                        offlineCallback(obj);
 
                         //-
                         $scope.$emit('HidePreloader');
 
-                        if (obj.statusCode == 408) {//Request Timeout
+                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
                             progressBar.set(0); //For Login Preloader
 
                             $timeout(function () {
                                 $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
                                 $scope.$emit('scrollTop');
-                                //$scope.$emit('HidePreloader');
                             }, 1);
                             //$scope.openModal();
 
@@ -454,28 +456,28 @@ angular
                         var course = moodleFactory.Services.GetCacheJson("course");
                         moodleFactory.Services.GetAsyncUserPostCounter(userFacebook.token, course.courseid, function () {
                             $scope.incLoadedItem(); ////NOT FORCE REFRESH
-                        }, function () {
-                            offlineCallback();
+                        }, function (obj) {
+                            offlineCallback(obj);
                         }, false);
 
                         IntervalFactory.StartUserNotificationWeeklyInterval();
 
                         moodleFactory.Services.GetAsyncForumDiscussions(85, userFacebook.token, function () {
                             $scope.incLoadedItem(); //2
-                        }, function () {
-                            offlineCallback();
+                        }, function (obj) {
+                            offlineCallback(obj);
                         }, true);
 
                         moodleFactory.Services.GetAsyncForumDiscussions(91, userFacebook.token, function () {
                             $scope.incLoadedItem(); //3
-                        }, function () {
-                            offlineCallback();
+                        }, function (obj) {
+                            offlineCallback(obj);
                         }, true);
 
                         moodleFactory.Services.GetAsyncMultipleChallengeInfo(userFacebook.token, function(){
                             $scope.incLoadedItem(); //4 y 5
-                        }, function(){
-                            offlineCallback();
+                        }, function(obj){
+                            offlineCallback(obj);
                         }, true);
 
                         //Load Quizzes assets
@@ -497,7 +499,7 @@ angular
                         //-
                         $scope.$emit('HidePreloader');
 
-                        if (obj.statusCode == 408) {//Request Timeout
+                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
                             progressBar.set(0); //For Login Preloader
 
                             $timeout(function () {
@@ -534,7 +536,7 @@ angular
                 $scope.$emit('scrollTop');
             }
 
-            function offlineCallback() {
+            function offlineCallback(obj) {
                 $rootScope.loaderForLogin = false; //For Login Preloader
                 progressBar.set(0); //For Login Preloader
                 $scope.loaderRandom(); //For Login Preloader
@@ -546,6 +548,10 @@ angular
                     $scope.$emit('scrollTop');
                     $scope.$emit('HidePreloader');
                 }, 1);
+
+                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                    localStorage.setItem("offlineConnection", "timeout");
+                }
             }
 
             if (localStorage.getItem("offlineConnection") == "offline") {

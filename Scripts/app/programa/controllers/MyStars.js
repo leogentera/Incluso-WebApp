@@ -50,8 +50,21 @@ myStarsModule.controller('MyStarsController', [
                     if (dataStars.length > 0) {
                         addStarsByActivity(dataStars);
                     }
-                }, function () {
+                }, function (obj) {
                     $scope.activitiesCompleted = [];
+                    //-
+                    $scope.$emit('HidePreloader');
+
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                        }, 1000);
+                    } else {//Another kind of Error happened
+                        $timeout(function () {
+                            $location.path('/Offline');
+                        }, 1000);
+                    }
+                    //-
                 }, true);
             }
 

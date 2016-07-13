@@ -191,8 +191,13 @@ angular
                 moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
                 }, function (obj) {
                     //-
-                    if (obj.statusCode == 408) {//Request Timeout
-                        $scope.$emit('HidePreloader');
+                    $scope.$emit('HidePreloader');
+
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                        }, 1000);
+                    } else {//Another kind of Error happened
                         $timeout(function () {
                             $location.path('/Offline');
                         }, 1000);
@@ -211,7 +216,7 @@ angular
                 $timeout(function () {
                     $scope.validateConnection(function () {
                         //Get the 'usercourse' object
-                        moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
+                        moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback, null, true);
                     }, function () {
                         
                         $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -363,9 +368,9 @@ angular
             function errorCallback(obj) {
 
                 //-
-                if (obj.statusCode == 408) {//Request Timeout
+                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
                     progressBar.set(0); //For Login Preloader
-                    localStorage.setItem("offlineConnection", "offline");  //For login can know what happened
+                    localStorage.setItem("offlineConnection", "timeout");  //For login can know what happened
                     console.log("TIMEOUT DETECTED...");
                 }
                 //-
@@ -382,9 +387,9 @@ angular
                     $scope.$emit('HidePreloader');
                     localStorage.setItem("offlineConnection", "offline");
                     $location.path('/');
-                } else if (localStorage.getItem("offlineConnection")) {console.log("TAKING TIMEOUT ACTION...");
+                } else if (localStorage.getItem("offlineConnection") == "timeout") {
                     $scope.$emit('HidePreloader');
-                    $location.path('/Offline');
+                    $location.path('/');
                 }
                 
                 _pageLoaded = true;
@@ -512,11 +517,24 @@ angular
                         $scope.$emit('HidePreloader');
                     }
 
-                }, function () {
+                }, function (obj) {
                     _loadedResources = true;
                     if (_loadedResources && _pageLoaded) {
                         $scope.$emit('HidePreloader');
                     }
+                    //-
+                    $scope.$emit('HidePreloader');
+
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                        }, 1000);
+                    } else {//Another kind of Error happened
+                        $timeout(function () {
+                            $location.path('/Offline');
+                        }, 1000);
+                    }
+                    //-
                 }, false);
 
             }

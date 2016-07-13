@@ -7,23 +7,27 @@
         var globalTimeOut = 60000;
         var longTimeOut = 120000;
 
-        function timeOutCallback(data, currentTime, finalTime) {
+        var _isQueueWorking = true;
+        var _maxTimeOutAttempts = 10;
+        var _currentTimeOutAttempt = 0;
+        var _lastTimeQueuePaused = new Date().getTime();
+        var _queuePausedTime = 600000; //miliseconds
+
+        function timeOutCallback(data, timeOut, currentTime, finalTime) {
             var obj = {};
 
             if (data) {
                 if (data.messageerror) {
                     obj.messageerror = data.messageerror;
-                    obj.statusCode = status;
                 } else {
                     obj.messageerror = "Undefined Server Error";
-                    obj.statusCode = status;
                 }
             } else {
                 obj.messageerror = "Undefined Server Error";
                 obj.statusCode = 500;
             }
 
-            if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+            if (finalTime - currentTime > timeOut && timeOut > 0) {
                 obj.statusCode = 408;
                 obj.messageerror = "Request Timeout";
             }
@@ -71,9 +75,9 @@
             _putAsyncData("usercourseaward", data, API_RESOURCE.format('usercourse/' + userId), successCallback, errorCallback);
         };
 
-        var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
-            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh);
+            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh, timeOutFlag);
         };
 
         var _getAsyncAvatarInfo = function (userId, token, successCallback, errorCallback, forceRefresh) {
@@ -102,15 +106,15 @@
         };
 
 
-        var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
+        var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh, timeOutFlag);
         };
 
-        var _getAsyncUserPostCounter = function (token, courseId, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncUserPostCounter = function (token, courseId, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             var key = "postcounter/" + courseId;
             var url = API_RESOURCE.format("postcounter/" + courseId);
 
-            _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh);
+            _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh, timeOutFlag);
         };
 
         var _getAsyncDiscussionPosts = function (token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
@@ -133,9 +137,9 @@
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             if (userId != -1) {
-                _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh);
+                _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, timeOutFlag);
             }
         };
 
@@ -219,9 +223,9 @@
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);
         };
 
-        var _getAsyncMultipleChallengeInfo = function (token, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("retoMultiplePartials", API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh);
-            _getAsyncData("retoMultipleCompleted", API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh);
+        var _getAsyncMultipleChallengeInfo = function (token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+            _getAsyncData("retoMultiplePartials", API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh, timeOutFlag);
+            _getAsyncData("retoMultipleCompleted", API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh, timeOutFlag);
         }
 
         var _putMultipleActivities = function (key, data, userCourseModel, url, successCallback, errorCallback) {
@@ -274,7 +278,7 @@
                 successCallback(data);
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
@@ -291,11 +295,16 @@
             }
         };
 
-        var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
 
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
             var currentTime = new Date().getTime();
+
+            var timeOut = globalTimeOut;
+            if (timeOutFlag) {//Calling from login/register
+                timeOut = longTimeOut;
+            }
 
             if (returnValue) {
                 _timeout(function () {
@@ -309,8 +318,9 @@
                         method: 'POST',
                         data: { "userid": userId, "activities": activitiesArray },
                         url: url,
-                        timeout: longTimeOut,
-                        headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                        timeout: timeOut,
+                        headers: {'Content-Type': 'application/json', 'Authorization': token}
+
                     }).success(function (data, status, headers, config) {
 
                         var proc = setInterval(function () {//Get & save each activity object.
@@ -346,7 +356,7 @@
                         successCallback();
                     }).error(function (data, status, headers, config) {
                         var finalTime = new Date().getTime();
-                        errorCallback(timeOutCallback(data, currentTime, finalTime));
+                        errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
                     });
                 }
             } else {
@@ -356,8 +366,9 @@
                         data: {
                             method: 'GET',
                             url: url,
-                            timeout: longTimeOut,
-                            headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                            timeout: timeOut,
+                            headers: {'Content-Type': 'application/json', 'Authorization': token}
+
                         }
                     }, successCallback, errorCallback);
                 }
@@ -380,11 +391,16 @@
 
         };
 
-        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
             var currentTime = new Date().getTime();
             var timeOfExpiration;
+
+            var timeOut = globalTimeOut;
+            if (timeOutFlag) {//Calling from login/register
+                timeOut = longTimeOut;
+            }
 
             if (returnValue) {
                 _timeout(function () {
@@ -394,12 +410,6 @@
             }
             else if (forceRefresh) {
                 if (token) {
-
-                    if (key == "halloffame") {
-                        timeOfExpiration = globalTimeOut;
-                    } else {
-                        timeOfExpiration = longTimeOut;
-                    }
 
                     if (key.indexOf("Perfil") > -1) {
                         //timeOfExpiration = 100;
@@ -412,25 +422,29 @@
                     _httpFactory({
                         method: 'GET',
                         url: url,
-                        timeout: timeOfExpiration,
-                        headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                        timeout: timeOut,
+                        headers: {'Content-Type': 'application/json', 'Authorization': token}
+
                     }).success(function (data, status, headers, config) {
                         _setLocalStorageJsonItem(key, data);
                         successCallback(data, key);
                     }).error(function (data, status, headers, config) {
                         var finalTime = new Date().getTime();
-                        errorCallback(timeOutCallback(data, currentTime, finalTime));
+                        errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
                     });
                 } else {
                     _httpFactory({
                         method: 'GET',
                         url: url,
-                        headers: { 'Content-Type': 'application/json' }
+                        timeout: timeOut,
+                        headers: {'Content-Type': 'application/json'}
+
                     }).success(function (data, status, headers, config) {
                         _setLocalStorageJsonItem(key, data);
                         successCallback(data, key);
                     }).error(function (data, status, headers, config) {
-                        errorCallback(data);
+                        //- errorCallback(data);
+                        errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
                     });
                 }
             }
@@ -490,7 +504,7 @@
 
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
 
         };
@@ -520,11 +534,11 @@
             }).error(function (data, status, headers, config) {
 
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
-        var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
+        var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             _getDeviceVersionAsync();
             var currentTime = new Date().getTime();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
@@ -536,10 +550,16 @@
                 return returnValue;
             }
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+
+            var timeOut = globalTimeOut;
+            if (timeOutFlag) {//Calling from login/register
+                timeOut = longTimeOut;
+            }
+
             _httpFactory({
                 method: 'GET',
                 url: url,
-                timeout: longTimeOut,
+                timeout: timeOut,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': currentUser.token
@@ -549,32 +569,8 @@
                 successCallback();
             }).error(function (data, status, headers, config) {
                 //errorCallback(data);
-
                 var finalTime = new Date().getTime();
-                var obj = {};
-
-                if (data) {
-                    if (data.messageerror) {
-                        obj.messageerror = data.messageerror;
-                        obj.statusCode = status;
-                    } else {
-                        obj.messageerror = "Undefined Server Error";
-                        obj.statusCode = status;
-                    }
-                } else {
-                    obj.messageerror = "Undefined Server Error";
-                    obj.statusCode = 500;
-                }
-
-                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
-                    obj.statusCode = 408;
-                    obj.messageerror = "Request Timeout";
-                }
-
-                errorCallback(obj);
-
-
-
+                errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
             });
         };
 
@@ -614,7 +610,7 @@
                 //}
 
                 var finalTime = new Date().getTime();
-                errorCb(timeOutCallback(data, currentTime, finalTime));
+                errorCb(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
@@ -641,7 +637,7 @@
             }).error(function (data, status, headers, config) {
 
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
@@ -679,7 +675,7 @@
 
                 //-
                 var finalTime = new Date().getTime();
-                errorCb(timeOutCallback(data, currentTime, finalTime));
+                errorCb(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
                 //-
 
             });
@@ -698,6 +694,8 @@
                         method: 'POST',
                         url: url,
                         data: data,
+                        timeout: globalTimeOut,
+                        // errCallback: errorCallback,
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': currentUser.token
@@ -734,7 +732,7 @@
                     successCallback();
                 }).error(function (data, status, headers, config) {
                     var finalTime = new Date().getTime();
-                    errorCallback(timeOutCallback(data, currentTime, finalTime));
+                    errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
                 });
             }
         };
@@ -771,7 +769,7 @@
                     successCallback(data, key);
                 }).error(function (data, status, headers, config) {
                     var finalTime = new Date().getTime();
-                    errorCallback(timeOutCallback(data, currentTime, finalTime));
+                    errorCallback(timeOutCallback(data, timeOfExpiration, currentTime, finalTime));
                 });
             } else {
                 addRequestToQueue(key, {
@@ -812,6 +810,7 @@
                     url: url,
                     data: dataModel,
                     timeout: globalTimeOut,
+                    //errCallback: errorCallback,
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': currentUser.token
@@ -844,7 +843,7 @@
                 successCallback();
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
@@ -910,12 +909,20 @@
                 successCallback();
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
             _getDeviceVersionAsync();
+
+            var globalT;
+            //ONly for simulate TimeOut when Finishing Quizes
+            if (key == "usercourse") {
+                globalT = globalTimeOut;
+            } else {
+                globalT = globalTimeOut;
+            }
 
             addRequestToQueue(key, {
                 type: "httpRequest",
@@ -923,8 +930,9 @@
                     method: 'PUT',
                     url: url,
                     data: data,
-                    timeout: globalTimeOut,
-                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                    timeout: globalT,
+                    headers: {'Content-Type': 'application/json', 'Authorization': token}
+
                 }
             }, successCallback, errorCallback);
 
@@ -1326,7 +1334,7 @@
 
         };
 
-        var _getAsyncPostCounter = function (token, key, url, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncPostCounter = function (token, key, url, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             _getDeviceVersionAsync();
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
@@ -1339,11 +1347,17 @@
                 return returnValue;
             }
 
+            var timeOut = globalTimeOut;
+            if (timeOutFlag) {//Calling from login/register
+                timeOut = longTimeOut;
+            }
+
             _httpFactory({
                 method: 'GET',
                 url: url,
-                timeout: longTimeOut,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                timeout: timeOut,
+                headers: {'Content-Type': 'application/json', 'Authorization': token}
+
             }).success(function (data, status, headers, config) {
 
                 var obj = {
@@ -1356,7 +1370,7 @@
                 successCallback(data, key);
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
             });
         };
 
@@ -1426,6 +1440,9 @@
 
         }
 
+
+
+
         function addRequestToQueue(key, queue, successCallback, errorCallback) {
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
@@ -1448,12 +1465,23 @@
                     doRequestforWeb(queue.data.errCallback);
                 }
             }
+
         }
+
 
         function doRequestforWeb(errCallback) {
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
 
-            if (navigator.onLine && _httpFactory && requestQueue && requestQueue.length > 0) {
+            if (!_isQueueWorking) {
+                var systemTime = new Date().getTime();
+                var sleepTime = systemTime - _lastTimeQueuePaused
+                if (sleepTime >= _queuePausedTime) {
+                    _isQueueWorking = true;
+                    _currentTimeOutAttempt = 0;
+                }
+            }
+
+            if (navigator.onLine && _httpFactory && requestQueue && requestQueue.length > 0 && _isQueueWorking) {
                 var queue = requestQueue[0];
 
                 //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
@@ -1490,8 +1518,6 @@
                                     var isTimeout = status == -1; //(finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
                                     var obj;
 
-
-
                                     console.log("isTimeout:" + isTimeout);
                                     console.log("status:" + status);
                                     console.log("time lapsed:" + (finalTime - currentTime));
@@ -1505,6 +1531,13 @@
                                         };
 
                                     } else {
+
+                                        _currentTimeOutAttempt++;
+                                        if (_currentTimeOutAttempt >= _maxTimeOutAttempts) {
+                                            _lastTimeQueuePaused = new Date().getTime();
+                                            _isQueueWorking = false;
+                                        }
+
                                         obj = {
                                             messageerror: "Request Timeout",
                                             statusCode: 408
@@ -1603,8 +1636,17 @@
         function doRequestforCellphone(errCallback) {
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
 
+            if (!_isQueueWorking) {
+                var systemTime = new Date().getTime();
+                var sleepTime = systemTime - _lastTimeQueuePaused
+                if (sleepTime >= _queuePausedTime) {
+                    _isQueueWorking = true;
+                    _currentTimeOutAttempt = 0;
+                }
+            }
+
             _updateConnectionStatus(function () {
-                if (_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length > 0) {
+                if (_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length > 0 && _isQueueWorking) {
 
                     var queue = requestQueue[0];
 
@@ -1617,63 +1659,67 @@
 
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
-                                var currentTime = new Date().getTime();
-
-                               
+                                var currentTime = new Date().getTime();                               
                                     
                                 _httpFactory(queue.data)
-                                    .success(function (data, status, headers, config) {
+                                   .success(function (data, status, headers, config) {
 
-                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                                        requestQueue.shift();
+                                       requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                       requestQueue.shift();
 
-                                        if (queue.data.method == 'GET') {
-                                            if (queue.key) {
-                                                _setLocalStorageJsonItem(queue.key, response);
-                                            }
-                                        }
+                                       if (queue.data.method == 'GET') {
+                                           if (queue.key) {
+                                               _setLocalStorageJsonItem(queue.key, response);
+                                           }
+                                       }
 
-                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                       _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
 
-                                        if (requestQueue.length == 0 && _callback != null) {
-                                            _callback();
-                                            _callback = null;
-                                        }
+                                       if (requestQueue.length == 0 && _callback != null) {
+                                           _callback();
+                                           _callback = null;
+                                       }
 
-                                        doRequestforCellphone();
+                                       doRequestforCellphone();
 
-                                    }).error(function (data, status, header, config) {
+                                   }).error(function (data, status, header, config) {
 
 
-                                        var finalTime = new Date().getTime();
-                                        var isTimeout = (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
-                                        var obj;
+                                       var finalTime = new Date().getTime();
+                                       var isTimeout = (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
+                                       var obj;
 
-                                        console.log("isTimeout:" + isTimeout);
-                                        console.log("status:" + status);
-                                        console.log("time lapsed:" + (finalTime - currentTime));
+                                       console.log("isTimeout:" + isTimeout);
+                                       console.log("status:" + status);
+                                       console.log("time lapsed:" + (finalTime - currentTime));
 
-                                        if (!isTimeout) {
-                                            requestQueue[0].retryCount++;
-                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                            obj = {
-                                                messageerror: (data && data.messageerror) ? data.messageerror : "Undefined Server Error",
-                                                statusCode: (data && data.status) ? data.status : 500
-                                            };
+                                       if (!isTimeout) {
+                                           requestQueue[0].retryCount++;
+                                           _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                           obj = {
+                                               messageerror: (data && data.messageerror) ? data.messageerror : "Undefined Server Error",
+                                               statusCode: (data && data.status) ? data.status : 500
+                                           };
 
-                                        } else {
-                                            obj = {
-                                                messageerror: "Request Timeout",
-                                                statusCode: 408
-                                            };
-                                        }
+                                       } else {
+                                           _currentTimeOutAttempt++;
+                                           if (_currentTimeOutAttempt >= _maxTimeOutAttempts) {
+                                               _lastTimeQueuePaused = new Date().getTime();
+                                               _isQueueWorking = false;
+                                           }
 
-                                        if (errCallback) {
-                                            errCallback(obj);
-                                        }
+                                           obj = {
+                                               messageerror: "Request Timeout",
+                                               statusCode: 408
+                                           };
+                                       }
 
-                                        doRequestforCellphone();
-                                    });   
+                                       if (errCallback) {
+                                           errCallback(obj);
+                                       }
+
+                                       doRequestforCellphone();
+                                   });
                             }
                             else {
                                 requestQueue.shift();
