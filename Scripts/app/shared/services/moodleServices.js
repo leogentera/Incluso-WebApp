@@ -6,23 +6,21 @@
         var globalTimeOut = 60000;
         var longTimeOut = 120000;
 
-        function timeOutCallback(data, currentTime, finalTime) {
+        function timeOutCallback(data, timeOut, currentTime, finalTime) {
             var obj = {};
 
             if (data) {
                 if (data.messageerror) {
                     obj.messageerror = data.messageerror;
-                    obj.statusCode = status;
                 } else {
                     obj.messageerror = "Undefined Server Error";
-                    obj.statusCode = status;
                 }
             } else {
                 obj.messageerror = "Undefined Server Error";
                 obj.statusCode = 500;
             }
 
-            if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
+            if (finalTime - currentTime > timeOut && timeOut > 0) {
                 obj.statusCode = 408;
                 obj.messageerror = "Request Timeout";
             }
@@ -70,9 +68,9 @@
             _putAsyncData("usercourseaward", data, API_RESOURCE.format('usercourse/' + userId), successCallback, errorCallback);
         };
 
-        var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
-            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh);
+            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh, timeOutFlag);
         };
 
         var _getAsyncAvatarInfo = function (userId, token, successCallback, errorCallback, forceRefresh) {
@@ -101,15 +99,15 @@
         };
 
 
-        var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
+        var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh, timeOutFlag);
         };
 
-        var _getAsyncUserPostCounter = function (token, courseId, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncUserPostCounter = function (token, courseId, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             var key = "postcounter/" + courseId;
             var url = API_RESOURCE.format("postcounter/" + courseId);
 
-            _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh);
+            _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh, timeOutFlag);
         };
 
         var _getAsyncDiscussionPosts = function (token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
@@ -132,9 +130,9 @@
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             if (userId != -1) {
-                _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh);
+                _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, timeOutFlag);
             }
         };
 
@@ -218,9 +216,9 @@
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);
         };
 
-        var _getAsyncMultipleChallengeInfo = function (token, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("retoMultiplePartials", API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh);
-            _getAsyncData("retoMultipleCompleted", API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh);
+        var _getAsyncMultipleChallengeInfo = function (token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+            _getAsyncData("retoMultiplePartials", API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh, timeOutFlag);
+            _getAsyncData("retoMultipleCompleted", API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh, timeOutFlag);
         }
 
         var _putMultipleActivities = function (key, data, userCourseModel, url, successCallback, errorCallback) {
@@ -273,7 +271,7 @@
                 successCallback(data);
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
@@ -290,11 +288,16 @@
             }
         };
 
-        var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
 
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
             var currentTime = new Date().getTime();
+
+            var timeOut = globalTimeOut;
+            if (timeOutFlag) {//Calling from login/register
+                timeOut = longTimeOut;
+            }
 
             if (returnValue) {
                 _timeout(function () {
@@ -308,7 +311,7 @@
                         method: 'POST',
                         data: {"userid": userId, "activities": activitiesArray},
                         url: url,
-                        timeout: longTimeOut,
+                        timeout: timeOut,
                         headers: {'Content-Type': 'application/json', 'Authorization': token}
                     }).success(function (data, status, headers, config) {
 
@@ -345,7 +348,7 @@
                         successCallback();
                     }).error(function (data, status, headers, config) {
                         var finalTime = new Date().getTime();
-                        errorCallback(timeOutCallback(data, currentTime, finalTime));
+                        errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
                     });
                 }
             } else {
@@ -355,7 +358,7 @@
                         data: {
                             method: 'GET',
                             url: url,
-                            timeout: longTimeOut,
+                            timeout: timeOut,
                             headers: {'Content-Type': 'application/json', 'Authorization': token}
                         }
                     });
@@ -379,11 +382,16 @@
 
         };
 
-        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
             var currentTime = new Date().getTime();
             var timeOfExpiration;
+
+            var timeOut = globalTimeOut;
+            if (timeOutFlag) {//Calling from login/register
+                timeOut = longTimeOut;
+            }
 
             if (returnValue) {
                 _timeout(function () {
@@ -393,12 +401,6 @@
             }
             else if (forceRefresh) {
                 if (token) {
-
-                    if (key == "halloffame") {
-                        timeOfExpiration = globalTimeOut;
-                    } else {
-                        timeOfExpiration = longTimeOut;
-                    }
 
                     if (key.indexOf("Perfil") > -1) {
                         //timeOfExpiration = 100;
@@ -411,25 +413,27 @@
                     _httpFactory({
                         method: 'GET',
                         url: url,
-                        timeout: timeOfExpiration,
+                        timeout: timeOut,
                         headers: {'Content-Type': 'application/json', 'Authorization': token}
                     }).success(function (data, status, headers, config) {
                         _setLocalStorageJsonItem(key, data);
                         successCallback(data, key);
                     }).error(function (data, status, headers, config) {
                         var finalTime = new Date().getTime();
-                        errorCallback(timeOutCallback(data, currentTime, finalTime));
+                        errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
                     });
                 } else {
                     _httpFactory({
                         method: 'GET',
                         url: url,
+                        timeout: timeOut,
                         headers: {'Content-Type': 'application/json'}
                     }).success(function (data, status, headers, config) {
                         _setLocalStorageJsonItem(key, data);
                         successCallback(data, key);
                     }).error(function (data, status, headers, config) {
-                        errorCallback(data);
+                        //- errorCallback(data);
+                        errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
                     });
                 }
             }
@@ -489,7 +493,7 @@
 
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
 
         };
@@ -519,11 +523,11 @@
             }).error(function (data, status, headers, config) {
 
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
-        var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
+        var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             _getDeviceVersionAsync();
             var currentTime = new Date().getTime();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
@@ -535,10 +539,16 @@
                 return returnValue;
             }
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+
+            var timeOut = globalTimeOut;
+            if (timeOutFlag) {//Calling from login/register
+                timeOut = longTimeOut;
+            }
+
             _httpFactory({
                 method: 'GET',
                 url: url,
-                timeout: longTimeOut,
+                timeout: timeOut,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': currentUser.token
@@ -548,32 +558,8 @@
                 successCallback();
             }).error(function (data, status, headers, config) {
                 //errorCallback(data);
-
                 var finalTime = new Date().getTime();
-                var obj = {};
-
-                if (data) {
-                    if (data.messageerror) {
-                        obj.messageerror = data.messageerror;
-                        obj.statusCode = status;
-                    } else {
-                        obj.messageerror = "Undefined Server Error";
-                        obj.statusCode = status;
-                    }
-                } else {
-                    obj.messageerror = "Undefined Server Error";
-                    obj.statusCode = 500;
-                }
-
-                if (finalTime - currentTime > globalTimeOut && globalTimeOut > 0) {
-                    obj.statusCode = 408;
-                    obj.messageerror = "Request Timeout";
-                }
-
-                errorCallback(obj);
-
-
-
+                errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
             });
         };
 
@@ -613,7 +599,7 @@
                 //}
 
                 var finalTime = new Date().getTime();
-                errorCb(timeOutCallback(data, currentTime, finalTime));
+                errorCb(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
@@ -640,7 +626,7 @@
             }).error(function (data, status, headers, config) {
 
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
@@ -678,7 +664,7 @@
 
                 //-
                 var finalTime = new Date().getTime();
-                errorCb(timeOutCallback(data, currentTime, finalTime));
+                errorCb(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
                 //-
 
             });
@@ -697,6 +683,8 @@
                         method: 'POST',
                         url: url,
                         data: data,
+                        timeout: globalTimeOut,
+                        // errCallback: errorCallback,
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': currentUser.token
@@ -733,7 +721,7 @@
                     successCallback();
                 }).error(function (data, status, headers, config) {
                     var finalTime = new Date().getTime();
-                    errorCallback(timeOutCallback(data, currentTime, finalTime));
+                    errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
                 });
             }
         };
@@ -770,7 +758,7 @@
                     successCallback(data, key);
                 }).error(function (data, status, headers, config) {
                     var finalTime = new Date().getTime();
-                    errorCallback(timeOutCallback(data, currentTime, finalTime));
+                    errorCallback(timeOutCallback(data, timeOfExpiration, currentTime, finalTime));
                 });
             } else {
                 addRequestToQueue(key, {
@@ -811,6 +799,7 @@
                     url: url,
                     data: dataModel,
                     timeout: globalTimeOut,
+                    //errCallback: errorCallback,
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': currentUser.token
@@ -843,7 +832,7 @@
                 successCallback();
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
@@ -909,12 +898,20 @@
                 successCallback();
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
             });
         };
 
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
             _getDeviceVersionAsync();
+
+            var globalT;
+            //ONly for simulate TimeOut when Finishing Quizes
+            if (key == "usercourse") {
+                globalT = globalTimeOut;
+            } else {
+                globalT = globalTimeOut;
+            }
 
             addRequestToQueue(key, {
                 type: "httpRequest",
@@ -922,10 +919,10 @@
                     method: 'PUT',
                     url: url,
                     data: data,
-                    timeout: globalTimeOut,
+                    timeout: globalT,
                     headers: {'Content-Type': 'application/json', 'Authorization': token}
                 }
-            });
+            }, successCallback, errorCallback);
 
             _setLocalStorageJsonItem(key, userCourseModel);
             if (successCallback) {
@@ -1325,7 +1322,7 @@
 
         };
 
-        var _getAsyncPostCounter = function (token, key, url, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncPostCounter = function (token, key, url, successCallback, errorCallback, forceRefresh, timeOutFlag) {
             _getDeviceVersionAsync();
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
@@ -1338,10 +1335,15 @@
                 return returnValue;
             }
 
+            var timeOut = globalTimeOut;
+            if (timeOutFlag) {//Calling from login/register
+                timeOut = longTimeOut;
+            }
+
             _httpFactory({
                 method: 'GET',
                 url: url,
-                timeout: longTimeOut,
+                timeout: timeOut,
                 headers: {'Content-Type': 'application/json', 'Authorization': token}
             }).success(function (data, status, headers, config) {
 
@@ -1355,7 +1357,7 @@
                 successCallback(data, key);
             }).error(function (data, status, headers, config) {
                 var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, currentTime, finalTime));
+                errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
             });
         };
 
@@ -1425,7 +1427,7 @@
 
         }
 
-        function addRequestToQueue(key, queue) {
+        function addRequestToQueue2(key, queue, successCallback, errorCallback) {
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
             var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
@@ -1447,6 +1449,57 @@
                     doRequestforWeb(queue.data.errCallback);
                 }
             }
+        }
+
+        function addRequestToQueue(key, queue, successCallback, errorCallback) {
+            _forceUpdateConnectionStatus(function () {
+
+                _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
+                var requestQueue = [];
+                var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                if (cacheQueue instanceof Array) {
+                    requestQueue = cacheQueue;
+                }
+
+
+                if (_isDeviceOnline) {
+
+                    var currentTime = new Date().getTime();
+                    _httpFactory(queue.data)
+                        .success(function (data, status, headers, config) {
+                            if (successCallback) {
+                                successCallback();
+                            }
+                        }).error(function (data, status, headers, config) {
+                        var finalTime = new Date().getTime();
+                        if (errorCallback) {
+
+                            errorCallback(timeOutCallback(data, currentTime, finalTime));
+                        }
+                    });
+                }
+                else {
+
+                    queue.retryCount = 0;
+                    queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
+                    queue.key = key;
+                    requestQueue.push(queue);
+                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+
+
+                }
+
+                if (requestQueue.length == 1 || _queuePaused) {
+                    if (window.mobilecheck()) {
+                        doRequestforCellphone(queue.data.errCallback);
+                    }
+                    else {
+                        doRequestforWeb(queue.data.errCallback);
+                    }
+                }
+
+            }, function () { });
+
         }
 
 
@@ -1621,57 +1674,57 @@
 
                                 function finalExecution() {
                                     var currentTime = new Date().getTime();
-                                    _httpFactory(queue.data).success(function (response) {
-                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                                        requestQueue.shift();
+                                    _httpFactory(queue.data)
+                                        .success(function (response) {
+                                            requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                            requestQueue.shift();
 
-                                        if (queue.data.method == 'GET') {
-                                            if (queue.key) {
-                                                _setLocalStorageJsonItem(queue.key, response);
+                                            if (queue.data.method == 'GET') {
+                                                if (queue.key) {
+                                                    _setLocalStorageJsonItem(queue.key, response);
+                                                }
                                             }
-                                        }
 
-                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
 
-                                        if (requestQueue.length == 0 && _callback != null) {
-                                            _callback();
-                                            _callback = null;
-                                        }
+                                            if (requestQueue.length == 0 && _callback != null) {
+                                                _callback();
+                                                _callback = null;
+                                            }
 
-                                        doRequestforCellphone();
+                                            doRequestforCellphone();
 
-                                    }).error(function (data, status, header, config) {
+                                    })
+                                        .error(function (data, status, header, config) {
 
-                                        var finalTime = new Date().getTime();
-                                        var obj = {};
+                                            var finalTime = new Date().getTime();
+                                            var obj = {};
 
-                                        if (data) {
-                                            if (data.messageerror) {
-                                                obj.messageerror = data.messageerror;
-                                                obj.statusCode = status;
+                                            if (data) {
+                                                if (data.messageerror) {
+                                                    obj.messageerror = data.messageerror;
+                                                } else {
+                                                    obj.messageerror = "Undefined Server Error";
+                                                }
                                             } else {
                                                 obj.messageerror = "Undefined Server Error";
-                                                obj.statusCode = status;
+                                                obj.statusCode = 500;
                                             }
-                                        } else {
-                                            obj.messageerror = "Undefined Server Error";
-                                            obj.statusCode = 500;
-                                        }
 
-                                        if (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0) {
-                                            obj.statusCode = 408;
-                                            obj.messageerror = "Request Timeout";
+                                            if (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0) {
+                                                obj.statusCode = 408;
+                                                obj.messageerror = "Request Timeout";
 
-                                            if (errCallback) {
-                                                errCallback(obj);
+                                                if (errCallback) {
+                                                    errCallback(obj);
+                                                }
                                             }
-                                        }
 
-                                        if (_isDeviceOnline) {
-                                            requestQueue[0].retryCount++;
-                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                            doRequestforCellphone();
-                                        }
+                                            if (_isDeviceOnline) {
+                                                requestQueue[0].retryCount++;
+                                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                                doRequestforCellphone();
+                                            }
                                     });
                                 }
 

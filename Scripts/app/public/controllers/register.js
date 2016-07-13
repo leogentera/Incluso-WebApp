@@ -295,10 +295,11 @@ angular
                 drupalFactory.Services.GetDrupalContent(function () {
                     _loadedDrupalResources = true;
                     $scope.incLoadedItem(); //2
-                }, function () {
+                }, function (obj) {
                     _loadedDrupalResources = false;
                     _loadedDrupalResourcesWithErrors = true;
-                }, true);
+                    offlineCallback(obj);
+                }, true, true);
                 /*  */
 
                 $rootScope.OAUTH_ENABLED = false;
@@ -328,28 +329,19 @@ angular
 
                         moodleFactory.Services.GetAsyncForumDiscussions(85, data.token, function () {
                             $scope.incLoadedItem(); //5
-                        }, errorByTimeOut, true);
+                        }, errorByTimeOut, true, true);
 
                         moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
                             $scope.incLoadedItem(); //6
-                        }, errorByTimeOut, true);
+                        }, errorByTimeOut, true, true);
 
                         moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
                             $scope.incLoadedItem(); //7 y 8
-                        }, errorByTimeOut, true);
+                        }, errorByTimeOut, true, true);
 
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, quizesArray, data.token, function() {
                             $scope.incLoadedItem(); //9
-                        }, function(obj) {
-                            //-
-                            if (obj.statusCode == 408) {//Request Timeout
-                                $scope.$emit('HidePreloader');
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                            //-
-                        }, true);
+                        }, errorByTimeOut, true, true);
 
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         if (currentUser && currentUser.token) {
@@ -366,7 +358,7 @@ angular
                         localStorage.setItem("offlineConnection", "offline");
                         $location.path('/');
 
-                    }, true);
+                    }, true, true);
                     
                     IntervalFactory.StartUserNotificationWeeklyInterval();
 
@@ -381,20 +373,25 @@ angular
 
                         }, 1000);
 
-                }, errorByTimeOut, true);
+                }, errorByTimeOut, true, true);
             };
 
             function errorByTimeOut(obj) {
                 $scope.registerModel.modelState.isValid = false;
                 $scope.isRegistered = false;
                 localStorage.removeItem("Credentials");
-                localStorage.setItem("offlineConnection", "othercause");
                 $scope.$emit('HidePreloader');
 
                 $timeout(function () {
                     $scope.registerModel.modelState.errorMessages = ["Hubo en fallo en la red. Intenta más tarde."];
                     $scope.$emit('scrollTop');
                 }, 1000);
+
+                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                    localStorage.setItem("offlineConnection", "timeout");
+                } else {
+                    localStorage.setItem("offlineConnection", "othercause");
+                }
             }
 
             $scope.datePickerClick = function () {

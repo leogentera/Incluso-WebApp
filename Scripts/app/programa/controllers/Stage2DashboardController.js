@@ -188,7 +188,20 @@ angular
                 };
 
                 moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
-                }, function () {
+                }, function (obj) {
+                    //-
+                    $scope.$emit('HidePreloader');
+
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                        }, 1000);
+                    } else {//Another kind of Error happened
+                        $timeout(function () {
+                            $location.path('/Offline');
+                        }, 1000);
+                    }
+                    //-
                 });
 
             };
@@ -202,7 +215,20 @@ angular
                     $scope.updateStageFirstTime();
                 }
 
-                var challengeCompletedId = _closeChallenge($scope.idEtapa);
+                var challengeCompletedId = _closeChallenge($scope.idEtapa,
+                    function(obj) {//Error handler
+                        $scope.$emit('HidePreloader');
+
+                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                            $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                            }, 1000);
+                        } else {//Another kind of Error happened
+                            $timeout(function () {
+                                $location.path('/Offline');
+                            }, 1000);
+                        }
+                });
 
 
                 //Exclude initial and final challenges from showing modal robot
@@ -230,7 +256,19 @@ angular
 
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                _progressNotification();
+                _progressNotification(function(obj) {//Error handler
+                    $scope.$emit('HidePreloader');
+
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                        }, 1000);
+                    } else {//Another kind of Error happened
+                        $timeout(function () {
+                            $location.path('/Offline');
+                        }, 1000);
+                    }
+                });
                 
             }
 
@@ -268,7 +306,19 @@ angular
                     if (_compareSyncDeviceVersions()) {
                         var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
-                        logStartActivityAction(activityId, timeStamp);
+                        logStartActivityAction(activityId, timeStamp, function(obj) {//Error handler
+                            $scope.$emit('HidePreloader');
+
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                }, 1000);
+                            } else {//Another kind of Error happened
+                                $timeout(function () {
+                                    $location.path('/Offline');
+                                }, 1000);
+                            }
+                        });
 
                         if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
                             isQuiz = true;

@@ -113,7 +113,20 @@ angular
                     if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
 
-                        logStartActivityAction(activityId, timeStamp);
+                        logStartActivityAction(activityId, timeStamp,
+                            function(obj) {//Error handler
+                            $scope.$emit('HidePreloader');
+
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                }, 1000);
+                            } else {//Another kind of Error happened
+                                $timeout(function () {
+                                    $location.path('/Offline');
+                                }, 1000);
+                            }
+                        });
 
                         if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
                             isQuiz = true;
