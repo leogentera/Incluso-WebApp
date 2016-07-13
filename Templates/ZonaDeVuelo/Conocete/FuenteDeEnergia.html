@@ -119,33 +119,27 @@
                                 <div class="detail">
                                     <div>
                                         <div class="message">
-                                            <span ng-show="activity.status"
-                                                  ng-bind-html="activity.activityContent.labeltext"></span>
-                                            <span class="htmlContent" ng-show="activity.status"
-                                                  ng-bind-html="activity.activityContent.pagecontent"></span>
-                                            <span ng-click="updateStatus(activity.groupid)"
-                                                  ng-if="activity.activity_type == 'label' && !activity.status">Mostrar texto...</span>
-
+                                            <span ng-show="activity.status" ng-bind-html="activity.activityContent.labeltext"></span>
+                                            <span class="htmlContent" ng-show="activity.status" ng-bind-html="activity.activityContent.pagecontent"></span>
+                                            <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'label' && !activity.status">Mostrar texto...</span>
                                             <div ng-if="activity.activity_type == 'resource'" class="image-container">
-                                                <a href="{{::activity.activityContent.content[0].fileurl}}"
-                                                   target="blank"><img ng-click="updateStatus(activity.groupid)"
-                                                                       ng-src="{{activity.status && activity.activityContent.content[0].fileurl || 'assets/images/svg/img_placeholder-01.svg'}}"
-                                                                       class="image-element'"></a>
+                                                <a href="{{::activity.activityContent.content[0].fileurl}}" target="blank">
+                                                  <img ng-click="updateStatus(activity.groupid)" ng-src="{{activity.activityContent.content[0].fileurl}}" ng-show="activity.status" class="image-element'">
+                                                  <img ng-click="updateStatus(activity.groupid)" ng-src="assets/images/svg/img_placeholder-01.svg" ng-hide="activity.status" class="image-element'">
+                                                </a>
                                             </div>
-                                            <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'"
-                                               ng-click="updateStatus(activity.groupid)"
-                                               href={{::activity.activityContent.url}} target="_blank">{{::activity.activityContent.url}}</a>
+                                            <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" 
+                                                href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
                                             <section class="component ng-scope" ng-if="activity.activityintro == 'video'">
                                                 <div class="panel panel-video">
                                                     <div class="video-player">
                                                         <div class="stage">
-                                                            <a class="icon icon-play"
-                                                               ng-click="updateStatus(activity.groupid)"
-                                                               href={{::activity.activityContent.url}} target="_blank">
+                                                            <a class="icon icon-play" ng-click="updateStatus(activity.groupid)" href={{::activity.activityContent.url}} target="_blank">
                                                                 <span class="glyphicon glyphicon-play"></span>
                                                             </a>
                                                             <figure class="poster">
-                                                                <img ng-src="{{activity.status && activity.activityContent.thumbnail || 'assets/images/svg/img_placeholder-01.svg'}}" alt="video"/>
+                                                                <img ng-src="{{activity.activityContent.thumbnail}}" ng-show="activity.status"/>
+                                                                <img ng-src="assets/images/svg/img_placeholder-01.svg" ng-hide="activity.status"/>
                                                             </figure>
                                                         </div>
                                                     </div>
@@ -154,10 +148,10 @@
 
                                         </div>
                                         <div class="block popularity" ng-show="activity.activityContent.likes != 0">A
-                                            <span class="green">{{activity.activityContent.likes || 0}}</span> <span
-                                                    ng-hide="activity.activityContent.likes < 2">jóvenes</span><span
-                                                    ng-hide="activity.activityContent.likes >= 2">joven</span> le<span
-                                                    ng-hide="activity.activityContent.likes < 2">s</span> gusta esto
+                                            <span class="green">{{activity.activityContent.likes || 0}}</span>
+                                            <span ng-hide="activity.activityContent.likes < 2">jóvenes</span>
+                                            <span ng-hide="activity.activityContent.likes >= 2">joven</span> le
+                                            <span ng-hide="activity.activityContent.likes < 2">s</span> gusta esto
                                         </div>
                                     </div>
                                     <div>

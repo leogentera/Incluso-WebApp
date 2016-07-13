@@ -516,11 +516,11 @@ angular
                     });
                 });
 
-                if ($scope.userCredentialsModel.rememberCredentials) {
-                    _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
-                } else {
-                    localStorage.removeItem("Credentials");
-                }
+                //if ($scope.userCredentialsModel.rememberCredentials) {
+                //    _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
+                //} else {
+                localStorage.removeItem("Credentials");
+                //}
             }
 
             function FacebookLoginFailure(data) {
