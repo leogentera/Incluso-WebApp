@@ -1,4 +1,5 @@
 (function () {
+
     namespace('moodleFactory');
 
     moodleFactory.Services = (function () {
@@ -268,7 +269,7 @@
                 method: 'GET',
                 url: API_RESOURCE.format('date'),
                 timeout: globalTimeOut,
-                headers: {'Content-Type': 'application/json'}
+                headers: { 'Content-Type': 'application/json' }
             }).success(function (data) {
                 successCallback(data);
             }).error(function (data, status, headers, config) {
@@ -306,10 +307,10 @@
                 if (token) {
                     _httpFactory({
                         method: 'POST',
-                        data: {"userid": userId, "activities": activitiesArray},
+                        data: { "userid": userId, "activities": activitiesArray },
                         url: url,
                         timeout: longTimeOut,
-                        headers: {'Content-Type': 'application/json', 'Authorization': token}
+                        headers: { 'Content-Type': 'application/json', 'Authorization': token }
                     }).success(function (data, status, headers, config) {
 
                         var proc = setInterval(function () {//Get & save each activity object.
@@ -356,9 +357,9 @@
                             method: 'GET',
                             url: url,
                             timeout: longTimeOut,
-                            headers: {'Content-Type': 'application/json', 'Authorization': token}
+                            headers: { 'Content-Type': 'application/json', 'Authorization': token }
                         }
-                    });
+                    }, successCallback, errorCallback);
                 }
                 else {
                     addRequestToQueue(key, {
@@ -367,14 +368,14 @@
                             method: 'GET',
                             url: url,
                             timeout: longTimeOut,
-                            headers: {'Content-Type': 'application/json'}
+                            headers: { 'Content-Type': 'application/json' }
                         }
-                    });
+                    }, successCallback, errorCallback);
                 }
 
-                if (successCallback) {
-                    successCallback();
-                }
+                //if (successCallback) {
+                //    successCallback();
+                //}
             }
 
         };
@@ -412,7 +413,7 @@
                         method: 'GET',
                         url: url,
                         timeout: timeOfExpiration,
-                        headers: {'Content-Type': 'application/json', 'Authorization': token}
+                        headers: { 'Content-Type': 'application/json', 'Authorization': token }
                     }).success(function (data, status, headers, config) {
                         _setLocalStorageJsonItem(key, data);
                         successCallback(data, key);
@@ -424,7 +425,7 @@
                     _httpFactory({
                         method: 'GET',
                         url: url,
-                        headers: {'Content-Type': 'application/json'}
+                        headers: { 'Content-Type': 'application/json' }
                     }).success(function (data, status, headers, config) {
                         _setLocalStorageJsonItem(key, data);
                         successCallback(data, key);
@@ -440,7 +441,7 @@
                         data: {
                             method: 'GET',
                             url: url,
-                            headers: {'Content-Type': 'application/json', 'Authorization': token}
+                            headers: { 'Content-Type': 'application/json', 'Authorization': token }
                         }
                     });
                 }
@@ -450,7 +451,7 @@
                         data: {
                             method: 'GET',
                             url: url,
-                            headers: {'Content-Type': 'application/json'}
+                            headers: { 'Content-Type': 'application/json' }
                         }
                     });
                 }
@@ -479,7 +480,7 @@
                 method: 'GET',
                 url: url,
                 timeout: globalTimeOut,
-                headers: {'Content-Type': 'application/json', 'Authorization': token}
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
             }).success(function (data, status, headers, config) {
 
                 var posts = createPostsTree(data.posts);
@@ -511,7 +512,7 @@
                 method: 'GET',
                 url: url,
                 timeout: globalTimeOut,
-                headers: {'Content-Type': 'application/json', 'Authorization': token},
+                headers: { 'Content-Type': 'application/json', 'Authorization': token },
             }).success(function (data, status, headers, config) {
                 var forum = createForumTree(data);
                 _setLocalStorageJsonItem(key, forum);
@@ -655,7 +656,7 @@
                 url: url,
                 data: data,
                 timeout: globalTimeOut,
-                headers: {'Content-Type': 'application/json'}
+                headers: { 'Content-Type': 'application/json' }
             }).success(function (data, status, headers, config) {
 
                 if (key != null) {
@@ -817,7 +818,7 @@
                     }
                 }
             });
-            dataModel = (key == "avatarInfo" ? [dataModel] : (!otherDataModel ? dataModel : otherDataModel) );
+            dataModel = (key == "avatarInfo" ? [dataModel] : (!otherDataModel ? dataModel : otherDataModel));
             _setLocalStorageJsonItem(key, dataModel);
 
             if (successCallback) {
@@ -860,7 +861,7 @@
                     url: url,
                     timeout: globalTimeOut,
                     data: dataModel,
-                    headers: {'Content-Type': 'application/json', 'Authorization': token}
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
                 }
             });
 
@@ -881,7 +882,7 @@
                     url: API_RESOURCE.format('usercourse/' + userId),
                     data: dataModel,
                     timeout: globalTimeOut,
-                    headers: {'Content-Type': 'application/json', 'Authorization': currentUser.token}
+                    headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
                 }
             });
 
@@ -923,9 +924,9 @@
                     url: url,
                     data: data,
                     timeout: globalTimeOut,
-                    headers: {'Content-Type': 'application/json', 'Authorization': token}
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
                 }
-            });
+            }, successCallback, errorCallback);
 
             _setLocalStorageJsonItem(key, userCourseModel);
             if (successCallback) {
@@ -943,7 +944,7 @@
                     url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),
                     data: data,
                     timeout: globalTimeOut,
-                    headers: {'Content-Type': 'application/json', 'Authorization': token}
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
                 }
             });
             if (successCallback) {
@@ -1020,7 +1021,7 @@
                         var reply = forum["discussions"][i]["posts"][0].replies[j];
                         if (reply && reply.has_attachment == "1") {
                             reply["attachments"] = [];
-                            reply["attachments"].push({filename: reply.filename, fileurl: reply.fileurl, mimetype: reply.mimetype});
+                            reply["attachments"].push({ filename: reply.filename, fileurl: reply.fileurl, mimetype: reply.mimetype });
                         }
                         reply["replies"] = _.filter(posts, function (p) {
                             return p.post_parent == reply.post_id;
@@ -1082,7 +1083,7 @@
             if (user) {
                 user.stars = globalPointsAchieved;
             }
-            return {course: usercourse, user: user};
+            return { course: usercourse, user: user };
         }
 
         var createTree = function (activities) {
@@ -1315,7 +1316,7 @@
                 var currentStage = userCourse.stages[stageIndex];
                 if (currentStage.status == 0 && currentStage.sectionname != "General") {
                     var totalChallengesByStage = currentStage.challenges.length;
-                    var totalChallengesCompleted = _.where(currentStage.challenges, {status: 1}).length;
+                    var totalChallengesCompleted = _.where(currentStage.challenges, { status: 1 }).length;
                     if (totalChallengesByStage == totalChallengesCompleted) {
                         userCourse.stages[stageIndex].status = 1;
                     }
@@ -1342,7 +1343,7 @@
                 method: 'GET',
                 url: url,
                 timeout: longTimeOut,
-                headers: {'Content-Type': 'application/json', 'Authorization': token}
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
             }).success(function (data, status, headers, config) {
 
                 var obj = {
@@ -1368,8 +1369,8 @@
                     method: 'POST',
                     url: API_RESOURCE.format('geolocation'),
                     timeout: globalTimeOut,
-                    data: {moduleid: moduleId},
-                    headers: {'Content-Type': 'application/json', 'Authorization': currentUser.token}
+                    data: { moduleid: moduleId },
+                    headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
                 }
             });
         };
@@ -1379,8 +1380,8 @@
             _httpFactory({
                 method: 'PATCH',
                 url: API_RESOURCE.format("user/" + userId),
-                headers: {'Content-Type': 'application/json', 'Authorization': token},
-                data: {password: password}
+                headers: { 'Content-Type': 'application/json', 'Authorization': token },
+                data: { password: password }
             }).success(function (data) {
                 successCallback(data);
             }).error(function () {
@@ -1425,7 +1426,7 @@
 
         }
 
-        function addRequestToQueue(key, queue) {
+        function addRequestToQueue(key, queue, successCallback, errorCallback) {
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
             var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
@@ -1448,7 +1449,6 @@
                 }
             }
         }
-
 
         function doRequestforWeb(errCallback) {
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
@@ -1486,37 +1486,37 @@
                                     doRequestforWeb();
                                 }).error(function (data, status, headers, config) {
 
-                                var finalTime = new Date().getTime();
-                                var obj = {};
+                                    var finalTime = new Date().getTime();
+                                    var isTimeout = status == -1; //(finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
+                                    var obj;
 
-                                if (data) {
-                                    if (data.messageerror) {
-                                        obj.messageerror = data.messageerror;
-                                        obj.statusCode = status;
+
+
+                                    console.log("isTimeout:" + isTimeout);
+                                    console.log("status:" + status);
+                                    console.log("time lapsed:" + (finalTime - currentTime));
+
+                                    if (!isTimeout) {
+                                        requestQueue[0].retryCount++;
+                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                        obj = {
+                                            messageerror: (data && data.messageerror) ? data.messageerror : "Undefined Server Error",
+                                            statusCode: (data && data.status) ? data.status : 500
+                                        };
+
                                     } else {
-                                        obj.messageerror = "Undefined Server Error";
-                                        obj.statusCode = status;
+                                        obj = {
+                                            messageerror: "Request Timeout",
+                                            statusCode: 408
+                                        };
                                     }
-                                } else {
-                                    obj.messageerror = "Undefined Server Error";
-                                    obj.statusCode = 500;
-                                }
-
-                                if (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0) {
-                                    obj.statusCode = 408;
-                                    obj.messageerror = "Request Timeout";
 
                                     if (errCallback) {
                                         errCallback(obj);
                                     }
-                                }
 
-                                if (navigator.onLine) {
-                                    requestQueue[0].retryCount++;
-                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                                     doRequestforWeb();
-                                }
-                            });
+                                });
                         }
                         else {
 
@@ -1573,12 +1573,12 @@
                                         doRequestforWeb();
                                     }).error(function (response) {
 
-                                    if (navigator.onLine) {
-                                        requestQueue[0].retryCount++;
-                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                        doRequestforWeb();
-                                    }
-                                });
+                                        if (navigator.onLine) {
+                                            requestQueue[0].retryCount++;
+                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                            doRequestforWeb();
+                                        }
+                                    });
                             } else {
 
                                 requestQueue.shift();
@@ -1613,15 +1613,17 @@
 
                         if (queue.type === "httpRequest") {
 
-                            _queuePaused = false;
-
                             if (queue.retryCount < 5) {
+
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
+                                var currentTime = new Date().getTime();
 
-                                function finalExecution() {
-                                    var currentTime = new Date().getTime();
-                                    _httpFactory(queue.data).success(function (response) {
+                               
+                                    
+                                _httpFactory(queue.data)
+                                    .success(function (data, status, headers, config) {
+
                                         requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
                                         requestQueue.shift();
 
@@ -1642,52 +1644,41 @@
 
                                     }).error(function (data, status, header, config) {
 
+
                                         var finalTime = new Date().getTime();
-                                        var obj = {};
+                                        var isTimeout = (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
+                                        var obj;
 
-                                        if (data) {
-                                            if (data.messageerror) {
-                                                obj.messageerror = data.messageerror;
-                                                obj.statusCode = status;
-                                            } else {
-                                                obj.messageerror = "Undefined Server Error";
-                                                obj.statusCode = status;
-                                            }
-                                        } else {
-                                            obj.messageerror = "Undefined Server Error";
-                                            obj.statusCode = 500;
-                                        }
+                                        console.log("isTimeout:" + isTimeout);
+                                        console.log("status:" + status);
+                                        console.log("time lapsed:" + (finalTime - currentTime));
 
-                                        if (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0) {
-                                            obj.statusCode = 408;
-                                            obj.messageerror = "Request Timeout";
-
-                                            if (errCallback) {
-                                                errCallback(obj);
-                                            }
-                                        }
-
-                                        if (_isDeviceOnline) {
+                                        if (!isTimeout) {
                                             requestQueue[0].retryCount++;
                                             _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                            doRequestforCellphone();
-                                        }
-                                    });
-                                }
+                                            obj = {
+                                                messageerror: (data && data.messageerror) ? data.messageerror : "Undefined Server Error",
+                                                statusCode: (data && data.status) ? data.status : 500
+                                            };
 
-                                if (queue.data && queue.data.data && queue.data.data.hasfilecontent) {
-                                    encodeImageWithUri(queue.data.data.imageuri, queue.data.data.datatype, function (b64) {
-                                        console.log('imageencodedsuccessfully')
-                                        queue.data.data.filecontent = b64;
-                                        finalExecution();
-                                    });
-                                } else {
-                                    finalExecution();
-                                }
+                                        } else {
+                                            obj = {
+                                                messageerror: "Request Timeout",
+                                                statusCode: 408
+                                            };
+                                        }
+
+                                        if (errCallback) {
+                                            errCallback(obj);
+                                        }
+
+                                        doRequestforCellphone();
+                                    });   
                             }
                             else {
                                 requestQueue.shift();
                                 _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+
                                 if (requestQueue.length == 0 && _callback != null) {
                                     _callback();
                                     _callback = null;
@@ -1707,14 +1698,14 @@
                                 });
                                 postCurrentPosition();
                             };
-                            var getCurrentPositionErrorCallback = function(error) {
-                                
-                                 _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, { 
+                            var getCurrentPositionErrorCallback = function (error) {
+
+                                _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, {
                                     latitude: 0,
                                     longitude: 0
                                 });
                                 postCurrentPosition();
-                                
+
                             };
 
                             navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
@@ -1748,12 +1739,12 @@
                                             doRequestforCellphone();
                                         }).error(function (response) {
 
-                                        if (_isDeviceOnline) {
-                                            requestQueue[0].retryCount++;
-                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                            doRequestforCellphone();
-                                        }
-                                    });
+                                            if (_isDeviceOnline) {
+                                                requestQueue[0].retryCount++;
+                                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                                doRequestforCellphone();
+                                            }
+                                        });
                                 } else {
 
                                     requestQueue.shift();
@@ -1777,7 +1768,8 @@
                     _callback();
                     _callback = null;
                 }
-            }, function () {  console.log("OFFLINE !!");
+            }, function () {
+                console.log("OFFLINE !!");
             });
         }
 
