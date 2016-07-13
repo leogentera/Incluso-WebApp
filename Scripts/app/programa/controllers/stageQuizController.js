@@ -172,7 +172,7 @@ angular
                 var obj = [];
                 for (var i = 0; i < activityObject.questions.length; i++) {
                     if (activityObject.questions[i].questionType == "multichoice") {
-                        obj.push({"questionid": +activityObject.questions[i].id, "answers": []});
+                        obj.push({ "questionid": +activityObject.questions[i].id, "answers": [] });
                     }
                 }
 
@@ -863,6 +863,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
+
                         }, null, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
 
@@ -875,6 +876,7 @@ angular
                                     $location.path('/Offline');
                                 }, 1000);
                             }
+
                         });
 
                         activityModel.activityType = "Assign";
@@ -882,6 +884,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
+
                         }, null, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
 
@@ -894,6 +897,7 @@ angular
                                     $location.path('/Offline');
                                 }, 1000);
                             }
+
                         });
 
                     } else {
@@ -914,6 +918,7 @@ angular
                                     $location.path('/Offline');
                                 }, 1000);
                             }
+
                         });
                     }
 
@@ -1156,7 +1161,7 @@ angular
                 var index, b, i;
                 var numAnswered = 0;
                 var numQuestions = $scope.activityObject.questions.length;
-                
+
                 //Adaptation for the "Sueña" activity
                 if ($scope.activityname == "Mi sueño es:") {
                     $scope.activityname = "Sueña";
@@ -1435,13 +1440,13 @@ angular
             function addHeightEssay(elem) {
                 var containerWidth = angular.element("div.owl-wrapper-outer").width();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-                angular.element(".owl-wrapper-outer").css('height', containerHeight + 0.462*containerWidth + 'px');
+                angular.element(".owl-wrapper-outer").css('height', containerHeight + 0.462 * containerWidth + 'px');
             }
 
             function removeHeightEssay(elem) {
                 var containerWidth = angular.element("div.owl-wrapper-outer").width();
                 var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                angular.element("div.owl-wrapper-outer").css('height', containerHeight -  0.462*containerWidth);
+                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 0.462 * containerWidth);
             }
 
             //This function is activated from Template, with ESSAY type questions
@@ -1450,21 +1455,21 @@ angular
                 $scope.answers[index].push("");
             };
 
-            $scope.checkCharacter = function(event, ele, question, index) {
+            $scope.checkCharacter = function (event, ele, question, index) {
                 if (event.keyCode == 13) {
                     event.preventDefault();
                 }
             };
 
-            $scope.autoSize = function(ele, question, index) {
+            $scope.autoSize = function (ele, question, index) {
                 var elem = $("#" + ele + question + "-" + index);
                 autosize(elem);
 
-                elem.on('autosize:resized', function(){//This event fires when height changes
+                elem.on('autosize:resized', function () {//This event fires when height changes
                     var containerHeight = angular.element('div.owl-wrapper-outer');
                     var questionContainer = angular.element("#" + ele + question);
 
-                    containerHeight.height(questionContainer.height() + 0.27*$(window).width());
+                    containerHeight.height(questionContainer.height() + 0.27 * $(window).width());
                     questionContainer.css('height', 'auto');
                 });
             };
@@ -1607,6 +1612,6 @@ angular
                 }
             }
         };
-    } ]);
+    }]);
 
 
