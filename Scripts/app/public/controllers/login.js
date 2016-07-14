@@ -116,14 +116,12 @@ angular
                             /* para auto iniciar sesión en offline es necesario que se haya cargado por lo menos una vez toda la información */
                             if (localStorage.getItem("leaderboard") && localStorage.getItem("Perfil/" + $scope.currentUserModel.userId)) {
                                 $timeout(function () {
-                                    $scope.$emit('HidePreloader');
+                                    //$scope.$emit('HidePreloader');
                                     _loadedDrupalResources = true;
                                     $location.path('/ProgramaDashboard');
                                 }, 1);
                             } else {
-                                $timeout(function () {
-                                    $scope.$emit('HidePreloader');
-                                }, 1);
+                                offlineCallback();
                             }
                         });
                     }, 500);
