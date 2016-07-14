@@ -528,8 +528,7 @@ angular
                 $rootScope.loaderForLogin = false; //For Login Preloader
                 progressBar.set(0); //For Login Preloader
                 $scope.loaderRandom(); //For Login Preloader
-                localStorage.removeItem("Credentials");
-                $location.path('/'); //Return to login
+                localStorage.removeItem("CurrentUser");
 
                 $timeout(function () {
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
