@@ -457,7 +457,7 @@
                             url: url,
                             headers: { 'Content-Type': 'application/json', 'Authorization': token }
                         }
-                    });
+                    }, successCallback, errorCallback);
                 }
                 else {
                     addRequestToQueue(key, {
@@ -467,7 +467,7 @@
                             url: url,
                             headers: { 'Content-Type': 'application/json' }
                         }
-                    });
+                    }, successCallback, errorCallback);
                 }
 
                 if (successCallback) {
@@ -701,7 +701,7 @@
                             'Authorization': currentUser.token
                         }
                     }
-                });
+                }, successCallback, errorCallback);
 
                 _setLocalStorageJsonItem(key, data);
 
@@ -786,7 +786,7 @@
                             'Authorization': currentUser.token
                         }
                     }
-                });
+                }, successCallback, errorCallback);
 
                 dataModel = !otherDataModel ? dataModel : otherDataModel;
 
@@ -816,7 +816,7 @@
                         'Authorization': currentUser.token
                     }
                 }
-            });
+            }, successCallback, errorCallback);
             dataModel = (key == "avatarInfo" ? [dataModel] : (!otherDataModel ? dataModel : otherDataModel));
             _setLocalStorageJsonItem(key, dataModel);
 
@@ -862,7 +862,7 @@
                     data: dataModel,
                     headers: { 'Content-Type': 'application/json', 'Authorization': token }
                 }
-            });
+            }, successCallback, errorCallback);
 
             _setLocalStorageJsonItem(key, profile);
             if (successCallback) {
@@ -883,7 +883,7 @@
                     timeout: globalTimeOut,
                     headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
                 }
-            });
+            }, successCallback, errorCallback);
 
             if (successCallback) {
                 successCallback();
@@ -954,7 +954,8 @@
                     timeout: globalTimeOut,
                     headers: { 'Content-Type': 'application/json', 'Authorization': token }
                 }
-            });
+            }, successCallback, errorCallback);
+
             if (successCallback) {
                 successCallback();
             }
@@ -1459,10 +1460,10 @@
 
             if (requestQueue.length == 1 || _queuePaused) {
                 if (window.mobilecheck()) {
-                    doRequestforCellphone(queue.data.errCallback);
+                    doRequestforCellphone(errorCallback);
                 }
                 else {
-                    doRequestforWeb(queue.data.errCallback);
+                    doRequestforWeb(errorCallback);
                 }
             }
 
