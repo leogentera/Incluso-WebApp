@@ -218,26 +218,26 @@ angular
                         //Get the 'usercourse' object
                         moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback, null, true);
                     }, function () {
-                        
+
                         $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
                         $scope.course = JSON.parse(localStorage.getItem("course"));
-                        $scope.currentStage = getCurrentStage();                    
+                        $scope.currentStage = getCurrentStage();
                         _setLocalStorageItem("currentStage", $scope.currentStage);
 
                         var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         for(var lb = 0; lb < leaderboard.length; lb++) {
-                            
+
                             if (leaderboard[lb].userId === parseInt(currentUserID, 10)) {
                                 leaderboard[lb].stars = $scope.user.stars;
                             }
-                            
-                            getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function(niceImageUrl) { 
+
+                            getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function(niceImageUrl) {
                                 leaderboard[lb].profileimageurl = niceImageUrl;
                             });
                         }
 
                         $scope.course.leaderboard = leaderboard;
-                        
+
                         _pageLoaded = true;
                         $timeout(function () {
                             if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
