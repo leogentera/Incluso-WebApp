@@ -7,6 +7,7 @@ angular
         'ui.bootstrap.tpls',
         'inlcuso.shared.mainNavigation',
         'incluso.shared.offlineController',
+        'incluso.shared.timeOut',
         'incluso.home',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
         // one controller for all controllers in the module, and we would also need a variable to keep track of the modules:
@@ -704,6 +705,11 @@ angular
         $routeProvider.when('/Offline', {
             templateUrl: 'Templates/Shared/offline.html',
             controller: 'offlineController'
+        });
+
+        $routeProvider.when('/TimeOut', {
+            templateUrl: 'Templates/Shared/timeout.html',
+            controller: 'timeOutController'
         });
 
         $routeProvider.otherwise({

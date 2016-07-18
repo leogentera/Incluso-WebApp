@@ -39,52 +39,52 @@
     <!-- Test commit 2 -->
 </head>
 
-    <body ng-controller="homeCtrl" class="incluso-app ng-scope has-sidebar-left" ng-class="{'sidebar-left-active': sidebar, 'spinner-active-body': loading}">
-        <!-- preloader -->
-        <preloader-component></preloader-component>
+<body ng-controller="homeCtrl" class="incluso-app ng-scope has-sidebar-left" ng-class="{'sidebar-left-active': sidebar, 'spinner-active-body': loading}">
+<!-- preloader -->
+<preloader-component></preloader-component>
 
-        <!-- Main menu / sidebar -->
-        <menu-component ng-class="{'spinner-active': loading}"></menu-component>
-        
-        <!-- app wrapper -->
-        <div class="app" ng-class="{'spinner-active': loading}">
-            <a class="anchor-scroll" id="top"></a>
-            
-            <!-- toolbar for private views -->
-            <toolbar-component></toolbar-component>
-            
-            <!-- App Body -->
-            <div class="app-body" ng-click="sideToggle('outside')">
-                <div class="app-content">
-                    <ng-view></ng-view>
-                    
-                    <script type="text/ng-template" id="updateApp.html">
-                        <div class="modal-robot robot-lg user-help">
-                            <img src="assets/images/img-robot-lg.svg" alt="robot" />
-                            <div class="modal-header">
-                            </div>
-                            <div class="modal-body">
-                                <h3 class="subtitle centered">Actualizaci&oacute;n</h3>
-                                <p class="centered">Hemos detectado que no cuentas con la &uacute;ltima versi&oacute;n de Misi&oacute;n Incluso, por lo que la aplicaci&oacute;n ser&aacute; actualizada en este momento para que puedas continuar navegando.</p>
-                                <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="updateApp()">Continuar</a>
-                            </div>
-                        </div>
-                    </script>
-                    
-                    <script type="text/ng-template" id="ClosingCabinaChallengeModal.html">
-                        <div class="modal-robot robot-sm closing-stage-modal user-help" >
-                            <img src="assets/images/img-robot-sm.svg" alt="robot" />
-                            <div class="modal-header">
-                                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
-                                    <span class="icomoon icon-cross"></span>
-                                </a>
-                            </div>
-                            <div class="modal-body">
-                                <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
-                                <p class="txt-renglon centered">{{actualMessage.message}}</p>
-                            </div>
-                        </div>
-                    </script>
+<!-- Main menu / sidebar -->
+<menu-component ng-class="{'spinner-active': loading}"></menu-component>
+
+<!-- app wrapper -->
+<div class="app" ng-class="{'spinner-active': loading}">
+    <a class="anchor-scroll" id="top"></a>
+
+    <!-- toolbar for private views -->
+    <toolbar-component></toolbar-component>
+
+    <!-- App Body -->
+    <div class="app-body" ng-click="sideToggle('outside')">
+        <div class="app-content">
+            <ng-view></ng-view>
+
+            <script type="text/ng-template" id="updateApp.html">
+                <div class="modal-robot robot-lg user-help">
+                    <img src="assets/images/img-robot-lg.svg" alt="robot"/>
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="subtitle centered">Actualizaci&oacute;n</h3>
+                        <p class="centered">Hemos detectado que no cuentas con la &uacute;ltima versi&oacute;n de Misi&oacute;n Incluso, por lo que la aplicaci&oacute;n ser&aacute; actualizada en este momento para que puedas continuar navegando.</p>
+                        <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="updateApp()">Continuar</a>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="ClosingCabinaChallengeModal.html">
+                <div class="modal-robot robot-sm closing-stage-modal user-help">
+                    <img src="assets/images/img-robot-sm.svg" alt="robot"/>
+                    <div class="modal-header">
+                        <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                            <span class="icomoon icon-cross"></span>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                        <p class="txt-renglon centered">{{actualMessage.message}}</p>
+                    </div>
+                </div>
+            </script>
 
             <script type="text/ng-template" id="openingRequirementsModal.html">
                 <div class="modal-robot robot-lg user-help">
@@ -117,7 +117,7 @@
                         <div>
                             <p class="centered">Revisa tu conexión a Internet<br>y vuelve a intentar.</p>
                         </div>
-						<a role="button" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">Aceptar</a>
+                        <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">Aceptar</a>
                     </div>
                 </div>
             </script>
@@ -159,12 +159,40 @@
                                         No puedes seguir con tu aventura, porque actualmente no estás conectado a la internet.
                                     </p>
                                     <p class="txt-renglon centered">
-                                        Asegúrate de restablecer tu conexión para continuar con tu aventura, en Misión Incluso.                          
+                                        Asegúrate de restablecer tu conexión para continuar con tu aventura, en Misión Incluso.
                                     </p>
                                 </div>
-                                <a role="button" id="OfflineRedirect" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">CONTINUAR</a>                                                   
+                                <a role="button" id="OfflineRedirect" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">CONTINUAR</a>
                             </div>
-                              
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div tabindex="-1" id="timeoutModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-robot robot-lg closing-stage-modal user-help ng-scope">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <img src="assets/images/img-error-msg.svg" alt="...">
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center text-uppercase">Tu conexión está lenta</h3>
+                                <div>
+                                    <p class="txt-renglon centered">
+                                        Tu conexión está lenta.
+                                    </p>
+                                    <p class="txt-renglon centered">
+                                        Tu conexión está lenta.
+                                    </p>
+                                </div>
+                                <a role="button" id="timeOutRedirect" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">CONTINUAR</a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -192,7 +220,7 @@
     <img width="1" height="1" src="assets/images/challenges/stage-1/img-evaluacion-inicial.svg"/>
     <img width="1" height="1" src="assets/images/challenges/stage-1/img-evaluacion-final.svg"/>
     <img width="1" height="1" src="assets/images/challenges/stage-1/img-mis-suenos.svg"/>
-        <script src="Scripts/autosize.min.js"></script>
+    <script src="Scripts/autosize.min.js"></script>
     <img width="1" height="1" src="assets/images/img-robot-sm.svg"/>
     <img width="1" height="1" src="assets/images/img-robot-lg.svg"/>
 
@@ -232,6 +260,7 @@
 <script src="Scripts/app/shared/services/moodleServices.js"></script>
 <script src="Scripts/app/shared/controllers/navigation.js"></script>
 <script src="Scripts/app/shared/controllers/offlineController.js"></script>
+<script src="Scripts/app/shared/controllers/timeOutController.js"></script>
 <script src="Scripts/app/home/controllers/home.js"></script>
 <script src="Scripts/app/public/controllers/login.js"></script>
 <script src="Scripts/app/public/controllers/register.js"></script>
