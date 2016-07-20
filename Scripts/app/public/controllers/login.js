@@ -265,6 +265,10 @@ angular
                                         offlineCallback(obj);
                                     }, true, true);
 
+                                    moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function () {
+                                        $scope.incLoadedItem(); //10
+                                    }, function(){}, true);                                
+                                    
                                     $timeout(
                                         function () {
                                             //$scope.$emit('HidePreloader');
@@ -397,12 +401,13 @@ angular
                 //Run queue
                 moodleFactory.Services.ExecuteQueue(function () {
                     //Preparing for syncAll...
-
+                    
+                    var userId = _getItem("userId");
                     //succesful credentials
-                    moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
+                    moodleFactory.Services.GetAsyncUserCourse(userId, function () {
                         $scope.incLoadedItem(); //NOT FORCE REFRESH
 
-                        //Came back from redirecting...                        
+                        //Came back from redirecting...
                         var course = moodleFactory.Services.GetCacheJson("course");
                         moodleFactory.Services.GetAsyncUserPostCounter(userFacebook.token, course.courseid, function () {
                             $scope.incLoadedItem(); ////NOT FORCE REFRESH
@@ -435,6 +440,10 @@ angular
                             $scope.incLoadedItem(); //6
                         });
 
+                        moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function () {
+                            $scope.incLoadedItem(); //10
+                        }, function(){}, true);
+                        
                         $timeout(
                             function () {
                                 if (userFacebook.is_new == true) {

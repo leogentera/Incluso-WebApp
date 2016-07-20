@@ -269,8 +269,10 @@ angular
             //Callback function for UserCourse call
             function getDataAsyncCallback() {
                 //Load UserCourse structure into model
-                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                getUserNotifications($scope.usercourse.courseid);
+                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));                
+                getUserStarsByPoints();
+                getUserLikes();
+                getUserChat();
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function () {
                     $scope.course = JSON.parse(localStorage.getItem("course"));                    
@@ -422,18 +424,6 @@ angular
                 return currentStage;
             }
 
-            function getUserNotifications(courseid) {
-                var courseId = courseid;
-                var userId = _getItem("userId");
-
-                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {
-                    $scope.incLoadedItem(); //10
-                    getUserStarsByPoints();
-                    getUserLikes();
-                    getUserChat();
-                }, errorCallback, true);
-            }
-            
             function getUserStarsByPoints() {
 
                 moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token, function (dataStars) {

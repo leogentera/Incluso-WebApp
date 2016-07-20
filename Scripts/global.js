@@ -1400,7 +1400,7 @@ var fillProfilePoints = function (pointsToAdd) {
     moodleFactory.Services.PostProfilePoints('', JSON.stringify(objectProfile), function (data) {
         console.log(JSON.stringify(data));
     }, function (obj) {
-        console.log(JSON.stringify(data));
+        console.log(JSON.stringify(obj));
         //-
         if (obj.statusCode == 408) {//Request Timeout
             $scope.$emit('HidePreloader');
