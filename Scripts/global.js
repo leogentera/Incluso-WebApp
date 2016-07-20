@@ -1388,7 +1388,7 @@ var fillProfilePoints = function (pointsToAdd) {
 
         var profileObject = {
             "profileid": item.profileid,
-            "moduleid": item.moduleId,
+            "moduleid": item.moduleid,
             "score": item.score
         };
 
@@ -1414,35 +1414,6 @@ var fillProfilePoints = function (pointsToAdd) {
     localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
 
 }
-
-
-
-/*
-ESTA FUNCIÓN NO PARECE ESTARSE USANDO COMENTADA POR CARLOS EL 12/07/2016
-var getProfileCatalogs = function(){
-    
-=======
-
-var getProfileCatalogs = function () {
-
->>>>>>> d-v-1.2
-    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-    if (currentUser) {
-        moodleFactory.Services.GetProfileCatalogs(currentUser.token, function (data) { }, function (obj) {
-            //-
-            if (obj.statusCode == 408) {//Request Timeout
-                $scope.$emit('HidePreloader');
-                $timeout(function () {
-                    $location.path('/Offline');
-                }, 1000);
-            }
-            //-
-        }, true);
-    }
-};
-*/
-
-
 
 
 
