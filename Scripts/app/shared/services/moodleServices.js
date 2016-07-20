@@ -143,7 +143,7 @@
             }
         };
 
-        var _postBadgeToUser = function (userId, badgeModel, successCallback, errroCallback) {
+        var _postBadgeToUser = function (userId, badgeModel, successCallback, errorCallback) {
 
             _putAsyncData("badges", badgeModel, API_RESOURCE.format('badges/' + userId), successCallback, errorCallback);
         };
