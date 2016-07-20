@@ -184,7 +184,7 @@
         };
 
         var _postUserNotifications = function (data, successCallback, errorCallback, forceRefresh) {
-            _postAsyncData("", data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+            _postAsyncDataOffline(null, data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
         var _postAsyncForumPost = function (key, data, successCallback, errorCallback, addToQueue, updatePostCounter) {
@@ -192,7 +192,7 @@
         };
 
         var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
-            _postAsyncData(key, data, API_RESOURCE.format('reportabuse'), successCallback, errorCallback);
+            _postAsyncDataOffline(key, data, API_RESOURCE.format('reportabuse'), successCallback, errorCallback);
         };
 
         var _postProfilePoints = function (key, data, successCallback, errorCallback) {
@@ -594,7 +594,7 @@
                 if (key != null) {
                     _setLocalStorageJsonItem(key, data);
                 }
-
+                
                 if (typeof successCb === "function") {
                     successCb(key, data);
                 } else {
@@ -602,12 +602,6 @@
                 }
 
             }).error(function (data, status, headers, config) {
-
-                //if (typeof errorCb === "function") {
-                //    errorCb();
-                //} else {
-                //    errorCallback();
-                //}
 
                 var finalTime = new Date().getTime();
                 errorCb(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
@@ -665,18 +659,8 @@
                 }
 
             }).error(function (data, status, headers, config) {
-
-                //if (typeof errorCb === "function") {
-                //    errorCb();
-                //} else {
-                //    errorCallback();
-                //}
-
-                //-
                 var finalTime = new Date().getTime();
                 errorCb(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
-                //-
-
             });
         };
 
@@ -801,6 +785,7 @@
 
         var _postAsyncDataOffline = function (key, dataModel, url, successCallback, errorCallback, otherDataModel) {
             _getDeviceVersionAsync();
+            debugger;
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             addRequestToQueue(key, {
                 type: "httpRequest",
@@ -1291,6 +1276,7 @@
 
             }
         };
+        
         var _loadActivityStatus = function () {
             var usercourse = JSON.parse(localStorage.getItem("usercourse"));
             var activityStatus = {};
@@ -1437,13 +1423,10 @@
             else {
                 doRequestforWeb();
             }
-
         }
-
-
-
-
+        
         function addRequestToQueue(key, queue, successCallback, errorCallback) {
+            debugger;
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
             var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
@@ -1460,14 +1443,11 @@
             if (requestQueue.length == 1 || _queuePaused) {
                 if (window.mobilecheck()) {
                     doRequestforCellphone(errorCallback);
-                }
-                else {
+                }else {
                     doRequestforWeb(errorCallback);
                 }
             }
-
         }
-
 
         function doRequestforWeb(errCallback) {
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
@@ -1494,7 +1474,7 @@
                             //Reemplazamos el token con el token actual
                             queue.data.headers.Authorization = _currentUser.token;
                             var currentTime = new Date().getTime();
-
+                            debugger;
                             _httpFactory(queue.data)
                                 .success(function (data, status, headers, config) {
 
@@ -1513,7 +1493,7 @@
                                     }
                                     doRequestforWeb();
                                 }).error(function (data, status, headers, config) {
-
+                                    debugger;
                                     var finalTime = new Date().getTime();
                                     var isTimeout = status == -1; //(finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
                                     var obj;
@@ -1631,10 +1611,13 @@
 
         function doRequestforCellphone(errCallback) {
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-
+            console.log("queue working: " + _isQueueWorking);
             if (!_isQueueWorking) {
                 var systemTime = new Date().getTime();
-                var sleepTime = systemTime - _lastTimeQueuePaused
+                console.log("systemTime:" + systemTime);
+                console.log("lastTimeQueue paused: " + _lastTimeQuedePaused);
+                var sleepTime = systemTime - _lastTimeQueuePaused;
+                console.log("sleepTime:" +  sleepTime);
                 if (sleepTime >= _queuePausedTime) {
                     _isQueueWorking = true;
                     _currentTimeOutAttempt = 0;
@@ -1648,20 +1631,22 @@
 
                     //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
                     if (queue.userID == _currentUser.userId) {
-
+                        console.log("queueType: " + queue.type);
                         if (queue.type === "httpRequest") {
 
                             if (queue.retryCount < 5) {
 
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
-                                var currentTime = new Date().getTime();                               
-                                    
+                                var currentTime = new Date().getTime();
+
                                 _httpFactory(queue.data)
                                    .success(function (data, status, headers, config) {
-
+                                      
                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                       console.log(JSON.stringify(requestQueue));
                                        requestQueue.shift();
+                                       console.log("shift");
 
                                        if (queue.data.method == 'GET') {
                                            if (queue.key) {
@@ -1672,6 +1657,7 @@
                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
 
                                        if (requestQueue.length == 0 && _callback != null) {
+                                            console.log("Callback executed");
                                            _callback();
                                            _callback = null;
                                        }
@@ -1679,20 +1665,24 @@
                                        doRequestforCellphone();
 
                                    }).error(function (data, status, header, config) {
-
+                                        console.log("error callback httpRequest into queue");
+                                        if (data) {                                        
+                                            console.log(JSON.stringify(data));
+                                        }                                        
 
                                        var finalTime = new Date().getTime();
-                                       var isTimeout = (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
+                                       var isTimeout = (((finalTime - currentTime) > queue.data.timeout) && (queue.data.timeout > 0));
                                        var obj;
 
                                        if (!isTimeout) {
                                            requestQueue[0].retryCount++;
                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                           
                                            obj = {
                                                messageerror: (data && data.messageerror) ? data.messageerror : "Undefined Server Error",
                                                statusCode: (data && data.status) ? data.status : 500
                                            };
-
+                                    
                                        } else {
                                            _currentTimeOutAttempt++;
                                            if (_currentTimeOutAttempt >= _maxTimeOutAttempts) {
@@ -1707,6 +1697,7 @@
                                        }
 
                                        if (errCallback) {
+                                        
                                            //errCallback(obj);
                                        }
 
@@ -1788,6 +1779,7 @@
                                     requestQueue.shift();
                                     _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                                     if (requestQueue.length == 0 && _callback != null) {
+                                        console.log("last queue item and callback and geolocation");
                                         _callback();
                                         _callback = null;
                                     }
@@ -1800,11 +1792,18 @@
                     }
                 }
                 else if (!_isDeviceOnline) {
+                    console.log("Device offline");
                     _queuePaused = true;
-                }
-                else if (_callback != null) {
+                }else if (_callback != null) {
+                    console.log("queue callback");
                     _callback();
                     _callback = null;
+                }else{
+                    console.log("else queue");
+                    if (requestQueue) {
+                        console.log(requestQueue.length);
+                    }
+                    console.log("queue working" + _isQueueWorking);                    
                 }
             }, function () {
                 console.log("OFFLINE !!");
