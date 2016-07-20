@@ -320,7 +320,9 @@ angular
                 
                 moodleFactory.Services.PostGeolocation(-1);
 
-                moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
+                var userId = _getItem("userId");
+                
+                moodleFactory.Services.GetAsyncUserCourse(userId, function () {
                     $scope.incLoadedItem(); //3
                     var course = moodleFactory.Services.GetCacheJson("course");
                     moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
@@ -343,6 +345,10 @@ angular
                             $scope.incLoadedItem(); //9
                         }, errorByTimeOut, true, true);
 
+                        moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function () {
+                                        $scope.incLoadedItem(); //10
+                                    }, function(){}, true);
+                        
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         if (currentUser && currentUser.token) {
                             var objectToken = {
