@@ -1,7 +1,7 @@
 /* Controller to handle offline redirections */
 angular
-.module('incluso.shared.offlineController', ['GlobalAppConstants'])
-.controller('offlineController', [
+.module('incluso.shared.timeOut', ['GlobalAppConstants'])
+.controller('timeOutController', [
         '$q',
         '$scope',
         '$location',
@@ -20,7 +20,7 @@ angular
         $rootScope.pageName = "Sin conexión";
         $rootScope.navbarBlue = false;
         $rootScope.showToolbar = true;
-        $rootScope.showFooter = false;
+        $rootScope.showFooter = true;
         $rootScope.showFooterRocks = false;
         $rootScope.showStage1Footer = false;
         $rootScope.showStage2Footer = false;
@@ -28,20 +28,20 @@ angular
         $scope.setToolbar("/ProgramaDashboard","Misión Incluso");
         
         /* Shows offline message to prevent a user from using a section that requires connection */
-        $("#offlineModal").addClass("show");         
+        $("#timeoutModal").addClass("show");
         
         $scope.$on("$destroy", function() {
-            $("#offlineModal").removeClass("show");
+            $("#timeoutModal").removeClass("show");
         });
 
-        $('#OfflineRedirect').click(function () {
+        $('#timeOutRedirect').click(function () {
             $scope.navigateToDashboard();
         });
 
         $scope.navigateToDashboard = function () {
-            $("#offlineModal").removeClass("show");
+            $("#timeoutModal").removeClass("show");
             $location.path('/ProgramaDashboard');
         };
 
-        
+
     }]);

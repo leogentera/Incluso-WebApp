@@ -196,6 +196,7 @@ angular
                         $scope.currentUserModel.userId = data.id;
 
                         _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                        _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
                         _setId(data.id);
 
                         /* loads drupal resources (content) */
@@ -212,27 +213,6 @@ angular
                             _loadedDrupalResources = false;
                             _loadedDrupalResourcesWithErrors = true;
                             offlineCallback(obj);
-
-                            //-
-                            /*
-                            $scope.$emit('HidePreloader'); Comentado por carlos el 11 julio
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                progressBar.set(0); //For Login Preloader
-
-                                $timeout(function () {
-                                    $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                                    $scope.$emit('scrollTop');
-                                }, 1);
-                                //$scope.openModal();
-
-                            } else {//A different Error happened
-                                var errorMessage = [obj.messageerror];
-                                $scope.modelState.errorCode = obj.statusCode;
-                                $scope.modelState.errorMessages = errorMessage;
-                            }
-                            */
-                            //-
 
                         }, true, true);
 
@@ -301,20 +281,19 @@ angular
                             }, function (obj) {
                                 //-
                                 $scope.$emit('HidePreloader');
-                                console.log("objeto con mensaje de error");
-                                console.log(JSON.stringify(obj));
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    progressBar.set(0); //For Login Preloader
-                                }
+
                                  $timeout(function () {
-                                        $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                                        $scope.$emit('scrollTop');
+                                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                         $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                                     } else {
+                                         $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                                     }
+
+                                     $scope.$emit('scrollTop');
                                     }, 1);
                                 //-
                             });
                         });
-
-                        _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
 
                     }).error(function (data, status, headers, config) {
                         $scope.userCredentialsModel.modelState.isValid = false;
@@ -326,15 +305,15 @@ angular
                         }
 
                         $scope.$emit('HidePreloader');
+                        progressBar.set(0); //For Login Preloader
                         $scope.$emit('scrollTop');
-                        $scope.isLogginIn = false;
                         clearLocalStorage();
 
                         //-
                         var finalTime = new Date().getTime();
 
                         if (finalTime - currentTime > $rootScope.globalTimeOut && $rootScope.globalTimeOut > 0) {
-                            //$scope.openModal();
+                            errorMessage = "Se necesita estar conectado a Internet para continuar";
                         }
                         //-
 
@@ -401,26 +380,6 @@ angular
                         _loadedDrupalResources = false;
                         _loadedDrupalResourcesWithErrors = true;
                         offlineCallback(obj);
-
-                        //-
-                        $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            progressBar.set(0); //For Login Preloader
-
-                            $timeout(function () {
-                                $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                                $scope.$emit('scrollTop');
-                            }, 1);
-                            //$scope.openModal();
-
-                        } else {//A different Error happened
-                            var errorMessage = [obj.messageerror];
-                            $scope.modelState.errorCode = obj.statusCode;
-                            $scope.modelState.errorMessages = errorMessage;
-                        }
-                        //-
-
                     }, true);
                 /*******************  ******/
 
@@ -489,19 +448,19 @@ angular
                     }, function (obj) {
                         //-
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            progressBar.set(0); //For Login Preloader
-
-                        }
+                        progressBar.set(0); //For Login Preloader
                         
                         $timeout(function () {
                             $scope.userCredentialsModel.modelState.isValid = false;
-                            $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                            } else {//The error is not a time out
+                                $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                            }
+
                             $scope.$emit('scrollTop');
                         }, 1);
-                        
-                        
                         //-
                     });
                 });
@@ -529,21 +488,31 @@ angular
                 localStorage.removeItem("CurrentUser");
 
                 $timeout(function () {
-                    $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                        $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                    } else {
+                        $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                    }
+
                     $scope.$emit('scrollTop');
                     $scope.$emit('HidePreloader');
                 }, 1);
 
-                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                    localStorage.setItem("offlineConnection", "timeout");
-                }
             }
 
             if(!localStorage.getItem("offlineConnection")){
                 $scope.loadCredentials();                
             }else {
+                var Credentials = JSON.parse(localStorage.getItem("Credentials"));
+
                 $timeout(function () {
                     $scope.userCredentialsModel.modelState.isValid = false;
+
+                    if (Credentials) {//Show user credentials, to avoid writing again
+                        $scope.userCredentialsModel.username = Credentials.username;
+                        $scope.userCredentialsModel.password = Credentials.password;
+                    }
+
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
                     $scope.$emit('HidePreloader');
                     $scope.$emit('scrollTop');

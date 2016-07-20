@@ -143,7 +143,7 @@
             }
         };
 
-        var _postBadgeToUser = function (userId, badgeModel, successCallback, errroCallback) {
+        var _postBadgeToUser = function (userId, badgeModel, successCallback, errorCallback) {
 
             _putAsyncData("badges", badgeModel, API_RESOURCE.format('badges/' + userId), successCallback, errorCallback);
         };
@@ -415,8 +415,8 @@
                         //timeOfExpiration = 100;
                     }
 
-                    if (key == "userChat/") {
-                        //timeOfExpiration = 10;
+                    if (key == "leaderboard") {//Request for Leaderobard.
+                        //timeOut = 10;
                     }
 
                     _httpFactory({
@@ -642,7 +642,6 @@
         };
 
         var _postAsyncCatalogs = function (key, data, url, successCb, errorCb) {
-            console.log("Catalog!");
             _getDeviceVersionAsync();
 
             var currentTime = new Date().getTime();
@@ -1519,10 +1518,6 @@
                                     var isTimeout = status == -1; //(finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
                                     var obj;
 
-                                    console.log("isTimeout:" + isTimeout);
-                                    console.log("status:" + status);
-                                    console.log("time lapsed:" + (finalTime - currentTime));
-
                                     if (!isTimeout) {
                                         requestQueue[0].retryCount++;
                                         _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
@@ -1690,10 +1685,6 @@
                                        var isTimeout = (finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
                                        var obj;
 
-                                       console.log("isTimeout:" + isTimeout);
-                                       console.log("status:" + status);
-                                       console.log("time lapsed:" + (finalTime - currentTime));
-
                                        if (!isTimeout) {
                                            requestQueue[0].retryCount++;
                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
@@ -1716,7 +1707,7 @@
                                        }
 
                                        if (errCallback) {
-                                           errCallback(obj);
+                                           //errCallback(obj);
                                        }
 
                                        doRequestforCellphone();

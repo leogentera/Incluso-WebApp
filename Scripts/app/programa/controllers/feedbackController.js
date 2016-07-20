@@ -339,6 +339,8 @@ angular
             }
             
             function updateLocalStorageStars(data) {
+                $scope.profile.stars = Number($scope.profile.stars) + Number(data.stars);
+                _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"),$scope.profile);
                 var userStars = JSON.parse(localStorage.getItem("userStars"));
 
                 var localStorageStarsData = {
