@@ -214,6 +214,7 @@ angular
                             moodleFactory.Services.ExecuteQueue(function () {
                                 //Preparing for syncAll. Succesful credentials
                                 var userId = _getItem("userId");
+                                console.log("Before userCourse");
                                 moodleFactory.Services.GetAsyncUserCourse(userId, function () {
                                     console.log("GetAsyncUserCourse");
                                     $scope.incLoadedItem(); //3
@@ -365,6 +366,7 @@ angular
                         $scope.incLoadedItem(); //NOT FORCE REFRESH
 
                         var course = moodleFactory.Services.GetCacheJson("course");
+                        console.log("Before userCourse");
                         moodleFactory.Services.GetAsyncUserPostCounter(userFacebook.token, course.courseid, function () {
                             console.log("GetAsyncUserPostCounter");
                             $scope.incLoadedItem(); ////NOT FORCE REFRESH
@@ -402,7 +404,7 @@ angular
                                 }, loginErrorCallback, true);
                             }, loginErrorCallback, true);
                         }, loginErrorCallback, false);
-                    }, loginErrorCallback,true,false);
+                    }, loginErrorCallback,true,true);
                 });
                 localStorage.removeItem("Credentials");                
             }
