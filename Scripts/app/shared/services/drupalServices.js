@@ -159,7 +159,7 @@
             var currentTime = new Date().getTime();
 
             var timeOut = globalTimeOut;
-            if (timeOutFlag) {//Calling from login/register
+            if (isLoginRequest) {//Calling from login/register
                 timeOut = longTimeOut;
             }
 

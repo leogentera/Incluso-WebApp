@@ -267,7 +267,7 @@
             var currentTime = new Date().getTime();
 
             var timeOut = globalTimeOut;
-            if (timeOutFlag) {//Calling from login/register
+            if (isLoginRequest) {//Calling from login/register
                 timeOut = longTimeOut;
             }
 
@@ -330,7 +330,7 @@
             var timeOfExpiration;
 
             var timeOut = globalTimeOut;
-            if (timeOutFlag) {//Calling from login/register
+            if (isLoginRequest) {//Calling from login/register
                 timeOut = longTimeOut;
             }
 
@@ -487,7 +487,7 @@
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     
                 var timeOut = globalTimeOut;
-                if (timeOutFlag) {//Calling from login/register
+                if (isLoginRequest) {//Calling from login/register
                     timeOut = longTimeOut;
                 }
     
@@ -500,9 +500,11 @@
                         'Authorization': currentUser.token
                     }
                 }).success(function (data, status, headers, config) {
+                    console.log("success");
                     createTree(data);
                     successCallback();
                 }).error(function (data, status, headers, config) {
+                    console.log("error");
                     console.log(JSON.stringify(data));
                     errorCallback();
                 });
@@ -1269,7 +1271,7 @@
             }
 
             var timeOut = globalTimeOut;
-            if (timeOutFlag) {//Calling from login/register
+            if (isLoginRequest) {//Calling from login/register
                 timeOut = longTimeOut;
             }
 

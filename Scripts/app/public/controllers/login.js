@@ -250,7 +250,7 @@ angular
                                                                 if ($rootScope.loaderForLogin) {//To avoid redirect when there is a connection error.
                                                                     $location.path('/ProgramaDashboard');
                                                                 }
-                                                            }, 1000);
+                                                            }, 1);
                                                         },loginErrorCallback, true);
                                                     }, loginErrorCallback, true, true);
                                                 });
