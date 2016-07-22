@@ -257,7 +257,7 @@ angular
                                             }, loginErrorCallback, true);                                                    
                                         }, loginErrorCallback, true, true);
                                     }, loginErrorCallback, true, true);
-                                }, loginErrorCallback,true,false);
+                                }, loginErrorCallback,true,true);
                             });                            
                         }, function (obj) {
                             _loadedDrupalResources = false;

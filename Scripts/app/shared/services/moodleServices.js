@@ -263,7 +263,7 @@
         var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
 
             _getDeviceVersionAsync();
-            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+           // var returnValue = (forceRefresh) ? null : _getCacheJson(key);
             var currentTime = new Date().getTime();
 
             var timeOut = globalTimeOut;
@@ -271,11 +271,12 @@
                 timeOut = longTimeOut;
             }
 
-            if (returnValue) {
+            if (!forceRefresh) {
+                var returnValue =  _getCacheJson(key);
                 _timeout(function () {
                     successCallback(returnValue, key)
                 }, 1000);
-                return returnValue;
+                //return returnValue;
             }else if (forceRefresh && token) {
                 _httpFactory({
                     method: 'POST',
@@ -316,35 +317,10 @@
                         }
                     }, 50);
                     successCallback();
-                }).error(function (data, status, headers, config) {
-                    var finalTime = new Date().getTime();
-                    errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
-                });
+                }).error(errorCallback);
             } else {
-                if (token) {
-                    addRequestToQueue(key, {
-                        type: "httpRequest",
-                        data: {
-                            method: 'GET',
-                            url: url,
-                            timeout: timeOut,
-                            headers: {'Content-Type': 'application/json', 'Authorization': token}
-
-                        }
-                    }, successCallback, errorCallback);
-                }else {
-                    addRequestToQueue(key, {
-                        type: "httpRequest",
-                        data: {
-                            method: 'GET',
-                            url: url,
-                            timeout: longTimeOut,
-                            headers: { 'Content-Type': 'application/json' }
-                        }
-                    }, successCallback, errorCallback);
-                }
+               errorCallback();
             }
-
         };
 
         var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
