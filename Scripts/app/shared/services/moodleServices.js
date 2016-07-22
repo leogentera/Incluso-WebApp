@@ -12,6 +12,7 @@
         var _currentTimeOutAttempt = 0;
         var _lastTimeQueuePaused = new Date().getTime();
         var _queuePausedTime = 600000; //miliseconds
+        var _maxTimeOut = 300000;
 
         function timeOutCallback(data, timeOut, currentTime, finalTime) {
             console.log("data");
@@ -1392,6 +1393,9 @@
             queue.retryCount = 0;
             queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;
+            if (queue.timeout) {
+                queue.timeout = _maxTimeOut;
+            }
             requestQueue.push(queue);
             _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
 
