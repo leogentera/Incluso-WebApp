@@ -780,7 +780,6 @@ var errorCallbackNoScope = function (obj) {
 
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
-    console.log("GetActivityByActivityIDentifier");
     var matchingActivity = null;
     var breakAll = false;
     var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
