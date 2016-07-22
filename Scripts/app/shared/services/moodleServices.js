@@ -499,9 +499,8 @@
                     createTree(data);
                     successCallback();
                 }).error(function (data, status, headers, config) {
-                    //errorCallback(data);
-                    var finalTime = new Date().getTime();
-                    errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
+                    console.log(JSON.stringify(data));
+                    errorCallback();
                 });
             }
         };

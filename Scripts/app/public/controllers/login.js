@@ -426,11 +426,10 @@ angular
                 progressBar.set(0); //For Login Preloader
                 $scope.loaderRandom(); //For Login Preloader
                 localStorage.removeItem("CurrentUser");
-
+                $scope.$emit('HidePreloader');
                 $timeout(function () {                                            
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
                     $scope.$emit('scrollTop');
-                    $scope.$emit('HidePreloader');
                 }, 1);
 
             }
