@@ -56,9 +56,9 @@
             _putAsyncData("usercourseaward", data, API_RESOURCE.format('usercourse/' + userId), successCallback, errorCallback);
         };
 
-        var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh, isLoginRequest) {
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
-            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh, timeOutFlag);
+            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh, isLoginRequest);
         };
 
         var _getAsyncAvatarInfo = function (userId, token, successCallback, errorCallback, forceRefresh) {
@@ -87,15 +87,15 @@
         };
 
 
-        var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
-            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh, timeOutFlag);
+        var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh, isLoginRequest) {
+            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh, isLoginRequest);
         };
 
-        var _getAsyncUserPostCounter = function (token, courseId, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        var _getAsyncUserPostCounter = function (token, courseId, successCallback, errorCallback, forceRefresh, isLoginRequest) {
             var key = "postcounter/" + courseId;
             var url = API_RESOURCE.format("postcounter/" + courseId);
 
-            _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh, timeOutFlag);
+            _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh, isLoginRequest);
         };
 
         var _getAsyncDiscussionPosts = function (token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
@@ -118,9 +118,9 @@
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh, isLoginRequest) {
             if (userId != -1) {
-                _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, timeOutFlag);
+                _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, isLoginRequest);
             }
         };
 
@@ -204,9 +204,9 @@
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);
         };
 
-        var _getAsyncMultipleChallengeInfo = function (token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
-            _getAsyncData("retoMultiplePartials", API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh, timeOutFlag);
-            _getAsyncData("retoMultipleCompleted", API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh, timeOutFlag);
+        var _getAsyncMultipleChallengeInfo = function (token, successCallback, errorCallback, forceRefresh, isLoginRequest) {
+            _getAsyncData("retoMultiplePartials", API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh, isLoginRequest);
+            _getAsyncData("retoMultipleCompleted", API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh, isLoginRequest);
         }
 
         var _putMultipleActivities = function (key, data, userCourseModel, url, successCallback, errorCallback) {
@@ -260,7 +260,7 @@
             }
         };
 
-        var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, isLoginRequest) {
 
             _getDeviceVersionAsync();
            // var returnValue = (forceRefresh) ? null : _getCacheJson(key);
@@ -323,7 +323,7 @@
             }
         };
 
-        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh, isLoginRequest) {
             _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
             var currentTime = new Date().getTime();
@@ -376,7 +376,11 @@
                         successCallback(data, key);
                     }).error(function (data, status, headers, config) {
                         var finalTime = new Date().getTime();
-                        errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
+                        if (isLoginRequest) {
+                            errorCallback();
+                        }else{
+                            errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
+                        }
                     });
                 }
             }
@@ -470,7 +474,7 @@
             });
         };
 
-        var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh, isLoginRequest) {
             _getDeviceVersionAsync();
             var currentTime = new Date().getTime();
 
@@ -1251,7 +1255,7 @@
 
         };
 
-        var _getAsyncPostCounter = function (token, key, url, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        var _getAsyncPostCounter = function (token, key, url, successCallback, errorCallback, forceRefresh, isLoginRequest) {
             _getDeviceVersionAsync();
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
@@ -1285,9 +1289,8 @@
                 _calculateForumExtraPoints(obj);
                 _setLocalStorageJsonItem(key, obj);
                 successCallback(data, key);
-            }).error(function (data, status, headers, config) {
-                var finalTime = new Date().getTime();
-                errorCallback(timeOutCallback(data, timeOut, currentTime, finalTime));
+            }).error(function(data, status, headers, config) {
+                errorCallback();
             });
         };
 

@@ -142,12 +142,12 @@
             }
         };
 
-        var _getDrupalContent = function ( successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        var _getDrupalContent = function ( successCallback, errorCallback, forceRefresh, isLoginRequest) {
 
-            _getAsyncDataDrupal(DRUPAL_CONTENT_RESOURCE, successCallback, errorCallback, forceRefresh, timeOutFlag);
+            _getAsyncDataDrupal(DRUPAL_CONTENT_RESOURCE, successCallback, errorCallback, forceRefresh, isLoginRequest);
         };
         
-        var _getAsyncDataDrupal = function (url, successCallback, errorCallback, forceRefresh, timeOutFlag) {            
+        var _getAsyncDataDrupal = function (url, successCallback, errorCallback, forceRefresh, isLoginRequest) {            
 
             if (!forceRefresh) {
                 var returnValue = _getCacheJson(key);
