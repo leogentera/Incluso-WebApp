@@ -588,5 +588,5 @@ angular
        $scope.cancel = function () {
            $scope.$emit('ShowPreloader');
            $modalInstance.dismiss('cancel');
-       }
+       };
    });
