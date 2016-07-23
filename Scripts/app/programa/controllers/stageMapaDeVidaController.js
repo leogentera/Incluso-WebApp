@@ -465,22 +465,15 @@ angular
                                                             });
                                                         }, 500);
                                                     }, 500);
-                                                },
-                                                function (obj) {//Error
+                                                },function () {//Error
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
                                                         $scope.showSharedAlbum = false;
                                                         $scope.$emit('HidePreloader');
-
-                                                        if (obj.statusCode == 408) {//Request Timeout
-                                                            $scope.openModal();
-                                                        } else {//A different Error happened
-                                                            $location.path('/ZonaDeNavegacion/Dashboard/2/4');
-                                                        }
-
-                                                    }, 1000);
-                                                }, (!_isDeviceOnline)
+                                                        $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+                                                    }, 500);
+                                                }, true
                                             );
                                         }
 

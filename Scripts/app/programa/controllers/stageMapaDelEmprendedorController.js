@@ -411,15 +411,9 @@ angular
                                                             localStorage.setItem("currentDiscussionIds", prevCurrentDiscussionIds);
                                                         }
 
-                                                        if (obj.statusCode == 408) {//Request Timeout
-                                                            $scope.openModal();
-
-                                                        } else {//A different Error happened
-                                                            $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
-                                                        }
-
-                                                    }, 1000);
-                                                }, (!_isDeviceOnline)
+                                                        $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                                    }, 500);
+                                                }, true
                                             );
                                         }
 
