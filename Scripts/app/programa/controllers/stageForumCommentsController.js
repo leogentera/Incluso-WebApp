@@ -449,7 +449,7 @@ angular
                                 }
                                 //-
 
-                            }, null, false);
+                            }, null, true);
 
                     }, offlineCallback);
 
