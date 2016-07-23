@@ -91,11 +91,20 @@ angular
                 switch(type){
                 case 'All':
                     return !($scope.notificationsQuantity >= $scope.notifications.length);
-                case 'Read':                    
-                    return !($scope.notificationsQuantityRead >= _.where($scope.notifications, {seen_date: !null}).length);
                     break;
-                default :
-                    return !($scope.notificationsQuantityUnread >= _.where($scope.notifications, {seen_date: null }).length);
+                case 'Read':
+                    var qtyNotifsRead = _.filter($scope.notifications, function(notif) {
+                        return notif.seen_date != null;
+                    });
+                    console.log("Read " + qtyNotifsRead.length);
+                    return !($scope.notificationsQuantityRead >= qtyNotifsRead.length);
+                    break;
+                default :                    
+                    var qtyNotifsUnread = _.filter($scope.notifications, function(notif) {
+                        return notif.seen_date== null;
+                    });
+                    console.log("Unread" + qtyNotifsUnread.length);
+                    return !($scope.notificationsQuantityUnread >= qtyNotifsUnread.length);
                     break;
                 }
             };
@@ -123,14 +132,15 @@ angular
                 var userId = localStorage.getItem('userId');                
                 
                 var seen_date_now = new Date();
-                for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){
-                    if (userNotifications[indexNotification].notificationid == notificationId) {
-                        userNotifications[indexNotification].seen_date = seen_date_now;
+                for(var i = 0; i < userNotifications.length; i ++){
+                    if ((userNotifications[i].notificationid == notificationId && usernotificationId == "-1")
+                        || (userNotifications[i].notificationid == notificationId && userNotifications[i].usernotificationid == usernotificationId)) {
+                        userNotifications[i].seen_date = seen_date_now;
                     }
                 }
                 
                 _setLocalStorageJsonItem("notifications", userNotifications);
-                _readNotification(userId,notificationId, usernotificationId);
+                _readNotification(userId, notificationId, usernotificationId);
                 $scope.navigateTo('/AlertsDetail/' + notificationId + '/' + usernotificationId , 'null');
             
             };
@@ -146,22 +156,15 @@ angular
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function(){
                         if (usernotificationId != "-1") {
                             cordova.exec(function () {
-
                                 }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
                         }
                     }, function (obj) {
                     $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
                         $timeout(function () {
                             $location.path('/Offline'); //This behavior could change
                         }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                },true);
+                    },true
+                );
             };
         }
 ]);
