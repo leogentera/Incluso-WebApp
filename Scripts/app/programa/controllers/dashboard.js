@@ -46,7 +46,7 @@ angular
                 }
             }, 1000);
 
-            if (!_getItem("userId")) {
+            if (!_getItem("userId") || !_getItem("CurrentUser")) {
                 $location.path('/');
                 return "";
             }
@@ -75,7 +75,7 @@ angular
                 saveLocalImages(imageProf);
             };
             
-            if ($scope.user.haspicture != "1") {
+            if (window.mobilecheck() && $scope.user.haspicture != "1") {
                 $location.path('/Tutorial');
             }
 
