@@ -450,31 +450,11 @@ angular
                         }
                         _endActivity(parentActivity, function(){}, null, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
                         });
                         parentActivity.status = 1;
                         if (parentActivity.activities) {
                           updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj) {//Error handler
                               $scope.$emit('HidePreloader');
-
-                              if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                  $timeout(function () {
-                                      $location.path('/Offline'); //This behavior could change
-                                  }, 1000);
-                              } else {//Another kind of Error happened
-                                  $timeout(function () {
-                                      $location.path('/Offline');
-                                  }, 1000);
-                              }
                           });
                         }
                       }
@@ -483,16 +463,6 @@ angular
                      parentActivity.onlymodifieddate=true;
                      _endActivity(parentActivity, function(){}, null, function(obj) {//Error handler
                          $scope.$emit('HidePreloader');
-
-                         if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                             $timeout(function () {
-                                 $location.path('/Offline'); //This behavior could change
-                             }, 1000);
-                         } else {//Another kind of Error happened
-                             $timeout(function () {
-                                 $location.path('/Offline');
-                             }, 1000);
-                         }
                      });
 
                     if (request.activities.length > 0) {
@@ -567,19 +537,7 @@ angular
                       checkActivitiesPosted();
                     }, function(obj){
                       finishedPosting();
-                        //-
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
                     });
                   });
                 }else{
@@ -587,19 +545,7 @@ angular
                     checkActivitiesPosted();
                   }, function(obj){
                     finishedPosting();
-                      //-
                       $scope.$emit('HidePreloader');
-
-                      if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                          $timeout(function () {
-                              $location.path('/Offline'); //This behavior could change
-                          }, 1000);
-                      } else {//Another kind of Error happened
-                          $timeout(function () {
-                              $location.path('/Offline');
-                          }, 1000);
-                      }
-                      //-
                   });
                 }
               });              
@@ -607,19 +553,7 @@ angular
 
             $scope.saveUser = function () {
                 moodleFactory.Services.PutAsyncProfile($scope.user.id, $scope.user, function() {}, function(obj) {
-                    //-
                     $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                    //-
                 });
             };
                 

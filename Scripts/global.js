@@ -1129,9 +1129,6 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
         _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile)
         _setLocalStorageJsonItem("CurrentUser", currentUser)
 
-
-
-
     }
 }
 

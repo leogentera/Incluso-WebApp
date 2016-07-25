@@ -87,19 +87,7 @@ angular
                                     $scope.multiplicaTuDineroActivity = data;
                                     assignCourseModuleId(true, data);
                                 }, function(obj) {
-                                    //-
                                     $scope.$emit('HidePreloader');
-
-                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
-                                    } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
-                                    }
-                                    //-
                                 })
                             }
                         }
@@ -268,47 +256,15 @@ angular
                         }
                         _endActivity(parentActivity, function () {}, null, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
                         });
                         moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (obj) {
-                            //-
                             $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                            //-
                         });
                         
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                     }
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj) {//Error handler
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
                     });
                 }
 
@@ -399,16 +355,6 @@ angular
                     }, 1000);
                 }, null, function(obj) {//Error handler
                     $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
                 });
             };
 

@@ -1362,7 +1362,7 @@
         }
         
         function addRequestToQueue(key, queue, successCallback, errorCallback) {
-            debugger;
+            
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
             var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
@@ -1376,16 +1376,62 @@
             if (queue.timeout) {
                 queue.timeout = _maxTimeOut;
             }
-            requestQueue.push(queue);
-            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+            
+            _updateConnectionStatus(function () {
+                
+                console.log("DeviceOnline callback");
+                if(_isDeviceOnline){
+                    console.log("device online into updateConnectionStatusOnlineCallback");
+                    queue.data.headers.Authorization = _currentUser.token;
+                    _httpFactory(queue.data)
+                        .success(function(data){
+                            console.log("request successful");
+                            if (queue.data.method == 'GET') {
+                                if (queue.key) {
+                                    _setLocalStorageJsonItem(queue.key, data);
+                                }
+                            }
+                            
+                            successCallback();
+                        }).error(function(data){
+                            var finalTime = new Date().getTime();
+                            var isTimeout = (((finalTime - currentTime) > queue.data.timeout) && (queue.data.timeout > 0));
+                            var obj;
 
-            if (requestQueue.length == 1 || _queuePaused) {
-                if (window.mobilecheck()) {
-                    doRequestforCellphone(errorCallback);
-                }else {
-                    doRequestforWeb(errorCallback);
+                            if (!isTimeout) {
+                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);                                           
+                                obj = {
+                                    messageerror: (data && data.messageerror) ? data.messageerror : "Undefined Server Error",
+                                    statusCode: (data && data.status) ? data.status : 500
+                                };
+                            } else {
+                                 obj = {
+                                    messageerror: "Request Timeout",
+                                    statusCode: 408
+                                };
+                            }
+                            
+                            if (errCallback) {
+                                errCallback(obj);
+                            }
+                        });
+                }else{
+                    console.log("device offline into updateConnectionStatusOnlineCallback");
+                        requestQueue.push(queue);
+                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+            
+                        if (requestQueue.length == 1 || _queuePaused) {
+                            if (window.mobilecheck()) {
+                                doRequestforCellphone(errorCallback);
+                            }else {
+                                doRequestforWeb(errorCallback);
+                            }
+                        }
                 }
-            }
+            },function(){
+                console.log("updateConnectionStatusOfflineCallback");    
+                });
+          
         }
 
         function doRequestforWeb(errCallback) {
@@ -1589,7 +1635,7 @@
 
                                        if (queue.data.method == 'GET') {
                                            if (queue.key) {
-                                               _setLocalStorageJsonItem(queue.key, response);
+                                               _setLocalStorageJsonItem(queue.key, data);
                                            }
                                        }
 
@@ -1605,42 +1651,7 @@
 
                                    }).error(function (data, status, header, config) {
                                         console.log("error callback httpRequest into queue");
-                                        if (data) {                                        
-                                            console.log(JSON.stringify(data));
-                                        }                                        
-
-                                       var finalTime = new Date().getTime();
-                                       var isTimeout = (((finalTime - currentTime) > queue.data.timeout) && (queue.data.timeout > 0));
-                                       var obj;
-
-                                       if (!isTimeout) {
-                                           requestQueue[0].retryCount++;
-                                           _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                           
-                                           obj = {
-                                               messageerror: (data && data.messageerror) ? data.messageerror : "Undefined Server Error",
-                                               statusCode: (data && data.status) ? data.status : 500
-                                           };
-                                    
-                                       } else {
-                                           _currentTimeOutAttempt++;
-                                           if (_currentTimeOutAttempt >= _maxTimeOutAttempts) {
-                                               _lastTimeQueuePaused = new Date().getTime();
-                                               _isQueueWorking = false;
-                                           }
-
-                                           obj = {
-                                               messageerror: "Request Timeout",
-                                               statusCode: 408
-                                           };
-                                       }
-
-                                       if (errCallback) {
-                                        
-                                           //errCallback(obj);
-                                       }
-
-                                       doRequestforCellphone();
+                                        doRequestforCellphone();
                                    });
                             }
                             else {

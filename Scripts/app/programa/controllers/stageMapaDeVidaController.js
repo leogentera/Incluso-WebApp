@@ -315,7 +315,6 @@ angular
                                 $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, (parent_finished));
                             }
                         }
-
                     }
                 } else {
                     $timeout(function () {
@@ -484,25 +483,8 @@ angular
                     }
                 }, null, function(obj) {//Error handler
                     $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
                 });
             };
-
-            function offlineCallback() {
-                $timeout(function () {
-                    $location.path("/Offline");
-                }, 1000);
-            }
-
 
             var failureGame = function (data) {
                 $location.path('/ZonaDeNavegacion/Dashboard/2/4');
