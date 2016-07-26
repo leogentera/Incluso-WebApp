@@ -1317,8 +1317,13 @@ function getdate() {
     return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
 }
 
-var logout = function ($scope, $location) {
+var logout = function ($scope, $location, checkQueue) {
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+
+    var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + $scope.currentUser.id);
+    if (typeof checkQueue == 'undefined' && checkQueue != true && cacheQueue instanceof Array && cacheQueue.length) {
+        $location.path('/pendingQueue');
+    }else{
 
     _forceUpdateConnectionStatus(function () {
 
@@ -1328,7 +1333,7 @@ var logout = function ($scope, $location) {
                 {
                     method: 'POST',
                     url: API_RESOURCE.format("authentication"),
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     data: $.param(
                         {
                             token: $scope.currentUser.token,
@@ -1337,21 +1342,25 @@ var logout = function ($scope, $location) {
                         })
                 }
             ).success(function (data, status, headers, config) {
-                if ($scope.currentUser && $scope.currentUser.token) {
-                    var objectToken = {
-                        moodleAPI: API_RESOURCE.format(''),
-                        moodleToken: $scope.currentUser.token
-                    };
+                    if ($scope.currentUser && $scope.currentUser.token) {
+                        var objectToken = {
+                            moodleAPI: API_RESOURCE.format(''),
+                            moodleToken: $scope.currentUser.token
+                        };
 
-                    cordova.exec(function () { }, function () { }, "CallToAndroid", "logout", [objectToken]);
+                        cordova.exec(function () {
+                        }, function () {
+                        }, "CallToAndroid", "logout", [objectToken]);
+                    }
                 }
-            }
             );
         }
 
-    }, function () { });
+    }, function () {
+    });
 
     clearLocalStorage($location);
+}
 };
 
 
