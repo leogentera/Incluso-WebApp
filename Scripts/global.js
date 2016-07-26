@@ -5,7 +5,6 @@ var DRUPAL_API_RESOURCE = "http://InclusoDrup.cloudapp.net/incluso-drupal/rest/n
 var DRUPAL_CONTENT_RESOURCE = "http://InclusoDrup.cloudapp.net/drupal_proxy/proxy.php";
 
 var _courseId = 4;
-var _endActivityCurrentChallenge = null;
 var _httpFactory = null;
 var _timeout = null;
 var _location = null;
@@ -283,10 +282,6 @@ var notificationTypes = {
     likesNotifications: 7
 };
 
-var allServicesCallback = function () {
-    _syncCallback();
-};
-
 /* save user id in cache */
 var _setId = function (userId) {
     _setLocalStorageItem("userId", userId);
@@ -377,7 +372,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
 
 /* ends an activity */
 
-var _endActivity = function (activityModel, callback, pathCh, errorCallback) {
+var _endActivity = function (activityModel, callback, errorCallback, forceAddToQueue) {
 
     //trigger activity type 2 is sent when the activity ends.
     var triggerActivity = 2;
@@ -390,8 +385,7 @@ var _endActivity = function (activityModel, callback, pathCh, errorCallback) {
     //create notification
     _activityNotification(activityId, triggerActivity, errorCallbackScope);
     if (activityModel.activityType == "Quiz") {
-        _endActivityCurrentChallenge = pathCh;
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallbackScope);
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallbackScope, forceAddToQueue);
     }
     else if (activityModel.activityType == "Assign") {
         var data = { userid: currentUserId };
@@ -404,7 +398,7 @@ var _endActivity = function (activityModel, callback, pathCh, errorCallback) {
             data.onlymodifieddate = activityModel.onlymodifieddate;
             data.modifieddate = activityModel.modifieddate;
         }
-        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallbackScope);
+        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallbackScope, forceAddToQueue);
     } else {
         var data = { userid: currentUserId };
         if (activityModel.hasOwnProperty('onlymodifieddate')) {
@@ -413,52 +407,16 @@ var _endActivity = function (activityModel, callback, pathCh, errorCallback) {
 
         }
 
+        console.log("forceAddToQueue:" + forceAddToQueue);
         // update activity status dictionary used for blocking activity links
         updateActivityStatusDictionary(activityModel.activity_identifier);
-        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallbackScope);
-    }
-};
-
-/* callback from quiz request with status 200 */
-var successQuizCallback = function () {
-    var currentStage = localStorage.getItem("currentStage");
-
-    if (_location) {
-        _endActivityCurrentChallenge ? _location.path(_endActivityCurrentChallenge) : "";
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallbackScope, forceAddToQueue);
     }
 };
 
 /* convert community access value to bool */
 var _hasCommunityAccessLegacy = function (value) {
     return (value == "Enable" || value == "1");
-};
-
-//This function updates in localStorage the status of the stage when completed
-var _updateStageStatus = function () {
-    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-
-    var stageCompleted = false;
-
-    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
-        var currentStage = userCourse.stages[stageIndex];
-        if (currentStage.status == 0 && currentStage.sectionname != "General") {
-            var totalChallengesByStage = currentStage.challenges.length;
-            var totalChallengesCompleted = _.where(currentStage.challenges, { status: 1 }).length;
-            if (totalChallengesByStage == totalChallengesCompleted) {
-                userCourse.stages[stageIndex].status = 1;
-                //Get current stage for update
-                var stage = localStorage.getItem("currentStage");
-                //Check if not is the last stage
-                if (stageIndex + 1 < userCourse.stages.length) {
-                    stage = stageIndex + 1;
-                    _setLocalStorageJsonItem("currentStage", stage);
-                }
-                _setLocalStorageJsonItem("usercourse", userCourse);
-                stageCompleted = true;
-            }
-        }
-    }
-    return stageCompleted;
 };
 
 //Returns TRUE only if the stage gets closed right here. If it was closed before or has activities pending, will return FALSE.
@@ -557,7 +515,6 @@ var _closeChallenge = function (stageId, errorCallback) {
     return success;
 }
 
-
 var _updateBadgeStatus = function (coursemoduleid) {
     var profile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
     var badges = profile.badges;
@@ -569,15 +526,9 @@ var _updateBadgeStatus = function (coursemoduleid) {
                 if (badges[indexBadge].id == currentBadge.badgeId) {
                     profile.badges[indexBadge].status = "won";
                     _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile);
-                } else {
-                    //This else statement is set to avoid errors on execution flows
                 }
             }
-        } else {
-            //This else statement is set to avoid errors while debugging in firefox
         }
-    } else {
-        //This else statement is set to avoid errors while debugging in firefox
     }
 };
 
@@ -619,29 +570,20 @@ var logStartActivityAction = function(activityId, timeStamp, errorCallback) {
         _setLocalStorageJsonItem('usercourse', userCourse);
 
         moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
-
             var triggerActivity = 1;
             _activityNotification(treeActivity.coursemoduleid, triggerActivity, errorCallback);
-
         }, errorCallback);
     }
 }
 
-
 var _activityNotification = function (courseModuleId, triggerActivity, errorCallback) {
-
     currentUserId = localStorage.getItem("userId");
-
     var allNotifications = JSON.parse(localStorage.getItem("notifications"));
-
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-    
     var activity = _getActivityByCourseModuleId(courseModuleId, userCourse );
     var errorCallbackScope = errorCallback || errorCallbackNoScope;
     
     if (activity && allNotifications) {
-        //code
-
         for (var i = 0; i < allNotifications.length; i++) {
             var currentNotification = allNotifications[i];
             if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
@@ -659,15 +601,10 @@ var _activityNotification = function (courseModuleId, triggerActivity, errorCall
 
                 moodleFactory.Services.PostUserNotifications(dataModelNotification, function () {
                 }, errorCallbackScope, true);
-
-            } else {
-
             }
         }
     }
 };
-
-
 
 function updateUserStarsUsingExternalActivity(activity_identifier, errorCallback) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
@@ -699,29 +636,18 @@ function updateUserStarsUsingExternalActivity(activity_identifier, errorCallback
 
     localStorage.setItem("userStars", JSON.stringify(userStars));
 
-    
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallbackScope);
-        }
-
-
-
-
+}
 
 var _progressNotification = function(errorCallback){
-
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-
     var notifications = JSON.parse(localStorage.getItem("notifications"));
-
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-    
     var profile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.id));
     var errorCallbackScope = errorCallback || errorCallbackNoScope;
     
     if(profile && notifications){
-      
         for(i = 0; i < notifications.length; i++){
-
             var currentNotification = notifications[i];
 
             //{rangeId : 1, progressMin: 0, progressMax:0},
@@ -753,7 +679,6 @@ var _progressNotification = function(errorCallback){
                     moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
                     }, errorCallbackScope, true);
                     
-
                 }
             }
         }
@@ -783,12 +708,12 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
     if (activity_identifier == "50000") {
         matchingActivity = userCourse.community;
     } else {
-        for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
-            var stage = userCourse.stages[stageIndex];
-            for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
-                var challenge = stage.challenges[challengeIndex];
-                for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                    var activity = challenge.activities[activityIndex];
+        for (var k = 0; k < userCourse.stages.length; k++) {
+            var stage = userCourse.stages[k];
+            for (var j = 0; j < stage.challenges.length; j++) {
+                var challenge = stage.challenges[j];
+                for (var i = 0; i < challenge.activities.length; i++) {
+                    var activity = challenge.activities[i];
                     //console.log(activity.activity_identifier + " : " + activity);
                     if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
                         matchingActivity = activity;
@@ -796,11 +721,9 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
                         break;
                     }
                 }
-                if (breakAll)
-                    break;
+                if (breakAll){break;}
             }
-            if (breakAll)
-                break;
+            if (breakAll){break;}
         }
     }
 
@@ -812,14 +735,14 @@ function getActivityQuizModuleId(activity_identifier) {
     var courseModuleId = null;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
 
-    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
-        var stage = userCourse.stages[stageIndex];
+    for (var k = 0; k < userCourse.stages.length; k++) {
+        var stage = userCourse.stages[k];
 
-        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
-            var challenge = stage.challenges[challengeIndex];
+        for (var j = 0; j < stage.challenges.length; j++) {
+            var challenge = stage.challenges[j];
 
-            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                var activity = challenge.activities[activityIndex];
+            for (var i = 0; i < challenge.activities.length; i++) {
+                var activity = challenge.activities[i];
 
                 if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
                     courseModuleId = activity.coursemoduleid;
@@ -828,9 +751,8 @@ function getActivityQuizModuleId(activity_identifier) {
                 }
 
                 if (activity.activities != null) {
-
-                    for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
-                        var subactivity = activity.activities[subactivityIndex];
+                    for (var h = 0; h < activity.activities.length; h++) {
+                        var subactivity = activity.activities[h];
 
                         if (parseInt(subactivity.activity_identifier) === parseInt(activity_identifier)) {
                             courseModuleId = subactivity.coursemoduleid;
@@ -839,13 +761,10 @@ function getActivityQuizModuleId(activity_identifier) {
                         }
                     }
                 }
-
             }
-            if (breakAll)
-                break;
+            if (breakAll){break;}
         }
-        if (breakAll)
-            break;
+        if (breakAll){break;}
     }
 
     return courseModuleId;
@@ -855,12 +774,12 @@ function getChallengeByActivity_identifier(activity_identifier, usercourse) {
     var matchingActivity = null;
     var breakAll = false;
     var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
-    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
-        var stage = userCourse.stages[stageIndex];
-        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
-            var challenge = stage.challenges[challengeIndex];
-            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                var activity = challenge.activities[activityIndex];
+    for (var k = 0; k < userCourse.stages.length; k++) {
+        var stage = userCourse.stages[k];
+        for (var j = 0; j < stage.challenges.length; j++) {
+            var challenge = stage.challenges[j];
+            for (var i = 0; i < challenge.activities.length; i++) {
+                var activity = challenge.activities[i];
                 //console.log(activity.activity_identifier + " : " + activity);
                 if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
                     matchingChallengeIndex = challengeIndex;
@@ -868,11 +787,9 @@ function getChallengeByActivity_identifier(activity_identifier, usercourse) {
                     break;
                 }
             }
-            if (breakAll)
-                break;
+            if (breakAll){break;}
         }
-        if (breakAll)
-            break;
+        if (breakAll){break;}
     }
     return matchingChallengeIndex;
 }
@@ -881,16 +798,16 @@ function _getActivityByCourseModuleId(coursemoduleid, usercourse) {
     var matchingActivity = null;
     var breakAll = false;
     var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
-    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
-        var stage = userCourse.stages[stageIndex];
-        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
-            var challenge = stage.challenges[challengeIndex];
+    for (var k = 0; k < userCourse.stages.length; k++) {
+        var stage = userCourse.stages[k];
+        for (var j = 0; j < stage.challenges.length; j++) {
+            var challenge = stage.challenges[j];
             //Return challenge when courseModuleId match a challenge.
             if (challenge.coursemoduleid == coursemoduleid) {
                 return challenge;
             }
-            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                var activity = challenge.activities[activityIndex];
+            for (var i = 0; i < challenge.activities.length; i++) {
+                var activity = challenge.activities[i];
                 //console.log(activity.activity_identifier + " : " + activity);
                 if (activity.coursemoduleid == coursemoduleid) {
                     matchingActivity = activity;
@@ -898,11 +815,9 @@ function _getActivityByCourseModuleId(coursemoduleid, usercourse) {
                     break;
                 }
             }
-            if (breakAll)
-                break;
+            if (breakAll){break;}
         }
-        if (breakAll)
-            break;
+        if (breakAll){break;}
     }
     return matchingActivity;
 }
@@ -915,74 +830,20 @@ function getMoodleIdFromTreeActivity(activityId) {
     return moodleId;
 }
 
-var relation_MoodleId_ActivityIdentifier = [
-    {
-        'recievedMoodleId': 91,
-        'activity_identifier': 3404,
-        'moodleid': 91
-    },
-    {
-        'recievedMoodleId': 93,
-        'activity_identifier': 3304,
-        'moodleid': 93
-    },
-    {
-        'recievedMoodleId': 151,
-        'activity_identifier': 1010,
-        'moodleid': 64
-    },
-    {
-        'recievedMoodleId': 64,
-        'activity_identifier': 1010,
-        'moodleid': 64
-    },
-    {
-        'recievedMoodleId': 73,
-        'activity_identifier': 1008,
-        'moodleid': 73
-    },
-    {
-        'recievedMoodleId': 147,
-        'activity_identifier': 1049,
-        'moodleid': 147
-    },
-    {
-        'recievedMoodleId': 148,
-        'activity_identifier': 1049,
-        'moodleid': 148
-    },
-    {
-        'recievedMoodleId': 179,
-        'activity_identifier': 2008,
-        'moodleid': 178
-    },
-    {
-        'recievedMoodleId': 178,
-        'activity_identifier': 2008,
-        'moodleid': 178
-    },
-    {
-        'recievedMoodleId': 85,
-        'activity_identifier': 2018,
-        'moodleid': 85
-    }
-
-];
-
 function updateSubActivityStatus(coursemoduleid) {
     //Update activity status for activity blocking binding
     //Update activity status in usercourse
     var breakAll = false;
     var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
-    for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
-        var stage = theUserCouerse.stages[stageIndex];
-        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
-            var challenge = stage.challenges[challengeIndex];
-            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                var activity = challenge.activities[activityIndex];
+    for (var k = 0; k < theUserCouerse.stages.length; k++) {
+        var stage = theUserCouerse.stages[k];
+        for (var j = 0; j < stage.challenges.length; j++) {
+            var challenge = stage.challenges[j];
+            for (var i = 0; i < challenge.activities.length; i++) {
+                var activity = challenge.activities[i];
                 if (activity.activities) {
-                    for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
-                        var subactivity = activity.activities[subactivityIndex];
+                    for (var h = 0; h < activity.activities.length; h++) {
+                        var subactivity = activity.activities[h];
                         if (subactivity.coursemoduleid == coursemoduleid) {
                             subactivity.status = 1;
                             subactivity.last_status_update = moment(Date.now()).unix();
@@ -992,11 +853,9 @@ function updateSubActivityStatus(coursemoduleid) {
                     }
                 }
             }
-            if (breakAll)
-                break;
+            if (breakAll){break;}
         }
-        if (breakAll)
-            break;
+        if (breakAll){break;}
     }
     var theUserCouerseUpdated = theUserCouerse;
     return theUserCouerseUpdated;
@@ -1007,12 +866,12 @@ function updateActivityStatus(activity_identifier) {
     //Update activity status in usercourse
     var breakAll = false;
     var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
-    for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
-        var stage = theUserCouerse.stages[stageIndex];
-        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
-            var challenge = stage.challenges[challengeIndex];
-            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                var activity = challenge.activities[activityIndex];
+    for (var k = 0; k < theUserCouerse.stages.length; k++) {
+        var stage = theUserCouerse.stages[k];
+        for (var j = 0; j < stage.challenges.length; j++) {
+            var challenge = stage.challenges[j];
+            for (var i = 0; i < challenge.activities.length; i++) {
+                var activity = challenge.activities[i];
                 if (activity.activity_identifier == activity_identifier) {
                     activity.status = 1;
                     activity.last_status_update = moment(Date.now()).unix();
@@ -1021,11 +880,9 @@ function updateActivityStatus(activity_identifier) {
                     break;
                 }
             }
-            if (breakAll)
-                break;
+            if (breakAll){break;}
         }
-        if (breakAll)
-            break;
+        if (breakAll){break;}
     }
     var theUserCouerseUpdated = theUserCouerse;
     return theUserCouerseUpdated;
@@ -1036,12 +893,12 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
     var breakAll = false;
     var subactivitiesCompleted = 0;
     var theUserCourse = JSON.parse(localStorage.getItem("usercourse"));
-    for (var stageIndex = 0; stageIndex < theUserCourse.stages.length; stageIndex++) {
-        var stage = theUserCourse.stages[stageIndex];
-        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
-            var challenge = stage.challenges[challengeIndex];
-            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                var activity = challenge.activities[activityIndex];
+    for (var k = 0; k < theUserCourse.stages.length; k++) {
+        var stage = theUserCourse.stages[k];
+        for (var j = 0; j < stage.challenges.length; j++) {
+            var challenge = stage.challenges[j];
+            for (var i = 0; i < challenge.activities.length; i++) {
+                var activity = challenge.activities[i];
                 if (activity.activities && activity.activity_identifier == parentActivity.activity_identifier) {
 
                     if (parentActivity.hasOwnProperty('onlymodifieddate')) {
@@ -1068,23 +925,19 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
                         if (subactivitiesCompleted == subactivitiesCourseModuleId.length) {
                             breakAll = true;
                         }
-                        if (breakAll)
-                            break;
+                        if (breakAll){break;}
                     }
                 }
-                if (breakAll)
-                    break;
+                if (breakAll){break;}
             }
-            if (breakAll)
-                break;
+            if (breakAll){break;}
         }
-        if (breakAll)
-            break;
+        if (breakAll){break;}
     }
     return theUserCourse;
 }
 
-function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock, errorCallback) {
+function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock, errorCallback, forceAddToQueue) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var errorCallbackScope = errorCallback || errorCallbackNoScope;
@@ -1122,13 +975,10 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
 
         userStars.push(localStorageStarsData);
         localStorage.setItem("userStars", JSON.stringify(userStars));    
+        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, errorCallbackScope, forceAddToQueue);
         
-        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){
-          }, errorCallbackScope);
-
-        _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile)
-        _setLocalStorageJsonItem("CurrentUser", currentUser)
-
+        _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile);
+        _setLocalStorageJsonItem("CurrentUser", currentUser);
     }
 }
 
@@ -1141,14 +991,12 @@ var getForumExtraPointsCounter = function (discussionIds) {
     var tempDiscussionIds = [];
     var tempDiscussions = { "status": 0, "discussions": [] };
     for (var f = 0; f < forumData.forums.length; f++) {
-
         var forum = forumData.forums[f];
         var discussions = forum.discussion;
         tempDiscussions.status = forum.status;
 
         for (var d = 0; d < discussions.length; d++) {
             tempDiscussionIds.push(discussions[d].discussionid);
-
             tempDiscussions.discussions.push(discussions[d]);
         }
 
@@ -1180,9 +1028,6 @@ function updateUserStars(activityIdentifier, extraPoints, errorCallback) {
         profile.stars = Number(profile.stars) + Number(activity.points);
         stars = activity.points;
     }
-
-    console.log("Profile stars = " + profile.stars);
-    console.log("Forum stars to assign: " + stars);
 
     var data = {
         userId: profile.id,
@@ -1248,7 +1093,6 @@ function updateUserForumStars(activityIdentifier, points, isExtra, callback, err
 
 }
 
-
 function updateActivityManager(activityManager, coursemoduleid, activity_identifier) {
     var breakAll = false;
     if (!activityManager) {
@@ -1313,9 +1157,7 @@ var logout = function ($scope, $location) {
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
     _forceUpdateConnectionStatus(function () {
-
         if (_isDeviceOnline) {
-
             _httpFactory(
                 {
                     method: 'POST',
@@ -1337,41 +1179,14 @@ var logout = function ($scope, $location) {
 
                     cordova.exec(function () { }, function () { }, "CallToAndroid", "logout", [objectToken]);
                 }
-            }
-            );
+            });
         }
-
     }, function () { });
-
     clearLocalStorage($location);
 };
 
 
-/*  ESTE MÉTODO NO PARECE ESTAR USÁNDOSE COMENTADO POR CARLOS EL 12/07
-var getProfilePoints = function(currentUser){
-  
-  var userCourse = JSON.parse(localStorage.getItem('usercourse'));
-
-  moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(data){
-      console.log(JSON.stringify(data));
-    },function(obj){
-      console.log(data);
-      //-
-      if (obj.statusCode == 408) {//Request Timeout
-          $scope.$emit('HidePreloader');
-          $timeout(function () {
-              $location.path('/Offline');
-          }, 1000);
-      }
-    //-
-      },true);
-
-};
-*/
-
-
 var fillProfilePoints = function (pointsToAdd) {
-
     if (pointsToAdd.length == 0) {
         return;
     }
@@ -1387,7 +1202,6 @@ var fillProfilePoints = function (pointsToAdd) {
             "moduleid": item.moduleid,
             "score": item.score
         };
-
         scores.push(profileObject);
     }
 
@@ -1395,23 +1209,10 @@ var fillProfilePoints = function (pointsToAdd) {
     console.log(JSON.stringify(objectProfile));
     moodleFactory.Services.PostProfilePoints('', JSON.stringify(objectProfile), function (data) {
         console.log(JSON.stringify(data));
-    }, function (obj) {
-        console.log(JSON.stringify(obj));
-        //-
-        if (obj.statusCode == 408) {//Request Timeout
-            $scope.$emit('HidePreloader');
-            $timeout(function () {
-                $location.path('/Offline');
-            }, 1000);
-        }
-        //-
-    });
-
+    }, function () {});
     localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
-
+    
 }
-
-
 
 var clearLocalStorage = function (location) {
 
@@ -1466,9 +1267,6 @@ var clearLocalStorage = function (location) {
     }
 
 }
-
-
-
 
 function ClearLocalStorage(startsWith) {
     var myLength = startsWith.length;
@@ -1567,7 +1365,6 @@ var _activityRoutes = [
     { id: 3501, name: '', url: '/ZonaDeAterrizaje/Retroalimentacion/3501' },
     { id: 3601, name: '', url: '/ZonaDeAterrizaje/ExploracionFinal/3601' },
     { id: 50000, name: 'Comunidad General', url: '/Community/50000' }
-    //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
@@ -1867,7 +1664,6 @@ function getcurrentVersion() {
     }
     return localVersion;
 }
-
 
 var progressBar = {
     set: function (val) {

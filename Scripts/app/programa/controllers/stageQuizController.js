@@ -864,7 +864,7 @@ angular
                         _endActivity(activityModel, function () {
                             updateProfile();
 
-                        }, null, function(obj) {//Error handler
+                        }, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
 
                             if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
@@ -885,16 +885,17 @@ angular
                         _endActivity(activityModel, function () {
                             updateProfile();
 
-                        }, null, function(obj) {//Error handler
+                        }, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
 
                             if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
                                 $timeout(function () {
                                     $location.path('/Offline'); //This behavior could change
                                 }, 1000);
-                            } else {//Another kind of Error happened
+                            } else {
                                 $timeout(function () {
-                                    $location.path('/Offline');
+                                    //$location.path('/Offline');
+                                    console.log(obj.statusCode);
                                 }, 1000);
                             }
 
@@ -906,7 +907,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, null, function(obj) {//Error handler
+                        }, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
 
                             if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout

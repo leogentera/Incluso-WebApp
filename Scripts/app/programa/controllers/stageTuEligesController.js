@@ -202,15 +202,15 @@ angular
                         }
                         moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (obj) {
                             $scope.$emit('HidePreloader');
-                        });
-                        _endActivity(parentActivity, function(){}, null, function(obj) {//Error handler
+                        }, false, true);
+                        _endActivity(parentActivity, function(){}, function(){
                             $scope.$emit('HidePreloader');
-                        });
+                        }, true);
 
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
-                        updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj) {//Error handler
+                        updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function (obj){
                             $scope.$emit('HidePreloader');
-                        });
+                        }, true);
                     }
                 }
                 if (data["calificación"] && data["calificación"] == "Reprobado") {
@@ -284,9 +284,9 @@ angular
                             $location.path(url);
                         });
                     },1000);
-                }, null, function(obj) {//Error handler
+                }, function(obj) {//Error handler
                     $scope.$emit('HidePreloader');
-                });
+                }, true);
             }
                 
             var failureGame = function (data){

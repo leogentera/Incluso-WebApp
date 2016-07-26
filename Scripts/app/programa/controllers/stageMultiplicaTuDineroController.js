@@ -254,18 +254,18 @@ angular
                         }else if (data["calificación"] && data["calificación"] == "Reprobado" && (user.financialAbility == "-1" || !user.financialAbility)) {
                           user.financialAbility = 0;
                         }
-                        _endActivity(parentActivity, function () {}, null, function(obj) {//Error handler
+                        _endActivity(parentActivity, function () {}, function(){
                             $scope.$emit('HidePreloader');
-                        });
+                        }, true);
                         moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (obj) {
                             $scope.$emit('HidePreloader');
-                        });
+                        }, false, true);
                         
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                     }
-                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj) {//Error handler
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(){
                         $scope.$emit('HidePreloader');
-                    });
+                    }, true);
                 }
 
                 if (data["calificación"] && data["calificación"] == "Reprobado") {
@@ -353,9 +353,9 @@ angular
                             $location.path(url);
                         });
                     }, 1000);
-                }, null, function(obj) {//Error handler
+                }, function(){
                     $scope.$emit('HidePreloader');
-                });
+                }, true);
             };
 
             var failureGame = function (data) {

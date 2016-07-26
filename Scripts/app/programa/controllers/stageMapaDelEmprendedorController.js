@@ -225,12 +225,12 @@ angular
                     parentUpdated = true;
                     parentActivity.onlymodifieddate=false;
                 }
-                    _endActivity(parentActivity, function() {}, null, function(obj) {//Error handler
+                    _endActivity(parentActivity, function() {}, function(){
                         $scope.$emit('HidePreloader');
-                    } );
-                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj) {//Error handler
+                    }, true);
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(){
                         $scope.$emit('HidePreloader');
-                    });
+                    }, true);
                 
                 if (subactivitiesCompleted.length > 0) {
                     if (parentActivity.activities) {
@@ -381,7 +381,7 @@ angular
 
                                                         $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
                                                     }, 500);
-                                                }, true
+                                                }, true, false, true
                                             );
                                         }
 
@@ -418,9 +418,9 @@ angular
                             }    
                         }, function(){});
                     }
-                }, null, function(obj) {//Error handler
+                }, function(){
                     $scope.$emit('HidePreloader');
-                });
+                }, true);
             }
             
             var failureGame = function (data){

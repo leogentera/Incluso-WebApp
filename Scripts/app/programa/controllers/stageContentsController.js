@@ -348,7 +348,7 @@ angular
                                     var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
                                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
                                     _setLocalStorageJsonItem("activityManagers", activitymanagers);
-                                    _endActivity($scope.fuenteDeEnergia.activities[i], function() {}, null,
+                                    _endActivity($scope.fuenteDeEnergia.activities[i], function() {},
                                         function(obj) {//Error handler
                                         $scope.$emit('HidePreloader');
 

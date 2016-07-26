@@ -1796,7 +1796,7 @@ angular
                                 activityModel.coursemoduleid = parentActivity.coursemoduleid;
                                 activityModel.activityType = "Quiz";
                                 _endActivity(activityModel, function () {
-                                }, "", function(obj) {//Error handler
+                                }, function(obj) {//Error handler
                                     $scope.$emit('HidePreloader');
 
                                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
@@ -1931,7 +1931,7 @@ angular
                                 activityModel.coursemoduleid = parentActivity.coursemoduleid;
                                 activityModel.activityType = "Quiz";
                                 _endActivity(activityModel, function () {
-                                }, "", function(obj) {//Error handler
+                                }, function(obj) {//Error handler
                                     $scope.$emit('HidePreloader');
 
                                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
@@ -2154,20 +2154,21 @@ angular
 
                                 //Finish Activity.
                                 _endActivity(activityModel, function () {
-                                    validateAllFieldsCompleted();
-                                }, null, function(obj) {//Error handler
-                                    $scope.$emit('HidePreloader');
-
-                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
-                                    } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
+                                        validateAllFieldsCompleted();
+                                    }, function(obj) {//Error handler
+                                        $scope.$emit('HidePreloader');
+    
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                            $timeout(function () {
+                                                $location.path('/Offline'); //This behavior could change
+                                            }, 1000);
+                                        } else {//Another kind of Error happened
+                                            $timeout(function () {
+                                                $location.path('/Offline');
+                                            }, 1000);
+                                        }
                                     }
-                                });
+                                );
 
                                 sectionFieldsAreOk = false;  //Restore 'sectionFieldsAreOk' value
                             } else {//Not all fields were completed.
