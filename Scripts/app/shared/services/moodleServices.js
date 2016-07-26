@@ -1426,6 +1426,7 @@
         }
         
         function addRequestToQueue(key, queue, successCallback, errorCallback) {
+            debugger;
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
             var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
@@ -1473,6 +1474,7 @@
                             //Reemplazamos el token con el token actual
                             queue.data.headers.Authorization = _currentUser.token;
                             var currentTime = new Date().getTime();
+                            debugger;
                             _httpFactory(queue.data)
                                 .success(function (data, status, headers, config) {
 
@@ -1491,6 +1493,7 @@
                                     }
                                     doRequestforWeb();
                                 }).error(function (data, status, headers, config) {
+                                    debugger;
                                     var finalTime = new Date().getTime();
                                     var isTimeout = status == -1; //(finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
                                     var obj;
