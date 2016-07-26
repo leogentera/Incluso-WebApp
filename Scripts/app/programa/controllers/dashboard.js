@@ -63,11 +63,6 @@ angular
            $scope.stageProgress = 0;
 
            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
-           if ($scope.user) {
-               var imageProfLead = [{ 'path': "assets/avatar", 'name': "leaderboard_" + $scope.user.userId + ".png", 'downloadLink': $scope.user.profileimageurlsmall.replace("f2", "f1") }];
-               saveLeaderboardImage(imageProfLead);
-
-           }
 
            if ($scope.user.retoMultipleAvatar) {
                $scope.profileImage = $scope.user.retoMultipleAvatar;
@@ -276,17 +271,7 @@ angular
 
            }
 
-           function saveLeaderboardImage(images) {
-               _forceUpdateConnectionStatus(function () {
-                   cordova.exec(function (data) {
-                       if (data.files[0] && data.files[0].imageB64) {
-                           $scope.LeaderboardUserprofileImage = 'data:image/png;base64,' + data.files[0].imageB64;
-                           $scope.user.LeaderboardUserbase64Image = 'data:image/png;base64,' + data.files[0].imageB64;
-                           localStorage.setItem("CurrentUserAtLeaderBoard", JSON.stringify($scope.user));
-                       };
-                   }, function () { }, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
-               }, function () { });
-           }
+
 
            //Callback function for UserCourse call
            function getDataAsyncCallback() {
@@ -342,12 +327,8 @@ angular
 
                            for (var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
 
-                               if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...                                    
-                                   var imageProfLeaderboard = [{ 'path': "assets/avatar", 'name': "leaderboard_" + $scope.user.userId + ".png", 'downloadLink': $scope.user.profileimageurlsmall.replace("f2", "f1") }];
-                                   if ($scope.LeaderboardUserprofileImage) {
-                                       $scope.LeaderboardUserprofileImage = $scope.user.LeaderboardUserbase64Image;
-                                       $scope.course.leaderboard[lb].profileimageurl = $scope.LeaderboardUserprofileImage; // Take the leaderboard image from the updated profileImage.                                 
-                                   }
+                               if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...                                                                     
+                                   if ($scope.profileImage) { $scope.course.leaderboard[lb].profileimageurl = $scope.profileImage; } // Take the leaderboard image from the updated profileImage.
                                    profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
                                    profile.stars = parseInt($scope.course.leaderboard[lb].stars, 10);
                                    $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
