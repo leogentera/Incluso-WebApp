@@ -47,7 +47,7 @@ angular
                }
            }, 1000);
 
-           if (!_getItem("userId") && !_getItem("CurrentUser")) {
+           if (!_getItem("userId") || !_getItem("CurrentUser")) {
                $location.path('/');
                return "";
            }
