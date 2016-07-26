@@ -25,6 +25,7 @@ angular
            }
 
            $scope.profileImage = "";
+           $scope.UserAtleaderboardImage = "";
 
            var activity_identifier = "0000";
            var currentUserProfile = getCurrentUserProfile();
@@ -46,7 +47,7 @@ angular
                }
            }, 1000);
 
-           if (!_getItem("userId")) {
+           if (!_getItem("userId") || !_getItem("CurrentUser")) {
                $location.path('/');
                return "";
            }
@@ -61,13 +62,16 @@ angular
 
            $scope.stageProgress = 0;
 
-           $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage        
+           $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");  //load current user from local storage
 
            if ($scope.user.retoMultipleAvatar) {
                $scope.profileImage = $scope.user.retoMultipleAvatar;
                $scope.user.base64Image = $scope.user.retoMultipleAvatar;
            } else if ($scope.user.base64Image) {
                $scope.profileImage = $scope.user.base64Image;
+               if ($scope.user.LeaderboardUserbase64Image) {
+                   $scope.LeaderboardUserprofileImage = $scope.user.LeaderboardUserbase64Image;
+               }
            } else {
                console.log("it does not exists");
                //Download profile Images
@@ -226,13 +230,15 @@ angular
                        var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                        for (var lb = 0; lb < leaderboard.length; lb++) {
 
+                           //getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function (niceImageUrl) {
+                           //    leaderboard[lb].profileimageurl = niceImageUrl;
+                           //});
+
                            if (leaderboard[lb].userId === parseInt(currentUserID, 10)) {
-                               leaderboard[lb].stars = $scope.user.stars;                            
+                               leaderboard[lb].stars = $scope.user.stars;
+                               leaderboard[lb].profileimageurl = $scope.profileImage;
                            }
 
-                           getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function (niceImageUrl) {
-                               leaderboard[lb].profileimageurl = niceImageUrl;
-                           });
                        }
 
                        $scope.course.leaderboard = leaderboard;
@@ -264,6 +270,8 @@ angular
                }, function () { });
 
            }
+
+
 
            //Callback function for UserCourse call
            function getDataAsyncCallback() {
@@ -319,11 +327,12 @@ angular
 
                            for (var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
 
-                               if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...                          
+                               if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...                                                                     
+                                   if ($scope.profileImage) { $scope.course.leaderboard[lb].profileimageurl = $scope.profileImage; } // Take the leaderboard image from the updated profileImage.
                                    profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
                                    profile.stars = parseInt($scope.course.leaderboard[lb].stars, 10);
                                    $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
-                                   $scope.user.stars = $scope.course.leaderboard[lb].stars;  //Update stars in template,   
+                                   $scope.user.stars = $scope.course.leaderboard[lb].stars;  //Update stars in template,                                   
                                    _setLocalStorageJsonItem("Perfil/" + _getItem("userId"), profile);  //Update rank in Perfil/nnn in LS,
                                    _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
                                    break;
