@@ -1,7 +1,7 @@
 //global variables and functions
 var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
 //var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
-var DRUPAL_API_RESOURCE = "http://InclusoDrup.cloudapp.net/incluso-drupal/rest/node/{0}"; 
+var DRUPAL_API_RESOURCE = "http://InclusoDrup.cloudapp.net/incluso-drupal/rest/node/{0}";
 var DRUPAL_CONTENT_RESOURCE = "http://InclusoDrup.cloudapp.net/drupal_proxy/proxy.php";
 
 var _courseId = 4;
@@ -448,7 +448,7 @@ var _tryAssignAward = function () {
             "dataissued": moment().format("YYYY/MM/DD h:mm:ss")
         };
         moodleFactory.Services.PutAsyncAward(userid, awardData, function () { },function(obj){
-          
+
           });
 
         // update profile
@@ -671,7 +671,7 @@ var _progressNotification = function(errorCallback){
 
                     moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
                     }, errorCallbackScope, true);
-                    
+
                 }
             }
         }
@@ -965,7 +965,7 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
         userStars.push(localStorageStarsData);
         localStorage.setItem("userStars", JSON.stringify(userStars));    
         moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, errorCallbackScope, forceAddToQueue);
-        
+
         _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile);
         _setLocalStorageJsonItem("CurrentUser", currentUser);
     }
@@ -1142,8 +1142,13 @@ function getdate() {
     return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
 }
 
-var logout = function ($scope, $location) {
+var logout = function ($scope, $location, checkQueue) {
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+
+    var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + $scope.currentUser.id);
+    if (typeof checkQueue == 'undefined' && checkQueue != true && cacheQueue instanceof Array && cacheQueue.length) {
+        $location.path('/pendingQueue');
+    }else{
 
     _forceUpdateConnectionStatus(function () {
         if (_isDeviceOnline) {
@@ -1172,6 +1177,7 @@ var logout = function ($scope, $location) {
         }
     }, function () { });
     clearLocalStorage($location);
+}
 };
 
 
@@ -1200,7 +1206,7 @@ var fillProfilePoints = function (pointsToAdd) {
         console.log(JSON.stringify(data));
     }, function () {});
     localStorage.setItem("profilePoints", JSON.stringify(profilePoints));
-    
+
 }
 
 var clearLocalStorage = function (location) {
