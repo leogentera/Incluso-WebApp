@@ -55,21 +55,7 @@ angular
                             _setLocalStorageJsonItem("Perfil/" + userId, profile);
                             $scope.$emit('HidePreloader'); //show preloader
                             $scope.navigateTo('ProgramaDashboard');
-                        },function(obj){
-                        //-
-                        $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
-                    }, true )
+                        }, connectionErrorCallback, true )
 
                 }
 

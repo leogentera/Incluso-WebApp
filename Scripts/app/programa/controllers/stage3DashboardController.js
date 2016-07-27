@@ -186,21 +186,7 @@ angular
                 };
 
                 moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
-                }, function (obj) {
-                    //-
-                    $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                    //-
-                });
+                }, connectionErrorCallback);
 
             };
 
@@ -213,19 +199,7 @@ angular
                     $scope.updateStageFirstTime();
                 }
 
-                var challengeCompletedId = _closeChallenge($scope.idEtapa, function(obj) {//Error handler
-                    $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                });
+                var challengeCompletedId = _closeChallenge($scope.idEtapa, connectionErrorCallback);
 
                 //Exclude challenges initial and final from showing modal robot
                 var challengeExploracionInicial = 205;
@@ -252,19 +226,7 @@ angular
 
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                _progressNotification(function(obj) {//Error handler
-                    $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                });
+                _progressNotification(connectionErrorCallback);
 
                 if ($scope.stageProgress === 100 && fromLastQuiz) {
                     localStorage.removeItem("fromLastQuiz/" + userid);
@@ -319,19 +281,7 @@ angular
                     if (_compareSyncDeviceVersions()) {
                         var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
-                        logStartActivityAction(activityId, timeStamp, function(obj) {//Error handler
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                        });
+                        logStartActivityAction(activityId, timeStamp, connectionErrorCallback);
 
                         if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
                             isQuiz = true;

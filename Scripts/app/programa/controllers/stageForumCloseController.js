@@ -82,49 +82,16 @@ angular
                         if ($routeParams.moodleId == 147 || $routeParams.moodleId == 148) {
                             
                             if (activities[i].coursemoduleid == $routeParams.moodleId) {
-                                moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
-                                    //alert("endParentActivity");
-                                    endParentActivity();
-                                }, function(obj) {
-                                    //-
-                                    $scope.$emit('HidePreloader');
-
-                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
-                                    } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
-                                    }
-                                    //-
-                                });
+                                moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, endParentActivity, connectionErrorCallback);
                             }
 
                         }else {
                             moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
                                 finishChildCounter++;
-                                //alert("endParentActivity 2");
-
                                 if (finishChildCounter == activities.length) {
                                     endParentActivity();
                                 }
-                            }, function(obj) {
-                                //-
-                                $scope.$emit('HidePreloader');
-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
-                            });
+                            }, connectionErrorCallback);
                         }
                     }
                 }else{
@@ -175,43 +142,12 @@ angular
 
                                 if (extraPoints != 0) {//alert(extraPoints);
 
-                                    updateUserForumStars($routeParams.activityId, extraPoints,true, function (){
-                                        //alert("updateUserForumStars");
-                                        successPutStarsCallback();
-                                    }, function(obj) {//Error handler
-                                        $scope.$emit('HidePreloader');
-
-                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                            $timeout(function () {
-                                                $location.path('/Offline'); //This behavior could change
-                                            }, 1000);
-                                        } else {//Another kind of Error happened
-                                            $timeout(function () {
-                                                $location.path('/Offline');
-                                            }, 1000);
-                                        }
-                                    });
+                                    updateUserForumStars($routeParams.activityId, extraPoints,true, successPutStarsCallback, connectionErrorCallback);
                                 }
 
                                 var course = moodleFactory.Services.GetCacheJson("course");
                                 var user = moodleFactory.Services.GetCacheJson("CurrentUser");
-                                moodleFactory.Services.GetAsyncUserPostCounter(user.token, course.courseid, function(){
-                                    //alert("GetAsyncUserPostCounter");
-                                }, function(obj) {
-                                    //-
-                                    $scope.$emit('HidePreloader');
-
-                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
-                                    } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
-                                    }
-                                    //-
-                                }, true);
+                                moodleFactory.Services.GetAsyncUserPostCounter(user.token, course.courseid, function(){}, connectionErrorCallback, true);
 
                                 localStorage.removeItem("starsToAssignedAfterFinishActivity");
 
@@ -226,21 +162,7 @@ angular
                                     $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                                 }
 
-                            }, function(obj) {
-                                //-
-                                $scope.$emit('HidePreloader');
-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
-                            } );
+                            },connectionErrorCallback);
                       },
                       function(obj){
                           var activityId = Number($routeParams.activityId);
@@ -251,20 +173,6 @@ angular
                           } else if(activityId == 3304 || activityId == 3404){
                               $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                           }
-
-                          //-
-                          //$scope.$emit('HidePreloader');
-                          //
-                          //if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                          //    $timeout(function () {
-                          //        $location.path('/Offline'); //This behavior could change
-                          //    }, 1000);
-                          //} else {//Another kind of Error happened
-                          //    $timeout(function () {
-                          //        $location.path('/Offline');
-                          //    }, 1000);
-                          //}
-                          //-
                       });
                 }
 

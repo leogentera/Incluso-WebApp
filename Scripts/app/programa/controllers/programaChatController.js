@@ -43,7 +43,7 @@ angular
 
                 function getMessages() {
                     $scope.validateConnection(function () {
-                        moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
+                        moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, connectionErrorCallback, true);
                     }, function () {
                     });
                 }
@@ -53,7 +53,7 @@ angular
                 });
 
                 // Get Chat conversation
-                moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
+                moodleFactory.Services.GetUserChat(currentUser.userId, currentUser.token, getUserRefreshChatCallback, connectionErrorCallback, true);
 
                 function getUserRefreshChatCallback() {
                     $scope.$emit('HidePreloader'); //hide preloader
@@ -94,7 +94,7 @@ angular
                                 $anchorScroll();
 
                                 // 3) Save User Post Remotely.
-                                moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                                moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, connectionErrorCallback);
 
                                 // 4) Create Model for Automated Message
                                 var firstTimeMessage = JSON.parse(localStorage.getItem("drupal/content/chat_generic_message")).node.chat_instructions;
@@ -114,7 +114,7 @@ angular
                                     $anchorScroll();
 
                                     // 6) Save Automated Message Remotely.
-                                    moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, errorCallback);
+                                    moodleFactory.Services.PutUserChat(currentUser.userId, newMessage, getUserChatCallback, connectionErrorCallback);
                                 }, 1000);
 
                             }, 1000);
@@ -125,22 +125,6 @@ angular
 
                 function getUserChatCallback() {
                     _setLocalStorageItem('numMessages/' + currentUser.userId, $scope.messages.length);
-                }
-
-                function errorCallback(obj) {
-                    //-
-                    $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                    //-
                 }
 
                 function triggerAndroidKeyboardHide() {

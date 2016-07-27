@@ -103,21 +103,7 @@ angular
                         localStorage.setItem("likesByUser", JSON.stringify(userLikes));
 
                         var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
-                        moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, countLikesByUser, function (obj) {
-                            //-
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                            //-
-                        });
+                        moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, countLikesByUser, connectionErrorCallback);
 
                     }, offlineCallback);
                 };
@@ -143,21 +129,7 @@ angular
                             showRobotForum();
                             localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
 
-                            moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {}, function (obj) {
-                                //-
-                                $scope.$emit('HidePreloader');
-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
-                            });
+                            moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {}, connectionErrorCallback);
 
                         }
                     }
@@ -175,21 +147,7 @@ angular
                         /* sumar uno extra al total */
                         //if (forumData.totalExtraPoints < 11) {
                         if (forumData.totalExtraPoints < $scope.activity.points_limit) {
-                            updateUserForumStars($routeParams.activityId, $scope.activity.extra_points, true, function () {
-                                successPutStarsCallback();
-                            }, function(obj) {//Error handler
-                                $scope.$emit('HidePreloader');
-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                            });
+                            updateUserForumStars($routeParams.activityId, $scope.activity.extra_points, true, successPutStarsCallback, connectionErrorCallback);
                         }
                     }
                 };
@@ -226,23 +184,7 @@ angular
                             }
                             localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
                             showRobotForum();
-                            moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function () {
-                            }, function (obj) {
-                                //-
-                                $scope.$emit('HidePreloader');
-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
-                            });
-
+                            moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){}, connectionErrorCallback);
                         }
                     }
                 };
@@ -429,27 +371,7 @@ angular
                                 checkForumExtraPoints();
                                 refreshRepliesToPost(parentId);
                                 checkForumProgress(refreshTopicData);
-                            },
-                            function (data) {//Error
-                                $scope.$emit('HidePreloader');
-                                var errorMessage = [window.atob(data.messageerror)];
-
-                                if (data && data.statusCode) {
-                                    $scope.modelState.errorCode = data.statusCode;
-                                }
-
-                                $scope.modelState.errorMessages = errorMessage;
-                                $scope.scrollToTop();
-
-                                //-
-                                if (data && data.statusCode && data.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                }
-                                //-
-
-                            }, null, true);
+                            }, connectionErrorCallback, null, true);
 
                     }, offlineCallback);
 
@@ -614,17 +536,8 @@ angular
                             $scope.$emit('HidePreloader');
                             $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
                             $scope.isReportedAbuseSentModalCollapsed["id" + postId] = false;
-                            //-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                            //-
+                            
+                            connectionErrorCallback(obj);
                         }, true);
 
                     }, offlineCallback);
@@ -716,21 +629,8 @@ angular
                         return d.discussion == Number($routeParams.discussionId);
                     });
 
-                    moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, function (obj) {
-                        //-
-                        $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
-                    }, true);
+                    moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion,
+                        $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, connectionErrorCallback, true);
 
                     forceUpdateForumProgress();
                 }
@@ -778,21 +678,8 @@ angular
                 };
 
                 var refreshTopicData = function () {
-                    moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, function(obj) {
-                        //-
-                        $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
-                    }, true);
+                    moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion,
+                        $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, connectionErrorCallback, true);
                 };
 
                 var refreshRepliesToPost = function (parentId) {
@@ -839,23 +726,8 @@ angular
 
                         showMoreCounter++;
                         $scope.$emit('ShowPreloader');
-                        moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, "default",
-                                                                       getPostsDataCallback, function(obj){
-                                //-
-                                $scope.$emit('HidePreloader');
-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
-                            }, true);
-
+                        moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion,
+                                $scope.activity.forumid, postPager.from, postPager.to, 0, "default", getPostsDataCallback, connectionErrorCallback, true);
                     }, offlineCallback);
 
                 };

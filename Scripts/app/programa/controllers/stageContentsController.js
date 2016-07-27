@@ -243,19 +243,7 @@ angular
                         $scope.$emit('HidePreloader')
                     }
 
-                    //-
-                    $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                    //-
+                    connectionErrorCallback(obj);
                 }
 
                 function setResources(myActivity) {
@@ -348,20 +336,7 @@ angular
                                     var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
                                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
                                     _setLocalStorageJsonItem("activityManagers", activitymanagers);
-                                    _endActivity($scope.fuenteDeEnergia.activities[i], function() {},
-                                        function(obj) {//Error handler
-                                        $scope.$emit('HidePreloader');
-
-                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                            $timeout(function () {
-                                                $location.path('/Offline'); //This behavior could change
-                                            }, 1000);
-                                        } else {//Another kind of Error happened
-                                            $timeout(function () {
-                                                $location.path('/Offline');
-                                            }, 1000);
-                                        }
-                                    } );
+                                    _endActivity($scope.fuenteDeEnergia.activities[i], function() {}, connectionErrorCallback);
                                     if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                         $scope.statusObligatorios += 1;
                                         starsMandatory += 50;
@@ -396,12 +371,12 @@ angular
                         profile.stars = parseInt(profile.stars) + stars;
                         updateLocalStorageStars(data);
                         moodleFactory.Services.PutStars(data, profile, $scope.token, function () {
-                        }, errorCallback);
+                        }, connectionErrorCallback);
                     }
                     else if (!isMandatory && ((totalOptionalPoints + stars) <= $scope.fuenteDeEnergia.max_resources)) {
                         data.is_extra = true;
                         profile.stars = parseInt(profile.stars) + stars;
-                        moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
+                        moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, connectionErrorCallback);
                         totalOptionalPoints += stars;
                         updateLocalStorageStars(data);
                     }
@@ -446,23 +421,7 @@ angular
                 function successfullCallBack() {
                     _updateRewardStatus();
                 }
-
-                function errorCallback(obj) {
-                    //-
-                    $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                    //-
-                }
-
+                
                 function successEndFuente() {
                     $scope.$emit('HidePreloader');
                     $location.path('/' + stage + '/Dashboard/' + userCurrentStage + '/' + currentChallenge);
@@ -497,20 +456,7 @@ angular
                             $scope.fuenteDeEnergia.status = 1;
                             // update activity status dictionary used for blocking activity links
                             updateActivityStatusDictionary($scope.fuenteDeEnergia.activity_identifier);
-                            moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, successEndFuente, function (obj) {
-                                $scope.$emit('HidePreloader');
-                                //-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
-                            });
+                            moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, successEndFuente, connectionErrorCallback);
                         }, 1000);
 
                     }, offlineCallback);
@@ -550,7 +496,7 @@ angular
 
                                 localStorage.setItem("likesByUser", JSON.stringify(userLikes));
                                 moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, function () {
-                                }, errorCallback);
+                                    }, connectionErrorCallback);
                             }
                         }
                     }, offlineCallback);
@@ -576,24 +522,7 @@ angular
                                         var profile = moodleFactory.Services.GetCacheJson("Perfil/" + currentUser.userId);
                                         profile.hasRequiredApps = true;
 
-                                        moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,
-                                            function (data) {
-                                            },
-                                            function (obj) {
-                                                //-
-                                                $scope.$emit('HidePreloader');
-
-                                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                                    $timeout(function () {
-                                                        $location.path('/Offline'); //This behavior could change
-                                                    }, 1000);
-                                                } else {//Another kind of Error happened
-                                                    $timeout(function () {
-                                                        $location.path('/Offline');
-                                                    }, 1000);
-                                                }
-                                                //-
-                                            });
+                                        moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,function(){},connectionErrorCallback);
                                     }
 
                                     $modalInstance.dismiss('cancel');

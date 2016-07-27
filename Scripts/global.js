@@ -447,16 +447,7 @@ var _tryAssignAward = function () {
             "award": true,
             "dataissued": moment().format("YYYY/MM/DD h:mm:ss")
         };
-        moodleFactory.Services.PutAsyncAward(userid, awardData, function () { }, function (obj) {
-            //-
-            if (obj.statusCode == 408) {//Request Timeout
-                $scope.$emit('HidePreloader');
-                $timeout(function () {
-                    $location.path('/Offline');
-                }, 1000);
-            }
-            //-
-        });
+        moodleFactory.Services.PutAsyncAward(userid, awardData, function () { },connectionErrorCallback);
 
         // update profile
         var awards = _getAwards();
@@ -694,11 +685,25 @@ var successCallback = function (data) {
 };
 
 /* function to prevent broken code when calling a service */
-
 var errorCallbackNoScope = function (obj) {
-
 };
 
+function connectionErrorCallback(obj) {
+    $scope.$emit('HidePreloader');
+    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+      $timeout(function () {
+        $location.path('/Offline'); //This behavior could change
+      }, 1);
+    } else {//Another kind of Error happened
+      $timeout(function () {
+          if (data && data.messageerror) {
+              errorMessage = window.atob(data.messageerror);
+              $scope.model.modelState.errorMessages = [errorMessage];
+          }
+          $scope.$emit('HidePreloader');          
+      }, 1);
+    }
+}
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
     var matchingActivity = null;
@@ -714,7 +719,6 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
                 var challenge = stage.challenges[j];
                 for (var i = 0; i < challenge.activities.length; i++) {
                     var activity = challenge.activities[i];
-                    //console.log(activity.activity_identifier + " : " + activity);
                     if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
                         matchingActivity = activity;
                         breakAll = true;

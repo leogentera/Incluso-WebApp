@@ -117,6 +117,8 @@
         var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh, isLoginRequest) {
             if (userId != -1) {
                 _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, isLoginRequest);
+            }else{                
+                console.log("userId = -1");
             }
         };
 
@@ -396,9 +398,9 @@
                     }, successCallback, errorCallback);
                 }
 
-                if (successCallback) {
-                    successCallback();
-                }
+                //if (successCallback) {
+                //    successCallback();
+                //}
             }
 
         };
@@ -476,6 +478,9 @@
             }else{
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     
+                if (!currentUser) {
+                    console.log("currentUser does not exist");
+                }
                 var timeOut = globalTimeOut;
                 if (isLoginRequest) {//Calling from login/register
                     timeOut = longTimeOut;
@@ -490,11 +495,11 @@
                         'Authorization': currentUser.token
                     }
                 }).success(function (data, status, headers, config) {
-                    console.log("success");
+                    console.log("success usercourse");
                     createTree(data);
                     successCallback();
                 }).error(function (data, status, headers, config) {
-                    console.log("error");
+                    console.log("error usercourse");
                     console.log(JSON.stringify(data));
                     errorCallback();
                 });
@@ -1375,7 +1380,7 @@
                             successCallback();
                         }).error(function(data){
                             var finalTime = new Date().getTime();
-                            
+                            console.log("error callback into online callback");
                             if (errorCallback) {
                                 errorCallback(timeOutCallback(data, queue.data.timeout, currentTime, finalTime));
                             }

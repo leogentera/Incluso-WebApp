@@ -113,20 +113,7 @@ angular
                     if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
 
-                        logStartActivityAction(activityId, timeStamp,
-                            function(obj) {//Error handler
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                        });
+                        logStartActivityAction(activityId, timeStamp, connectionErrorCallback);
 
                         if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
                             isQuiz = true;
@@ -168,17 +155,7 @@ angular
                         courseId: userCourse.courseid
                     };
 
-                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
-                    }, function (obj) {
-                        //-
-                        if (obj.statusCode == 408) {//Request Timeout
-                            $scope.$emit('HidePreloader');
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
-                    });
+                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {}, connectionErrorCallback);
                 }
 
                 //Update current stage

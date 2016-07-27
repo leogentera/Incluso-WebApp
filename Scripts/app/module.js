@@ -1180,14 +1180,7 @@ angular
             if(course != null && userId != null && currentUser != null) {
                 moodleFactory.Services.GetUserNotification(userId, JSON.parse(course).courseid, JSON.parse(currentUser).token, function () {
                     callback();
-                }, function(obj){
-                    if (obj.statusCode == 408) {//Request Timeout
-                        $scope.$emit('HidePreloader');
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                }, true);
+                }, connectionErrorCallback, true);
             }
         };
         

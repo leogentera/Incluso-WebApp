@@ -158,12 +158,7 @@ angular
                             cordova.exec(function () {
                                 }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
                         }
-                    }, function (obj) {
-                    $scope.$emit('HidePreloader');
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    },true
+                    }, connectionErrorCallback, true
                 );
             };
         }

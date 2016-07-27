@@ -867,60 +867,20 @@ angular
                         }, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
 
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
+                           connectionErrorCallback(obj);
 
                         });
 
                         activityModel.activityType = "Assign";
                         activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
 
-                        _endActivity(activityModel, function () {
-                            updateProfile();
-
-                        }, function(obj) {//Error handler
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {
-                                $timeout(function () {
-                                    //$location.path('/Offline');
-                                    console.log(obj.statusCode);
-                                }, 1000);
-                            }
-
-                        });
+                        _endActivity(activityModel, updateProfile, connectionErrorCallback);
 
                     } else {
                         activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
                         activityModel.activityType = "Quiz";
 
-                        _endActivity(activityModel, function () {
-                            updateProfile();
-                        }, function(obj) {//Error handler
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-
-                        });
+                        _endActivity(activityModel, updateProfile, connectionErrorCallback);
                     }
 
                 }, 1);
@@ -1089,40 +1049,11 @@ angular
                             if ($scope.activity_status == 0) {
                                 $scope.activity_status = 1;
 
-                                updateUserStars($scope.parentActivity.activity_identifier, null, function(obj) {//Error handler
-                                    $scope.$emit('HidePreloader');
-
-                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
-                                    } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
-                                    }
-                                });
+                                updateUserStars($scope.parentActivity.activity_identifier, null, connectionErrorCallback);
                             }
 
                             $location.path(pathToRedirect());
-                        },
-
-                        function (obj) {
-                            //-
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                            //-
-                        }
-                    );
+                        }, connectionErrorCallback);
 
                 } else {
 
@@ -1132,19 +1063,7 @@ angular
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
-                        updateUserStars($scope.parentActivity.activity_identifier, null, function(obj) {//Error handler
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                        });
+                        updateUserStars($scope.parentActivity.activity_identifier, null, connectionErrorCallback);
                     }
 
                     if ($scope.activity_identifier === 3601) {

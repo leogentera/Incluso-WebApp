@@ -68,7 +68,7 @@ angular
                 moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, quizesArray, userToken,
                     successCallback,
                     loginErrorCallback,
-                    true, true);
+                    true, false);
             }
 
             $scope.loadCredentials = function () {
@@ -255,9 +255,9 @@ angular
                                                         },loginErrorCallback, true);
                                                     }, loginErrorCallback, true, true);
                                                 });
-                                            }, loginErrorCallback, true);                                                    
-                                        }, loginErrorCallback, true, true);
-                                    }, loginErrorCallback, true, true);
+                                            }, loginErrorCallback, false);
+                                        }, loginErrorCallback, true, false);
+                                    }, loginErrorCallback, true, false);
                                 }, loginErrorCallback,true,true);
                             });                            
                         }, function (obj) {

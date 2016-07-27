@@ -291,19 +291,7 @@ angular
                     //Update local storage and activities status array
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);
                     assignStars();
-                }, function(obj) {//Error handler
-                    $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                });
+                }, connectionErrorCallback);
                 $location.path($scope.location);
             };
             
@@ -320,10 +308,8 @@ angular
                     };
                 updateLocalStorageStars(data);
                 moodleFactory.Services.PutStars(data, $scope.profile, currentUser.token, function () {
-                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (data) {},function (obj) {                        
-                        $scope.$emit('HidePreloader');
-                    });
-                }, function(){});
+                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (){}, connectionErrorCallback);
+                }, connectionErrorCallback);
             }
             
             function updateLocalStorageStars(data) {
