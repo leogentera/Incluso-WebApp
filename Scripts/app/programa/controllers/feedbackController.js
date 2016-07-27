@@ -197,7 +197,6 @@ angular
                     var tiedMisGustos = _.filter(misGustosProfiles, function(item){ return item.score == maxMisGustos.score; });
                     //If there is a tie in Mis Gustos Profiles goes to reto Multiple Activities
                     if (tiedMisGustos.length > 1) {
-                        console.log("TiedMisGustos" + tiedMisGustos.length);
                         var retoMultipleActivities = _.filter(profilePoints, function(item){
                             for(var i = 0; i < misGustosActivities.length; i++){
                                 var misGustosActivity = misGustosActivities[i];
@@ -291,7 +290,22 @@ angular
                     //Update local storage and activities status array
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);
                     assignStars();
-                }, connectionErrorCallback);
+                }, function (obj) {
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          if (data && data.messageerror) {
+                              errorMessage = window.atob(data.messageerror);
+                              $scope.model.modelState.errorMessages = [errorMessage];
+                          }
+                          $scope.$emit('HidePreloader');          
+                      }, 1);
+                    }
+                });
                 $location.path($scope.location);
             };
             
@@ -308,8 +322,38 @@ angular
                     };
                 updateLocalStorageStars(data);
                 moodleFactory.Services.PutStars(data, $scope.profile, currentUser.token, function () {
-                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (){}, connectionErrorCallback);
-                }, connectionErrorCallback);
+                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (){}, function (obj) {
+                        $scope.$emit('HidePreloader');
+                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                          $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                          }, 1);
+                        } else {//Another kind of Error happened
+                          $timeout(function () {
+                              if (data && data.messageerror) {
+                                  errorMessage = window.atob(data.messageerror);
+                                  $scope.model.modelState.errorMessages = [errorMessage];
+                              }
+                              $scope.$emit('HidePreloader');          
+                          }, 1);
+                        }
+                    });
+                }, function (obj) {
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          if (data && data.messageerror) {
+                              errorMessage = window.atob(data.messageerror);
+                              $scope.model.modelState.errorMessages = [errorMessage];
+                          }
+                          $scope.$emit('HidePreloader');          
+                      }, 1);
+                    }
+                });
             }
             
             function updateLocalStorageStars(data) {

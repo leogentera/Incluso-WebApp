@@ -49,7 +49,22 @@ angular
                    moodleFactory.Services.GetAsyncDiscussionDetail($scope.notification.postid, $scope.user.token,function(data){
                         var posts = data.posts;
                         posts.forEach(initializeCommentsData);
-                    }, connectionErrorCallback, true);
+                    }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
                 }
             }
             
@@ -60,7 +75,22 @@ angular
                     $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId; });
                     _readNotification(userId, $routeParams.notificationId, $routeParams.usernotificationId, userNotifications);
                     getPost();
-                }, connectionErrorCallback, true);
+                }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
             }
             
             initialLoading();
@@ -98,7 +128,22 @@ angular
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
                     cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
-                }, connectionErrorCallback, true);
+                }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
             };
             
             

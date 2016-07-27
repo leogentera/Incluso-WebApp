@@ -173,7 +173,7 @@ angular
                         {
                             method: 'POST',
                             url: API_RESOURCE.format("authentication"),
-                            timeout: $rootScope.globalTimeOut,
+                            timeout: 30000,
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                             data: $.param({
                                 username: $scope.userCredentialsModel.username.toString().toLowerCase(),
@@ -255,8 +255,8 @@ angular
                                                         },loginErrorCallback, true);
                                                     }, loginErrorCallback, true, true);
                                                 });
-                                            }, loginErrorCallback, false);
-                                        }, loginErrorCallback, true, false);
+                                            }, loginErrorCallback, true);
+                                        }, loginErrorCallback, true, true);
                                     }, loginErrorCallback, true, false);
                                 }, loginErrorCallback,true,true);
                             });                            

@@ -113,7 +113,22 @@ angular
                     if (activityId) {
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
 
-                        logStartActivityAction(activityId, timeStamp, connectionErrorCallback);
+                        logStartActivityAction(activityId, timeStamp, function(obj) {
+							$scope.$emit('HidePreloader');
+							if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+							  $timeout(function () {
+								$location.path('/Offline'); //This behavior could change
+							  }, 1);
+							} else {//Another kind of Error happened
+							  $timeout(function () {
+								  if (data && data.messageerror) {
+									  errorMessage = window.atob(data.messageerror);
+									  $scope.model.modelState.errorMessages = [errorMessage];
+								  }
+								  $scope.$emit('HidePreloader');          
+							  }, 1);
+							}
+						});
 
                         if (quizIdentifiers.indexOf(activityId.toString()) > -1) {//If the activity is a Quiz...
                             isQuiz = true;
@@ -155,7 +170,22 @@ angular
                         courseId: userCourse.courseid
                     };
 
-                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {}, connectionErrorCallback);
+                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {}, function (obj) {
+						$scope.$emit('HidePreloader');
+						if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+						  $timeout(function () {
+							$location.path('/Offline'); //This behavior could change
+						  }, 1);
+						} else {//Another kind of Error happened
+						  $timeout(function () {
+							  if (data && data.messageerror) {
+								  errorMessage = window.atob(data.messageerror);
+								  $scope.model.modelState.errorMessages = [errorMessage];
+							  }
+							  $scope.$emit('HidePreloader');          
+						  }, 1);
+						}
+					});
                 }
 
                 //Update current stage

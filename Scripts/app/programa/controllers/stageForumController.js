@@ -118,7 +118,20 @@ angular
                         if (_loadedResources && _pageLoaded) {
                             $scope.$emit('HidePreloader')
                         }
-                        connectionErrorCallback(obj);
+                        $scope.$emit('HidePreloader');
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                          $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                          }, 1);
+                                        } else {//Another kind of Error happened
+                                          $timeout(function () {
+                                              if (data && data.messageerror) {
+                                                  errorMessage = window.atob(data.messageerror);
+                                                  $scope.model.modelState.errorMessages = [errorMessage];
+                                              }
+                                              $scope.$emit('HidePreloader');          
+                                          }, 1);
+                                        }  
                     }, true) : '';
 
                     if ($scope.moodleId == 149) {
@@ -214,7 +227,22 @@ angular
                         activity: childCourseModuleId
                     };
 
-                    moodleFactory.Services.PutAsyncFirstTimeInfoForForums(userId, CurrentUser.token, dataModel, function(){}, connectionErrorCallback);
+                    moodleFactory.Services.PutAsyncFirstTimeInfoForForums(userId, CurrentUser.token, dataModel, function(){}, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
                 }
 
                 function getForumDiscussionsCallback(data, key) {
@@ -362,7 +390,22 @@ controller('closingChallengeController', function ($scope, $modalInstance, $rout
             $scope.title = data.node.titulo;
             $scope.instructions = data.node.mensaje;
         }
-    }, connectionErrorCallback, false);
+    }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, false);
 
     var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
 

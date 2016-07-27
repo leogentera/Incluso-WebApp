@@ -20,7 +20,6 @@
             
             var obj = {};
             if (!isTimeout) {
-                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                 obj = {
                     messageerror: (data && data.messageerror) ? data.messageerror : "Undefined Server Error",
                     statusCode: (data && data.status) ? data.status : 500
@@ -1357,10 +1356,7 @@
             queue.retryCount = 0;
             queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;
-            if (queue.data.timeout) {
-                queue.data.timeout = _maxTimeOut;
-            }
-            
+                        
             _updateConnectionStatus(function () {
                 
                 console.log("DeviceOnline callback");
@@ -1388,6 +1384,10 @@
                 }else{
                     console.log("device offline or forced to queue");
                     requestQueue.push(queue);
+                    
+                    if (queue.data.timeout) {
+                        queue.data.timeout = _maxTimeOut;
+                    }
                     _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
             
                     if (requestQueue.length == 1 || _queuePaused) {

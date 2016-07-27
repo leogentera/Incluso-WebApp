@@ -96,7 +96,22 @@ angular
                         $scope.forumId = data.forumid;
                         callback();
 
-                    }, connectionErrorCallback, true);
+                    }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
                 }
 
                 //Time Out Message modal
@@ -140,7 +155,22 @@ angular
                             function () {//Success
                                 $scope.$emit('HidePreloader');
                                 $location.path("/Community/50000");
-                            }, connectionErrorCallback);
+                            }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
                     }
                 }
 

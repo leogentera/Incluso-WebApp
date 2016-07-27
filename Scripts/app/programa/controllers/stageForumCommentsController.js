@@ -103,7 +103,22 @@ angular
                         localStorage.setItem("likesByUser", JSON.stringify(userLikes));
 
                         var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
-                        moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, countLikesByUser, connectionErrorCallback);
+                        moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, countLikesByUser, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
 
                     }, offlineCallback);
                 };
@@ -129,7 +144,22 @@ angular
                             showRobotForum();
                             localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
 
-                            moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {}, connectionErrorCallback);
+                            moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {}, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
 
                         }
                     }
@@ -147,7 +177,22 @@ angular
                         /* sumar uno extra al total */
                         //if (forumData.totalExtraPoints < 11) {
                         if (forumData.totalExtraPoints < $scope.activity.points_limit) {
-                            updateUserForumStars($routeParams.activityId, $scope.activity.extra_points, true, successPutStarsCallback, connectionErrorCallback);
+                            updateUserForumStars($routeParams.activityId, $scope.activity.extra_points, true, successPutStarsCallback, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
                         }
                     }
                 };
@@ -184,7 +229,22 @@ angular
                             }
                             localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
                             showRobotForum();
-                            moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){}, connectionErrorCallback);
+                            moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){}, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
                         }
                     }
                 };
@@ -371,7 +431,22 @@ angular
                                 checkForumExtraPoints();
                                 refreshRepliesToPost(parentId);
                                 checkForumProgress(refreshTopicData);
-                            }, connectionErrorCallback, null, true);
+                            }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, null, true);
 
                     }, offlineCallback);
 
@@ -537,7 +612,20 @@ angular
                             $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
                             $scope.isReportedAbuseSentModalCollapsed["id" + postId] = false;
                             
-                            connectionErrorCallback(obj);
+                            $scope.$emit('HidePreloader');
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                          $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                          }, 1);
+                                        } else {//Another kind of Error happened
+                                          $timeout(function () {
+                                              if (data && data.messageerror) {
+                                                  errorMessage = window.atob(data.messageerror);
+                                                  $scope.model.modelState.errorMessages = [errorMessage];
+                                              }
+                                              $scope.$emit('HidePreloader');          
+                                          }, 1);
+                                        }  
                         }, true);
 
                     }, offlineCallback);
@@ -630,7 +718,22 @@ angular
                     });
 
                     moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion,
-                        $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, connectionErrorCallback, true);
+                        $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
 
                     forceUpdateForumProgress();
                 }
@@ -679,7 +782,22 @@ angular
 
                 var refreshTopicData = function () {
                     moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion,
-                        $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, connectionErrorCallback, true);
+                        $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
                 };
 
                 var refreshRepliesToPost = function (parentId) {
@@ -727,7 +845,22 @@ angular
                         showMoreCounter++;
                         $scope.$emit('ShowPreloader');
                         moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion,
-                                $scope.activity.forumid, postPager.from, postPager.to, 0, "default", getPostsDataCallback, connectionErrorCallback, true);
+                                $scope.activity.forumid, postPager.from, postPager.to, 0, "default", getPostsDataCallback, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
                     }, offlineCallback);
 
                 };

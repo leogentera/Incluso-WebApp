@@ -447,7 +447,9 @@ var _tryAssignAward = function () {
             "award": true,
             "dataissued": moment().format("YYYY/MM/DD h:mm:ss")
         };
-        moodleFactory.Services.PutAsyncAward(userid, awardData, function () { },connectionErrorCallback);
+        moodleFactory.Services.PutAsyncAward(userid, awardData, function () { },function(obj){
+          
+          });
 
         // update profile
         var awards = _getAwards();
@@ -687,23 +689,6 @@ var successCallback = function (data) {
 /* function to prevent broken code when calling a service */
 var errorCallbackNoScope = function (obj) {
 };
-
-function connectionErrorCallback(obj) {
-    $scope.$emit('HidePreloader');
-    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-      $timeout(function () {
-        $location.path('/Offline'); //This behavior could change
-      }, 1);
-    } else {//Another kind of Error happened
-      $timeout(function () {
-          if (data && data.messageerror) {
-              errorMessage = window.atob(data.messageerror);
-              $scope.model.modelState.errorMessages = [errorMessage];
-          }
-          $scope.$emit('HidePreloader');          
-      }, 1);
-    }
-}
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
     var matchingActivity = null;

@@ -186,7 +186,22 @@ angular
                 };
 
                 moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
-                }, connectionErrorCallback);
+                }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
 
             };
 
@@ -199,7 +214,22 @@ angular
                     $scope.updateStageFirstTime();
                 }
 
-                var challengeCompletedId = _closeChallenge($scope.idEtapa, connectionErrorCallback);
+                var challengeCompletedId = _closeChallenge($scope.idEtapa, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
 
                 //Exclude challenges initial and final from showing modal robot
                 var challengeExploracionInicial = 205;
@@ -226,7 +256,22 @@ angular
 
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                _progressNotification(connectionErrorCallback);
+                _progressNotification(function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
 
                 if ($scope.stageProgress === 100 && fromLastQuiz) {
                     localStorage.removeItem("fromLastQuiz/" + userid);
@@ -281,7 +326,22 @@ angular
                     if (_compareSyncDeviceVersions()) {
                         var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
-                        logStartActivityAction(activityId, timeStamp, connectionErrorCallback);
+                        logStartActivityAction(activityId, timeStamp, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
 
                         if (quizIdentifiers.indexOf(activity.activity_identifier) > -1) {//If the activity is a Quiz...
                             isQuiz = true;

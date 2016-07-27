@@ -189,7 +189,22 @@ angular
                 };
 
                 moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
-                }, connectionErrorCallback);
+                }, function (obj) {
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          if (data && data.messageerror) {
+                              errorMessage = window.atob(data.messageerror);
+                              $scope.model.modelState.errorMessages = [errorMessage];
+                          }
+                          $scope.$emit('HidePreloader');          
+                      }, 1);
+                    }
+                });
             };
 
             $scope.playVideo = function (videoAddress, videoName) {
@@ -202,7 +217,22 @@ angular
                 $timeout(function () {
                     $scope.validateConnection(function () {
                         //Get the 'usercourse' object
-                        moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, connectionErrorCallback, null, true);
+                        moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, function (obj) {
+                            $scope.$emit('HidePreloader');
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                              $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                              }, 1);
+                            } else {//Another kind of Error happened
+                              $timeout(function () {
+                                  if (data && data.messageerror) {
+                                      errorMessage = window.atob(data.messageerror);
+                                      $scope.model.modelState.errorMessages = [errorMessage];
+                                  }
+                                  $scope.$emit('HidePreloader');          
+                              }, 1);
+                            }
+                        }, null, true);
                     }, function () {
 
                         $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -275,7 +305,22 @@ angular
                         if(profile) {
                             profileCallback();
                         } else {
-                            moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, profileCallback, connectionErrorCallback, true);
+                            moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, profileCallback, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
                         }
                         
                         function profileCallback() {
@@ -284,7 +329,22 @@ angular
 
                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
                                 $scope.incLoadedItem(); //16
-                            }, connectionErrorCallback, true);
+                            }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
 
                             _pageLoaded = true;
                             if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
@@ -320,8 +380,38 @@ angular
                             }
                         }
 
-                    }, connectionErrorCallback, true);
-                }, connectionErrorCallback);
+                    }, function (obj) {
+                        $scope.$emit('HidePreloader');
+                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                          $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                          }, 1);
+                        } else {//Another kind of Error happened
+                          $timeout(function () {
+                              if (data && data.messageerror) {
+                                  errorMessage = window.atob(data.messageerror);
+                                  $scope.model.modelState.errorMessages = [errorMessage];
+                              }
+                              $scope.$emit('HidePreloader');          
+                          }, 1);
+                        }
+                    }, true);
+                }, function (obj) {
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          if (data && data.messageerror) {
+                              errorMessage = window.atob(data.messageerror);
+                              $scope.model.modelState.errorMessages = [errorMessage];
+                          }
+                          $scope.$emit('HidePreloader');          
+                      }, 1);
+                    }
+                });
 
                 calculateTotalProgress();
             }
@@ -380,8 +470,21 @@ angular
                         localStorage.setItem("userStars", JSON.stringify(dataStars));
                     }
                 }, function (obj) {
-                    $scope.activitiesCompleted = [];
-                    connectionErrorCallback(obj);
+                    $scope.activitiesCompleted = [];                    
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          if (data && data.messageerror) {
+                              errorMessage = window.atob(data.messageerror);
+                              $scope.model.modelState.errorMessages = [errorMessage];
+                          }
+                          $scope.$emit('HidePreloader');          
+                      }, 1);
+                    }
                 }, true);
             }
 
@@ -411,7 +514,22 @@ angular
                         }
                     }
 
-                }, connectionErrorCallback, true);
+                }, function (obj) {
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          if (data && data.messageerror) {
+                              errorMessage = window.atob(data.messageerror);
+                              $scope.model.modelState.errorMessages = [errorMessage];
+                          }
+                          $scope.$emit('HidePreloader');          
+                      }, 1);
+                    }
+                }, true);
             }
 
             function getUserLikes() {
@@ -424,10 +542,55 @@ angular
                             $scope.incLoadedItem(); //15
                             //getProfilePoints(currentUser);
                             var userCourse = JSON.parse(localStorage.getItem('usercourse'));
-                            moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(){}, connectionErrorCallback, true);
-                        }, connectionErrorCallback,true);
+                            moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(){}, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            }, true);
+                        }, function (obj) {
+                            $scope.$emit('HidePreloader');
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                              $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                              }, 1);
+                            } else {//Another kind of Error happened
+                              $timeout(function () {
+                                  if (data && data.messageerror) {
+                                      errorMessage = window.atob(data.messageerror);
+                                      $scope.model.modelState.errorMessages = [errorMessage];
+                                  }
+                                  $scope.$emit('HidePreloader');          
+                              }, 1);
+                            }
+                        },true);
                     }
-                }, connectionErrorCallback,true);
+                }, function (obj) {
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          if (data && data.messageerror) {
+                              errorMessage = window.atob(data.messageerror);
+                              $scope.model.modelState.errorMessages = [errorMessage];
+                          }
+                          $scope.$emit('HidePreloader');          
+                      }, 1);
+                    }
+                },true);
             }
 
             //Open Welcome Message modal
@@ -455,7 +618,20 @@ angular
                     if (_loadedResources && _pageLoaded) {
                         $scope.$emit('HidePreloader');
                     }
-                    connectionErrorCallback(obj);
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          if (data && data.messageerror) {
+                              errorMessage = window.atob(data.messageerror);
+                              $scope.model.modelState.errorMessages = [errorMessage];
+                          }
+                          $scope.$emit('HidePreloader');          
+                      }, 1);
+                    }                
                 }, false);
 
             }

@@ -867,20 +867,63 @@ angular
                         }, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
 
-                           connectionErrorCallback(obj);
+                           $scope.$emit('HidePreloader');
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                          $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                          }, 1);
+                                        } else {//Another kind of Error happened
+                                          $timeout(function () {
+                                              if (data && data.messageerror) {
+                                                  errorMessage = window.atob(data.messageerror);
+                                                  $scope.model.modelState.errorMessages = [errorMessage];
+                                              }
+                                              $scope.$emit('HidePreloader');          
+                                          }, 1);
+                                        }  
 
                         });
 
                         activityModel.activityType = "Assign";
                         activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
 
-                        _endActivity(activityModel, updateProfile, connectionErrorCallback);
+                        _endActivity(activityModel, updateProfile, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
 
                     } else {
                         activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
                         activityModel.activityType = "Quiz";
 
-                        _endActivity(activityModel, updateProfile, connectionErrorCallback);
+                        _endActivity(activityModel, updateProfile, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
                     }
 
                 }, 1);
@@ -1049,11 +1092,41 @@ angular
                             if ($scope.activity_status == 0) {
                                 $scope.activity_status = 1;
 
-                                updateUserStars($scope.parentActivity.activity_identifier, null, connectionErrorCallback);
+                                updateUserStars($scope.parentActivity.activity_identifier, null, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
                             }
 
                             $location.path(pathToRedirect());
-                        }, connectionErrorCallback);
+                        }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
 
                 } else {
 
@@ -1063,7 +1136,22 @@ angular
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
-                        updateUserStars($scope.parentActivity.activity_identifier, null, connectionErrorCallback);
+                        updateUserStars($scope.parentActivity.activity_identifier, null, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      if (data && data.messageerror) {
+                                          errorMessage = window.atob(data.messageerror);
+                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                      }
+                                      $scope.$emit('HidePreloader');          
+                                  }, 1);
+                                }
+                            });
                     }
 
                     if ($scope.activity_identifier === 3601) {
