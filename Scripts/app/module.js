@@ -8,6 +8,7 @@ angular
         'inlcuso.shared.mainNavigation',
         'incluso.shared.offlineController',
         'incluso.shared.timeOut',
+        'incluso.shared.errorController',
         'incluso.home',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
         // one controller for all controllers in the module, and we would also need a variable to keep track of the modules:
@@ -707,6 +708,12 @@ angular
             controller: 'offlineController'
         });
 
+        $routeProvider.when('/connectionError', {
+            templateUrl: 'Templates/Shared/errorTemplate.html',
+            controller: 'errorController'
+        });
+
+        
         $routeProvider.when('/TimeOut', {
             templateUrl: 'Templates/Shared/timeout.html',
             controller: 'timeOutController'
@@ -1188,7 +1195,8 @@ angular
                       }, 1);
                     } else {//Another kind of Error happened
                       $timeout(function () {
-                          $scope.$emit('HidePreloader');          
+                          $scope.$emit('HidePreloader');
+                          $location.path('/connectionError');
                       }, 1);
                     }        
                 }, true);
