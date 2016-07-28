@@ -771,7 +771,7 @@ function getChallengeByActivity_identifier(activity_identifier, usercourse) {
                 var activity = challenge.activities[i];
                 //console.log(activity.activity_identifier + " : " + activity);
                 if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
-                    matchingChallengeIndex = challengeIndex;
+                    matchingChallengeIndex = j;
                     breakAll = true;
                     break;
                 }
