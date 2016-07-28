@@ -1621,6 +1621,23 @@
                                        doRequestforCellphone();
 
                                    }).error(function (data, status, header, config) {
+                                    
+                                        var finalTime = new Date().getTime();
+                                        var isTimeout = ((finalTime - currentTime) > globalTimeOut );
+                                        
+                                        if (!isTimeout) {
+                                            requestQueue[0].retryCount++;
+                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+            
+                                        } else {
+                                            _currentTimeOutAttempt++;
+                                            if (_currentTimeOutAttempt >= _maxTimeOutAttempts) {
+                                                _lastTimeQueuePaused = new Date().getTime();
+                                                _isQueueWorking = false;
+                                            }
+                                    }
+                                    
+                                    
                                         console.log("error callback httpRequest into queue");
                                         doRequestforCellphone();
                                    });
