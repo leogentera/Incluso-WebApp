@@ -224,6 +224,36 @@
                 </div>
             </div>
 
+            <div tabindex="-1" id="pendingQueueModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-robot robot-lg closing-stage-modal user-help ng-scope">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <img src="assets/images/img-error-msg.svg" alt="...">
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center text-uppercase">¡Espera!</h3>
+                                <div>
+                                    <p class="txt-renglon centered">
+                                        Aún hay datos que no hemos guardado en nuestros servidores, si abandonas la aplicación en este momento podrías perder parte de tu avance en la misión.
+                                    </p>
+                                    <p class="txt-renglon centered">
+                                        ¿Estás seguro qué deseas salir?
+                                    </p>
+                                </div>
+                                <a role="button" id="leavePendingQueue" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">Si</a>
+                                <br/>
+                                <a role="button" id="stayPendingQueue" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">No</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>
@@ -288,6 +318,7 @@
 <script src="Scripts/app/shared/controllers/offlineController.js"></script>
 <script src="Scripts/app/shared/controllers/timeOutController.js"></script>
 <script src="Scripts/app/shared/controllers/errorController.js"></script>
+<script src="Scripts/app/shared/controllers/pendingQueueController.js"></script>
 <script src="Scripts/app/home/controllers/home.js"></script>
 <script src="Scripts/app/public/controllers/login.js"></script>
 <script src="Scripts/app/public/controllers/register.js"></script>

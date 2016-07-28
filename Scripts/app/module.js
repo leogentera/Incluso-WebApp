@@ -8,6 +8,7 @@ angular
         'inlcuso.shared.mainNavigation',
         'incluso.shared.offlineController',
         'incluso.shared.timeOut',
+        'incluso.shared.pendingQueueController',
         'incluso.shared.errorController',
         'incluso.home',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
@@ -713,10 +714,15 @@ angular
             controller: 'errorController'
         });
 
-        
+
         $routeProvider.when('/TimeOut', {
             templateUrl: 'Templates/Shared/timeout.html',
             controller: 'timeOutController'
+        });
+
+        $routeProvider.when('/pendingQueue',{
+            templateUrl: 'Templates/Shared/PendingQueue.html',
+            controller: 'pendingQueueController'
         });
 
         $routeProvider.otherwise({

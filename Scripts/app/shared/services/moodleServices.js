@@ -15,9 +15,9 @@
         var _maxTimeOut = 300000;
 
         function timeOutCallback(data, timeOut, currentTime, finalTime) {
-            
+
             var isTimeout = ((timeOut > 0) && ((finalTime - currentTime) > timeOut));
-            
+
             var obj = {};
             if (!isTimeout) {
                 obj = {
@@ -116,7 +116,7 @@
         var _getAsyncActivityQuizInfo = function (activityId, userId, activitiesArray, token, successCallback, errorCallback, forceRefresh, isLoginRequest) {
             if (userId != -1) {
                 _getAsyncDataByActivities("activity/" + activityId, API_RESOURCE.format('activitiesinformation'), activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, isLoginRequest);
-            }else{                
+            }else{
                 console.log("userId = -1");
             }
         };
@@ -476,7 +476,7 @@
                 }, 1000);
             }else{
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-    
+
                 if (!currentUser) {
                     console.log("currentUser does not exist");
                 }
@@ -484,7 +484,7 @@
                 if (isLoginRequest) {//Calling from login/register
                     timeOut = longTimeOut;
                 }
-    
+
                 _httpFactory({
                     method: 'GET',
                     url: url,
@@ -1345,7 +1345,7 @@
         }
         
         function addRequestToQueue(key, queue, successCallback, errorCallback, forceAddToQueue) {
-            
+
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
             var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
@@ -1356,9 +1356,9 @@
             queue.retryCount = 0;
             queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;
-                        
+
             _updateConnectionStatus(function () {
-                
+
                 console.log("DeviceOnline callback");
                 if(_isDeviceOnline && !forceAddToQueue){
                     console.log("device online into updateConnectionStatusOnlineCallback");
@@ -1372,7 +1372,7 @@
                                     _setLocalStorageJsonItem(queue.key, data);
                                 }
                             }
-                            
+
                             successCallback();
                         }).error(function(data){
                             var finalTime = new Date().getTime();
@@ -1384,12 +1384,12 @@
                 }else{
                     console.log("device offline or forced to queue");
                     requestQueue.push(queue);
-                    
+
                     if (queue.data.timeout) {
                         queue.data.timeout = _maxTimeOut;
                     }
                     _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-            
+
                     if (requestQueue.length == 1 || _queuePaused) {
                         if (window.mobilecheck()) {
                             doRequestforCellphone(errorCallback);
@@ -1399,9 +1399,9 @@
                     }
                 }
             },function(){
-                console.log("updateConnectionStatusOfflineCallback");    
+                console.log("updateConnectionStatusOfflineCallback");
             });
-          
+
         }
 
         function doRequestforWeb(errCallback) {
@@ -1429,7 +1429,6 @@
                             //Reemplazamos el token con el token actual
                             queue.data.headers.Authorization = _currentUser.token;
                             var currentTime = new Date().getTime();
-                            debugger;
                             _httpFactory(queue.data)
                                 .success(function (data, status, headers, config) {
 
@@ -1448,7 +1447,6 @@
                                     }
                                     doRequestforWeb();
                                 }).error(function (data, status, headers, config) {
-                                    debugger;
                                     var finalTime = new Date().getTime();
                                     var isTimeout = status == -1; //(finalTime - currentTime > queue.data.timeout && queue.data.timeout > 0);
                                     var obj;
