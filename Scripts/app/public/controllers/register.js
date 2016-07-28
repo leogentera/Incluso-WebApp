@@ -367,13 +367,13 @@ angular
                                                     }, 1000);
                                                 }, loginErrorCallback, true);
                                             }, loginErrorCallback, true);
-                                        }, offlineCallback, true, true);
-                                    }, offlineCallback, true, true);
-                                }, offlineCallback, true, true);
-                            }, offlineCallback, true, true);
-                        }, offlineCallback, true, true);
-                    }, offlineCallback, true, true);
-                }, offlineCallback, true, true);                
+                                        }, loginErrorCallback, true, true);
+                                    }, loginErrorCallback, true, true);
+                                }, loginErrorCallback, true, true);
+                            }, loginErrorCallback, true, true);
+                        }, loginErrorCallback, true, true);
+                    }, loginErrorCallback, true, true);
+                }, loginErrorCallback, true, true);                
             };
 
             $scope.datePickerClick = function () {
@@ -397,6 +397,20 @@ angular
                 
             };
 
+            function loginErrorCallback(obj) {
+                console.log("login error callback");
+                $scope.userCredentialsModel.modelState.isValid = false;
+                $rootScope.loaderForLogin = false; //For Login Preloader
+                progressBar.set(0); //For Login Preloader
+                $scope.loaderRandom(); //For Login Preloader
+                localStorage.removeItem("CurrentUser");
+                $scope.$emit('HidePreloader');
+                $timeout(function () {                                            
+                    $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                    $scope.$emit('scrollTop');
+                }, 1);
+            }
+            
             function SuccessDatePicker(data) {
                 $("input[name='birthday']").val(data);
             }
