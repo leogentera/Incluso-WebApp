@@ -138,7 +138,7 @@ angular
                     var errorMessage;
 
                     if ((data != null && data.messageerror != null)) {
-                        errorMessage = window.atob(data.messageerror);
+                        errorMessage = window.atob(obj.messageerror);
                     } else {
                         errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
                     }
@@ -180,7 +180,7 @@ angular
                         $scope.$emit('HidePreloader');
                         var errorMessage;
                         if ((data != null && data.messageerror != null)) {
-                            errorMessage = window.atob(data.messageerror);
+                            errorMessage = window.atob(obj.messageerror);
                         } else {
                             errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
                         }
@@ -233,7 +233,7 @@ angular
 
                     var errorMessage;
                     if ((data != null && data.messageerror != null)) {
-                        errorMessage = window.atob(data.messageerror);
+                        errorMessage = window.atob(obj.messageerror);
                     } else {
                         errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
                     }

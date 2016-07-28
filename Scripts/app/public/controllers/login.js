@@ -268,8 +268,8 @@ angular
                     }).error(function (data, status, headers, config) {
                         $scope.userCredentialsModel.modelState.isValid = false;
                         var errorMessage = "";
-                        if (data && data.messageerror) {
-                            errorMessage = window.atob(data.messageerror);
+                        if (obj && obj.messageerror) {
+                            errorMessage = window.atob(obj.messageerror);
                         } else {
                             errorMessage = "Se necesita estar conectado a Internet para continuar";
                         }
@@ -412,7 +412,7 @@ angular
             function FacebookLoginFailure(data) {
                console.log(JSON.stringify(data));
                 $scope.userCredentialsModel.modelState.isValid = false;
-                //var errorMessage = window.atob(data.messageerror);
+                //var errorMessage = window.atob(obj.messageerror);
 
                 $timeout(function () {
                     $scope.$emit('HidePreloader');
@@ -433,7 +433,6 @@ angular
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
                     $scope.$emit('scrollTop');
                 }, 1);
-
             }
 
             if(!localStorage.getItem("offlineConnection")){

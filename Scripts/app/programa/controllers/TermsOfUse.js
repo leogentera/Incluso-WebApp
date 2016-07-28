@@ -62,13 +62,10 @@ angular
                                 $location.path('/Offline'); //This behavior could change
                               }, 1);
                             } else {//Another kind of Error happened
-                              $timeout(function () {
-                                  if (data && data.messageerror) {
-                                      errorMessage = window.atob(data.messageerror);
-                                      $scope.model.modelState.errorMessages = [errorMessage];
-                                  }
-                                  $scope.$emit('HidePreloader');          
-                              }, 1);
+                             console.log("Another kind of Error happened");
+                                $timeout(function () {
+                                    $scope.$emit('HidePreloader');
+                                }, 1);
                             }
                         }, true );
                 }

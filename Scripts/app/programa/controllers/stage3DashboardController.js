@@ -194,10 +194,7 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (data && data.messageerror) {
-                                          errorMessage = window.atob(data.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
+                                      console.log("Another kind of Error happened");
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -222,10 +219,7 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (data && data.messageerror) {
-                                          errorMessage = window.atob(data.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
+                                      console.log("Another kind of Error happened");
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -264,10 +258,7 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (data && data.messageerror) {
-                                          errorMessage = window.atob(data.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
+                                      console.log("Another kind of Error happened");
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -334,10 +325,7 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (data && data.messageerror) {
-                                          errorMessage = window.atob(data.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
+                                      console.log("Another kind of Error happened");
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }

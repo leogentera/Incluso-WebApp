@@ -120,13 +120,9 @@ angular
 								$location.path('/Offline'); //This behavior could change
 							  }, 1);
 							} else {//Another kind of Error happened
-							  $timeout(function () {
-								  if (data && data.messageerror) {
-									  errorMessage = window.atob(data.messageerror);
-									  $scope.model.modelState.errorMessages = [errorMessage];
-								  }
-								  $scope.$emit('HidePreloader');          
-							  }, 1);
+								$timeout(function () {								
+									$scope.$emit('HidePreloader');          
+								}, 1);
 							}
 						});
 
@@ -177,13 +173,9 @@ angular
 							$location.path('/Offline'); //This behavior could change
 						  }, 1);
 						} else {//Another kind of Error happened
-						  $timeout(function () {
-							  if (data && data.messageerror) {
-								  errorMessage = window.atob(data.messageerror);
-								  $scope.model.modelState.errorMessages = [errorMessage];
-							  }
-							  $scope.$emit('HidePreloader');          
-						  }, 1);
+						  $timeout(function () {								
+									$scope.$emit('HidePreloader');          
+								}, 1);
 						}
 					});
                 }

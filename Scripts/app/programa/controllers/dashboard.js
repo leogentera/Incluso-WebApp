@@ -196,12 +196,9 @@ angular
                         $location.path('/Offline'); //This behavior could change
                       }, 1);
                     } else {//Another kind of Error happened
+                      console.log("Another kind of Error happened");
                       $timeout(function () {
-                          if (data && data.messageerror) {
-                              errorMessage = window.atob(data.messageerror);
-                              $scope.model.modelState.errorMessages = [errorMessage];
-                          }
-                          $scope.$emit('HidePreloader');          
+                          $scope.$emit('HidePreloader');
                       }, 1);
                     }
                 });
@@ -224,13 +221,10 @@ angular
                                 $location.path('/Offline'); //This behavior could change
                               }, 1);
                             } else {//Another kind of Error happened
-                              $timeout(function () {
-                                  if (data && data.messageerror) {
-                                      errorMessage = window.atob(data.messageerror);
-                                      $scope.model.modelState.errorMessages = [errorMessage];
-                                  }
-                                  $scope.$emit('HidePreloader');          
-                              }, 1);
+                              console.log("Another kind of Error happened");
+                                $timeout(function () {
+                                    $scope.$emit('HidePreloader');
+                                }, 1);
                             }
                         }, null, true);
                     }, function () {
@@ -312,13 +306,10 @@ angular
                                     $location.path('/Offline'); //This behavior could change
                                   }, 1);
                                 } else {//Another kind of Error happened
-                                  $timeout(function () {
-                                      if (data && data.messageerror) {
-                                          errorMessage = window.atob(data.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
-                                      $scope.$emit('HidePreloader');          
-                                  }, 1);
+                                  console.log("Another kind of Error happened");
+                                    $timeout(function () {
+                                        $scope.$emit('HidePreloader');
+                                    }, 1);
                                 }
                             }, true);
                         }
@@ -336,13 +327,10 @@ angular
                                     $location.path('/Offline'); //This behavior could change
                                   }, 1);
                                 } else {//Another kind of Error happened
-                                  $timeout(function () {
-                                      if (data && data.messageerror) {
-                                          errorMessage = window.atob(data.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
-                                      $scope.$emit('HidePreloader');          
-                                  }, 1);
+                                  console.log("Another kind of Error happened");
+                                    $timeout(function () {
+                                        $scope.$emit('HidePreloader');
+                                    }, 1);
                                 }
                             }, true);
 
@@ -388,10 +376,7 @@ angular
                           }, 1);
                         } else {//Another kind of Error happened
                           $timeout(function () {
-                              if (data && data.messageerror) {
-                                  errorMessage = window.atob(data.messageerror);
-                                  $scope.model.modelState.errorMessages = [errorMessage];
-                              }
+                              console.log("Another kind of Error happened");
                               $scope.$emit('HidePreloader');          
                           }, 1);
                         }
@@ -403,12 +388,9 @@ angular
                         $location.path('/Offline'); //This behavior could change
                       }, 1);
                     } else {//Another kind of Error happened
+                      console.log("Another kind of Error happened");
                       $timeout(function () {
-                          if (data && data.messageerror) {
-                              errorMessage = window.atob(data.messageerror);
-                              $scope.model.modelState.errorMessages = [errorMessage];
-                          }
-                          $scope.$emit('HidePreloader');          
+                          $scope.$emit('HidePreloader');
                       }, 1);
                     }
                 });
@@ -477,12 +459,9 @@ angular
                         $location.path('/Offline'); //This behavior could change
                       }, 1);
                     } else {//Another kind of Error happened
+                      console.log("Another kind of Error happened");
                       $timeout(function () {
-                          if (data && data.messageerror) {
-                              errorMessage = window.atob(data.messageerror);
-                              $scope.model.modelState.errorMessages = [errorMessage];
-                          }
-                          $scope.$emit('HidePreloader');          
+                          $scope.$emit('HidePreloader');
                       }, 1);
                     }
                 }, true);
@@ -522,10 +501,7 @@ angular
                       }, 1);
                     } else {//Another kind of Error happened
                       $timeout(function () {
-                          if (data && data.messageerror) {
-                              errorMessage = window.atob(data.messageerror);
-                              $scope.model.modelState.errorMessages = [errorMessage];
-                          }
+                          console.log("Another kind of Error happened");
                           $scope.$emit('HidePreloader');          
                       }, 1);
                     }
@@ -549,13 +525,10 @@ angular
                                     $location.path('/Offline'); //This behavior could change
                                   }, 1);
                                 } else {//Another kind of Error happened
-                                  $timeout(function () {
-                                      if (data && data.messageerror) {
-                                          errorMessage = window.atob(data.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
-                                      $scope.$emit('HidePreloader');          
-                                  }, 1);
+                                 console.log("Another kind of Error happened");
+                                    $timeout(function () {
+                                        $scope.$emit('HidePreloader');
+                                    }, 1);
                                 }
                             }, true);
                         }, function (obj) {
@@ -565,13 +538,10 @@ angular
                                 $location.path('/Offline'); //This behavior could change
                               }, 1);
                             } else {//Another kind of Error happened
-                              $timeout(function () {
-                                  if (data && data.messageerror) {
-                                      errorMessage = window.atob(data.messageerror);
-                                      $scope.model.modelState.errorMessages = [errorMessage];
-                                  }
-                                  $scope.$emit('HidePreloader');          
-                              }, 1);
+                              console.log("Another kind of Error happened");
+                                $timeout(function () {
+                                    $scope.$emit('HidePreloader');
+                                }, 1);
                             }
                         },true);
                     }
@@ -582,12 +552,9 @@ angular
                         $location.path('/Offline'); //This behavior could change
                       }, 1);
                     } else {//Another kind of Error happened
+                      console.log("Another kind of Error happened");
                       $timeout(function () {
-                          if (data && data.messageerror) {
-                              errorMessage = window.atob(data.messageerror);
-                              $scope.model.modelState.errorMessages = [errorMessage];
-                          }
-                          $scope.$emit('HidePreloader');          
+                          $scope.$emit('HidePreloader');
                       }, 1);
                     }
                 },true);
@@ -625,10 +592,7 @@ angular
                       }, 1);
                     } else {//Another kind of Error happened
                       $timeout(function () {
-                          if (data && data.messageerror) {
-                              errorMessage = window.atob(data.messageerror);
-                              $scope.model.modelState.errorMessages = [errorMessage];
-                          }
+                          console.log("Another kind of Error happened");
                           $scope.$emit('HidePreloader');          
                       }, 1);
                     }                
