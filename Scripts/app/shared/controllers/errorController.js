@@ -28,18 +28,18 @@ angular
         $scope.setToolbar("/ProgramaDashboard","Misión Incluso");
         
         /* Shows offline message to prevent a user from using a section that requires connection */
-        $("#offlineModal").addClass("show");         
+        $("#errorConnectionModal").addClass("show");         
         
         $scope.$on("$destroy", function() {
-            $("#offlineModal").removeClass("show");
+            $("#errorConnectionModal").removeClass("show");
         });
 
-        $('#OfflineRedirect').click(function () {
+        $('#errorConnectionRedirect').click(function () {
             $scope.navigateToDashboard();
         });
 
         $scope.navigateToDashboard = function () {
-            $("#offlineModal").removeClass("show");
+            $("#errorConnectionModal").removeClass("show");
             $location.path('/ProgramaDashboard');
         };
 

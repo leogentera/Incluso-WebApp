@@ -202,7 +202,7 @@
         };
 
         var _getAsyncMultipleChallengeInfo = function (token, successCallback, errorCallback, forceRefresh, isLoginRequest) {
-            _getAsyncData("retoMultiplePartials", API_RESOURCE.format('partialactivities'), token, successCallback, errorCallback, forceRefresh, isLoginRequest);
+            _getAsyncData("retoMultiplePartials", API_RESOURCE.format('partialactivities'), token, function(){}, errorCallback, forceRefresh, isLoginRequest);
             _getAsyncData("retoMultipleCompleted", API_RESOURCE.format('multipleactivities'), token, successCallback, errorCallback, forceRefresh, isLoginRequest);
         }
 
@@ -314,7 +314,10 @@
                         }
                     }, 50);
                     successCallback();
-                }).error(errorCallback);
+                }).error(function(){
+                    console.log("error callback on getDataActivityAsync");
+                    errorCallback();
+                });
             } else {
                errorCallback();
             }

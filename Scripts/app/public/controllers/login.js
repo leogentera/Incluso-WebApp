@@ -266,10 +266,7 @@ angular
                                     }, loginErrorCallback, true, false);
                                 }, loginErrorCallback,true,true);
                             });                            
-                        }, function (obj) {
-                            _loadedDrupalResources = false;
-                            _loadedDrupalResourcesWithErrors = true;
-                        }, true, true);
+                        }, loginErrorCallback, true, true);
 
                     }).error(function (data, status, headers, config) {
                         $scope.userCredentialsModel.modelState.isValid = false;
