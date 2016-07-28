@@ -157,7 +157,8 @@ angular
                               }, 1);
                             } else {//Another kind of Error happened
                               $timeout(function () {
-                                 $scope.$emit('HidePreloader');          
+                                 $scope.$emit('HidePreloader');
+                                 $location.path('/connectionError');
                                 }, 1);
                             }
                             

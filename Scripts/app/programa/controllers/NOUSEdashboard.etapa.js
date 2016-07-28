@@ -179,6 +179,7 @@ angular
                         console.log("Another kind of Error happened");
                       $timeout(function () {
                           $scope.$emit('HidePreloader');
+                          $location.path('/connectionError');
                       }, 1);
                     }
                 });

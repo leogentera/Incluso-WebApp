@@ -169,7 +169,33 @@
                     </div>
                 </div>
             </div>
+            <div tabindex="-1" id="errorConnectionModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-robot robot-lg closing-stage-modal user-help ng-scope">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <img src="assets/images/img-error-msg.svg" alt="...">
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center text-uppercase">Tienes una conexión a internet inestable</h3>
+                                <div>
+                                    <p class="txt-renglon centered">
+                                        Para continuar, busca otra red o bien puedes apagar tus datos y/o WiFi y avanzar hasta que cuentes con una red estable,
+                                    </p>
+                                    <p class="txt-renglon centered">
+                                        recuerda puedes avanzar sin tener conexión a internet.
+                                    </p>
+                                </div>
+                                <a role="button" id="OfflineRedirect" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">CONTINUAR</a>
+                            </div>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div tabindex="-1" id="timeoutModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -291,6 +317,7 @@
 <script src="Scripts/app/shared/controllers/navigation.js"></script>
 <script src="Scripts/app/shared/controllers/offlineController.js"></script>
 <script src="Scripts/app/shared/controllers/timeOutController.js"></script>
+<script src="Scripts/app/shared/controllers/errorController.js"></script>
 <script src="Scripts/app/shared/controllers/pendingQueueController.js"></script>
 <script src="Scripts/app/home/controllers/home.js"></script>
 <script src="Scripts/app/public/controllers/login.js"></script>

@@ -135,7 +135,8 @@ angular
                           }, 1);
                         } else {//Another kind of Error happened
                           $timeout(function () {
-                              $scope.$emit('HidePreloader');          
+                              $scope.$emit('HidePreloader');
+                              $location.path('/connectionError');
                           }, 1);
                         }
                     }, true);
@@ -160,7 +161,8 @@ angular
                               }, 1);
                             } else {//Another kind of Error happened
                               $timeout(function () {
-                                  $scope.$emit('HidePreloader');          
+                                  $scope.$emit('HidePreloader');
+                                  $location.path('/connectionError');
                               }, 1);
                             }
                         }, true);
@@ -192,7 +194,8 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      $scope.$emit('HidePreloader');          
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
                                   }, 1);
                                 }
                             }, true);
@@ -231,7 +234,8 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      $scope.$emit('HidePreloader');          
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
                                   }, 1);
                                 }
                             }, true);
@@ -274,7 +278,8 @@ angular
                           }, 1);
                         } else {//Another kind of Error happened
                           $timeout(function () {
-                              $scope.$emit('HidePreloader');          
+                              $scope.$emit('HidePreloader');
+                              $location.path('/connectionError');
                           }, 1);
                         }
                     }, true);
@@ -317,7 +322,8 @@ angular
                                       }, 1);
                                     } else {//Another kind of Error happened
                                       $timeout(function () {
-                                          $scope.$emit('HidePreloader');          
+                                          $scope.$emit('HidePreloader');
+                                          $location.path('/connectionError');
                                       }, 1);
                                     }
                                 
@@ -361,7 +367,8 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      $scope.$emit('HidePreloader');          
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
                                   }, 1);
                                 }
                             });
@@ -400,7 +407,8 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      $scope.$emit('HidePreloader');          
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
                                   }, 1);
                                 }
                             });
@@ -450,7 +458,8 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      $scope.$emit('HidePreloader');          
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
                                   }, 1);
                                 }
                             });
@@ -554,7 +563,8 @@ angular
                                           errorMessage = window.atob(obj.messageerror);
                                           $scope.modelState.errorMessages = [errorMessage];
                                       }
-                                      $scope.$emit('HidePreloader');          
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
                                   }, 1);
                                 }
                             });
@@ -605,7 +615,8 @@ angular
                                           errorMessage = window.atob(obj.messageerror);
                                           $scope.modelState.errorMessages = [errorMessage];
                                       }
-                                      $scope.$emit('HidePreloader');          
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
                                   }, 1);
                                 }
                             });
@@ -709,7 +720,8 @@ angular
                                       }, 1);
                                     } else {//Another kind of Error happened
                                       $timeout(function () {
-                                          $scope.$emit('HidePreloader');          
+                                          $scope.$emit('HidePreloader');
+                                          $location.path('/connectionError');
                                       }, 1);
                                     }  
                                 });
@@ -761,7 +773,8 @@ angular
                                           }, 1);
                                         } else {//Another kind of Error happened
                                           $timeout(function () {
-                                              $scope.$emit('HidePreloader');          
+                                              $scope.$emit('HidePreloader');
+                                              $location.path('/connectionError');
                                           }, 1);
                                         }  
                                 });
