@@ -250,10 +250,6 @@ angular
                           }, 1);
                         } else {//Another kind of Error happened
                           $timeout(function () {
-                              if (obj && obj.messageerror) {
-                                  errorMessage = window.atob(obj.messageerror);
-                                  $scope.model.modelState.errorMessages = [errorMessage];
-                              }
                               $scope.$emit('HidePreloader');          
                           }, 1);
                         }  
@@ -357,10 +353,6 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (obj && obj.messageerror) {
-                                          errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -407,10 +399,6 @@ angular
                                 }, 1);
                               } else {//Another kind of Error happened
                                 $timeout(function () {
-                                    if (obj && obj.messageerror) {
-                                        errorMessage = window.atob(obj.messageerror);
-                                        $scope.model.modelState.errorMessages = [errorMessage];
-                                    }
                                     $scope.$emit('HidePreloader');          
                                 }, 1);
                               }
@@ -427,10 +415,6 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (obj && obj.messageerror) {
-                                          errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -522,10 +506,6 @@ angular
                                 }, 1);
                               } else {//Another kind of Error happened
                                 $timeout(function () {
-                                    if (obj && obj.messageerror) {
-                                        errorMessage = window.atob(obj.messageerror);
-                                        $scope.model.modelState.errorMessages = [errorMessage];
-                                    }
                                     $scope.$emit('HidePreloader');          
                                 }, 1);
                               }
@@ -577,10 +557,6 @@ angular
                                             }, 1);
                                           } else {//Another kind of Error happened
                                             $timeout(function () {
-                                                if (obj && obj.messageerror) {
-                                                    errorMessage = window.atob(obj.messageerror);
-                                                    $scope.model.modelState.errorMessages = [errorMessage];
-                                                }
                                                 $scope.$emit('HidePreloader');          
                                             }, 1);
                                           }
@@ -611,21 +587,17 @@ angular
                                         profile.hasRequiredApps = true;
 
                                         moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,function(){},function (obj) {
-                                $scope.$emit('HidePreloader');
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                  $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                  }, 1);
-                                } else {//Another kind of Error happened
-                                  $timeout(function () {
-                                      if (obj && obj.messageerror) {
-                                          errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
-                                      $scope.$emit('HidePreloader');          
-                                  }, 1);
-                                }
-                            });
+                                                $scope.$emit('HidePreloader');
+                                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                                  $timeout(function () {
+                                                    $location.path('/Offline'); //This behavior could change
+                                                  }, 1);
+                                                } else {//Another kind of Error happened
+                                                  $timeout(function () {
+                                                      $scope.$emit('HidePreloader');          
+                                                  }, 1);
+                                                }
+                                            });
                                     }
 
                                     $modalInstance.dismiss('cancel');
@@ -715,7 +687,9 @@ angular
                                 function (obj) {//Error
                                     console.log('Error!!');
                                     if (obj.statusCode == 408) {//Request Timeout
-                                        $scope.openModalFE();
+                                        $timeout(function () {
+                                          $location.path('/Offline'); //This behavior could change
+                                        }, 1);
                                     } else {//A different Error happened
                                         var errorMessage = [window.atob(obj.messageerror)];
                                         $scope.modelState.errorCode = obj.statusCode;

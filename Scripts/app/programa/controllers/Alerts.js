@@ -96,14 +96,12 @@ angular
                     var qtyNotifsRead = _.filter($scope.notifications, function(notif) {
                         return notif.seen_date != null;
                     });
-                    console.log("Read " + qtyNotifsRead.length);
                     return !($scope.notificationsQuantityRead >= qtyNotifsRead.length);
                     break;
                 default :                    
                     var qtyNotifsUnread = _.filter($scope.notifications, function(notif) {
                         return notif.seen_date== null;
                     });
-                    console.log("Unread" + qtyNotifsUnread.length);
                     return !($scope.notificationsQuantityUnread >= qtyNotifsUnread.length);
                     break;
                 }

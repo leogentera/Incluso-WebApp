@@ -113,7 +113,7 @@ angular
                                   $timeout(function () {
                                       if (obj && obj.messageerror) {
                                           errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                          $scope.modelState.errorMessages = [errorMessage];
                                       }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
@@ -152,10 +152,6 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (obj && obj.messageerror) {
-                                          errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -185,10 +181,6 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (obj && obj.messageerror) {
-                                          errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -237,10 +229,6 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (obj && obj.messageerror) {
-                                          errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -441,7 +429,7 @@ angular
                                   $timeout(function () {
                                       if (obj && obj.messageerror) {
                                           errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
+                                          $scope.modelState.errorMessages = [errorMessage];
                                       }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
@@ -619,10 +607,6 @@ angular
                                           }, 1);
                                         } else {//Another kind of Error happened
                                           $timeout(function () {
-                                              if (obj && obj.messageerror) {
-                                                  errorMessage = window.atob(obj.messageerror);
-                                                  $scope.model.modelState.errorMessages = [errorMessage];
-                                              }
                                               $scope.$emit('HidePreloader');          
                                           }, 1);
                                         }  
@@ -726,10 +710,6 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (obj && obj.messageerror) {
-                                          errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -790,10 +770,6 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (obj && obj.messageerror) {
-                                          errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
@@ -853,10 +829,6 @@ angular
                                   }, 1);
                                 } else {//Another kind of Error happened
                                   $timeout(function () {
-                                      if (obj && obj.messageerror) {
-                                          errorMessage = window.atob(obj.messageerror);
-                                          $scope.model.modelState.errorMessages = [errorMessage];
-                                      }
                                       $scope.$emit('HidePreloader');          
                                   }, 1);
                                 }
