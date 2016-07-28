@@ -163,7 +163,7 @@ angular
                 //Register.
                 localStorage.removeItem("Credentials");
 
-                $rootScope.totalLoads = 8; //Number of Login requests.
+                $rootScope.totalLoads = 11; //Number of Login requests.
                 $rootScope.comeFromRegister = true;
 
                 if (validateModel()) {
@@ -346,20 +346,27 @@ angular
                                     console.log("GetAsyncMultipleChallengeInfo");
                                     $scope.incLoadedItem(); //7 y 8
                                     
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, quizesArray, data.token, function() {
+                                    moodleFactory.Services.GetAsyncActivityQuizInfo(course.courseid, data.id, quizesArray, data.token, function() {
                                         console.log("LoadQuizesAssets");
                                         $scope.incLoadedItem(); //9
                                         
                                         moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function () {
                                             $scope.incLoadedItem(); //10
-                                            $timeout(function () {
-                                                try {
-                                                    //- $scope.$emit('HidePreloader');
-                                                    $location.path('/Tutorial');
-                                                } catch (e) {
-                                                    $location.path('/ProgramaDashboard');
-                                                }
-                                            }, 1000);
+                                            
+                                             moodleFactory.Services.GetProfileCatalogs(data.token, function(){
+                                                $scope.incLoadedItem();//11
+                                                moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                                    $scope.incLoadedItem();//12
+                                                    $timeout(function () {
+                                                        try {
+                                                            //- $scope.$emit('HidePreloader');
+                                                            $location.path('/Tutorial');
+                                                        } catch (e) {
+                                                            $location.path('/ProgramaDashboard');
+                                                        }
+                                                    }, 1000);
+                                                }, loginErrorCallback, true);
+                                            }, loginErrorCallback, true);
                                         }, offlineCallback, true, true);
                                     }, offlineCallback, true, true);
                                 }, offlineCallback, true, true);

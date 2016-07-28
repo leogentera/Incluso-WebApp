@@ -246,12 +246,18 @@ angular
                                                             console.log("GetUserNotification");
                                                             $scope.incLoadedItem(); //10
                                                             
-                                                            $timeout(function () {
-                                                                //$scope.$emit('HidePreloader');
-                                                                if ($rootScope.loaderForLogin) {//To avoid redirect when there is a connection error.
-                                                                    $location.path('/ProgramaDashboard');
-                                                                }
-                                                            }, 1);
+                                                             moodleFactory.Services.GetProfileCatalogs(data.token, function(){
+                                                                $scope.incLoadedItem();//11
+                                                                moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                                                    $scope.incLoadedItem();//12
+                                                                    $timeout(function () {
+                                                                        //$scope.$emit('HidePreloader');
+                                                                        if ($rootScope.loaderForLogin) {//To avoid redirect when there is a connection error.
+                                                                            $location.path('/ProgramaDashboard');
+                                                                        }
+                                                                    }, 1);
+                                                                }, loginErrorCallback, true);
+                                                            }, loginErrorCallback, true);
                                                         },loginErrorCallback, true);
                                                     }, loginErrorCallback, true, true);
                                                 });
@@ -268,8 +274,8 @@ angular
                     }).error(function (data, status, headers, config) {
                         $scope.userCredentialsModel.modelState.isValid = false;
                         var errorMessage = "";
-                        if (obj && obj.messageerror) {
-                            errorMessage = window.atob(obj.messageerror);
+                        if (data && data.messageerror) {
+                            errorMessage = window.atob(data.messageerror);
                         } else {
                             errorMessage = "Se necesita estar conectado a Internet para continuar";
                         }
@@ -391,13 +397,20 @@ angular
                                             
                                             moodleFactory.Services.GetUserNotification(userId, course.courseid, userFacebook.token, function () {
                                                 $scope.incLoadedItem(); //10
-                                                $timeout(function () {
-                                                    if (userFacebook.is_new == true) {
-                                                        $location.path('/Tutorial');
-                                                    } else {
-                                                        $location.path('/ProgramaDashboard');
-                                                    }
-                                                }, 1000);
+                                                
+                                                moodleFactory.Services.GetProfileCatalogs(userFacebook.token, function(){
+                                                    $scope.incLoadedItem();//11
+                                                    moodleFactory.Services.GetProfilePoints(userId, course.courseid, userFacebook.token,function(){
+                                                        $scope.incLoadedItem();//12
+                                                        $timeout(function () {
+                                                        if (userFacebook.is_new == true) {
+                                                            $location.path('/Tutorial');
+                                                        } else {
+                                                            $location.path('/ProgramaDashboard');
+                                                        }
+                                                    }, 1000);
+                                                    }, loginErrorCallback, true);
+                                                }, loginErrorCallback, true);
                                             },loginErrorCallback, true);
                                         });
                                     }, loginErrorCallback, true);

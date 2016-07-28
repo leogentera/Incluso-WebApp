@@ -290,7 +290,7 @@ angular
                     _setLocalStorageItem("currentStage", $scope.currentStage);
 
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
-                        $scope.incLoadedItem(); //11
+                        $scope.incLoadedItem(); //13
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         currentUserProfile = getCurrentUserProfile();
                         
@@ -315,11 +315,11 @@ angular
                         }
                         
                         function profileCallback() {
-                            $scope.incLoadedItem(); //14
+                            $scope.incLoadedItem(); //16
                             var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
 
                             moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
-                                $scope.incLoadedItem(); //16
+                                $scope.incLoadedItem(); //17
                             }, function (obj) {
                                 $scope.$emit('HidePreloader');
                                 if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
@@ -447,7 +447,7 @@ angular
             function getUserStarsByPoints() {
 
                 moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token, function (dataStars) {
-                    $scope.incLoadedItem(); //12
+                    $scope.incLoadedItem(); //14
                     if (dataStars.length > 0) {
                         localStorage.setItem("userStars", JSON.stringify(dataStars));
                     }
@@ -510,41 +510,8 @@ angular
 
             function getUserLikes() {
                 moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
-                    $scope.incLoadedItem(); //13
+                    $scope.incLoadedItem(); //15
 
-                    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                    if (currentUser) {
-                        moodleFactory.Services.GetProfileCatalogs(currentUser.token, function(data){
-                            $scope.incLoadedItem(); //15
-                            //getProfilePoints(currentUser);
-                            var userCourse = JSON.parse(localStorage.getItem('usercourse'));
-                            moodleFactory.Services.GetProfilePoints(currentUser.userId, userCourse.courseid, currentUser.token, function(){}, function (obj) {
-                                $scope.$emit('HidePreloader');
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                  $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                  }, 1);
-                                } else {//Another kind of Error happened
-                                 console.log("Another kind of Error happened");
-                                    $timeout(function () {
-                                        $scope.$emit('HidePreloader');
-                                    }, 1);
-                                }
-                            }, true);
-                        }, function (obj) {
-                            $scope.$emit('HidePreloader');
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                              $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                              }, 1);
-                            } else {//Another kind of Error happened
-                              console.log("Another kind of Error happened");
-                                $timeout(function () {
-                                    $scope.$emit('HidePreloader');
-                                }, 1);
-                            }
-                        },true);
-                    }
                 }, function (obj) {
                     $scope.$emit('HidePreloader');
                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
