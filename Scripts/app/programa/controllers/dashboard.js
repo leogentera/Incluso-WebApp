@@ -247,11 +247,13 @@ angular
  
                                 if (leaderboard[lb].userId === parseInt(currentUserID, 10)) {
                                     leaderboard[lb].stars = $scope.user.stars;
+                                    leaderboard[lb].profileimageurl = $scope.profileImage;
+
                                 }
     
-                                getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function(niceImageUrl) {
-                                    leaderboard[lb].profileimageurl = niceImageUrl;
-                                });
+                                //getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function(niceImageUrl) {
+                                //    leaderboard[lb].profileimageurl = niceImageUrl;
+                                //});
                             }
                             $scope.course.leaderboard = leaderboard;
      
@@ -369,7 +371,7 @@ angular
                             for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
 
                                 if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...
-                                    
+                                    if ($scope.profileImage) { $scope.course.leaderboard[lb].profileimageurl = $scope.profileImage; } // Take the leaderboard image from the updated profileImage.
                                     profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
                                     profile.stars = parseInt($scope.course.leaderboard[lb].stars, 10);
                                     $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
