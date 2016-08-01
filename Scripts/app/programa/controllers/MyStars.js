@@ -52,19 +52,19 @@ myStarsModule.controller('MyStarsController', [
                     }
                 }, function (obj) {
                     $scope.activitiesCompleted = [];
-                    //-
+                   
                     $scope.$emit('HidePreloader');
-
                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
                     } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
+                      $timeout(function () {
+                          $scope.$emit('HidePreloader');
+                          $location.path('/connectionError');
+                      }, 1);
                     }
-                    //-
+
                 }, true);
             }
 
@@ -78,6 +78,19 @@ myStarsModule.controller('MyStarsController', [
             if (_loadedResources && _pageLoaded) {
                 $scope.$emit('HidePreloader');
             }
+            
+            $scope.$emit('HidePreloader');
+            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+              $timeout(function () {
+                $location.path('/Offline'); //This behavior could change
+              }, 1);
+            } else {//Another kind of Error happened
+              $timeout(function () {
+                          $scope.$emit('HidePreloader');
+                          $location.path('/connectionError');
+                      }, 1);
+            }
+
         }, false);
 
         function addStarsByActivity(data) {

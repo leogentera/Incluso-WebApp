@@ -69,19 +69,7 @@ angular
                       $scope.retoMultipleActivities.push(data);
                       assignCourseModuleId(true, data);
                     }, function(obj) {
-                        //-
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
                     });
                   }
                   if ($scope.retoMultipleActivities.length > 0) {
@@ -112,20 +100,8 @@ angular
                       $scope.completedActivities = moodleFactory.Services.GetCacheJson("retoMultipleCompleted");
                       $scope.completedActivities = !$scope.completedActivities ? [] : $scope.completedActivities;
                       createRequest();
-                    }, function(obj){
-                        //-
+                    }, function(){
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
                     }, true);
                   }
                 }
@@ -137,20 +113,8 @@ angular
                     $scope.partialActivities = moodleFactory.Services.GetCacheJson("retoMultiplePartials");
                     $scope.partialActivities = !$scope.partialActivities ? [] : $scope.partialActivities;
                     getCompleted();
-                  }, function(obj){
-                      //-
+                  }, function(){
                       $scope.$emit('HidePreloader');
-
-                      if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                          $timeout(function () {
-                              $location.path('/Offline'); //This behavior could change
-                          }, 1000);
-                      } else {//Another kind of Error happened
-                          $timeout(function () {
-                              $location.path('/Offline');
-                          }, 1000);
-                      }
-                      //-
                   }, true);
                 }
             }
@@ -414,20 +378,7 @@ angular
                               "onlypicture": true
                             }];
                             moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function(){}, function(obj){
-                                console.log("failure");
-                                //-
-                                $scope.$emit('HidePreloader');
-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
+                                $scope.$emit('HidePreloader');                              
                             });
                           })
                         }else{
@@ -448,51 +399,21 @@ angular
                               });
                           }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);                      
                         }
-                        _endActivity(parentActivity, function(){}, null, function(obj) {//Error handler
+                        _endActivity(parentActivity, function(){}, function(){
                             $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                        });
+                        }, true);
                         parentActivity.status = 1;
                         if (parentActivity.activities) {
-                          updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj) {//Error handler
+                          updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(){
                               $scope.$emit('HidePreloader');
-
-                              if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                  $timeout(function () {
-                                      $location.path('/Offline'); //This behavior could change
-                                  }, 1000);
-                              } else {//Another kind of Error happened
-                                  $timeout(function () {
-                                      $location.path('/Offline');
-                                  }, 1000);
-                              }
-                          });
+                          }, true);
                         }
                       }
                     }
                     parentActivity.modifieddate=data.fechaModificación || '';
                      parentActivity.onlymodifieddate=true;
-                     _endActivity(parentActivity, function(){}, null, function(obj) {//Error handler
+                     _endActivity(parentActivity, function(){}, function(obj) {//Error handler
                          $scope.$emit('HidePreloader');
-
-                         if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                             $timeout(function () {
-                                 $location.path('/Offline'); //This behavior could change
-                             }, 1000);
-                         } else {//Another kind of Error happened
-                             $timeout(function () {
-                                 $location.path('/Offline');
-                             }, 1000);
-                         }
                      });
 
                     if (request.activities.length > 0) {
@@ -529,7 +450,7 @@ angular
               }, 2000);
             }
 
-            $scope.saveQuiz = function(quizzes, userCourseUpdated) {
+         $scope.saveQuiz = function(quizzes, userCourseUpdated) {
               var activityPosted = 0;
               var checkActivitiesPosted = function(){
                 activityPosted++;
@@ -560,67 +481,31 @@ angular
                 }, 1000);
               }
 
-              _.each(quizzes, function(quiz){
-                if (quiz.IsPartial) {
+            _.each(quizzes, function(quiz){
+               if (quiz.IsPartial) {
                   _.each(quiz.data, function(q){
-                    moodleFactory.Services.PutMultipleActivities("usercourse", q, userCourseUpdated, 'partialactivities', function(){
-                      checkActivitiesPosted();
-                    }, function(obj){
-                      finishedPosting();
-                        //-
+                     moodleFactory.Services.PutMultipleActivities("usercourse", q, userCourseUpdated, 'partialactivities', function(){
+                        checkActivitiesPosted();
+                     }, function(obj){
+                        finishedPosting();
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
-                    });
+                     }, true);
                   });
-                }else{
+               }else{
                   moodleFactory.Services.PostMultipleActivities("usercourse", quiz, userCourseUpdated, 'multipleactivities', function(){
-                    checkActivitiesPosted();
+                     checkActivitiesPosted();
                   }, function(obj){
-                    finishedPosting();
-                      //-
-                      $scope.$emit('HidePreloader');
-
-                      if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                          $timeout(function () {
-                              $location.path('/Offline'); //This behavior could change
-                          }, 1000);
-                      } else {//Another kind of Error happened
-                          $timeout(function () {
-                              $location.path('/Offline');
-                          }, 1000);
-                      }
-                      //-
-                  });
-                }
-              });              
-            }
+                     finishedPosting();
+                     $scope.$emit('HidePreloader');
+                  }, true);
+               }
+            });              
+         }
 
             $scope.saveUser = function () {
-                moodleFactory.Services.PutAsyncProfile($scope.user.id, $scope.user, function() {}, function(obj) {
-                    //-
+                moodleFactory.Services.PutAsyncProfile($scope.user.id, $scope.user, function() {}, function() {
                     $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                    //-
-                });
+                }, false, true);
             };
                 
             var failureGame = function (data){

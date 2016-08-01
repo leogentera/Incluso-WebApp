@@ -67,19 +67,7 @@ angular
                                 $scope.mapaDeVidaActivities.push(data);
                                 assignCourseModuleId(true, data);
                             }, function(obj) {
-                                //-
                                 $scope.$emit('HidePreloader');
-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
                             })
                         }
                     }
@@ -301,32 +289,12 @@ angular
                     parent_finished = true;
                     parentActivity.onlymodifieddate=false;
                 }
-                    _endActivity(parentActivity, function(){}, null, function(obj) {//Error handler
+                    _endActivity(parentActivity, function(){}, function(){
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                    });
-                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj) {//Error handler
+                    }, true);
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(){
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                    });
+                    }, true);
                 
                 if (activitiesAtLeastOne > 0) {
                     if (parentActivity.activities) {
@@ -347,7 +315,6 @@ angular
                                 $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, (parent_finished));
                             }
                         }
-
                     }
                 } else {
                     $timeout(function () {
@@ -465,22 +432,15 @@ angular
                                                             });
                                                         }, 500);
                                                     }, 500);
-                                                },
-                                                function (obj) {//Error
+                                                },function () {//Error
                                                     $timeout(function () {
                                                         $scope.sharedAlbumMessage = null;
                                                         $scope.isShareCollapsed = false;
                                                         $scope.showSharedAlbum = false;
                                                         $scope.$emit('HidePreloader');
-
-                                                        if (obj.statusCode == 408) {//Request Timeout
-                                                            $scope.openModal();
-                                                        } else {//A different Error happened
-                                                            $location.path('/ZonaDeNavegacion/Dashboard/2/4');
-                                                        }
-
-                                                    }, 1000);
-                                                }, (!_isDeviceOnline)
+                                                        $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+                                                    }, 500);
+                                                }, true, false, true
                                             );
                                         }
 
@@ -502,19 +462,7 @@ angular
                                             });
                                         }
                                     }, function (obj) {
-                                        //-
-                                        $scope.$emit('HidePreloader');
-
-                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                            $timeout(function () {
-                                                $location.path('/Offline'); //This behavior could change
-                                            }, 1000);
-                                        } else {//Another kind of Error happened
-                                            $timeout(function () {
-                                                $location.path('/Offline');
-                                            }, 1000);
-                                        }
-                                        //-
+                                        $scope.$emit('HidePreloader');                                        
                                     });
                                 } else {
                                     $timeout(function () {
@@ -533,27 +481,10 @@ angular
                             postToForum();
                         });
                     }
-                }, null, function(obj) {//Error handler
+                }, function(){
                     $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                });
+                }, true);
             };
-
-            function offlineCallback() {
-                $timeout(function () {
-                    $location.path("/Offline");
-                }, 1000);
-            }
-
 
             var failureGame = function (data) {
                 $location.path('/ZonaDeNavegacion/Dashboard/2/4');

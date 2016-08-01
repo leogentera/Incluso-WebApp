@@ -116,7 +116,20 @@ angular
                 var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
                 encodeImageUri(pathimagen, function (b64) {
                     avatarInfo[0]["filecontent"] = b64;
-                    moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], successCallback, errorCallback);
+                    moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], successCallback, function (obj) {
+                        $scope.$emit('HidePreloader');
+                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                          $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                          }, 1);
+                        } else {//Another kind of Error happened
+                          $timeout(function () {
+                              console.log("Another kind of Error happened");
+                              $scope.$emit('HidePreloader');
+                              $location.path('/connectionError');
+                          }, 1);
+                        }
+                    }, true);
                 });
             };
 
@@ -143,22 +156,6 @@ angular
                 }, 500);
             };
 
-            var errorCallback = function (obj) {
-                $scope.$emit('HidePreloader');
-                //$location.path('/ProgramaDashboard');
-
-                $scope.$emit('HidePreloader');
-
-                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                    $timeout(function () {
-                        $location.path('/Offline'); //This behavior could change
-                    }, 1000);
-                } else {//Another kind of Error happened
-                    $timeout(function () {
-                        $location.path('/Offline');
-                    }, 1000);
-                }
-            };
 
             $scope.avatar = function () {
                 var avatarInfoForGameIntegration = {

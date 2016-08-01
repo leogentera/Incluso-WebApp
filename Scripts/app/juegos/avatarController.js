@@ -91,22 +91,22 @@ angular
             $scope.uploadAvatar = function(file) {                
 
                 $scope.encodeImageUri("assets/images/avatar.svg", function(b64) {
-                $http({
-                    method: 'POST',
-                    url: API_RESOURCE.format('avatar'),
-                    data: {
-                        userid: user.id,
-                            filecontent: b64
-                    }
-                })
-                .success(function(){
-                    $location.path('/ProgramaDashboard');
-                })
-                .error(function(){
-                    $location.path('/ProgramaDashboard');
-                });
-            
+                    $http({
+                        method: 'POST',
+                        url: API_RESOURCE.format('avatar'),
+                        data: {
+                            userid: user.id,
+                                filecontent: b64
+                        }
+                    })
+                    .success(function(){
+                        $location.path('/ProgramaDashboard');
+                    })
+                    .error(function(){
+                        $location.path('/ProgramaDashboard');
                     });
-               }
+            
+                });
+            }
             
         }]);

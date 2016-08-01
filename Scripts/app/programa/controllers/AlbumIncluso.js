@@ -149,19 +149,19 @@ angular
                             $scope.sharedAlbumMessage = null;
                             $scope.isShareCollapsed = false;
                             $scope.showSharedAlbum = false;
+                            
                             $scope.$emit('HidePreloader');
-
-                            //-
                             if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
+                              $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                              }, 1);
                             } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
+                              $timeout(function () {
+                                 $scope.$emit('HidePreloader');
+                                 $location.path('/connectionError');
+                                }, 1);
                             }
-                            //-
+                            
                         }, true);
                     } else {
                         postAlbumToCommunity();

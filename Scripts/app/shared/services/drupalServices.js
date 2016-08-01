@@ -3,7 +3,7 @@
     
     drupalFactory.NodeRelation = {
         "tutorial": 95, /* General - Tutorial */
-        "host":"http://definityincluso.cloudapp.net/incluso-drupal",
+        "host":"http://InclusoDrup.cloudapp.net/incluso-drupal",
         "0000": 57, /* Programa - Dashboard */
         "1002": 53, /* Zona de Vuelo - Cabina de Soporte - Chat */
         "1010": 46, /* Zona de Vuelo - Con�cete - Punto de Encuentro */
@@ -70,8 +70,8 @@
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
         "BadgeForumRobot": 101, /*General - Robot al ganar el badge de foros*/
         "robot-inclubot" : 56, /*Dashboard Programa - Robot Inclubot*/
-        "RetroalimentacionClosing" : 103,  /*Cierre de actividad Retroalimentación*/
-        "chat_generic_message" : 104  /*Mensaje genérico de Chat*/
+        "RetroalimentacionClosing" : 104,  /*Cierre de actividad Retroalimentación*/
+        "chat_generic_message" : 103  /*Mensaje genérico de Chat*/
     };
 
     drupalFactory.Services = (function () {
@@ -142,23 +142,24 @@
             }
         };
 
-        var _getDrupalContent = function ( successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        var _getDrupalContent = function ( successCallback, errorCallback, forceRefresh, isLoginRequest) {
 
-            _getAsyncDataDrupal(DRUPAL_CONTENT_RESOURCE, successCallback, errorCallback, forceRefresh, timeOutFlag);
+            _getAsyncDataDrupal(DRUPAL_CONTENT_RESOURCE, successCallback, errorCallback, forceRefresh, isLoginRequest);
         };
-        var _getAsyncDataDrupal = function (url, successCallback, errorCallback, forceRefresh, timeOutFlag) {
+        
+        var _getAsyncDataDrupal = function (url, successCallback, errorCallback, forceRefresh, isLoginRequest) {            
 
-            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
-
-            if (returnValue) {
-                _timeout(function () { successCallback(returnValue, key) }, 1000);
-                return returnValue;
+            if (!forceRefresh) {
+                var returnValue = _getCacheJson(key);
+                _timeout(function () {
+                    successCallback(returnValue, key)
+                }, 1000);
             }
 
             var currentTime = new Date().getTime();
 
             var timeOut = globalTimeOut;
-            if (timeOutFlag) {//Calling from login/register
+            if (isLoginRequest) {//Calling from login/register
                 timeOut = longTimeOut;
             }
 
@@ -170,11 +171,6 @@
                 data:  JSON.stringify( drupalFactory.NodeRelation)
             }).success(function (data, status, headers, config) {
 
-                //var resultArray = Object.keys(data).map(function(k) { return data[k] });
-                //resultArray.forEach(function(element, index, array){
-                //    _setLocalStorageJsonItem("drupal/content/" + index, element);
-                //});
-
                 for (var key in data) {
                     if (data.hasOwnProperty(key)) {
                         //alert(key + " -> " + p[key]);
@@ -184,37 +180,7 @@
 
                 successCallback(data);
                 //successCallback(data, key);
-            }).error(function (data, status, headers, config) {
-
-                if (returnValue != null) {
-                    successCallback(returnValue, key);
-                } else {
-                    //- errorCallback(data);
-                }
-                //-
-                var finalTime = new Date().getTime();
-                var obj = {};
-
-                if (data) {
-                    if (data.messageerror) {
-                        obj.messageerror = data.messageerror;
-                    } else {
-                        obj.messageerror = "Undefined Server Error";
-                    }
-                } else {
-                    obj.messageerror = "Undefined Server Error";
-                    obj.statusCode = 500;
-                }
-
-                if (finalTime - currentTime > timeOut && timeOut > 0) {
-                    obj.statusCode = 408;
-                    obj.messageerror = "Request Timeout";
-                }
-
-                errorCallback(obj);
-                //-
-
-            });
+            }).error(errorCallback);
         };
 
         return {

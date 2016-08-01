@@ -71,19 +71,7 @@ angular
                                 $scope.mapaDeEmprendedorActivities.push(data);
                                 assignCourseModuleId(true, data);
                             }, function (obj) {
-                                //-
                                 $scope.$emit('HidePreloader');
-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
                             })
                         }
                     };
@@ -237,32 +225,12 @@ angular
                     parentUpdated = true;
                     parentActivity.onlymodifieddate=false;
                 }
-                    _endActivity(parentActivity, function() {}, null, function(obj) {//Error handler
+                    _endActivity(parentActivity, function() {}, function(){
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                    } );
-                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj) {//Error handler
+                    }, true);
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(){
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                    });
+                    }, true);
                 
                 if (subactivitiesCompleted.length > 0) {
                     if (parentActivity.activities) {
@@ -411,15 +379,9 @@ angular
                                                             localStorage.setItem("currentDiscussionIds", prevCurrentDiscussionIds);
                                                         }
 
-                                                        if (obj.statusCode == 408) {//Request Timeout
-                                                            $scope.openModal();
-
-                                                        } else {//A different Error happened
-                                                            $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
-                                                        }
-
-                                                    }, 1000);
-                                                }, (!_isDeviceOnline)
+                                                        $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                                    }, 500);
+                                                }, true, false, true
                                             );
                                         }
 
@@ -439,19 +401,7 @@ angular
                                             });
                                         }
                                     }, function(obj){
-                                        //-
                                         $scope.$emit('HidePreloader');
-
-                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                            $timeout(function () {
-                                                $location.path('/Offline'); //This behavior could change
-                                            }, 1000);
-                                        } else {//Another kind of Error happened
-                                            $timeout(function () {
-                                                $location.path('/Offline');
-                                            }, 1000);
-                                        }
-                                        //-
                                     });
                                 } else {
                                     $timeout(function () {
@@ -468,25 +418,11 @@ angular
                             }    
                         }, function(){});
                     }
-                }, null, function(obj) {//Error handler
+                }, function(){
                     $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                });
+                }, true);
             }
             
-            function offlineCallback() {
-                $timeout(function() { $location.path("/Offline"); }, 1000);
-            }
-
             var failureGame = function (data){
                 $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
             }

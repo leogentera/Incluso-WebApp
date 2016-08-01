@@ -61,19 +61,7 @@ angular
                                     $scope.tuEligesActivities = data;
                                     assignCourseModuleId(true, data);
                                 }, function(obj) {
-                                    //-
                                     $scope.$emit('HidePreloader');
-
-                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
-                                    } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
-                                    }
-                                    //-
                                 });
                             }
                         };
@@ -213,48 +201,16 @@ angular
                           user.assertiveness = 0;
                         }
                         moodleFactory.Services.PutAsyncProfile(userid, user,function (data) {},function (obj) {
-                            //-
                             $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                            //-
-                        });
-                        _endActivity(parentActivity, function(){}, null, function(obj) {//Error handler
+                        }, false, true);
+                        _endActivity(parentActivity, function(){}, function(){
                             $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                        });
+                        }, true);
 
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
-                        updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj) {//Error handler
+                        updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function (obj){
                             $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                        });
+                        }, true);
                     }
                 }
                 if (data["calificación"] && data["calificación"] == "Reprobado") {
@@ -328,19 +284,9 @@ angular
                             $location.path(url);
                         });
                     },1000);
-                }, null, function(obj) {//Error handler
+                }, function(obj) {//Error handler
                     $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                });
+                }, true);
             }
                 
             var failureGame = function (data){
