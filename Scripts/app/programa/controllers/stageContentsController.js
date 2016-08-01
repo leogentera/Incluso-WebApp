@@ -321,6 +321,10 @@ angular
                                     // update model
                                     $scope.fuenteDeEnergia.activities[i].status = true;
 
+                                    if (window.mobilecheck()){
+                                          $scope.$digest();
+                                    }
+                                    
                                     //Update cache even if not read from the loading, the cache object could have been created by interaction with anoother element such as "like"
                                     var fuenteDeEnergiaCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $routeParams.moodleid));
                                     if (fuenteDeEnergiaCache) {
@@ -347,18 +351,18 @@ angular
                                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
                                     _setLocalStorageJsonItem("activityManagers", activitymanagers);
                                     _endActivity($scope.fuenteDeEnergia.activities[i], function() {}, function (obj) {
-                                $scope.$emit('HidePreloader');
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                  $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                  }, 1);
-                                } else {//Another kind of Error happened
-                                  $timeout(function () {
-                                      $scope.$emit('HidePreloader');
-                                      $location.path('/connectionError');
-                                  }, 1);
-                                }
-                            });
+                                          $scope.$emit('HidePreloader');
+                                          if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                                $timeout(function () {
+                                                      $location.path('/Offline'); //This behavior could change
+                                                }, 1);
+                                          } else {//Another kind of Error happened
+                                                $timeout(function () {
+                                                      $scope.$emit('HidePreloader');
+                                                      $location.path('/connectionError');
+                                                }, 1);
+                                          }
+                                    });
                                     if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                         $scope.statusObligatorios += 1;
                                         starsMandatory += 50;
