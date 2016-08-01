@@ -118,20 +118,18 @@ angular
                         if (_loadedResources && _pageLoaded) {
                             $scope.$emit('HidePreloader')
                         }
-
-                        //-
                         $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                          $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                          }, 1);
+                                        } else {//Another kind of Error happened
+                                          $timeout(function () {
+                                              console.log("Another kind of Error happened");
+                                              $scope.$emit('HidePreloader');
+                                              $location.path('/connectionError');
+                                          }, 1);
+                                        }  
                     }, true) : '';
 
                     if ($scope.moodleId == 149) {
@@ -227,21 +225,20 @@ angular
                         activity: childCourseModuleId
                     };
 
-                    moodleFactory.Services.PutAsyncFirstTimeInfoForForums(userId, CurrentUser.token, dataModel, function () { }, function (obj) {
-                        //-
-                        $scope.$emit('HidePreloader');
-
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
-                        } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
-                        }
-                        //-
-                    });
+                    moodleFactory.Services.PutAsyncFirstTimeInfoForForums(userId, CurrentUser.token, dataModel, function(){}, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            });
                 }
 
                 function getForumDiscussionsCallback(data, key) {
@@ -390,20 +387,19 @@ controller('closingChallengeController', function ($scope, $modalInstance, $rout
             $scope.instructions = data.node.mensaje;
         }
     }, function (obj) {
-        //-
-        $scope.$emit('HidePreloader');
-
-        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-            $timeout(function () {
-                $location.path('/Offline'); //This behavior could change
-            }, 1000);
-        } else {//Another kind of Error happened
-            $timeout(function () {
-                $location.path('/Offline');
-            }, 1000);
-        }
-        //-
-    }, false);
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                     console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            }, false);
 
     var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
 

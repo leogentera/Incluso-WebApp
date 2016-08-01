@@ -197,7 +197,6 @@ angular
                     var tiedMisGustos = _.filter(misGustosProfiles, function(item){ return item.score == maxMisGustos.score; });
                     //If there is a tie in Mis Gustos Profiles goes to reto Multiple Activities
                     if (tiedMisGustos.length > 1) {
-                        console.log("TiedMisGustos" + tiedMisGustos.length);
                         var retoMultipleActivities = _.filter(profilePoints, function(item){
                             for(var i = 0; i < misGustosActivities.length; i++){
                                 var misGustosActivity = misGustosActivities[i];
@@ -291,17 +290,18 @@ angular
                     //Update local storage and activities status array
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);
                     assignStars();
-                }, null, function(obj) {//Error handler
+                }, function (obj) {
                     $scope.$emit('HidePreloader');
-
                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
                     } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
+                      $timeout(function () {
+                          console.log("Another kind of Error happened");
+                          $scope.$emit('HidePreloader');
+                          $location.path('/connectionError');
+                      }, 1);
                     }
                 });
                 $location.path($scope.location);
@@ -320,22 +320,34 @@ angular
                     };
                 updateLocalStorageStars(data);
                 moodleFactory.Services.PutStars(data, $scope.profile, currentUser.token, function () {
-                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (data) {},function (obj) {
-                        //-
+                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (){}, function (obj) {
                         $scope.$emit('HidePreloader');
-
                         if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                            $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                            }, 1000);
+                          $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                          }, 1);
                         } else {//Another kind of Error happened
-                            $timeout(function () {
-                                $location.path('/Offline');
-                            }, 1000);
+                          $timeout(function () {
+                              console.log("Another kind of Error happened");
+                              $scope.$emit('HidePreloader');
+                              $location.path('/connectionError');
+                          }, 1);
                         }
-                        //-
                     });
-                    }, function(){});
+                }, function (obj) {
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          console.log("Another kind of Error happened");
+                          $scope.$emit('HidePreloader');
+                          $location.path('/connectionError');
+                      }, 1);
+                    }
+                });
             }
             
             function updateLocalStorageStars(data) {

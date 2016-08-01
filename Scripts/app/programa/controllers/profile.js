@@ -626,18 +626,19 @@ angular
                                         $scope.model.modelState.errorMessages = ["Intente de nuevo más tarde."];
                                         $scope.$emit('scrollTop');
                                         $scope.$emit('HidePreloader');
-
-                                        //-
+                                       
+                                        $scope.$emit('HidePreloader');
                                         if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                            $timeout(function () {
-                                                $location.path('/Offline'); //This behavior could change
-                                            }, 1000);
+                                          $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                          }, 1);
                                         } else {//Another kind of Error happened
-                                            $timeout(function () {
-                                                $location.path('/Offline');
-                                            }, 1000);
-                                        }
-                                        //-
+                                          $timeout(function () {
+                                              console.log("Another kind of Error happened");
+                                              $scope.$emit('HidePreloader');
+                                              $location.path('/connectionError');
+                                          }, 1);
+                                        }                            
                                     });
 
                             } else {//The password is empty...
@@ -716,7 +717,7 @@ angular
                                 var errorMessage;
 
                                 if (data != null && data.messageerror != null) {
-                                    errorMessage = window.atob(data.messageerror);
+                                    errorMessage = window.atob(obj.messageerror);
                                 } else {
                                     errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
                                 }
@@ -791,25 +792,19 @@ angular
 
                             callback();
 
-                            moodleFactory.Services.GetAsyncAvatar($scope.userId, currentUser.token, getAvatarInfoCallback, function (obj) {
-                                _pageLoaded = true;
-                                if (_loadedResources && _pageLoaded) {
-                                    $scope.$emit('HidePreloader');
-                                }
-                                //-
+                            moodleFactory.Services.GetAsyncAvatar($scope.userId, currentUser.token, getAvatarInfoCallback,function (obj) {
                                 $scope.$emit('HidePreloader');
-
                                 if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
                                 } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
                                 }
-                                //-
-
                             }, true);
 
                             if (!$scope.model) {
@@ -824,19 +819,18 @@ angular
                                 'profileimageurl' : 'assets/avatar/default.png'
                             };
 
-                            //-
                             $scope.$emit('HidePreloader');
-
                             if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
+                              $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                              }, 1);
                             } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                            //-
+                              $timeout(function () {
+                                  console.log("Another kind of Error happened");
+                                  $scope.$emit('HidePreloader');
+                                  $location.path('/connectionError');
+                              }, 1);
+                            }                            
                         }, true);
                     }
 
@@ -1796,17 +1790,18 @@ angular
                                 activityModel.coursemoduleid = parentActivity.coursemoduleid;
                                 activityModel.activityType = "Quiz";
                                 _endActivity(activityModel, function () {
-                                }, "", function(obj) {//Error handler
+                                }, function (obj) {
                                     $scope.$emit('HidePreloader');
-
                                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
+                                      $timeout(function () {
+                                        $location.path('/Offline'); //This behavior could change
+                                      }, 1);
                                     } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
+                                      $timeout(function () {
+                                          console.log("Another kind of Error happened");
+                                          $scope.$emit('HidePreloader');
+                                          $location.path('/connectionError');
+                                      }, 1);
                                     }
                                 });
                             }
@@ -1931,17 +1926,18 @@ angular
                                 activityModel.coursemoduleid = parentActivity.coursemoduleid;
                                 activityModel.activityType = "Quiz";
                                 _endActivity(activityModel, function () {
-                                }, "", function(obj) {//Error handler
+                                }, function (obj) {
                                     $scope.$emit('HidePreloader');
-
                                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
+                                      $timeout(function () {
+                                        $location.path('/Offline'); //This behavior could change
+                                      }, 1);
                                     } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
+                                      $timeout(function () {
+                                          console.log("Another kind of Error happened");
+                                          $scope.$emit('HidePreloader');
+                                          $location.path('/connectionError');
+                                      }, 1);
                                     }
                                 });
                             }
@@ -2125,18 +2121,18 @@ angular
                                 profile.stars = newPoints;  //Update the 'stars' key.
 
                                 _setLocalStorageJsonItem("Perfil/" + $scope.userId, profile); //Save updated profile to Local Storage.
-                                updateUserStarsUsingExternalActivity(activity.activity_identifier,
-                                    function(obj) {//Error handler
+                                updateUserStarsUsingExternalActivity(activity.activity_identifier, function (obj) {
                                     $scope.$emit('HidePreloader');
-
                                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
+                                      $timeout(function () {
+                                        $location.path('/Offline'); //This behavior could change
+                                      }, 1);
                                     } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
+                                      $timeout(function () {
+                                          console.log("Another kind of Error happened");
+                                          $scope.$emit('HidePreloader');
+                                          $location.path('/connectionError');
+                                      }, 1);
                                     }
                                 }); //Update profile in Moodle.
 
@@ -2154,20 +2150,21 @@ angular
 
                                 //Finish Activity.
                                 _endActivity(activityModel, function () {
-                                    validateAllFieldsCompleted();
-                                }, null, function(obj) {//Error handler
-                                    $scope.$emit('HidePreloader');
-
-                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
+                                        validateAllFieldsCompleted();
+                                    }, function (obj) {
+                                        $scope.$emit('HidePreloader');
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                          $timeout(function () {
                                             $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
-                                    } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
-                                    }
-                                });
+                                          }, 1);
+                                        } else {//Another kind of Error happened
+                                          $timeout(function () {
+                                             console.log("Another kind of Error happened");
+                                              $scope.$emit('HidePreloader');
+                                              $location.path('/connectionError');
+                                          }, 1);
+                                        }
+                                    });
 
                                 sectionFieldsAreOk = false;  //Restore 'sectionFieldsAreOk' value
                             } else {//Not all fields were completed.
@@ -2200,21 +2197,19 @@ angular
 
                             localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
                             showRobotProfile();
-                            moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () {
-                            }, function (obj) {
-                                //-
+                            moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () {}, function (obj) {
                                 $scope.$emit('HidePreloader');
-
                                 if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
                                 } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
                                 }
-                                //-
                             });
                         }
                     }
@@ -2526,30 +2521,23 @@ angular
                 uploadAvatar = function (avatarInfo) {
                     console.log(avatarInfo[0].pathimagen);
                     var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
-                    console.log(pathimagen);
                     encodeImageUri(pathimagen, function (b64) {
-                        console.log("avatar enconded successfully");
                         avatarInfo[0]["filecontent"] = b64;
                         moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function () {
-                            console.log("Exito");
-                            //avatarUploaded("Exito");
                             $scope.$emit('HidePreloader');
                         }, function (obj) {
-                            console.log("Error");
                             $scope.$emit('HidePreloader');
-                            //avatarUploaded("Error");
-
-                            //-
                             if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
+                              $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                              }, 1);
                             } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
+                              $timeout(function () {
+                                  console.log("Another kind of Error happened");
+                                  $scope.$emit('HidePreloader');
+                                  $location.path('/connectionError');
+                              }, 1);
                             }
-                            //-
                         });
                     });
                 };
@@ -2705,19 +2693,19 @@ angular
                                 $scope.showShareAchievementMessage = false;
                                 $scope.showSharedAchievement = true;
                                 $scope.$emit('HidePreloader');
-
-                                //-
+                                
+                                $scope.$emit('HidePreloader');
                                 if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
                                 } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
                                 }
-                                //-
-
                             }, true);
                         } else {
                             postAchievement();
@@ -2754,27 +2742,20 @@ angular
                             $scope.showSharedAchievement = true;
 
                             $scope.$emit('HidePreloader');
-                        },
-                        function (obj) {
-                            $scope.shareAchievementMessage = "";
-                            $scope.showShareAchievementMessage = false;
-                            $scope.showSharedAchievement = false;
-
-                            $scope.$emit('HidePreloader');
-
-                            //-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
+                        },function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
                                     $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                            //-
-                        }
-                    );
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            });
                 }
 
                 function getRobotMessageContent() {

@@ -243,19 +243,17 @@ angular
                         $scope.$emit('HidePreloader')
                     }
 
-                    //-
                     $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
+                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                          $timeout(function () {
                             $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                    //-
+                          }, 1);
+                        } else {//Another kind of Error happened
+                          $timeout(function () {
+                              $scope.$emit('HidePreloader');
+                              $location.path('/connectionError');
+                          }, 1);
+                        }  
                 }
 
                 function setResources(myActivity) {
@@ -323,6 +321,10 @@ angular
                                     // update model
                                     $scope.fuenteDeEnergia.activities[i].status = true;
 
+                                    if (window.mobilecheck()){
+                                          $scope.$digest();
+                                    }
+                                    
                                     //Update cache even if not read from the loading, the cache object could have been created by interaction with anoother element such as "like"
                                     var fuenteDeEnergiaCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $routeParams.moodleid));
                                     if (fuenteDeEnergiaCache) {
@@ -348,20 +350,19 @@ angular
                                     var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
                                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
                                     _setLocalStorageJsonItem("activityManagers", activitymanagers);
-                                    _endActivity($scope.fuenteDeEnergia.activities[i], function() {}, null,
-                                        function(obj) {//Error handler
-                                        $scope.$emit('HidePreloader');
-
-                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                            $timeout(function () {
-                                                $location.path('/Offline'); //This behavior could change
-                                            }, 1000);
-                                        } else {//Another kind of Error happened
-                                            $timeout(function () {
-                                                $location.path('/Offline');
-                                            }, 1000);
-                                        }
-                                    } );
+                                    _endActivity($scope.fuenteDeEnergia.activities[i], function() {}, function (obj) {
+                                          $scope.$emit('HidePreloader');
+                                          if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                                $timeout(function () {
+                                                      $location.path('/Offline'); //This behavior could change
+                                                }, 1);
+                                          } else {//Another kind of Error happened
+                                                $timeout(function () {
+                                                      $scope.$emit('HidePreloader');
+                                                      $location.path('/connectionError');
+                                                }, 1);
+                                          }
+                                    });
                                     if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                         $scope.statusObligatorios += 1;
                                         starsMandatory += 50;
@@ -396,12 +397,36 @@ angular
                         profile.stars = parseInt(profile.stars) + stars;
                         updateLocalStorageStars(data);
                         moodleFactory.Services.PutStars(data, profile, $scope.token, function () {
-                        }, errorCallback);
+                        }, function (obj) {
+                              $scope.$emit('HidePreloader');
+                              if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                $timeout(function () {
+                                  $location.path('/Offline'); //This behavior could change
+                                }, 1);
+                              } else {//Another kind of Error happened
+                                $timeout(function () {
+                                    $scope.$emit('HidePreloader');
+                                    $location.path('/connectionError');
+                                }, 1);
+                              }
+                          });
                     }
                     else if (!isMandatory && ((totalOptionalPoints + stars) <= $scope.fuenteDeEnergia.max_resources)) {
                         data.is_extra = true;
                         profile.stars = parseInt(profile.stars) + stars;
-                        moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
+                        moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            });
                         totalOptionalPoints += stars;
                         updateLocalStorageStars(data);
                     }
@@ -446,23 +471,7 @@ angular
                 function successfullCallBack() {
                     _updateRewardStatus();
                 }
-
-                function errorCallback(obj) {
-                    //-
-                    $scope.$emit('HidePreloader');
-
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                        $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                        }, 1000);
-                    } else {//Another kind of Error happened
-                        $timeout(function () {
-                            $location.path('/Offline');
-                        }, 1000);
-                    }
-                    //-
-                }
-
+                
                 function successEndFuente() {
                     $scope.$emit('HidePreloader');
                     $location.path('/' + stage + '/Dashboard/' + userCurrentStage + '/' + currentChallenge);
@@ -498,19 +507,18 @@ angular
                             // update activity status dictionary used for blocking activity links
                             updateActivityStatusDictionary($scope.fuenteDeEnergia.activity_identifier);
                             moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, successEndFuente, function (obj) {
-                                $scope.$emit('HidePreloader');
-                                //-
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                    $timeout(function () {
-                                        $location.path('/Offline'); //This behavior could change
-                                    }, 1000);
-                                } else {//Another kind of Error happened
-                                    $timeout(function () {
-                                        $location.path('/Offline');
-                                    }, 1000);
-                                }
-                                //-
-                            });
+                              $scope.$emit('HidePreloader');
+                              if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                $timeout(function () {
+                                  $location.path('/Offline'); //This behavior could change
+                                }, 1);
+                              } else {//Another kind of Error happened
+                                $timeout(function () {
+                                    $scope.$emit('HidePreloader');
+                                    $location.path('/connectionError');
+                                }, 1);
+                              }
+                          });
                         }, 1000);
 
                     }, offlineCallback);
@@ -550,7 +558,19 @@ angular
 
                                 localStorage.setItem("likesByUser", JSON.stringify(userLikes));
                                 moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, function () {
-                                }, errorCallback);
+                                    }, function (obj) {
+                                          $scope.$emit('HidePreloader');
+                                          if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                            $timeout(function () {
+                                              $location.path('/Offline'); //This behavior could change
+                                            }, 1);
+                                          } else {//Another kind of Error happened
+                                            $timeout(function () {
+                                                $scope.$emit('HidePreloader');
+                                                $location.path('/connectionError');
+                                            }, 1);
+                                          }
+                                      });
                             }
                         }
                     }, offlineCallback);
@@ -576,23 +596,18 @@ angular
                                         var profile = moodleFactory.Services.GetCacheJson("Perfil/" + currentUser.userId);
                                         profile.hasRequiredApps = true;
 
-                                        moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,
-                                            function (data) {
-                                            },
-                                            function (obj) {
-                                                //-
+                                        moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,function(){},function (obj) {
                                                 $scope.$emit('HidePreloader');
-
                                                 if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                                    $timeout(function () {
-                                                        $location.path('/Offline'); //This behavior could change
-                                                    }, 1000);
+                                                  $timeout(function () {
+                                                    $location.path('/Offline'); //This behavior could change
+                                                  }, 1);
                                                 } else {//Another kind of Error happened
-                                                    $timeout(function () {
-                                                        $location.path('/Offline');
-                                                    }, 1000);
+                                                  $timeout(function () {
+                                                      $scope.$emit('HidePreloader');
+                                                      $location.path('/connectionError');
+                                                  }, 1);
                                                 }
-                                                //-
                                             });
                                     }
 
@@ -683,7 +698,9 @@ angular
                                 function (obj) {//Error
                                     console.log('Error!!');
                                     if (obj.statusCode == 408) {//Request Timeout
-                                        $scope.openModalFE();
+                                        $timeout(function () {
+                                          $location.path('/Offline'); //This behavior could change
+                                        }, 1);
                                     } else {//A different Error happened
                                         var errorMessage = [window.atob(obj.messageerror)];
                                         $scope.modelState.errorCode = obj.statusCode;

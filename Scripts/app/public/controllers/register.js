@@ -163,7 +163,7 @@ angular
                 //Register.
                 localStorage.removeItem("Credentials");
 
-                $rootScope.totalLoads = 8; //Number of Login requests.
+                $rootScope.totalLoads = 11; //Number of Login requests.
                 $rootScope.comeFromRegister = true;
 
                 if (validateModel()) {
@@ -262,22 +262,14 @@ angular
                     var errorMessage;
 
                     if ((data != null && data.messageerror != null)) {
-                        errorMessage = window.atob(data.messageerror);
+                        errorMessage = window.atob(obj.messageerror);
                     } else {
-                        errorMessage = "Problema con la red; asegúrate de tener Internet e intenta de nuevo.";
+                        errorMessage = "Se necesita estar conectado a Internet para continuar.";
                     }
 
                     $scope.$emit('HidePreloader');
                     $scope.$emit('scrollTop');
-
-                    //-
-                    var finalTime = new Date().getTime();
-
-                    if (finalTime - currentTime > $rootScope.globalTimeOut && $rootScope.globalTimeOut > 0) {
-                        //$scope.openModal();
-                    }
-                    //-
-
+                    
                     $scope.registerModel.modelState.errorMessages = [errorMessage];
                 });
             };
@@ -321,84 +313,68 @@ angular
                 moodleFactory.Services.PostGeolocation(-1);
 
                 var userId = _getItem("userId");
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                
+                if (currentUser && currentUser.token) {
+                    var objectToken = {
+                        moodleAPI: API_RESOURCE.format(''),
+                        moodleToken: currentUser.token
+                    };
+                    cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
+                }
                 
                 moodleFactory.Services.GetAsyncUserCourse(userId, function () {
+                    console.log("GetAsyncUserCourse");
                     $scope.incLoadedItem(); //3
+                    
                     var course = moodleFactory.Services.GetCacheJson("course");
                     moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
-                        //Get Moodle Assets
+                        console.log("GetAsyncUserPostCounter");
                         $scope.incLoadedItem(); //4
 
+                        IntervalFactory.StartUserNotificationWeeklyInterval();
+                        
                         moodleFactory.Services.GetAsyncForumDiscussions(85, data.token, function () {
+                            console.log("GetAsyncForumDiscussions");
                             $scope.incLoadedItem(); //5
-                        }, errorByTimeOut, true, true);
-
-                        moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
-                            $scope.incLoadedItem(); //6
-                        }, errorByTimeOut, true, true);
-
-                        moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
-                            $scope.incLoadedItem(); //7 y 8
-                        }, errorByTimeOut, true, true);
-
-                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, quizesArray, data.token, function() {
-                            $scope.incLoadedItem(); //9
-                        }, errorByTimeOut, true, true);
-
-                        moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function () {
-                                        $scope.incLoadedItem(); //10
-                                    }, function(){}, true);
-                        
-                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        if (currentUser && currentUser.token) {
-                            var objectToken = {
-                                moodleAPI: API_RESOURCE.format(''),
-                                moodleToken: currentUser.token
-                            };
-                            cordova.exec(function () {}, function () {},"CallToAndroid", "login", [objectToken]);
-                        }
-                        
-                    }, function () {
-
-                        $scope.$emit('HidePreloader');
-                        localStorage.setItem("offlineConnection", "offline");
-                        $location.path('/');
-
-                    }, true, true);
-                    
-                    IntervalFactory.StartUserNotificationWeeklyInterval();
-
-                    $timeout(
-                        function () {
-                            try {
-                                //- $scope.$emit('HidePreloader');
-                                $location.path('/Tutorial');
-                            } catch (e) {
-                                $location.path('/ProgramaDashboard');
-                            }
-
-                        }, 1000);
-
-                }, errorByTimeOut, true, true);
+                            
+                            moodleFactory.Services.GetAsyncForumDiscussions(91, data.token, function () {
+                                console.log("GetAsyncForumDiscussions");
+                                $scope.incLoadedItem(); //6
+                                    
+                                moodleFactory.Services.GetAsyncMultipleChallengeInfo(data.token, function(){
+                                    console.log("GetAsyncMultipleChallengeInfo");
+                                    $scope.incLoadedItem(); //7 y 8
+                                    
+                                    moodleFactory.Services.GetAsyncActivityQuizInfo(course.courseid, data.id, quizesArray, data.token, function() {
+                                        console.log("LoadQuizesAssets");
+                                        $scope.incLoadedItem(); //9
+                                        
+                                        moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function () {
+                                            $scope.incLoadedItem(); //10
+                                            
+                                             moodleFactory.Services.GetProfileCatalogs(data.token, function(){
+                                                $scope.incLoadedItem();//11
+                                                moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                                    $scope.incLoadedItem();//12
+                                                    $timeout(function () {
+                                                        try {
+                                                            //- $scope.$emit('HidePreloader');
+                                                            $location.path('/Tutorial');
+                                                        } catch (e) {
+                                                            $location.path('/ProgramaDashboard');
+                                                        }
+                                                    }, 1000);
+                                                }, loginErrorCallback, true);
+                                            }, loginErrorCallback, true);
+                                        }, loginErrorCallback, true, true);
+                                    }, loginErrorCallback, true, true);
+                                }, loginErrorCallback, true, true);
+                            }, loginErrorCallback, true, true);
+                        }, loginErrorCallback, true, true);
+                    }, loginErrorCallback, true, true);
+                }, loginErrorCallback, true, true);                
             };
-
-            function errorByTimeOut(obj) {
-                $scope.registerModel.modelState.isValid = false;
-                $scope.isRegistered = false;
-                localStorage.removeItem("Credentials");
-                $scope.$emit('HidePreloader');
-
-                $timeout(function () {
-                    $scope.registerModel.modelState.errorMessages = ["Hubo en fallo en la red. Intenta más tarde."];
-                    $scope.$emit('scrollTop');
-                }, 1000);
-
-                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                    localStorage.setItem("offlineConnection", "timeout");
-                } else {
-                    localStorage.setItem("offlineConnection", "othercause");
-                }
-            }
 
             $scope.datePickerClick = function () {
                 if (window.mobilecheck()) {
@@ -421,6 +397,20 @@ angular
                 
             };
 
+            function loginErrorCallback(obj) {
+                console.log("login error callback");
+                $scope.userCredentialsModel.modelState.isValid = false;
+                $rootScope.loaderForLogin = false; //For Login Preloader
+                progressBar.set(0); //For Login Preloader
+                $scope.loaderRandom(); //For Login Preloader
+                localStorage.removeItem("CurrentUser");
+                $scope.$emit('HidePreloader');
+                $timeout(function () {                                            
+                    $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                    $scope.$emit('scrollTop');
+                }, 1);
+            }
+            
             function SuccessDatePicker(data) {
                 $("input[name='birthday']").val(data);
             }

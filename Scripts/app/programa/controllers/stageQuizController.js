@@ -864,62 +864,59 @@ angular
                         _endActivity(activityModel, function () {
                             updateProfile();
 
-                        }, null, function(obj) {//Error handler
+                        }, function(obj) {//Error handler
                             $scope.$emit('HidePreloader');
 
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
+                           $scope.$emit('HidePreloader');
+                                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                          $timeout(function () {
+                                            $location.path('/Offline'); //This behavior could change
+                                          }, 1);
+                                        } else {//Another kind of Error happened
+                                          $timeout(function () {
+                                              $scope.$emit('HidePreloader');
+                                              $location.path('/connectionError');
+                                          }, 1);
+                                        }  
 
                         });
 
                         activityModel.activityType = "Assign";
                         activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
 
-                        _endActivity(activityModel, function () {
-                            updateProfile();
-
-                        }, null, function(obj) {//Error handler
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
+                        _endActivity(activityModel, updateProfile, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
                                     $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-
-                        });
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            });
 
                     } else {
                         activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
                         activityModel.activityType = "Quiz";
 
-                        _endActivity(activityModel, function () {
-                            updateProfile();
-                        }, null, function(obj) {//Error handler
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
+                        _endActivity(activityModel, updateProfile, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
                                     $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-
-                        });
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            });
                     }
 
                 }, 1);
@@ -1088,40 +1085,37 @@ angular
                             if ($scope.activity_status == 0) {
                                 $scope.activity_status = 1;
 
-                                updateUserStars($scope.parentActivity.activity_identifier, null, function(obj) {//Error handler
-                                    $scope.$emit('HidePreloader');
-
-                                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                        $timeout(function () {
-                                            $location.path('/Offline'); //This behavior could change
-                                        }, 1000);
-                                    } else {//Another kind of Error happened
-                                        $timeout(function () {
-                                            $location.path('/Offline');
-                                        }, 1000);
-                                    }
-                                });
+                                updateUserStars($scope.parentActivity.activity_identifier, null, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            });
                             }
 
                             $location.path(pathToRedirect());
-                        },
-
-                        function (obj) {
-                            //-
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
+                        }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
                                     $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                            //-
-                        }
-                    );
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            });
 
                 } else {
 
@@ -1131,19 +1125,20 @@ angular
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
-                        updateUserStars($scope.parentActivity.activity_identifier, null, function(obj) {//Error handler
-                            $scope.$emit('HidePreloader');
-
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                $timeout(function () {
+                        updateUserStars($scope.parentActivity.activity_identifier, null, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
                                     $location.path('/Offline'); //This behavior could change
-                                }, 1000);
-                            } else {//Another kind of Error happened
-                                $timeout(function () {
-                                    $location.path('/Offline');
-                                }, 1000);
-                            }
-                        });
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            });
                     }
 
                     if ($scope.activity_identifier === 3601) {
