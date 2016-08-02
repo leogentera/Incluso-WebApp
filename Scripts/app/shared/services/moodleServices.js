@@ -174,7 +174,7 @@
         };
 
         var _postProfilePoints = function (key, data, successCallback, errorCallback) {
-            _postAsyncData(key, data, API_RESOURCE.format('feedbackprofile'), successCallback, errorCallback);
+            _postAsyncDataOffline(key, data, API_RESOURCE.format('feedbackprofile'), successCallback, errorCallback, false, true);
         };
 
         var _putUserNotificationRead = function (userId, data, successCallback, errorCallback, forceRefresh) {
@@ -507,41 +507,7 @@
                 });
             }
         };
-
-        var _postAsyncData = function (key, data, url, successCb, errorCb) {
-            _getDeviceVersionAsync();
-
-            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-            var currentTime = new Date().getTime();
-
-            _httpFactory({
-                method: 'POST',
-                url: url,
-                data: data,
-                timeout: globalTimeOut,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': currentUser.token
-                }
-            }).success(function (data, status, headers, config) {
-
-                if (key != null) {
-                    _setLocalStorageJsonItem(key, data);
-                }
-                
-                if (typeof successCb === "function") {
-                    successCb(key, data);
-                } else {
-                    successCallback(key, data);
-                }
-
-            }).error(function (data, status, headers, config) {
-
-                var finalTime = new Date().getTime();
-                errorCb(timeOutCallback(data, globalTimeOut, currentTime, finalTime));
-            });
-        };
-
+        
         var _postAsyncCommentToActivity = function (key, data, url, successCallback, errorCallback) {
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             var currentTime = new Date().getTime();
@@ -622,9 +588,9 @@
 
                 _setLocalStorageJsonItem(key, data);
 
-                if (successCallback) {
-                    successCallback();
-                }
+                //if (successCallback) {
+                //    successCallback();
+                //}
 
             } else {
                 _httpFactory({
@@ -710,9 +676,9 @@
                     _setLocalStorageJsonItem(key, dataModel);
                 }
 
-                if (successCallback) {
-                    successCallback();
-                }
+                //if (successCallback) {
+                //    successCallback();
+                //}
             }
         };
 
@@ -736,9 +702,9 @@
             dataModel = (key == "avatarInfo" ? [dataModel] : (!otherDataModel ? dataModel : otherDataModel));
             _setLocalStorageJsonItem(key, dataModel);
 
-            if (successCallback) {
-                successCallback();
-            }
+            //if (successCallback) {
+            //    successCallback();
+            //}
         };
 
         var _putDataNoCache = function (data, url, successCallback, errorCallback) {
@@ -781,9 +747,9 @@
             }, successCallback, errorCallback, forceAddToQueue);
 
             _setLocalStorageJsonItem(key, profile);
-            if (successCallback) {
-                successCallback();
-            }
+            //if (successCallback) {
+            //    successCallback();
+            //}
         };
 
         var _putAsyncFirstTimeInfo = function (userId, dataModel, successCallback, errorCallback) {
@@ -801,9 +767,9 @@
                 }
             }, successCallback, errorCallback);
 
-            if (successCallback) {
-                successCallback();
-            }
+            //if (successCallback) {
+            //    successCallback();
+            //}
 
         };
 
@@ -844,9 +810,9 @@
             }, successCallback, errorCallback, forceAddToQueue);
 
             _setLocalStorageJsonItem(key, userCourseModel);
-            if (successCallback) {
-                successCallback(data);
-            }
+            //if (successCallback) {
+            //    successCallback(data);
+            //}
         };
 
         var _startActivity = function (data, activityModel, token, successCallback, errorCallback) {
@@ -863,9 +829,9 @@
                 }
             }, successCallback, errorCallback);
 
-            if (successCallback) {
-                successCallback();
-            }
+            //if (successCallback) {
+            //    successCallback();
+            //}
         };
 
         var createPostsTree = function (posts) {
@@ -1391,11 +1357,13 @@
                     if (queue.data.timeout) {
                         queue.data.timeout = _maxTimeOut;
                     }
+                    
                     _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
 
                     if (requestQueue.length == 1 || _queuePaused) {
                         if (window.mobilecheck()) {
                             doRequestforCellphone(errorCallback);
+                            successCallback();
                         }else {
                             doRequestforWeb(errorCallback);
                         }
