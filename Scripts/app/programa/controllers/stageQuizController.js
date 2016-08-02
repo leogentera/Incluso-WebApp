@@ -1123,9 +1123,7 @@ angular
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
-                        updateUserStars($scope.parentActivity.activity_identifier, function(){
-                                $scope.$emit('HidePreloader');
-                            }, function (obj) {
+                        updateUserStars($scope.parentActivity.activity_identifier,null, function (obj) {
                                 $scope.$emit('HidePreloader');
                                 if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
                                   $timeout(function () {
@@ -1144,11 +1142,11 @@ angular
                     if ($scope.activity_identifier === 3601) {
                         localStorage.setItem("fromLastQuiz/" + $scope.currentUser.userId, "true");
                     }
-
+                    $scope.$emit('HidePreloader');
                     $location.path(pathToRedirect());
                 }
                 
-                $scope.$emit('HidePreloader');
+                
             }
 
 
