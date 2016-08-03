@@ -1326,7 +1326,9 @@
             queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;
 
-            if(successCallback){successCallback();}
+            if(successCallback && !_isDeviceOnline){
+                successCallback();
+            }
             
             _updateConnectionStatus(function () {
 
@@ -1344,7 +1346,7 @@
                                 }
                             }
 
-                            //successCallback();
+                            successCallback();
                         }).error(function(data){
                             var finalTime = new Date().getTime();
                             console.log("error callback into online callback");
