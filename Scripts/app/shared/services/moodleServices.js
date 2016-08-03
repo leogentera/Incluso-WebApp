@@ -1344,7 +1344,7 @@
                                 }
                             }
 
-                            successCallback();
+                            //successCallback();
                         }).error(function(data){
                             var finalTime = new Date().getTime();
                             console.log("error callback into online callback");
