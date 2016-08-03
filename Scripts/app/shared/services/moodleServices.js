@@ -1326,6 +1326,8 @@
             queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;
 
+            if(successCallback){successCallback();}
+            
             _updateConnectionStatus(function () {
 
                 console.log("DeviceOnline callback");
@@ -1363,7 +1365,6 @@
                     if (requestQueue.length == 1 || _queuePaused) {
                         if (window.mobilecheck()) {
                             doRequestforCellphone(errorCallback);
-                            successCallback();
                         }else {
                             doRequestforWeb(errorCallback);
                         }
