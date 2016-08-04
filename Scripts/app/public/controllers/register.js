@@ -262,7 +262,7 @@ angular
                     var errorMessage;
 
                     if ((data != null && data.messageerror != null)) {
-                        errorMessage = window.atob(obj.messageerror);
+                        errorMessage = window.atob(data.messageerror);
                     } else {
                         errorMessage = "Se necesita estar conectado a Internet para continuar.";
                     }

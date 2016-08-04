@@ -14,7 +14,7 @@
         <section class="component profile-dashboard"  ng-class="currentPage == 12 ? 'hide' : ''">
             <div class="user-avatar">
                 <figure>
-                    <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive"/>
+                    <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive profile-img"/>
                 </figure>
                 <a type="button" id="editProfile" ng-click="avatar()" class="btn">
                     <span class="icomoon icon-edit"></span>
@@ -302,9 +302,8 @@
                                                                 class="btn btn-primary btn-lg control left" disabled>
                                                             <span class="icomoon icon-arrow-slim-left"></span>
                                                         </button>
-                                                        <button type="button"
-                                                                class="btn btn-primary btn-lg btn-block action"
-                                                                ng-click="save()">Guardar
+                                                        <button id="saveProfile" type="button" class="btn btn-primary btn-lg btn-block action">
+                                                              Guardar
                                                         </button>
                                                         <button type="button" ng-disabled="isRegistered"
                                                                 class="btn btn-primary btn-lg control right"

@@ -420,15 +420,21 @@ angular
             }
 
             function FacebookLoginFailure(data) {
-               console.log(JSON.stringify(data));
+                console.log(JSON.stringify(data));
                 $scope.userCredentialsModel.modelState.isValid = false;
-                //var errorMessage = window.atob(obj.messageerror);
+                var errorMessage = "";
+                if (data && data.messageerror) {
+                    errorMessage = window.atob(data.messageerror);
+                } else {
+                    errorMessage = "Se necesita estar conectado a Internet para continuar";
+                }
 
-                $timeout(function () {
-                    $scope.$emit('HidePreloader');
-                    $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                }, 1000);
+                $scope.$emit('HidePreloader');
+                progressBar.set(0); //For Login Preloader
                 $scope.$emit('scrollTop');
+                clearLocalStorage();
+
+                $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
             }
 
             function loginErrorCallback(obj) {
