@@ -1009,25 +1009,27 @@ angular
                     // ************************ The following are required fields. ****************************
                     var age;
 
-                    if ($scope.inMobile) {
+                    if ($scope.inMobile && $scope.model.birthday) {
                         age = calculate_age($scope.model.birthday);
-                    } else {
+                    } else if ($scope.birthdate_Dateformat) {
                         age = calculate_age($scope.birthdate_Dateformat);
                     }
 
-                    if (age < 13) {
-                        errors.push("Debes ser mayor de 13 años para poder registrarte.");
-                    }
+                    if (age) {
+                        if (age < 13) {
+                            errors.push("Debes ser mayor de 13 años para poder registrarte.");
+                        }
+                    } 
 
-                    if ($scope.model.firstname == '') {
+                    if (!$scope.model.firstname) {
                         errors.push("Formato de nombre incorrecto.");
                     }
 
-                    if ($scope.model.lastname == '') {
+                    if (!$scope.model.lastname) {
                         errors.push("Formato de apellido paterno incorrecto.");
                     }
 
-                    if ($scope.model.mothername == '') {
+                    if (!$scope.model.mothername) {
                         errors.push("Formato de apellido materno incorrecto.");
                     }
 
@@ -1035,7 +1037,7 @@ angular
                         errors.push("Debe indicar su género.");
                     }
 
-                    if (!isValidDate($scope.model.birthday)) {
+                    if (!age || !isValidDate($scope.model.birthday)) {
                         errors.push("Ingrese la fecha de nacimiento.");
                     }
 
@@ -1967,9 +1969,13 @@ angular
                     }, 500);
                 };
 
+
+                $('#saveProfile').click(function () {
+                    $scope.save();
+                });
+
                 $scope.save = function () {
                     $scope.$emit('ShowPreloader');
-
                     $timeout(function(){
                         if (!$scope.accessedSubsection) {
                             $location.path("Perfil/" + $scope.userId);
