@@ -399,7 +399,9 @@ angular
                               });
                           }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);                      
                         }
-                        _endActivity(parentActivity, function(){}, function(){
+                        _endActivity(parentActivity, function(){
+                              $scope.$emit('HidePreloader');
+                           }, function(){
                             $scope.$emit('HidePreloader');
                         }, true);
                         parentActivity.status = 1;
@@ -412,9 +414,11 @@ angular
                     }
                     parentActivity.modifieddate=data.fechaModificación || '';
                      parentActivity.onlymodifieddate=true;
-                     _endActivity(parentActivity, function(){}, function(obj) {//Error handler
+                     _endActivity(parentActivity, function(){
+                           $scope.$emit('HidePreloader');
+                        }, function(obj) {//Error handler
                          $scope.$emit('HidePreloader');
-                     });
+                     }, true);
 
                     if (request.activities.length > 0) {
                       $scope.activitiesToPost++;
