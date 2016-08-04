@@ -865,8 +865,6 @@ angular
                             updateProfile();
 
                         }, function(obj) {//Error handler
-                            $scope.$emit('HidePreloader');
-
                            $scope.$emit('HidePreloader');
                                         if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
                                           $timeout(function () {
@@ -1098,7 +1096,6 @@ angular
                                     }
                                 });
                             }
-                            $scope.$emit('HidePreloader');
                             $location.path(pathToRedirect());
                         }, function (obj) {
                                 $scope.$emit('HidePreloader');
@@ -1142,7 +1139,6 @@ angular
                     if ($scope.activity_identifier === 3601) {
                         localStorage.setItem("fromLastQuiz/" + $scope.currentUser.userId, "true");
                     }
-                    $scope.$emit('HidePreloader');
                     $location.path(pathToRedirect());
                 }
                 

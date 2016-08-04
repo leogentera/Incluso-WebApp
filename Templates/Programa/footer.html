@@ -24,7 +24,8 @@
         	<a href="" class="btn-link" ng-click="navigateTo('HelpAndSupport','sidebar')">Ayuda y Soporte</a>
         </li>
     </ul>
-    <a class="btn-back-to-top" ng-click="$emit('scrollTop');">
+	<a class="btn-back-to-top" onclick="$('.app').scrollTop(0);">
+	<!--<a class="btn-back-to-top" ng-click="$broadcast('scrollTop');">-->
         <span class="icomoon icon-double-arrow-up"></span>
         <span>Subir</span>
     </a>

@@ -66,10 +66,13 @@ angular
                 $scope.profileImage = $scope.user.retoMultipleAvatar;
                 $scope.user.base64Image = $scope.user.retoMultipleAvatar;
             }else if($scope.user.base64Image) {
-                $scope.profileImage = $scope.user.base64Image;
+                $scope.profileImage = $scope.user.base64Image;            
             }else{
-                console.log("it does not exists");
-                //Download profile Images
+                
+                getImageOrDefault("assets/avatar/avatar_" + $scope.user.userId + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
+                    $scope.profileImage = niceImageUrl;
+                });
+                
                 $scope.profileImage = "assets/avatar/default.png";
                 var imageProf = [{ 'path': "assets/avatar", 'name': "avatar_" + $scope.user.userId + ".png", 'downloadLink': $scope.user.profileimageurl }];
                 saveLocalImages(imageProf);
