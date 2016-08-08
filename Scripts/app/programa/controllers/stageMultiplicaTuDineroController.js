@@ -246,7 +246,7 @@ angular
                     }
                     var setAsCompleted= false; //Indicates if the activity should be completed or not
                     if ((activitiesCompleted == parentActivity.activities.length - 1) && $scope.IsComplete) {
-                        if (data["calificación"] && data["calificación"] == "Aprobado") {
+                        if (data["calificación"] && (data["calificación"] == "Aprobado" || data["calificación"] == "Regular" ) ) {
                            parentActivity.status = 1;
                            setAsCompleted=true;
                         }
