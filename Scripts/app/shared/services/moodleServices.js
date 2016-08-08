@@ -1326,7 +1326,7 @@
             queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;
 
-            if(successCallback && !_isDeviceOnline){
+            if(successCallback && (!_isDeviceOnline || forceAddToQueue)){
                 successCallback();
             }
             
