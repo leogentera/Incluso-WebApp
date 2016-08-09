@@ -1316,11 +1316,6 @@
         function addRequestToQueue(key, queue, successCallback, errorCallback, forceAddToQueue) {
 
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
-            var requestQueue = [];
-            var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-            if (cacheQueue instanceof Array) {
-                requestQueue = cacheQueue;
-            }
 
             queue.retryCount = 0;
             queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
@@ -1356,6 +1351,12 @@
                         });
                 }else{
                     console.log("device offline or forced to queue");
+                    
+                    var requestQueue = [];
+                    var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                    if (cacheQueue instanceof Array) {
+                        requestQueue = cacheQueue;
+                    }
                     requestQueue.push(queue);
 
                     if (queue.data.timeout) {
