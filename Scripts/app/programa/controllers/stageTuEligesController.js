@@ -188,8 +188,19 @@ angular
                         }
                     }
                     
+                     var setAsCompleted= false; //Indicates if the activity should be completed or not
+                     
                     if ($scope.IsComplete && activitiesCompleted == parentActivity.activities.length - 1) {
-                        parentActivity.status = 1;
+                        if (data["calificación"] && (data["calificación"] == "Aprobado" || data["calificación"] == "Regular" )) {
+                           parentActivity.status = 1;
+                           setAsCompleted=true;
+                        }
+                        else{
+                            setAsCompleted=false;
+                            parentActivity.status = 0; 
+                        }
+                        parentActivity.setAsCompleted=setAsCompleted;
+                        
                         var userid = localStorage.getItem("userId");
                         var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
                         //update assertiveness on users profile
@@ -208,9 +219,12 @@ angular
                         }, true);
 
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
-                        updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function (obj){
-                            $scope.$emit('HidePreloader');
-                        }, true);
+                        //We are going to assing stars once they pass
+                        if (setAsCompleted) {
+                                updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false, function(obj){
+                                    $scope.$emit('HidePreloader');
+                                }, true);
+                        }
                     }
                 }
                 if (data["calificación"] && data["calificación"] == "Reprobado") {
@@ -235,12 +249,16 @@ angular
                     }, 1000);
                 }
                 if (parentActivity.activities) {
-                    for (var i = 0; i < subactivitiesCompleted.length; i++) {
-                        $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
+                    
+                    if (setAsCompleted) {
+                      for (var i = 0; i < subactivitiesCompleted.length; i++) {
+                            $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
+                        }
+                        userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted); 
                     }
-                    userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
                     _setLocalStorageJsonItem("usercourse", userCourseUpdated);
                     _setLocalStorageJsonItem("activityManagers", $scope.activities);
+                    $scope.tuEligesActivities.setAsCompleted=setAsCompleted;
                     $scope.saveQuiz($scope.tuEligesActivities, logEntry, userCourseUpdated);
                 }
             }
@@ -253,7 +271,8 @@ angular
                     "like_status": quiz.like_status,
                     "activityidnumber": activity.coursemoduleid,
                     "dateStart": quiz.startingTime,
-                    "dateEnd": quiz.endingTime
+                    "dateEnd": quiz.endingTime,
+                    "setAsCompleted":activity.setAsCompleted
                 };
                 var activityModel = {
                     "usercourse": userCourseUpdated,

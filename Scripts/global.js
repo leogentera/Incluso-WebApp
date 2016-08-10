@@ -400,6 +400,10 @@ var _endActivity = function (activityModel, callback, errorCallback, forceAddToQ
             data.onlymodifieddate = activityModel.onlymodifieddate;
             data.modifieddate = activityModel.modifieddate;
         }
+        
+        if (activityModel.hasOwnProperty('setAsCompleted')) {
+            data.setAsCompleted = activityModel.setAsCompleted;
+        }
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallbackScope, forceAddToQueue);
     } else {
         var data = { userid: currentUserId };
@@ -407,6 +411,9 @@ var _endActivity = function (activityModel, callback, errorCallback, forceAddToQ
             data.onlymodifieddate = activityModel.onlymodifieddate;
             data.modifieddate = activityModel.modifieddate;
 
+        }
+        if (activityModel.hasOwnProperty('setAsCompleted')) {
+            data.setAsCompleted = activityModel.setAsCompleted;
         }
 
         console.log("forceAddToQueue:" + forceAddToQueue);
