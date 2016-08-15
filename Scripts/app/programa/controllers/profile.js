@@ -365,7 +365,7 @@ angular
                         case 4:
                             filename = "insignias-ala.gif";
                             break;
-                        case 5:
+                        case 27:
                             filename = "insignias-sist-navegacion.gif";
                             break;
                         case 6:
@@ -377,7 +377,7 @@ angular
                         case 8:
                             filename = "insignias-campodefuerza.gif";
                             break;
-                        case 9:
+                        case 28:
                             filename = "insignias-radar.gif";
                             break;
                         case 10:
