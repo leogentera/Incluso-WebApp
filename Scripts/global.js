@@ -1296,13 +1296,13 @@ var _badgesPerChallenge = [
     { badgeId: 6, badgeName: "Propulsor",  activity_identifier: "2003" },
     { badgeId: 7, badgeName: "Misiles", activity_identifier: "2005" },
     { badgeId: 8, badgeName: "Campo de fuerza", activity_identifier: "2010" },
-    { badgeId: 28, badgeName: "Radar", activity_identifier: "2022" },
     { badgeId: 18, badgeName: "Turbo", activity_identifier: "2014" },
     { badgeId: 10, badgeName: "Tanque de oxígeno",  activity_identifier: "3200" },
     { badgeId: 16, badgeName: "Casco espacial", activity_identifier: "3300" },
     { badgeId: 11, badgeName: "Sonda espacial", activity_identifier: "3400" },
-    { badgeId: 29, badgeName: "Radio de comunicación", activity_identifier: "3501" },
-    { badgeId: 27, badgeName: "Sistema de Navegación", activity_identifier: "1002" }
+    { badgeId: 30, badgeName: "Sistema de Navegación", activity_identifier: "1002" },
+    { badgeId: 31, badgeName: "Radar", activity_identifier: "2022" },
+    { badgeId: 32, badgeName: "Radio de comunicación", activity_identifier: "3501" }    
 ];
 
 
