@@ -401,7 +401,7 @@ angular
                         case 16:
                             filename = "insignias-casco.gif";
                             break;
-                        case 17:
+                        case 29:
                             filename = "insignias-radio.gif";
                             break;
                         case 18:
