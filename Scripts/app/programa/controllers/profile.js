@@ -171,11 +171,16 @@ angular
 
                             if (elem.status == "won") {
                                 elem.filename = getFileName(elem.id);
-                                elem.description = getDescription(elem.id);
+                                elem.description = getDescription(elem.id);                               
                             } else {
                                 elem.filename = "insignia-bloqueada.gif";
                             }
 
+                            if (elem.name.indexOf(" - Retroalimentación") > -1) {
+                                var finalIndex = elem.name.length - 20;
+                                elem.name = elem.name.substring(0, finalIndex);
+                            }
+                            
                             $scope.wholeBadgesPages[i].push(elem);
                         }
                     }

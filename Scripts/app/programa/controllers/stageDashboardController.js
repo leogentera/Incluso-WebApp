@@ -403,7 +403,7 @@ angular
                         title: $scope.contentResources.robot_title_challenge_four,
                         message: $scope.contentResources.robot_challenge_four,
                         read: "false",
-                        challengeId: 269
+                        challengeId: 262
                     }];
 
 
