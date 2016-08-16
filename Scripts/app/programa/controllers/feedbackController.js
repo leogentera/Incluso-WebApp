@@ -290,6 +290,7 @@ angular
                     //Update local storage and activities status array
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);
                     assignStars();
+                    $location.path($scope.location);
                 }, function (obj) {
                     $scope.$emit('HidePreloader');
                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
@@ -304,7 +305,7 @@ angular
                       }, 1);
                     }
                 });
-                $location.path($scope.location);
+                
             };
             
             function assignStars(){
