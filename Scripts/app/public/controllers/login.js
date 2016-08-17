@@ -22,6 +22,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+            $rootScope._pixel = false;          
             /* ViewModel */
             $scope.userCredentialsModel = {
                 username: "",
