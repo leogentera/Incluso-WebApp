@@ -290,7 +290,6 @@ angular
                     //Update local storage and activities status array
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUserCourse);
                     assignStars();
-                    $location.path($scope.location);
                 }, function (obj) {
                     $scope.$emit('HidePreloader');
                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
@@ -321,20 +320,23 @@ angular
                     };
                 updateLocalStorageStars(data);
                 moodleFactory.Services.PutStars(data, $scope.profile, currentUser.token, function () {
-                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (){}, function (obj) {
-                        $scope.$emit('HidePreloader');
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                          $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                          }, 1);
-                        } else {//Another kind of Error happened
-                          $timeout(function () {
-                              console.log("Another kind of Error happened");
-                              $scope.$emit('HidePreloader');
-                              $location.path('/connectionError');
-                          }, 1);
+                    moodleFactory.Services.PutAsyncProfile(currentUser.id, $scope.profile, function (){
+                            $location.path($scope.location);
+                        }, function (obj) { 
+                            $scope.$emit('HidePreloader');
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                              $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                              }, 1);
+                            } else {//Another kind of Error happened
+                              $timeout(function () {
+                                  console.log("Another kind of Error happened");
+                                  $scope.$emit('HidePreloader');
+                                  $location.path('/connectionError');
+                              }, 1);
+                            }
                         }
-                    });
+                    );
                 }, function (obj) {
                     $scope.$emit('HidePreloader');
                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
