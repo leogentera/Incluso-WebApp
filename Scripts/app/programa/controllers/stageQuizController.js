@@ -1110,10 +1110,15 @@ angular
                             });
                     }
 
+                    var path = pathToRedirect();
                     if ($scope.activity_identifier === 3601) {
                         localStorage.setItem("fromLastQuiz/" + $scope.currentUser.userId, "true");
                     }
-                    $location.path(pathToRedirect());
+                    $timeout(function () {                                      
+                        $scope.$emit('HidePreloader');
+                        $location.path(path);
+                    }, 1);
+                    
                 }
                 
                 
