@@ -392,7 +392,7 @@ angular
                         title: $scope.contentResources.robot_title_challenge_five,
                         message: $scope.contentResources.robot_challenge_five,
                         read: "false",
-                        challengeId: 167
+                        challengeId: 263
                     }];
 
 

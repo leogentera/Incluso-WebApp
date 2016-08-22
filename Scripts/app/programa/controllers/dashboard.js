@@ -66,19 +66,24 @@ angular
                 $scope.profileImage = $scope.user.retoMultipleAvatar;
                 $scope.user.base64Image = $scope.user.retoMultipleAvatar;
             }else if($scope.user.base64Image) {
-                $scope.profileImage = $scope.user.base64Image;
+                $scope.profileImage = $scope.user.base64Image;            
             }else{
-                console.log("it does not exists");
-                //Download profile Images
+                
+                getImageOrDefault("assets/avatar/avatar_" + $scope.user.userId + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
+                    $scope.profileImage = niceImageUrl;
+                });
+                
                 $scope.profileImage = "assets/avatar/default.png";
                 var imageProf = [{ 'path': "assets/avatar", 'name': "avatar_" + $scope.user.userId + ".png", 'downloadLink': $scope.user.profileimageurl }];
                 saveLocalImages(imageProf);
             };
             
-            if (window.mobilecheck() && $scope.user.haspicture != "1") {
+            var avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
+            
+            if (window.mobilecheck() && $scope.user.haspicture != "1" && !avatarInfo) {
                 $location.path('/Tutorial');
             }
-
+            
             var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
             if (profileData && profileData.stars) {
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
@@ -244,21 +249,13 @@ angular
                         var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         if (leaderboard) {
                             for(var lb = 0; lb < leaderboard.length; lb++) {
- 
                                 if (leaderboard[lb].userId === parseInt(currentUserID, 10)) {
                                     leaderboard[lb].stars = $scope.user.stars;
                                     leaderboard[lb].profileimageurl = $scope.profileImage;
-
                                 }
-    
-                                //getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function(niceImageUrl) {
-                                //    leaderboard[lb].profileimageurl = niceImageUrl;
-                                //});
                             }
-                            $scope.course.leaderboard = leaderboard;
-     
-                             _pageLoaded = true;
-                             
+                            $scope.course.leaderboard = leaderboard;     
+                            _pageLoaded = true;
                         }
                         $timeout(function () {
                             if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
@@ -295,113 +292,114 @@ angular
                 getUserChat();
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function () {
+                    
                     $scope.course = JSON.parse(localStorage.getItem("course"));                    
                     $scope.currentStage = getCurrentStage();                    
                     _setLocalStorageItem("currentStage", $scope.currentStage);
 
-                    moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
-                        $scope.incLoadedItem(); //13
-                        $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
-                        currentUserProfile = getCurrentUserProfile();
-                        
-                        var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                        
-                        if(profile) {
-                            profileCallback();
-                        } else {
-                            moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, profileCallback, function (obj) {
-                                $scope.$emit('HidePreloader');
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                  $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                  }, 1);
-                                } else {//Another kind of Error happened
-                                  console.log("Another kind of Error happened");
-                                    $timeout(function () {
-                                        $scope.$emit('HidePreloader');
-                                        $location.path('/connectionError');
-                                    }, 1);
-                                }
-                            }, true);
-                        }
-                        
-                        function profileCallback() {
-                            $scope.incLoadedItem(); //16
-                            var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-
-                            moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
-                                $scope.incLoadedItem(); //17
-                            }, function (obj) {
-                                if ($rootScope.loaderForLogin) {
-                                    localStorage.setItem("offlineConnection", "timeout");
-                                    $location.path('/');
-                                }
-                                $scope.$emit('HidePreloader');
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                  $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                  }, 1);
-                                } else {//Another kind of Error happened
-                                  console.log("Another kind of Error happened");
-                                    $timeout(function () {
-                                        $scope.$emit('HidePreloader');
-                                        $location.path('/connectionError');
-                                    }, 1);
-                                }
-                            }, true);
-
-                            _pageLoaded = true;
-                            if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
-                                $timeout(function(){
-                                    $scope.$emit('HidePreloader');
-                                }, 1000);
-                            }
-
-                            if (!profile.termsAndConditions) {
-                                $scope.openTermsModal();
-                                $scope.navigateTo('TermsOfUse');
-                            }
-
-                            $scope.user.firstname = profile.firstname;
-                            $scope.user.rank = profile.rank;
-                            $scope.user.stars = parseInt(profile.stars, 10); //Saved as an integer.
-
-                            _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
-
-                            for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
-
-                                if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...
-                                    if ($scope.profileImage) { $scope.course.leaderboard[lb].profileimageurl = $scope.profileImage; } // Take the leaderboard image from the updated profileImage.
-                                    profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
-                                    profile.stars = parseInt($scope.course.leaderboard[lb].stars, 10);
-                                    $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
-                                    $scope.user.stars = $scope.course.leaderboard[lb].stars;  //Update stars in template,
-                                    
-                                    _setLocalStorageJsonItem("Perfil/" + _getItem("userId"), profile);  //Update rank in Perfil/nnn in LS,
-                                    _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
-                                    break;
-                                }
-                            }
-                        }
-
-                    }, function (obj) {
-                        if ($rootScope.loaderForLogin) {
-                            localStorage.setItem("offlineConnection", "timeout");
-                            $location.path('/');
-                        }
-                        $scope.$emit('HidePreloader');
-                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                          $timeout(function () {
-                            $location.path('/Offline'); //This behavior could change
-                          }, 1);
-                        } else {//Another kind of Error happened
-                          $timeout(function () {
+                    // moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
+                    //$scope.incLoadedItem(); //13    
+                    $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+                    currentUserProfile = getCurrentUserProfile();
+                    
+                    var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
+                    
+                    if(profile) {
+                        profileCallback();
+                    } else {
+                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, profileCallback, function (obj) {
+                            $scope.$emit('HidePreloader');
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                              $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                              }, 1);
+                            } else {//Another kind of Error happened
                               console.log("Another kind of Error happened");
-                              $scope.$emit('HidePreloader');
-                              $location.path('/connectionError');
-                          }, 1);
+                                $timeout(function () {
+                                    $scope.$emit('HidePreloader');
+                                    $location.path('/connectionError');
+                                }, 1);
+                            }
+                        }, true);
+                    }
+                        
+                    function profileCallback() {
+                        $scope.incLoadedItem(); //16
+                        var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
+
+                        moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
+                            $scope.incLoadedItem(); //17
+                        }, function (obj) {
+                            if ($rootScope.loaderForLogin) {
+                                localStorage.setItem("offlineConnection", "timeout");
+                                $location.path('/');
+                            }
+                            $scope.$emit('HidePreloader');
+                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                              $timeout(function () {
+                                $location.path('/Offline'); //This behavior could change
+                              }, 1);
+                            } else {//Another kind of Error happened
+                              console.log("Another kind of Error happened");
+                                $timeout(function () {
+                                    $scope.$emit('HidePreloader');
+                                    $location.path('/connectionError');
+                                }, 1);
+                            }
+                        }, true);
+
+                        _pageLoaded = true;
+                        if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
+                            $timeout(function(){
+                                $scope.$emit('HidePreloader');
+                            }, 1000);
                         }
-                    }, true);
+
+                        if (!profile.termsAndConditions) {
+                            $scope.openTermsModal();
+                            $scope.navigateTo('TermsOfUse');
+                        }
+
+                        $scope.user.firstname = profile.firstname;
+                        $scope.user.rank = profile.rank;
+                        $scope.user.stars = parseInt(profile.stars, 10); //Saved as an integer.
+
+                        _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
+
+                        for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
+
+                            if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...
+                                if ($scope.profileImage) { $scope.course.leaderboard[lb].profileimageurl = $scope.profileImage; } // Take the leaderboard image from the updated profileImage.
+                                profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
+                                profile.stars = parseInt($scope.course.leaderboard[lb].stars, 10);
+                                $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
+                                $scope.user.stars = $scope.course.leaderboard[lb].stars;  //Update stars in template,
+                                
+                                _setLocalStorageJsonItem("Perfil/" + _getItem("userId"), profile);  //Update rank in Perfil/nnn in LS,
+                                _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
+                                break;
+                            }
+                        }
+                    }
+
+                    //}, function (obj) {
+                    //    if ($rootScope.loaderForLogin) {
+                    //        localStorage.setItem("offlineConnection", "timeout");
+                    //        $location.path('/');
+                    //    }
+                    //    $scope.$emit('HidePreloader');
+                    //    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                    //      $timeout(function () {
+                    //        $location.path('/Offline'); //This behavior could change
+                    //      }, 1);
+                    //    } else {//Another kind of Error happened
+                    //      $timeout(function () {
+                    //          console.log("Another kind of Error happened");
+                    //          $scope.$emit('HidePreloader');
+                    //          $location.path('/connectionError');
+                    //      }, 1);
+                    //    }
+                    //}, true);
                 }, function (obj) {
                     if ($rootScope.loaderForLogin) {
                             localStorage.setItem("offlineConnection", "timeout");

@@ -1316,62 +1316,62 @@
         function addRequestToQueue(key, queue, successCallback, errorCallback, forceAddToQueue) {
 
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
-            var requestQueue = [];
-            var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-            if (cacheQueue instanceof Array) {
-                requestQueue = cacheQueue;
-            }
 
             queue.retryCount = 0;
             queue.userID = _currentUser.userId; // Necesitamos guardar el request en la cola con el usuario actual
             queue.key = key;
-
-            if(successCallback && !_isDeviceOnline){
+                    
+            _updateConnectionStatus(function () {
+            
+            if(successCallback && (!_isDeviceOnline || forceAddToQueue)){
                 successCallback();
             }
-            
-            _updateConnectionStatus(function () {
-
-                console.log("DeviceOnline callback");
-                if(_isDeviceOnline && !forceAddToQueue){
-                    console.log("device online into updateConnectionStatusOnlineCallback");
-                    queue.data.headers.Authorization = _currentUser.token;
-                    var currentTime = new Date().getTime();
-                    _httpFactory(queue.data)
-                        .success(function(data){
-                            console.log("request successful");
-                            if (queue.data.method == 'GET') {
-                                if (queue.key) {
-                                    _setLocalStorageJsonItem(queue.key, data);
-                                }
+            console.log("DeviceOnline callback");
+            if(_isDeviceOnline && !forceAddToQueue){
+                console.log("device online into updateConnectionStatusOnlineCallback");
+                queue.data.headers.Authorization = _currentUser.token;
+                var currentTime = new Date().getTime();
+                _httpFactory(queue.data)
+                    .success(function(data){
+                        console.log("request successful");
+                        if (queue.data.method == 'GET') {
+                            if (queue.key) {
+                                _setLocalStorageJsonItem(queue.key, data);
                             }
-
-                            successCallback();
-                        }).error(function(data){
-                            var finalTime = new Date().getTime();
-                            console.log("error callback into online callback");
-                            if (errorCallback) {
-                                errorCallback(timeOutCallback(data, queue.data.timeout, currentTime, finalTime));
-                            }
-                        });
-                }else{
-                    console.log("device offline or forced to queue");
-                    requestQueue.push(queue);
-
-                    if (queue.data.timeout) {
-                        queue.data.timeout = _maxTimeOut;
-                    }
-                    
-                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-
-                    if (requestQueue.length == 1 || _queuePaused) {
-                        if (window.mobilecheck()) {
-                            doRequestforCellphone(errorCallback);
-                        }else {
-                            doRequestforWeb(errorCallback);
                         }
+
+                        successCallback();
+                    }).error(function(data){
+                        var finalTime = new Date().getTime();
+                        console.log("error callback into online callback");
+                        if (errorCallback) {
+                            errorCallback(timeOutCallback(data, queue.data.timeout, currentTime, finalTime));
+                        }
+                    });
+            }else{
+                console.log("device offline or forced to queue");
+                
+                var requestQueue = [];
+                var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                if (cacheQueue instanceof Array) {
+                    requestQueue = cacheQueue;
+                }
+                requestQueue.push(queue);
+
+                if (queue.data.timeout) {
+                    queue.data.timeout = _maxTimeOut;
+                }
+                
+                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+
+                if (requestQueue.length == 1 || _queuePaused) {
+                    if (window.mobilecheck()) {
+                        doRequestforCellphone(errorCallback);
+                    }else {
+                        doRequestforWeb(errorCallback);
                     }
                 }
+            }
             },function(){
                 console.log("updateConnectionStatusOfflineCallback");
             });

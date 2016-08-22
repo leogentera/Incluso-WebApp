@@ -81,9 +81,9 @@ hallOfFameModule
                 getTop5("Ver Todo");
                 //###########################################
 
-                if (profile.profileimageurl) {
-                    profile.profileimageurl = profile.profileimageurl + "?rnd=" + new Date().getTime();
-                }
+                //if (profile.profileimageurl) {
+                //    profile.profileimageurl = profile.profileimageurl + "?rnd=" + new Date().getTime();
+                //}
 
                 var userStats = {
                     profileImageUrl: profile.profileimageurl,

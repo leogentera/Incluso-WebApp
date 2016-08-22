@@ -171,11 +171,16 @@ angular
 
                             if (elem.status == "won") {
                                 elem.filename = getFileName(elem.id);
-                                elem.description = getDescription(elem.id);
+                                elem.description = getDescription(elem.id);                               
                             } else {
                                 elem.filename = "insignia-bloqueada.gif";
                             }
 
+                            if (elem.name.indexOf(" - Retroalimentación") > -1) {
+                                var finalIndex = elem.name.length - 20;
+                                elem.name = elem.name.substring(0, finalIndex);
+                            }
+                            
                             $scope.wholeBadgesPages[i].push(elem);
                         }
                     }
@@ -365,9 +370,6 @@ angular
                         case 4:
                             filename = "insignias-ala.gif";
                             break;
-                        case 5:
-                            filename = "insignias-sist-navegacion.gif";
-                            break;
                         case 6:
                             filename = "insignias-propulsor.gif";
                             break;
@@ -376,10 +378,7 @@ angular
                             break;
                         case 8:
                             filename = "insignias-campodefuerza.gif";
-                            break;
-                        case 9:
-                            filename = "insignias-radar.gif";
-                            break;
+                            break;                        
                         case 10:
                             filename = "insignias-tanqueoxigeno.gif";
                             break;
@@ -400,12 +399,18 @@ angular
                             break;
                         case 16:
                             filename = "insignias-casco.gif";
-                            break;
-                        case 17:
-                            filename = "insignias-radio.gif";
-                            break;
+                            break;                        
                         case 18:
                             filename = "insignias-turbo.gif";
+                            break;
+                        case 30:
+                            filename = "insignias-sist-navegacion.gif";
+                            break;
+                        case 31:
+                            filename = "insignias-radar.gif";
+                            break;
+                        case 32:
+                            filename = "insignias-radio.gif";
                             break;
                         default:
                             filename = "insignia-bloqueada.gif";
@@ -426,10 +431,7 @@ angular
                             break;
                         case 4:
                             description = "Has recuperado la 'Turbina Ala Ctu-3000' ¡Continua el viaje!";
-                            break;
-                        case 5:
-                            description = "Has encontrado el 'Sistema de navegación' ¡No te detengas!";
-                            break;
+                            break;                        
                         case 6:
                             description = "Has recuperado el 'Propulsor' ¡Ahora, ve por más!";
                             break;
@@ -438,9 +440,6 @@ angular
                             break;
                         case 8:
                             description = "El 'Campo de fuerza' es tuyo. ¡Lograste un reto más!";
-                            break;
-                        case 9:
-                            description = "Has obtenido el 'Radar' ¡Continúa la aventura!";
                             break;
                         case 10:
                             description = "Lograste obtener el 'Tanque de oxígeno' ¡No te rindas!";
@@ -463,11 +462,17 @@ angular
                         case 16:
                             description = "Has ganado el 'Casco'. Ahora, ¡ve por más!";
                             break;
-                        case 17:
-                            description = "Has ganado el 'Radio de comunicación'. ¡Nunca te des por vencido!";
-                            break;
                         case 18:
                             description = "Ya es tuyo el 'Turbo' ¡no te rindas!";
+                            break;
+                        case 30:
+                            description = "Has encontrado el 'Sistema de navegación' ¡No te detengas!";
+                            break;
+                        case 31:
+                            description = "Has obtenido el 'Radar' ¡Continúa la aventura!";
+                            break;
+                        case 32:
+                            description = "Has ganado el 'Radio de comunicación'. ¡Nunca te des por vencido!";
                             break;
                         default:
                             description = "";
@@ -1009,25 +1014,27 @@ angular
                     // ************************ The following are required fields. ****************************
                     var age;
 
-                    if ($scope.inMobile) {
+                    if ($scope.inMobile && $scope.model.birthday) {
                         age = calculate_age($scope.model.birthday);
-                    } else {
+                    } else if ($scope.birthdate_Dateformat) {
                         age = calculate_age($scope.birthdate_Dateformat);
                     }
 
-                    if (age < 13) {
-                        errors.push("Debes ser mayor de 13 años para poder registrarte.");
-                    }
+                    if (age) {
+                        if (age < 13) {
+                            errors.push("Debes ser mayor de 13 años para poder registrarte.");
+                        }
+                    } 
 
-                    if ($scope.model.firstname == '') {
+                    if (!$scope.model.firstname) {
                         errors.push("Formato de nombre incorrecto.");
                     }
 
-                    if ($scope.model.lastname == '') {
+                    if (!$scope.model.lastname) {
                         errors.push("Formato de apellido paterno incorrecto.");
                     }
 
-                    if ($scope.model.mothername == '') {
+                    if (!$scope.model.mothername) {
                         errors.push("Formato de apellido materno incorrecto.");
                     }
 
@@ -1035,7 +1042,7 @@ angular
                         errors.push("Debe indicar su género.");
                     }
 
-                    if (!isValidDate($scope.model.birthday)) {
+                    if (!age || !isValidDate($scope.model.birthday)) {
                         errors.push("Ingrese la fecha de nacimiento.");
                     }
 
@@ -1967,9 +1974,13 @@ angular
                     }, 500);
                 };
 
+
+                $('#saveProfile').click(function () {
+                    $scope.save();
+                });
+
                 $scope.save = function () {
                     $scope.$emit('ShowPreloader');
-
                     $timeout(function(){
                         if (!$scope.accessedSubsection) {
                             $location.path("Perfil/" + $scope.userId);

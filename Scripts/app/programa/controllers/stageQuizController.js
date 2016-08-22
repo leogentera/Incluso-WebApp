@@ -521,10 +521,18 @@ angular
                     questionCode = "essay";
                 }
 
-                if (questionType == "multichoice" && questionNumOfChoices == 2 || questionType == "truefalse") {
+                if ((questionType == "multichoice" && questionNumOfChoices == 2) || questionType == "truefalse") {
                     questionCode = "binary";
                 }
 
+                if (questionType == "multichoice" && questionCode != "binary"){
+                    if(question.single == "1") {
+                        questionCode = "simplechoice";
+                    }else{
+                        questionCode = "multichoicewo";
+                    }
+                }
+                
                 if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
                     questionCode = "multichoice";
 
@@ -544,23 +552,7 @@ angular
                     }
 
                 }
-
-                if (questionType == "multichoice" && questionNumOfChoices > 2 && !hasOther) {
-                    questionCode = "simplechoice";
-                }
-
-                if (questionType == "multichoice" && question.id == 124) {
-                    questionCode = "multichoicewo";
-                }
-
-                if (questionType == "multichoice" && question.id == 120) {
-                    questionCode = "multichoicewo";
-                }
-
-                if (questionType == "multichoice" && question.id == 119) {
-                    questionCode = "simplechoice";
-                }
-
+            
                 $scope.questionTypeCode.push(questionCode);
                 $scope.questionText.push(questionText);
 
@@ -579,23 +571,17 @@ angular
                         break;
 
                     case "multichoice":
-
                         if ($scope.answers[questionIndex] == undefined) {
                             $scope.answers[questionIndex] = []; //Adding room for first answer
                         }
-
                         if (question.userAnswer !== null && question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
-
                             for (indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
                                 userAnswer = cleanText(userAnswers[indexUserAnswers]).trim();
-
                                 for (index = 0; index < question.answers.length; index++) {
                                     questionOption = cleanText(question.answers[index].answer).trim();
-
                                     if (questionOption == userAnswer) {//For checked options...
                                         $scope.answers[questionIndex][index] = 1;
-
                                         if (userAnswer == "Otro") {//The user checked the "Otros" option, among others...
                                             $scope.OtroAnswers[$scope.position[questionIndex]].answers[0] = question.other;
                                             //_setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.activity.coursemoduleid, $scope.OtroAnswers);
@@ -604,46 +590,34 @@ angular
                                 }
                             }
                         }
-
                         for (index = 0; index < question.answers.length; index++) {
                             if ($scope.answers[questionIndex][index] !== 1) {
                                 $scope.answers[questionIndex][index] = 0;
                             }
                         }
-
                         break;
-
                     case "multichoicewo":
-
                         if ($scope.answers[questionIndex] == undefined) {
                             $scope.answers[questionIndex] = [];  //Adding room for first answer
                         }
-
                         if (question.userAnswer !== null && question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
-
                             for (indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
-
                                 userAnswer = cleanText(userAnswers[indexUserAnswers]).trim(); //Get each selected option
-
                                 for (index = 0; index < question.answers.length; index++) {
                                     questionOption = cleanText(question.answers[index].answer).trim();
-
                                     if (questionOption == userAnswer) {//For checked options...
                                         $scope.answers[questionIndex][index] = 1;
                                     }
                                 }
                             }
                         }
-
                         for (index = 0; index < question.answers.length; index++) {
                             if ($scope.answers[questionIndex][index] !== 1) {
                                 $scope.answers[questionIndex][index] = 0;
                             }
                         }
-
                         break;
-
                     case "shortanswer":
                         if ($scope.answers[questionIndex] === undefined) {
                             $scope.answers[questionIndex] = []; //Adding room for first answer
@@ -1136,10 +1110,15 @@ angular
                             });
                     }
 
+                    var path = pathToRedirect();
                     if ($scope.activity_identifier === 3601) {
                         localStorage.setItem("fromLastQuiz/" + $scope.currentUser.userId, "true");
                     }
-                    $location.path(pathToRedirect());
+                    $timeout(function () {                                      
+                        $scope.$emit('HidePreloader');
+                        $location.path(path);
+                    }, 1);
+                    
                 }
                 
                 

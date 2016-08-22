@@ -22,6 +22,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+            $rootScope._pixel = false;          
             /* ViewModel */
             $scope.userCredentialsModel = {
                 username: "",
@@ -245,17 +246,19 @@ angular
                                                         moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function () {
                                                             console.log("GetUserNotification");
                                                             $scope.incLoadedItem(); //10
-                                                            
-                                                             moodleFactory.Services.GetProfileCatalogs(data.token, function(){
-                                                                $scope.incLoadedItem();//11
-                                                                moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                                            moodleFactory.Services.GetAsyncLeaderboard(course.courseid, data.token, function () {
+                                                                $scope.incLoadedItem(); //11    
+                                                                moodleFactory.Services.GetProfileCatalogs(data.token, function(){
                                                                     $scope.incLoadedItem();//12
-                                                                    $timeout(function () {
-                                                                        //$scope.$emit('HidePreloader');
-                                                                        if ($rootScope.loaderForLogin) {//To avoid redirect when there is a connection error.
-                                                                            $location.path('/ProgramaDashboard');
-                                                                        }
-                                                                    }, 1);
+                                                                    moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                                                        $scope.incLoadedItem();//13
+                                                                        $timeout(function () {
+                                                                            //$scope.$emit('HidePreloader');
+                                                                            if ($rootScope.loaderForLogin) {//To avoid redirect when there is a connection error.
+                                                                                $location.path('/ProgramaDashboard');
+                                                                            }
+                                                                        }, 1);
+                                                                    }, loginErrorCallback, true);
                                                                 }, loginErrorCallback, true);
                                                             }, loginErrorCallback, true);
                                                         },loginErrorCallback, true);
@@ -395,17 +398,20 @@ angular
                                             moodleFactory.Services.GetUserNotification(userId, course.courseid, userFacebook.token, function () {
                                                 $scope.incLoadedItem(); //10
                                                 
-                                                moodleFactory.Services.GetProfileCatalogs(userFacebook.token, function(){
+                                                moodleFactory.Services.GetAsyncLeaderboard(course.courseid, userFacebook.token, function () {
                                                     $scope.incLoadedItem();//11
-                                                    moodleFactory.Services.GetProfilePoints(userId, course.courseid, userFacebook.token,function(){
+                                                    moodleFactory.Services.GetProfileCatalogs(userFacebook.token, function(){
                                                         $scope.incLoadedItem();//12
-                                                        $timeout(function () {
-                                                        if (userFacebook.is_new == true) {
-                                                            $location.path('/Tutorial');
-                                                        } else {
-                                                            $location.path('/ProgramaDashboard');
-                                                        }
-                                                    }, 1000);
+                                                        moodleFactory.Services.GetProfilePoints(userId, course.courseid, userFacebook.token,function(){
+                                                            $scope.incLoadedItem();//13
+                                                            $timeout(function () {
+                                                            if (userFacebook.is_new == true) {
+                                                                $location.path('/Tutorial');
+                                                            } else {
+                                                                $location.path('/ProgramaDashboard');
+                                                            }
+                                                        }, 1000);
+                                                        }, loginErrorCallback, true);
                                                     }, loginErrorCallback, true);
                                                 }, loginErrorCallback, true);
                                             },loginErrorCallback, true);
@@ -420,7 +426,6 @@ angular
             }
 
             function FacebookLoginFailure(data) {
-                console.log(JSON.stringify(data));
                 $scope.userCredentialsModel.modelState.isValid = false;
                 var errorMessage = "";
                 if (data && data.messageerror) {
@@ -429,12 +434,16 @@ angular
                     errorMessage = "Se necesita estar conectado a Internet para continuar";
                 }
 
-                $scope.$emit('HidePreloader');
+                $rootScope.loaderForLogin = false; //For Login Preloader
                 progressBar.set(0); //For Login Preloader
-                $scope.$emit('scrollTop');
+                                
                 clearLocalStorage();
-
-                $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
+                $scope.$emit('HidePreloader');
+                
+                $timeout(function () {                                            
+                    $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
+                    $scope.$emit('scrollTop');
+                }, 1);
             }
 
             function loginErrorCallback(obj) {
