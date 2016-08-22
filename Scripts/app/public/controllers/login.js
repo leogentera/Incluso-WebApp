@@ -52,6 +52,7 @@ angular
                     .then(function (response) {
                         if(response.data.result == true){
                             $rootScope._pixel = true;
+                            $rootScope.androidID = data.key;
                         }
                     }, function () {
                         console.log("Service Failed");
