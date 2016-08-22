@@ -41,6 +41,26 @@ angular
                 userId: ""
             };
 
+
+            // PIXEL API call
+            var requestAndroidId = function(){
+                cordova.exec(requestAndroidIDSucces, function(){ window.alert("Failed to get android ID.");}, "CallToAndroid", "requestAndroidId", []);
+            };
+            var requestAndroidIDSucces = function(data){
+
+                $http.post(API_RESOURCE.format("androidkey"), {key : data.key})
+                    .then(function (response) {
+                        if(response.data.result == true){
+                            $rootScope._pixel = true;
+                        }
+                    }, function () {
+                        console.log("Service Failed");
+                    });
+
+            };
+
+            requestAndroidId();
+
             /* Watchers */
             $scope.$watch("userCredentialsModel.modelState.errorMessages", function (newValue, oldValue) {
                 $scope.userCredentialsModel.modelState.isValid = (newValue.length === 0);
