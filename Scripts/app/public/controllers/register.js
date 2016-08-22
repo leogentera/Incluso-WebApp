@@ -353,18 +353,21 @@ angular
                                         moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function () {
                                             $scope.incLoadedItem(); //10
                                             
-                                             moodleFactory.Services.GetProfileCatalogs(data.token, function(){
-                                                $scope.incLoadedItem();//11
-                                                moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                            moodleFactory.Services.GetAsyncLeaderboard(course.courseid, data.token, function () {
+                                                $scope.incLoadedItem(); //11
+                                                moodleFactory.Services.GetProfileCatalogs(data.token, function(){
                                                     $scope.incLoadedItem();//12
-                                                    $timeout(function () {
-                                                        try {
-                                                            //- $scope.$emit('HidePreloader');
-                                                            $location.path('/Tutorial');
-                                                        } catch (e) {
-                                                            $location.path('/ProgramaDashboard');
-                                                        }
-                                                    }, 1000);
+                                                    moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                                        $scope.incLoadedItem();//13
+                                                        $timeout(function () {
+                                                            try {
+                                                                //- $scope.$emit('HidePreloader');
+                                                                $location.path('/Tutorial');
+                                                            } catch (e) {
+                                                                $location.path('/ProgramaDashboard');
+                                                            }
+                                                        }, 1000);
+                                                    }, loginErrorCallback, true);
                                                 }, loginErrorCallback, true);
                                             }, loginErrorCallback, true);
                                         }, loginErrorCallback, true, true);
