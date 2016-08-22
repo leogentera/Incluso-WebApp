@@ -307,22 +307,20 @@ angular
                 }
 
                 var challengeCompletedId = _closeChallenge($scope.idEtapa, function (obj) {
-                                          $scope.$emit('HidePreloader');
-                                          if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                            $timeout(function () {
-                                              $location.path('/Offline'); //This behavior could change
-                                            }, 1);
-                                          } else {//Another kind of Error happened
-                                            $timeout(function () {
-                                                console.log("Another kind of Error happened");
-                                                $scope.$emit('HidePreloader');
-                                                $location.path('/connectionError');
-                                            }, 1);
-                                          }
-                                      });
-
-                //_coachNotification($scope.idEtapa);
-
+                    $scope.$emit('HidePreloader');
+                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                      $timeout(function () {
+                        $location.path('/Offline'); //This behavior could change
+                      }, 1);
+                    } else {//Another kind of Error happened
+                      $timeout(function () {
+                          console.log("Another kind of Error happened");
+                          $scope.$emit('HidePreloader');
+                          $location.path('/connectionError');
+                      }, 1);
+                    }
+                });
+                
                 //Exclude challenges initial and final from showing modal robot
                 var challengeExploracionInicial = 140;
                 var challengeExploracionFinal = 152;
@@ -405,7 +403,7 @@ angular
                         title: $scope.contentResources.robot_title_challenge_four,
                         message: $scope.contentResources.robot_challenge_four,
                         read: "false",
-                        challengeId: 116
+                        challengeId: 262
                     }];
 
 

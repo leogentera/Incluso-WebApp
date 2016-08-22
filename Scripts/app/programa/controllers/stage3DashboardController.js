@@ -383,7 +383,7 @@ angular
                         title: $scope.contentResources.robot_title_challenge_four,
                         message: $scope.contentResources.robot_challenge_four,
                         read: "false",
-                        challengeId: 217
+                        challengeId: 264
                     }];
 
                 $scope.actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
