@@ -61,7 +61,10 @@ angular
 
             };
 
-            requestAndroidId();
+            document.addEventListener('deviceready', function() {
+                requestAndroidId();
+            });
+
 
             /* Watchers */
             $scope.$watch("userCredentialsModel.modelState.errorMessages", function (newValue, oldValue) {
