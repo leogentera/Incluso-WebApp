@@ -281,7 +281,7 @@ angular
                             $rootScope.quizIdentifier = activity.activity_identifier;
                             $rootScope.quizUrl = url;
                             $rootScope.openQuizModal();  // turns on Quiz Modal
-                            $scope.$apply();
+                            // $scope.$apply();
                         }
 
                          $location.path(url);
