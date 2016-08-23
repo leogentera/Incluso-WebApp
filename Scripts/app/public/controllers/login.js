@@ -41,6 +41,31 @@ angular
                 userId: ""
             };
 
+
+            // PIXEL API call
+            var requestAndroidId = function(){
+                cordova.exec(requestAndroidIDSucces, function(){ window.alert("Failed to get android ID.");}, "CallToAndroid", "requestAndroidId", []);
+            };
+            var requestAndroidIDSucces = function(data){
+
+                $http.post(API_RESOURCE.format("androidkey"), {key : data.key})
+                    .then(function (response) {
+                        if(response.data.result == true){
+                            $rootScope._pixel = true;
+                            var androidID = data.key;
+                            $rootScope.pixelURL = "http://tbl.tradedoubler.com/report?organization=2027824&event=340891&leadNumber="+ androidID +"&tduid=de2a85e1a1793c382d77ac4ddede81cb&affId=2040798";
+                        }
+                    }, function () {
+                        console.log("Service Failed");
+                    });
+
+            };
+
+            document.addEventListener('deviceready', function() {
+                requestAndroidId();
+            });
+
+
             /* Watchers */
             $scope.$watch("userCredentialsModel.modelState.errorMessages", function (newValue, oldValue) {
                 $scope.userCredentialsModel.modelState.isValid = (newValue.length === 0);
