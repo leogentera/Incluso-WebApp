@@ -356,24 +356,29 @@ angular
                                             moodleFactory.Services.GetAsyncProfile(userId, data.token, function(){
                                                 $scope.incLoadedItem(); //11
                                                 
-                                                 moodleFactory.Services.GetAsyncStars(userId, data.token, function() {
-                                                    
-                                                    moodleFactory.Services.GetAsyncLeaderboard(course.courseid, data.token, function() {
+                                                moodleFactory.Services.GetAsyncStars(userId, data.token, function() {
+                                                $scope.incLoadedItem(); //12
+                                                
+                                                    moodleFactory.Services.CountLikesByUser(course.courseid, data.token, function() {
                                                         $scope.incLoadedItem(); //12
                                                         
-                                                        moodleFactory.Services.GetProfileCatalogs(data.token, function(){
-                                                            $scope.incLoadedItem();//13
+                                                        moodleFactory.Services.GetAsyncLeaderboard(course.courseid, data.token, function() {
+                                                            $scope.incLoadedItem(); //13
                                                             
-                                                            moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                                            moodleFactory.Services.GetProfileCatalogs(data.token, function(){
                                                                 $scope.incLoadedItem();//14
-                                                                $timeout(function () {
-                                                                    try {
-                                                                        //- $scope.$emit('HidePreloader');
-                                                                        $location.path('/Tutorial');
-                                                                    } catch (e) {
-                                                                        $location.path('/ProgramaDashboard');
-                                                                    }
-                                                                }, 1000);
+                                                                
+                                                                moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                                                    $scope.incLoadedItem();//15
+                                                                    $timeout(function () {
+                                                                        try {
+                                                                            //- $scope.$emit('HidePreloader');
+                                                                            $location.path('/Tutorial');
+                                                                        } catch (e) {
+                                                                            $location.path('/ProgramaDashboard');
+                                                                        }
+                                                                    }, 1000);
+                                                                }, loginErrorCallback, true);
                                                             }, loginErrorCallback, true);
                                                         }, loginErrorCallback, true);
                                                     }, loginErrorCallback, true);

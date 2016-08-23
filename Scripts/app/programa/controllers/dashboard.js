@@ -286,9 +286,7 @@ angular
             //Callback function for UserCourse call
             function getDataAsyncCallback() {
                 //Load UserCourse structure into model
-                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));                
-                getUserStarsByPoints();
-                getUserLikes();
+                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
                 getUserChat();
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function () {
@@ -296,25 +294,14 @@ angular
                     $scope.course = JSON.parse(localStorage.getItem("course"));                    
                     $scope.currentStage = getCurrentStage();                    
                     _setLocalStorageItem("currentStage", $scope.currentStage);
-
-                    // moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
-                    //$scope.incLoadedItem(); //13    
+                    
                     $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                     currentUserProfile = getCurrentUserProfile();
                     
                     var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                    
-                    //profileCallback();
-                    //if(profile) {
-                    //    profileCallback();
-                    //} else {
-                    //    moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, profileCallback, function (obj) {}, true);
-                    //}
-                        
-                    var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
 
                     moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
-                        $scope.incLoadedItem(); //17
+                        $scope.incLoadedItem(); //16
                     }, function (obj) {
                         if ($rootScope.loaderForLogin) {
                             localStorage.setItem("offlineConnection", "timeout");
@@ -369,9 +356,9 @@ angular
 
                 }, function (obj) {
                     if ($rootScope.loaderForLogin) {
-                            localStorage.setItem("offlineConnection", "timeout");
-                            $location.path('/');
-                        }
+                        localStorage.setItem("offlineConnection", "timeout");
+                        $location.path('/');
+                    }
                     
                     $scope.$emit('HidePreloader');
                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
@@ -435,31 +422,7 @@ angular
                 }
                 return currentStage;
             }
-
-            function getUserStarsByPoints() {
-
-                moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token, function (dataStars) {
-                    $scope.incLoadedItem(); //14
-                    if (dataStars.length > 0) {
-                        localStorage.setItem("userStars", JSON.stringify(dataStars));
-                    }
-                }, function (obj) {
-                    $scope.activitiesCompleted = [];                    
-                    $scope.$emit('HidePreloader');
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                      $timeout(function () {
-                        $location.path('/Offline'); //This behavior could change
-                      }, 1);
-                    } else {//Another kind of Error happened
-                      console.log("Another kind of Error happened");
-                      $timeout(function () {
-                          $scope.$emit('HidePreloader');
-                          $location.path('/connectionError');
-                      }, 1);
-                    }
-                }, true);
-            }
-
+            
             function getUserChat() {
                 moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
 
@@ -501,26 +464,7 @@ angular
                     }
                 }, true);
             }
-
-            function getUserLikes() {
-                moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
-                    $scope.incLoadedItem(); //15
-
-                }, function (obj) {
-                    $scope.$emit('HidePreloader');
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                      $timeout(function () {
-                        $location.path('/Offline'); //This behavior could change
-                      }, 1);
-                    } else {//Another kind of Error happened
-                      console.log("Another kind of Error happened");
-                      $timeout(function () {
-                          $scope.$emit('HidePreloader');
-                          $location.path('/connectionError');
-                      }, 1);
-                    }
-                },true);
-            }
+           
 
             //Open Welcome Message modal
             $scope.openModal = function (size) {

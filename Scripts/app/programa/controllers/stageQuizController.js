@@ -1070,6 +1070,12 @@ angular
                                     }
                                 });
                             }
+                            $timeout(function () {                                      
+                                $scope.$emit('HidePreloader');
+                                var path = pathToRedirect();
+                                $location.path(path);
+                            }, 1);
+                            
                             $location.path(pathToRedirect());
                         }, function (obj) {
                                 $scope.$emit('HidePreloader');
