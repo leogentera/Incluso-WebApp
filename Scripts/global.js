@@ -967,11 +967,13 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             points: data.stars,
             userid: parseInt(data.userId)
         };
-
-        userStars.push(localStorageStarsData);
-        localStorage.setItem("userStars", JSON.stringify(userStars));    
-        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, errorCallbackScope, forceAddToQueue);
-
+  
+        if (userStars) {
+            userStars.push(localStorageStarsData);
+            localStorage.setItem("userStars", JSON.stringify(userStars));    
+            moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, errorCallbackScope, forceAddToQueue);
+        }
+        
         _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile);
         _setLocalStorageJsonItem("CurrentUser", currentUser);
     }
