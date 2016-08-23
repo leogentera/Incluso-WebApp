@@ -286,9 +286,7 @@ angular
             //Callback function for UserCourse call
             function getDataAsyncCallback() {
                 //Load UserCourse structure into model
-                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));                
-                getUserStarsByPoints();
-                getUserLikes();
+                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
                 getUserChat();
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function () {
@@ -296,115 +294,71 @@ angular
                     $scope.course = JSON.parse(localStorage.getItem("course"));                    
                     $scope.currentStage = getCurrentStage();                    
                     _setLocalStorageItem("currentStage", $scope.currentStage);
-
-                    // moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
-                    //$scope.incLoadedItem(); //13    
+                    
                     $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                     currentUserProfile = getCurrentUserProfile();
                     
                     var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                    
-                    if(profile) {
-                        profileCallback();
-                    } else {
-                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, profileCallback, function (obj) {
-                            $scope.$emit('HidePreloader');
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                              $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                              }, 1);
-                            } else {//Another kind of Error happened
-                              console.log("Another kind of Error happened");
-                                $timeout(function () {
-                                    $scope.$emit('HidePreloader');
-                                    $location.path('/connectionError');
-                                }, 1);
-                            }
-                        }, true);
-                    }
-                        
-                    function profileCallback() {
+
+                    moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
                         $scope.incLoadedItem(); //16
-                        var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-
-                        moodleFactory.Services.GetAsyncAvatar($scope.user.userId, $scope.user.token, function(){
-                            $scope.incLoadedItem(); //17
-                        }, function (obj) {
-                            if ($rootScope.loaderForLogin) {
-                                localStorage.setItem("offlineConnection", "timeout");
-                                $location.path('/');
-                            }
-                            $scope.$emit('HidePreloader');
-                            if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                              $timeout(function () {
-                                $location.path('/Offline'); //This behavior could change
-                              }, 1);
-                            } else {//Another kind of Error happened
-                              console.log("Another kind of Error happened");
-                                $timeout(function () {
-                                    $scope.$emit('HidePreloader');
-                                    $location.path('/connectionError');
-                                }, 1);
-                            }
-                        }, true);
-
-                        _pageLoaded = true;
-                        if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
-                            $timeout(function(){
-                                $scope.$emit('HidePreloader');
-                            }, 1000);
-                        }
-
-                        if (!profile.termsAndConditions) {
-                            $scope.openTermsModal();
-                            $scope.navigateTo('TermsOfUse');
-                        }
-
-                        $scope.user.firstname = profile.firstname;
-                        $scope.user.rank = profile.rank;
-                        $scope.user.stars = parseInt(profile.stars, 10); //Saved as an integer.
-
-                        _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
-
-                        for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
-
-                            if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...
-                                if ($scope.profileImage) { $scope.course.leaderboard[lb].profileimageurl = $scope.profileImage; } // Take the leaderboard image from the updated profileImage.
-                                profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
-                                profile.stars = parseInt($scope.course.leaderboard[lb].stars, 10);
-                                $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
-                                $scope.user.stars = $scope.course.leaderboard[lb].stars;  //Update stars in template,
-                                
-                                _setLocalStorageJsonItem("Perfil/" + _getItem("userId"), profile);  //Update rank in Perfil/nnn in LS,
-                                _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
-                                break;
-                            }
-                        }
-                    }
-
-                    //}, function (obj) {
-                    //    if ($rootScope.loaderForLogin) {
-                    //        localStorage.setItem("offlineConnection", "timeout");
-                    //        $location.path('/');
-                    //    }
-                    //    $scope.$emit('HidePreloader');
-                    //    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                    //      $timeout(function () {
-                    //        $location.path('/Offline'); //This behavior could change
-                    //      }, 1);
-                    //    } else {//Another kind of Error happened
-                    //      $timeout(function () {
-                    //          console.log("Another kind of Error happened");
-                    //          $scope.$emit('HidePreloader');
-                    //          $location.path('/connectionError');
-                    //      }, 1);
-                    //    }
-                    //}, true);
-                }, function (obj) {
-                    if ($rootScope.loaderForLogin) {
+                    }, function (obj) {
+                        if ($rootScope.loaderForLogin) {
                             localStorage.setItem("offlineConnection", "timeout");
                             $location.path('/');
                         }
+                        $scope.$emit('HidePreloader');
+                        if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                          $timeout(function () {
+                            $location.path('/Offline'); //This behavior could change
+                          }, 1);
+                        } else {//Another kind of Error happened
+                          console.log("Another kind of Error happened");
+                            $timeout(function () {
+                                $scope.$emit('HidePreloader');
+                                $location.path('/connectionError');
+                            }, 1);
+                        }
+                    }, true);
+
+                    _pageLoaded = true;
+                    if (_loadedResources && _pageLoaded && !$rootScope.loaderForLogin) {
+                        $timeout(function(){
+                            $scope.$emit('HidePreloader');
+                        }, 1000);
+                    }
+
+                    if (!profile.termsAndConditions) {
+                        $scope.openTermsModal();
+                        $scope.navigateTo('TermsOfUse');
+                    }
+
+                    $scope.user.firstname = profile.firstname;
+                    $scope.user.rank = profile.rank;
+                    $scope.user.stars = parseInt(profile.stars, 10); //Saved as an integer.
+
+                    _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
+
+                    for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
+
+                        if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...
+                            if ($scope.profileImage) { $scope.course.leaderboard[lb].profileimageurl = $scope.profileImage; } // Take the leaderboard image from the updated profileImage.
+                            profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
+                            profile.stars = parseInt($scope.course.leaderboard[lb].stars, 10);
+                            $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
+                            $scope.user.stars = $scope.course.leaderboard[lb].stars;  //Update stars in template,
+                            
+                            _setLocalStorageJsonItem("Perfil/" + _getItem("userId"), profile);  //Update rank in Perfil/nnn in LS,
+                            _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
+                            break;
+                        }
+                    }
+
+                }, function (obj) {
+                    if ($rootScope.loaderForLogin) {
+                        localStorage.setItem("offlineConnection", "timeout");
+                        $location.path('/');
+                    }
                     
                     $scope.$emit('HidePreloader');
                     if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
@@ -468,31 +422,7 @@ angular
                 }
                 return currentStage;
             }
-
-            function getUserStarsByPoints() {
-
-                moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token, function (dataStars) {
-                    $scope.incLoadedItem(); //14
-                    if (dataStars.length > 0) {
-                        localStorage.setItem("userStars", JSON.stringify(dataStars));
-                    }
-                }, function (obj) {
-                    $scope.activitiesCompleted = [];                    
-                    $scope.$emit('HidePreloader');
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                      $timeout(function () {
-                        $location.path('/Offline'); //This behavior could change
-                      }, 1);
-                    } else {//Another kind of Error happened
-                      console.log("Another kind of Error happened");
-                      $timeout(function () {
-                          $scope.$emit('HidePreloader');
-                          $location.path('/connectionError');
-                      }, 1);
-                    }
-                }, true);
-            }
-
+            
             function getUserChat() {
                 moodleFactory.Services.GetUserChat($scope.user.userId, $scope.user.token, function () {
 
@@ -534,26 +464,7 @@ angular
                     }
                 }, true);
             }
-
-            function getUserLikes() {
-                moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
-                    $scope.incLoadedItem(); //15
-
-                }, function (obj) {
-                    $scope.$emit('HidePreloader');
-                    if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                      $timeout(function () {
-                        $location.path('/Offline'); //This behavior could change
-                      }, 1);
-                    } else {//Another kind of Error happened
-                      console.log("Another kind of Error happened");
-                      $timeout(function () {
-                          $scope.$emit('HidePreloader');
-                          $location.path('/connectionError');
-                      }, 1);
-                    }
-                },true);
-            }
+           
 
             //Open Welcome Message modal
             $scope.openModal = function (size) {
