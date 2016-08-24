@@ -44,7 +44,10 @@ angular
 
             // PIXEL API call
             var requestAndroidId = function(){
-                cordova.exec(requestAndroidIDSucces, function(){ window.alert("Failed to get android ID.");}, "CallToAndroid", "requestAndroidId", []);
+                if (_getAPKVersion()>=228) {
+                    cordova.exec(requestAndroidIDSucces, function(){ window.alert("Failed to get android ID.");}, "CallToAndroid", "requestAndroidId", []);
+                }
+                
             };
             var requestAndroidIDSucces = function(data){
 
@@ -62,7 +65,8 @@ angular
             };
 
             document.addEventListener('deviceready', function() {
-                requestAndroidId();
+                _updateDeviceVersionCache(function(){requestAndroidId();})
+                
             });
 
 

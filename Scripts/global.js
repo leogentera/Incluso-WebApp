@@ -1530,7 +1530,7 @@ var _compareSyncDeviceVersions = function () {
 
 var FLAG_DEVICE_VERSION_RUNNING = false;
 
-function _updateDeviceVersionCache() {
+function _updateDeviceVersionCache(callback) {
     var currentDate = new Date();
 
     var deviceVersion = {
@@ -1556,6 +1556,9 @@ function _updateDeviceVersionCache() {
                 deviceVersion.apkVersion = data.apkVersion || 15;
                 localStorage.setItem("device-version", JSON.stringify(deviceVersion));
                 FLAG_DEVICE_VERSION_RUNNING = false;
+                if (callback) {
+                    callback();
+                }
             }, function () { console.log("fail"); FLAG_DEVICE_VERSION_RUNNING = false }, "CallToAndroid", "getversion", []);
         }
     }
@@ -1694,7 +1697,6 @@ var progressBar = {
 $(document).ready(function () {
 
     setTimeout(function () {
-        _updateDeviceVersionCache();
 
         (function () {
             /* Load catalogs */
