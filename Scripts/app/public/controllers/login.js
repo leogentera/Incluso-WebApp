@@ -56,7 +56,7 @@ angular
                         if(response.data.result == true){
                             $rootScope._pixel = true;
                             var androidID = data.key;
-                            $rootScope.pixelURL = "http://tbl.tradedoubler.com/report?organization=2027824&event=340891&leadNumber="+ androidID +"&tduid=de2a85e1a1793c382d77ac4ddede81cb&affId=2040798";
+                            $rootScope.pixelURL = "https://tbl.tradedoubler.com/report?organization=2027824&event=340891&leadNumber="+ androidID +"&tduid=de2a85e1a1793c382d77ac4ddede81cb&affId=2040798";
                         }
                     }, function () {
                         console.log("Service Failed");
