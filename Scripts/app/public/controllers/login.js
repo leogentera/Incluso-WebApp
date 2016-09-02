@@ -42,10 +42,6 @@ angular
                 userId: ""
             };
 
-            $scope.trustSrc = function(src) {
-                return $sce.trustAsResourceUrl(src);
-            }
-
             // PIXEL API call
             var requestAndroidId = function(){
                 if (_getAPKVersion()>=228) {
