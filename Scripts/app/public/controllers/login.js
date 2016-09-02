@@ -12,7 +12,8 @@ angular
         '$anchorScroll',
         '$modal',
         'IntervalFactory',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
+        '$sce',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory, $sce) {
             _timeout = $timeout;
             _httpFactory = $http;
             $scope.scrollToTop();
@@ -41,7 +42,6 @@ angular
                 userId: ""
             };
 
-
             // PIXEL API call
             var requestAndroidId = function(){
                 if (_getAPKVersion()>=228) {
@@ -54,9 +54,9 @@ angular
                 $http.post(API_RESOURCE.format("androidkey"), {key : data.key})
                     .then(function (response) {
                         if(response.data.result == true){
-                            $rootScope._pixel = true;
                             var androidID = data.key;
-                            $rootScope.pixelURL = "https://tbl.tradedoubler.com/report?organization=2027824&event=340891&leadNumber="+ androidID +"&tduid=de2a85e1a1793c382d77ac4ddede81cb&affId=2040798";
+                            $rootScope.pixelURL = $sce.trustAsResourceUrl( "https://tbl.tradedoubler.com/report?organization=2027824&event=340891&leadNumber="+ androidID +"&tduid=de2a85e1a1793c382d77ac4ddede81cb&affId=2040798");
+                            $rootScope._pixel = true;
                         }
                     }, function () {
                         console.log("Service Failed");
