@@ -23,7 +23,6 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-            $rootScope._pixel = false;          
             /* ViewModel */
             $scope.userCredentialsModel = {
                 username: "",
@@ -40,28 +39,6 @@ angular
             $scope.currentUserModel = {
                 token: "",
                 userId: ""
-            };
-
-            // PIXEL API call
-            var requestAndroidId = function(){
-                if (_getAPKVersion()>=228) {
-                    cordova.exec(requestAndroidIDSucces, function(){ window.alert("Failed to get android ID.");}, "CallToAndroid", "requestAndroidId", []);
-                }
-                
-            };
-            var requestAndroidIDSucces = function(data){
-
-                $http.post(API_RESOURCE.format("androidkey"), {key : data.key})
-                    .then(function (response) {
-                        if(response.data.result == true){
-                            var androidID = data.key;
-                            $rootScope.pixelURL = $sce.trustAsResourceUrl( "https://tbl.tradedoubler.com/report?organization=2027824&event=340891&leadNumber="+ androidID +"&tduid=de2a85e1a1793c382d77ac4ddede81cb&affId=2040798");
-                            $rootScope._pixel = true;
-                        }
-                    }, function () {
-                        console.log("Service Failed");
-                    });
-
             };
 
             document.addEventListener('deviceready', function() {
