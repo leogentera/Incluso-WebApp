@@ -54,7 +54,9 @@ angular
                     $scope.playVideo('assets/media', 'video-tutorial.mp4');
                 }else{
                     console.log("isMisionInclusoInstalled");
-                    isMisionInclusoInstalled();
+                    document.addEventListener('deviceready', function() {
+                        isMisionInclusoInstalled();    
+                    });
                 }
                 
                 
@@ -70,10 +72,12 @@ angular
                         }else{
                             $scope.navigateToPage(2);
                         }
-                    }, function () {
+                    }, function (e) {
+                        alert(e);
                     }, "CallToAndroid", " isInstalled", []);
                 }
                 catch (e) {
+                    alert(e);
                 }
             }
            
