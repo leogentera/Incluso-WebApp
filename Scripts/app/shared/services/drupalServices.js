@@ -1,9 +1,11 @@
 (function () {
     namespace('drupalFactory');
     
-    drupalFactory.NodeRelation = {
+    drupalFactory.NodeRelation = {        
         "tutorial": 95, /* General - Tutorial */
         "host":"http://InclusoDrup.cloudapp.net/incluso-drupal",
+        "tutorial2": 106,
+        "tutorial3": 105,
         "0000": 57, /* Programa - Dashboard */
         "1002": 53, /* Zona de Vuelo - Cabina de Soporte - Chat */
         "1010": 46, /* Zona de Vuelo - Con�cete - Punto de Encuentro */
