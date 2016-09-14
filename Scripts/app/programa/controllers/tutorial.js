@@ -26,6 +26,7 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
             $scope.isInstalled = false;
+            _inTutorial = true;
 
             $scope.avatarInfo = [{
                 "userid": "",
@@ -54,7 +55,13 @@ angular
                     $scope.isInstalled = true;
                 }
             }
-
+           
+            cordova.exec(function (data) {
+                    $scope.isInstalled = data.isInstalled
+                }, function () {
+            }, "CallToAndroid", " isInstalled", []);
+            
+                       
 
             function getDataAsync() {
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -280,9 +287,22 @@ angular
             function getContentResources() {
 
                 drupalFactory.Services.GetContent("tutorial", function (data, key) {
-                    $scope.contentResources = data.node;
-                }, function () {
-                }, false);
+                        $scope.contentResources = data.node;
+                        
+                        drupalFactory.Services.GetContent("tutorial2", function(data2, key){
+                                $scope.contentResources2 = data2.node;
+                                
+                                drupalFactory.Services.GetContent("tutorial3", function(data3, key){
+                                    $scope.contentResources3 = data3.node;
+                                }, function(){
+                                    }, false);
+                                
+                            }, function(){
+                                }, false);
+                        
+                    }, function () {
+                        }, false);
+                
             }
 
             getContentResources();

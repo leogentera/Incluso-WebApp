@@ -15,6 +15,7 @@ var _isDeviceOnline = null;
 var _queuePaused = false;
 var _activityStatus = null;
 var _tutorial = false;
+var _inTutorial= false;
 
 /* Prototypes */
 window.mobilecheck = function () {
@@ -1663,6 +1664,13 @@ function encodeImageWithUri(imageUri, datatype, callback) {
         }
     };
     img.src = imageUri;
+}
+
+function onResume() {
+    if (window.location.pathname.indexOf("Tutorial") > -1) {
+      window.location.href = "file:///storage/emulated/0/Android/data/com.gentera.misionincluso/files/app/initializr/index.html#/Tutorial";
+    }
+    
 }
 
 function getcurrentVersion() {
