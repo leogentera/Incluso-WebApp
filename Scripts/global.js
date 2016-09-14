@@ -1267,6 +1267,7 @@ var clearLocalStorage = function (location) {
     ClearLocalStorage("UserTalents");
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");
+    ClearLocalStorage("videoPlayed");
 
     if (location) {
         location.path('/');
@@ -1665,6 +1666,15 @@ function encodeImageWithUri(imageUri, datatype, callback) {
     img.src = imageUri;
 }
 
+function onResume() {
+    var videoPlayed = JSON.parse(localStorage.getItem("videoPlayed"));
+    if (window.location.href.indexOf("Tutorial") > -1 && videoPlayed) {
+      //window.location.href = "file:///storage/emulated/0/Android/data/com.gentera.misionincluso/files/app/initializr/index.html#/Tutorial";
+      location.reload();
+    }
+    
+}
+
 function getcurrentVersion() {
     var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
     var localVersion = "V-1.0.0.";
@@ -1692,14 +1702,6 @@ var progressBar = {
         }
     }
 };
-
-function onResume() {
-    if (window.location.href.indexOf("Tutorial") > -1) {
-        window.location.href = "file:///storage/emulated/0/Android/data/com.gentera.misionincluso/files/app/initializr/index.html#/Tutorial";
-    }
-}
-
-
 
 /* Waits until page is loaded */
 $(document).ready(function () {

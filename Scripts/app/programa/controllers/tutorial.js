@@ -15,7 +15,7 @@ angular
             _timeout = $timeout;
             $scope.scrollToTop();
             $scope.model = getDataAsync();
-            $scope.currentPage = 1;
+            $scope.currentPage = 2;
             $rootScope.loading = false;
             $rootScope.pageName = "Guia de uso";
             $rootScope.navbarBlue = false;
@@ -26,6 +26,7 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
             $scope.isInstalled = false;
+            _inTutorial = true;
 
             $scope.avatarInfo = [{
                 "userid": "",
@@ -44,13 +45,30 @@ angular
             }];
 
             if (!$routeParams.retry) {
-                isMisionInclusoInstalled();
+                
+                
+                
+                var videoPlayed = JSON.parse(localStorage.getItem("videoPlayed"));
+                if (!videoPlayed) {
+                    localStorage.setItem("videoPlayed", JSON.stringify("true"));
+                    $scope.playVideo('assets/media', 'video-tutorial.mp4');
+                }else{
+                    console.log("isMisionInclusoInstalled");
+                    isMisionInclusoInstalled();
+                }
+                
+                
             }
             
             function isMisionInclusoInstalled() {
                 try {
                     cordova.exec(function (data) {
-                        $scope.isInstalled = data.isInstalled
+                        $scope.isInstalled = data.isInstalled;
+                        if ($scope.isInstalled) {
+                            $scope.navigateToPage(3);
+                        }else{
+                            $scope.navigateToPage(2);
+                        }
                     }, function () {
                     }, "CallToAndroid", " isInstalled", []);
                 }
@@ -58,7 +76,13 @@ angular
                     $scope.isInstalled = true;
                 }
             }
-
+           
+            //cordova.exec(function (data) {
+            //        $scope.isInstalled = data.isInstalled
+            //    }, function () {
+            //}, "CallToAndroid", " isInstalled", []);
+            
+                       
             function getDataAsync() {
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 //moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), currentUser.token , getAvatarInfoCallback);
@@ -97,6 +121,7 @@ angular
 
             $scope.playVideo = function (videoAddress, videoName) {
                 playVideo(videoAddress, videoName);
+                isMisionInclusoInstalled();
             };
 
             encodeImageUri = function (imageUri, callback) {
@@ -283,16 +308,21 @@ angular
             function getContentResources() {
                 drupalFactory.Services.GetContent("tutorial", function (data, key) {
                         $scope.contentResources = data.node;
+                        
                         drupalFactory.Services.GetContent("tutorial2", function(data2, key){
                                 $scope.contentResources2 = data2.node;
+                                
                                 drupalFactory.Services.GetContent("tutorial3", function(data3, key){
                                     $scope.contentResources3 = data3.node;
                                 }, function(){
                                     }, false);
+                                
                             }, function(){
                                 }, false);
+                        
                     }, function () {
                         }, false);
+
             }
 
             getContentResources();
