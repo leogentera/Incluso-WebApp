@@ -54,7 +54,9 @@ angular
                     $scope.playVideo('assets/media', 'video-tutorial.mp4');
                 }else{
                     console.log("isMisionInclusoInstalled");
-                    isMisionInclusoInstalled();
+                    document.addEventListener('deviceready', function() {
+                        isMisionInclusoInstalled();    
+                    });
                 }
                 
                 
@@ -64,26 +66,20 @@ angular
                 try {
                     cordova.exec(function (data) {
                         $scope.isInstalled = data.isInstalled;
-                        
+                       
                         $scope.$digest();
-                        
+
                         if ($scope.isInstalled) {
                             $scope.navigateToPage(3);
                         }else{
                             $scope.navigateToPage(2);
                         }
-                    }, function () {
+                    }, function (e) {                        
                     }, "CallToAndroid", " isInstalled", []);
                 }
                 catch (e) {
                 }
             }
-           
-            //cordova.exec(function (data) {
-            //        $scope.isInstalled = data.isInstalled
-            //    }, function () {
-            //}, "CallToAndroid", " isInstalled", []);
-            
                        
             function getDataAsync() {
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
