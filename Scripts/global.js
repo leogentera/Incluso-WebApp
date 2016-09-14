@@ -1693,6 +1693,14 @@ var progressBar = {
     }
 };
 
+function onResume() {
+    if (window.location.href.indexOf("Tutorial") > -1) {
+        window.location.href = "file:///storage/emulated/0/Android/data/com.gentera.misionincluso/files/app/initializr/index.html#/Tutorial";
+    }
+}
+
+
+
 /* Waits until page is loaded */
 $(document).ready(function () {
 
