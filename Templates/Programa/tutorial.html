@@ -9,6 +9,7 @@
                 </div>
                 <div class="pages">
                     <div class="page" data-page="1" ng-class="currentPage === 1 ? 'active' : ''">
+                        <div class="txt-renglon centered" ng-bind-html="contentResources.etiqueta_titulo_video"></div>
                         <div class="video-gallery">
                             <div class="stage">
                                 <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-tutorial.mp4')">
@@ -38,7 +39,8 @@
                     </div>
                     <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : ''">                        
                         <section>
-                            <div class="txt-renglon centered" ng-bind-html="contentResources.tutorial_instructions.value"></div>
+                            <div class="txt-renglon centered" ng-bind-html="contentResources.tutorial_instructions.value" ng-show="!isInstalled"></div>
+                            <div class="txt-renglon centered" ng-bind-html="contentResources2.tutorial_instructions.value" ng-show="isInstalled"></div>
                         </section>
                         <section class="container-fluid">
                             <div class="row">
@@ -57,7 +59,7 @@
                         </section>
                         <section class="txt-renglon">
                             <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="!isInstalled" ng-click="avatar()" ng-bind="contentResources.tutorial_download_button"></button>
-                            <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="isInstalled" ng-click="avatar()" ng-bind="contentResources.tutorial_start_game_button"></button>
+                            <!--<button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="isInstalled" ng-click="avatar()" ng-bind="contentResources.tutorial_start_game_button"></button>-->
                         </section>
                     </div>
                     <div class="page" data-page="3" ng-class="currentPage === 3 ? 'active' : ''">
@@ -80,7 +82,7 @@
                             </div>
                         </section>
                         <section class="txt-renglon">
-                            <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="avatar()" ng-bind="contentResources3.tutorial_download_button"></button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-disabled="!isInstalled" ng-click="avatar()" ng-bind="contentResources3.tutorial_download_button"></button>
                         </section>
                     </div>
                 </div>

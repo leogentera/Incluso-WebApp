@@ -42,8 +42,7 @@ angular
             };
 
             document.addEventListener('deviceready', function() {
-                _updateDeviceVersionCache(function(){requestAndroidId();})
-                
+                _updateDeviceVersionCache(function(){})                
             });
 
 
