@@ -3,6 +3,8 @@
     
     drupalFactory.NodeRelation = {
         "tutorial": 95, /* General - Tutorial */
+        "tutorial2": 106,
+        "tutorial3": 105,
         "host":"http://definityincluso.cloudapp.net/incluso-drupal",
         "0000": 57, /* Programa - Dashboard */
         "1002": 53, /* Zona de Vuelo - Cabina de Soporte - Chat */

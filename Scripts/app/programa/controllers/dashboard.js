@@ -80,7 +80,7 @@ angular
             
             var avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
             
-            if (window.mobilecheck() && $scope.user.haspicture != "1" && !avatarInfo) {
+            if (window.mobilecheck() && $scope.user.haspicture != "1" && (!avatarInfo || avatarInfo.length < 1)) {
                 $location.path('/Tutorial');
             }
             
