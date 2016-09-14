@@ -64,6 +64,7 @@ angular
                 try {
                     cordova.exec(function (data) {
                         $scope.isInstalled = data.isInstalled;
+                        $scope.$digest();
                         if ($scope.isInstalled) {
                             $scope.navigateToPage(3);
                         }else{
@@ -73,7 +74,6 @@ angular
                     }, "CallToAndroid", " isInstalled", []);
                 }
                 catch (e) {
-                    $scope.isInstalled = true;
                 }
             }
            
