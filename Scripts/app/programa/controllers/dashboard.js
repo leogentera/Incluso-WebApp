@@ -82,6 +82,8 @@ angular
             
             if (window.mobilecheck() && $scope.user.haspicture != "1" && (!avatarInfo || avatarInfo.length < 1)) {
                 $location.path('/Tutorial');
+            }else{
+               ClearLocalStorage("createAvatar");
             }
             
             var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
