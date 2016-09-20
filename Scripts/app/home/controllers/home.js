@@ -447,7 +447,7 @@ angular
             if (data.node && data.node.titulo_quiz && data.node.instrucciones) {
                 $scope.title = data.node.titulo_quiz;
                 $scope.instructions = data.node.instrucciones;
-                $scope.$apply();
+                // $scope.$apply();
             }
 
             _loadedResources = true;

@@ -12,7 +12,8 @@ angular
         '$anchorScroll',
         '$modal',
         'IntervalFactory',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory) {
+        '$sce',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, IntervalFactory, $sce) {
             _timeout = $timeout;
             _httpFactory = $http;
             $scope.scrollToTop();
@@ -22,7 +23,6 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-            $rootScope._pixel = false;          
             /* ViewModel */
             $scope.userCredentialsModel = {
                 username: "",
@@ -40,6 +40,11 @@ angular
                 token: "",
                 userId: ""
             };
+
+            document.addEventListener('deviceready', function() {
+                _updateDeviceVersionCache(function(){})                
+            });
+
 
             /* Watchers */
             $scope.$watch("userCredentialsModel.modelState.errorMessages", function (newValue, oldValue) {
@@ -243,24 +248,40 @@ angular
                                                         console.log("GetAsyncMultipleChallengeInfo");
                                                         $scope.incLoadedItem(); //8 y 9
                                                         
-                                                        moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function () {
+                                                        moodleFactory.Services.GetUserNotification(userId, course.courseid, data.token, function() {
                                                             console.log("GetUserNotification");
                                                             $scope.incLoadedItem(); //10
-                                                            moodleFactory.Services.GetAsyncLeaderboard(course.courseid, data.token, function () {
-                                                                $scope.incLoadedItem(); //11    
-                                                                moodleFactory.Services.GetProfileCatalogs(data.token, function(){
-                                                                    $scope.incLoadedItem();//12
-                                                                    moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
-                                                                        $scope.incLoadedItem();//13
-                                                                        $timeout(function () {
-                                                                            //$scope.$emit('HidePreloader');
-                                                                            if ($rootScope.loaderForLogin) {//To avoid redirect when there is a connection error.
-                                                                                $location.path('/ProgramaDashboard');
-                                                                            }
-                                                                        }, 1);
+                                                            
+                                                            moodleFactory.Services.GetAsyncProfile(userId, data.token, function(){
+                                                                $scope.incLoadedItem(); //11
+                                                                
+                                                                moodleFactory.Services.GetAsyncStars(userId, data.token, function() {
+                                                                    $scope.incLoadedItem(); //12
+                                                                    
+                                                                    moodleFactory.Services.CountLikesByUser(course.courseid, data.token, function() {
+                                                                        $scope.incLoadedItem(); //13
+                                                                    
+                                                                        moodleFactory.Services.GetAsyncLeaderboard(course.courseid, data.token, function () {
+                                                                            $scope.incLoadedItem(); //14
+                                                                            
+                                                                            moodleFactory.Services.GetProfileCatalogs(data.token, function(){
+                                                                                $scope.incLoadedItem();//15
+                                                                                
+                                                                                moodleFactory.Services.GetProfilePoints(userId, course.courseid, data.token,function(){
+                                                                                    $scope.incLoadedItem();//16
+                                                                                    
+                                                                                    $timeout(function () {
+                                                                                        //$scope.$emit('HidePreloader');
+                                                                                        if ($rootScope.loaderForLogin) {//To avoid redirect when there is a connection error.
+                                                                                            $location.path('/ProgramaDashboard');
+                                                                                        }
+                                                                                    }, 1);
+                                                                                }, loginErrorCallback, true);
+                                                                            }, loginErrorCallback, true);
+                                                                        }, loginErrorCallback, true);
                                                                     }, loginErrorCallback, true);
                                                                 }, loginErrorCallback, true);
-                                                            }, loginErrorCallback, true);
+                                                            }, loginErrorCallback,true);
                                                         },loginErrorCallback, true);
                                                     }, loginErrorCallback, true, true);
                                                 });
@@ -398,22 +419,38 @@ angular
                                             moodleFactory.Services.GetUserNotification(userId, course.courseid, userFacebook.token, function () {
                                                 $scope.incLoadedItem(); //10
                                                 
-                                                moodleFactory.Services.GetAsyncLeaderboard(course.courseid, userFacebook.token, function () {
-                                                    $scope.incLoadedItem();//11
-                                                    moodleFactory.Services.GetProfileCatalogs(userFacebook.token, function(){
-                                                        $scope.incLoadedItem();//12
-                                                        moodleFactory.Services.GetProfilePoints(userId, course.courseid, userFacebook.token,function(){
-                                                            $scope.incLoadedItem();//13
-                                                            $timeout(function () {
-                                                            if (userFacebook.is_new == true) {
-                                                                $location.path('/Tutorial');
-                                                            } else {
-                                                                $location.path('/ProgramaDashboard');
-                                                            }
-                                                        }, 1000);
+                                                moodleFactory.Services.GetAsyncProfile(userId, userFacebook.token, function(){
+                                                    $scope.incLoadedItem(); //11
+
+                                                    moodleFactory.Services.GetAsyncStars(userId, userFacebook.token, function() {
+                                                        $scope.incLoadedItem(); //12
+                                                        
+                                                        moodleFactory.Services.CountLikesByUser(course.courseid, userFacebook.token, function() {
+                                                            $scope.incLoadedItem(); //13
+                                                            
+                                                            moodleFactory.Services.GetAsyncLeaderboard(course.courseid, userFacebook.token, function () {
+                                                                $scope.incLoadedItem();//14
+                                                                
+                                                                moodleFactory.Services.GetProfileCatalogs(userFacebook.token, function(){
+                                                                    $scope.incLoadedItem();//15
+                                                                    
+                                                                    moodleFactory.Services.GetProfilePoints(userId, course.courseid, userFacebook.token,function(){
+                                                                        $scope.incLoadedItem();//16
+                                                                        
+                                                                        
+                                                                        $timeout(function () {
+                                                                            if (userFacebook.is_new == true) {
+                                                                                $location.path('/Tutorial');
+                                                                            } else {
+                                                                                $location.path('/ProgramaDashboard');
+                                                                            }
+                                                                        }, 1000);
+                                                                    }, loginErrorCallback, true);
+                                                                }, loginErrorCallback, true);
+                                                            }, loginErrorCallback, true);
                                                         }, loginErrorCallback, true);
-                                                    }, loginErrorCallback, true);
-                                                }, loginErrorCallback, true);
+                                                    },loginErrorCallback, true);
+                                                },loginErrorCallback, true);
                                             },loginErrorCallback, true);
                                         });
                                     }, loginErrorCallback, true);
