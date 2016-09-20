@@ -182,6 +182,9 @@ angular
 
 
             $scope.avatar = function () {
+                
+                localStorage.setItem("createAvatar", JSON.stringify("true"));
+                
                 var avatarInfoForGameIntegration = {
                     "userId": "" + $scope.model.id,
                     "alias": $scope.model.alias,

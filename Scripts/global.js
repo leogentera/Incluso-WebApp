@@ -1265,6 +1265,7 @@ var clearLocalStorage = function (location) {
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");
     ClearLocalStorage("videoPlayed");
+    ClearLocalStorage("createAvatar");
 
     if (location) {
         location.path('/');
@@ -1665,7 +1666,9 @@ function encodeImageWithUri(imageUri, datatype, callback) {
 
 function onResume() {
     var videoPlayed = JSON.parse(localStorage.getItem("videoPlayed"));
-    if (window.location.href.indexOf("Tutorial") > -1 && videoPlayed) {
+    var createAvatar = JSON.parse(localStorage.getItem("createAvatar"));
+    
+    if (window.location.href.indexOf("Tutorial") > -1 && videoPlayed && !createAvatar) {
       //window.location.href = "file:///storage/emulated/0/Android/data/com.gentera.misionincluso/files/app/initializr/index.html#/Tutorial";
       location.reload();
     }
