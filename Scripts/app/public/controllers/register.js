@@ -39,7 +39,6 @@ angular
 
             $scope.genderItems = _getCatalogValuesBy("gender");
             $scope.countryItems = _getCatalogValuesBy("country");
-            $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
             $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
             $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
             $scope.showPlaceHolder = true;
@@ -48,11 +47,9 @@ angular
                 username: undefined,
                 firstname: "",
                 lastname: "",
-                mothername: "",
                 birthday: "",
                 gender: "",
-                country: "",
-                city: "",
+                country: "",                
                 email: "",
                 password: undefined,
                 confirmPassword: undefined,
@@ -188,18 +185,12 @@ angular
                 }
                 if (!$scope.registerForm.lastName.$valid) {
                     errors.push("Formato de apellido paterno incorrecto.");
-                }
-                if (!$scope.registerForm.motherName.$valid) {
-                    errors.push("Formato de apellido materno incorrecto.");
-                }
+                }                
                 if (!$scope.registerModel.gender) {
                     errors.push("Género inválido.");
                 }
                 if (!$scope.registerModel.country) {
                     errors.push("País inválido.");
-                }
-                if (!$scope.registerModel.city) {
-                    errors.push("Estado inválido.");
                 }
                 if (!$scope.registerForm.email.$valid) {
                     errors.push("Formato de correo incorrecto.");
@@ -239,10 +230,8 @@ angular
                         username: $scope.registerModel.username.toString().toLowerCase(),
                         firstname: $scope.registerModel.firstname,
                         lastname: $scope.registerModel.lastname,
-                        mothername: $scope.registerModel.mothername,
                         password: $scope.registerModel.password,
                         email: $scope.registerModel.email,
-                        city: $scope.registerModel.city,
                         country: $scope.registerModel.country,
                         secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
                         secretquestion: $scope.registerModel.secretQuestion,
@@ -480,7 +469,6 @@ angular
                     clearInterval(waitForCatalogsLoaded);
                     $scope.genderItems = _getCatalogValuesBy("gender");
                     $scope.countryItems = _getCatalogValuesBy("country");
-                    $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
                     $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
                     $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
                     $scope.$apply();
