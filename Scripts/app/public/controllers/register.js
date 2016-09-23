@@ -217,6 +217,10 @@ angular
                 return (errors.length === 0);
             }
 
+            $scope.clearErrorMessages = function(){
+                $scope.registerModel.modelState.errorMessages = [];
+            }
+            
             var registerUser = function () {
 
                 var currentTime = new Date().getTime();

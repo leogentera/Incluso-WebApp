@@ -127,6 +127,7 @@
                                         </p>
                                         <input type="text"
                                                ng-model="registerModel.firstname"
+                                               ng-blur="clearErrorMessages()"
                                                name="firstName"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Nombre(s)"
@@ -147,6 +148,7 @@
                                         </p>
                                         <input type="text"
                                                ng-model="registerModel.lastname"
+                                               ng-blur="clearErrorMessages()"
                                                name="lastName"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Apellido paterno"
@@ -189,6 +191,7 @@
                                         <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <input type="text"
                                                    ng-model="registerModel.birthday"
+                                                   ng-blur="clearErrorMessages()"
                                                    name="birthday"
                                                    ng-click="datePickerClick()"
                                                    ng-focus="showPlaceHolderBirthday()"
@@ -214,6 +217,7 @@
                                             ng-click="selectClick(genderItems, 'gender')"
                                             ng-show="mobilecheck()">{{registerModel.gender || 'Género'}}</label>
                                             <select ng-model="registerModel.gender" name="gender"
+                                                    ng-blur="clearErrorMessages()"
                                                     ng-options="item for item in genderItems"
                                                     ng-init="registerModel.gender == null"
                                                     ng-show="!mobilecheck()"
@@ -242,6 +246,7 @@
                                             ng-click="selectClick(countryItems, 'country')"
                                             ng-show="mobilecheck()">{{registerModel.country || 'País'}}</label>
                                             <select ng-model="registerModel.country" name="country"
+                                                    ng-blur="clearErrorMessages()"
                                                     ng-options="item for item in countryItems"
                                                     ng-init="registerModel.country == null"
                                                     ng-show="!mobilecheck()"
@@ -319,6 +324,7 @@
                                         <input type="text"
                                                ng-disabled="isRegistered"
                                                ng-model="registerModel.email"
+                                               ng-blur="clearErrorMessages()"
                                                name="email"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Correo"
@@ -340,6 +346,7 @@
                                         <input type="text"
                                                ng-disabled="isRegistered"
                                                ng-model="registerModel.password"
+                                               ng-blur="clearErrorMessages()"
                                                name="password" id="password"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Contraseña"
@@ -374,6 +381,7 @@
                                         <input type="text"
                                                ng-disabled="isRegistered"
                                                ng-model="registerModel.confirmPassword"
+                                               ng-blur="clearErrorMessages()"
                                                name="confirmPassword" id="confirmPassword"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Repetir contraseña"
@@ -421,6 +429,7 @@
                                             ng-show="mobilecheck()">{{registerModel.secretQuestion || 'Pregunta de seguridad'}}</label>
                                             <select ng-disabled="isRegistered"
                                                     ng-model="registerModel.secretQuestion"
+                                                    ng-blur="clearErrorMessages()"
                                                     ng-init="registerModel.secretQuestion == null"
                                                     ng-options="item for item in securityquestionItems"
                                                     ng-show="!mobilecheck()"
@@ -449,6 +458,7 @@
                                         </p>
                                         <input type="text" ng-disabled="isRegistered"
                                                ng-model="registerModel.secretAnswer"
+                                               ng-blur="clearErrorMessages()"
                                                name="secretAnswer"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Respuesta de seguridad"
@@ -474,6 +484,7 @@
                                             ng-show="mobilecheck()">{{registerModel.metThisAppBy || 'Conocí esta app por:'}}</label>
                                             <select ng-disabled="isRegistered"
                                                 ng-model="registerModel.metThisAppBy"
+                                                ng-blur="clearErrorMessages()"
                                                 ng-init="registerModel.metThisAppBy == null"
                                                 ng-options="item for item in metThisAppByItems"
                                                 ng-show="!mobilecheck()"
