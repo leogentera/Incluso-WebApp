@@ -89,6 +89,7 @@
                 <div class="pages">
 
                     <div class="page" data-page="1" ng-class="currentPage === 1 ? 'active' : ''">
+                        <!-- Username -->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -118,6 +119,7 @@
                             </div>
                         </div>
 
+                        <!-- Firstname -->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -139,6 +141,7 @@
                             </div>
                         </div>
 
+                        <!-- Lastname -->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -159,27 +162,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!--<div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="aliasAddOn">
-                                            <span class="icomoon icon-user"></span>
-                                        </p>
-                                        <input type="text"
-                                               ng-model="registerModel.mothername"
-                                               name="motherName"
-                                               class="form-control form-control-lg theme-default"
-                                               placeholder="Apellido materno"
-                                               aria-describedby="aliasAddOn"
-                                               ng-pattern="/^[\s\-a-zA-ZáéíóúÁÉÍÓÚ'ñÑ0-9]+$/"
-                                               ng-trim="true" required/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
-
+                        <!-- Birthday-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -204,7 +187,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Gender-->
+                        <div class="row" ng-show="!isFacebookUser">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -233,6 +217,7 @@
                             </div>
                         </div>
 
+                        <!-- Country-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -261,59 +246,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!--<div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="cityAddOn">
-                                            <span class="icomoon icon-map"></span>
-                                        </p>
-                                        <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
-                                            <label class="form-control form-control-lg theme-default"
-                                            ng-class="{'placeholder': registerModel.city == ''}"
-                                            ng-click="selectClick(cityItems, 'city')"
-                                            ng-show="mobilecheck()">{{registerModel.city || 'Estado'}}</label>
-                                            <select ng-model="registerModel.city" name="city"
-                                                    ng-options="item for item in cityItems"
-                                                    ng-init="registerModel.city == null"
-                                                    ng-show="!mobilecheck()"
-                                                    class="form-control form-control-lg theme-default"
-                                                    aria-describedby="cityAddOn" required
-                                                    ng-class="{'selected': registerModel.city.length != 0}">
-                                                <option value="" ng-disabled="!!registerModel.city">Estado</option>
-                                            </select>
-                                            <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
-
-                        <!--<div class="row">
-                            <div class="col-xs-12">
-                                <div class="page-number">
-                                    <p class="text-center">
-                                        <span>1</span>
-                                        <span>/</span>
-                                        <span class="total-number">2</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>-->
-
-                        <!--<div class="row">
-                            <div class="col-xs-12">
-                                <a role="button" class="btn btn-primary btn-lg btn-block"
-                                   ng-disabled="registerForm.userName.$pristine || registerForm.userName.$error.pattern || registerForm.userName.$error.required"
-                                   ng-click="navigateToPage(2)">Continuar</a>
-                            </div>
-                            <div class="col-xs-12">
-                                <a role="button" class="btn btn-default btn-transparent btn-lg btn-block"
-                                   ng-click="login()">Cancelar</a>
-                            </div>
-                        </div>-->
-
+                        <!-- Email-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -336,7 +269,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Password-->
+                        <div class="row" ng-show="!isFacebookUser">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -371,7 +305,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Confirm password-->
+                        <div class="row" ng-show="!isFacebookUser">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -402,7 +337,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Show password checkbox-->
+                        <div class="row" ng-show="!isFacebookUser">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="checkbox checkbox-custom">
@@ -415,7 +351,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Security question-->
+                        <div class="row" ng-show="!isFacebookUser">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -449,7 +386,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Secret answer-->
+                        <div class="row" ng-show="!isFacebookUser">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -470,6 +408,7 @@
                             </div>
                         </div>
     
+                        <!-- Met this app by-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -502,6 +441,7 @@
                             </div>
                         </div>
                         
+                        <!-- Accept terms and contitions checkbox-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="checkbox checkbox-custom">
@@ -514,270 +454,18 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!--<div class="row">
-                            <div class="col-xs-12">
-                                <div class="page-number">
-                                    <p class="text-center">
-                                        <span>2</span>
-                                        <span>/</span>
-                                        <span class="total-number">2</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>-->
-
+                        <!-- Register and cancel buttons-->
                         <div class="row">
-                        <div class="col-xs-12" ng-show="!isRegistered">
-                            <!--<div class="button-group">-->
-                                <!--<a role="button" ng-show="!isRegistered" class="btn btn-primary btn-lg"
-                                   ng-click="navigateToPage(1)">
-                                    <span class="icomoon icon-arrow-slim-left"></span>
-                                </a>-->
-                                <a role="button" ng-show="!isRegistered" ng-click="register()"
-                                   ng-disabled="registerForm.password.$pristine || !showPasswd || !showPasswdCf"
-                                   class="btn btn-primary btn-lg btn-block">Registrarme</a>
-                           <!-- </div>-->
-                        </div>
-                         <!--<div class="col-xs-12">
-                                <a role="button" class="btn btn-primary btn-lg btn-block"
-                                   ng-disabled="registerForm.userName.$pristine || registerForm.userName.$error.pattern || registerForm.userName.$error.required"
-                                   ng-click="navigateToPage(2)">Continuar</a>
-                            </div>-->
-                        
-                        <div class="col-xs-12" ng-show="!isRegistered">
-                            <a role="button" ng-disabled="isRegistered" ng-click="login()"
-                               class="btn btn-default btn-transparent btn-lg btn-block">Cancelar</a>
-                        </div>
-                    </div>
-
-                    <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : ''">
-
-                       <!-- <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="emailAddOn">
-                                            <span class="icomoon icon-envelope"></span>
-                                        </p>
-                                        <input type="text"
-                                               ng-disabled="isRegistered"
-                                               ng-model="registerModel.email"
-                                               name="email"
-                                               class="form-control form-control-lg theme-default"
-                                               placeholder="Correo"
-                                               aria-describedby="emailAddOn"
-                                               ng-pattern="/^[a-zA-ZñÑ0-9._%+-]+@[a-zA-ZñÑ0-9.-]+\.[a-zA-ZñÑ]{2,3}$/"
-                                               ng-trim="true" required/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="accountPasswordAddOn">
-                                            <span class="icomoon icon-lock"></span>
-                                        </p>
-                                        <input type="password"
-                                               ng-disabled="isRegistered"
-                                               ng-model="registerModel.password"
-                                               name="password" id="password"
-                                               class="form-control form-control-lg theme-default"
-                                               placeholder="Contraseña"
-                                               aria-describedby="accountPasswordAddOn"
-                                               ng-trim="true" required/>
-                                        <a class="input-group-addon btn-info">
-                                            <span class="icomoon icon-error red"
-                                                  ng-show="registerForm.password.$dirty && !showPasswd"
-                                                  ng-click="openModalPassword()">
-                                            </span>
-                                            <span class="icomoon icon-success yellowgreen"
-                                                  ng-show="registerForm.password.$dirty && showPasswd"
-                                                  ng-click="openModalPassword()">
-                                            </span>
-                                            <span class="icomoon icon-information"
-                                                  ng-click="openModalPassword()"
-                                                  ng-show="registerForm.password.$pristine">
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="confirmPasswordAddOn">
-                                            <span class="icomoon icon-lock"></span>
-                                        </p>
-                                        <input type="password"
-                                               ng-disabled="isRegistered"
-                                               ng-model="registerModel.confirmPassword"
-                                               name="confirmPassword" id="confirmPassword"
-                                               class="form-control form-control-lg theme-default"
-                                               placeholder="Repetir contraseña"
-                                               aria-describedby="confirmPasswordAddOn"
-                                               ng-trim="true" required/>
-                                        <a class="input-group-addon btn-info">
-                                            <span class="icomoon icon-error red"
-                                                  ng-show="registerForm.confirmPassword.$dirty && !showPasswdCf"
-                                                  ng-click="openModalPassword()">
-                                            </span>
-                                            <span class="icomoon icon-success yellowgreen"
-                                                  ng-show="registerForm.confirmPassword.$dirty && showPasswdCf"
-                                                  ng-click="openModalPassword()">
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="checkbox checkbox-custom">
-                                        <label>
-                                            <input type="checkbox" name="showPassword" ng-click="togglePassword()"/>
-                                            <span>Mostrar contraseña</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="securityQuestionAddOn">
-                                            <span class="icomoon icon-help"></span>
-                                        </p>
-                                        <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
-                                            <label class="form-control form-control-lg theme-default"
-                                            ng-class="{'placeholder': registerModel.secretQuestion == ''}"
-                                            ng-click="selectClick(securityquestionItems, 'securityQuestion')"
-                                            ng-show="mobilecheck()">{{registerModel.secretQuestion || 'Pregunta de seguridad'}}</label>
-                                            <select ng-disabled="isRegistered"
-                                                    ng-model="registerModel.secretQuestion"
-                                                    ng-init="registerModel.secretQuestion == null"
-                                                    ng-options="item for item in securityquestionItems"
-                                                    ng-show="!mobilecheck()"
-                                                    name="securityQuestion"
-                                                    class="form-control form-control-lg theme-default"
-                                                    aria-describedby="securityQuestionAddOn"
-                                                    data-show-placeholder="$scope.isRegistered" required
-                                                    ng-class="{'selected': registerModel.secretQuestion.length != 0}">
-                                                <option value="" ng-disabled="!!registerModel.secretQuestion">Pregunta
-                                                    de seguridad
-                                                </option>
-                                            </select>
-                                            <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="securityAnswerAddOn">
-                                            <span class="icomoon icon-help"></span>
-                                        </p>
-                                        <input type="text" ng-disabled="isRegistered"
-                                               ng-model="registerModel.secretAnswer"
-                                               name="secretAnswer"
-                                               class="form-control form-control-lg theme-default"
-                                               placeholder="Respuesta de seguridad"
-                                               aria-describedby="securityAnswerAddOn"
-                                               ng-pattern="/^[\w\W]+$/"
-                                               ng-trim="true" required/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="howIMetThisApp">
-                                            <span class="icomoon icon-help"></span>
-                                        </p>
-                                        <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
-                                            <label class="form-control form-control-lg theme-default"
-                                            ng-class="{'placeholder': registerModel.metThisAppBy == ''}"
-                                            ng-click="selectClick(metThisAppByItems, 'metThisAppBy')"
-                                            ng-show="mobilecheck()">{{registerModel.metThisAppBy || 'Conocí esta app por:'}}</label>
-                                            <select ng-disabled="isRegistered"
-                                                ng-model="registerModel.metThisAppBy"
-                                                ng-init="registerModel.metThisAppBy == null"
-                                                ng-options="item for item in metThisAppByItems"
-                                                ng-show="!mobilecheck()"
-                                                name="metThisAppBy"
-                                                class="form-control form-control-lg theme-default"
-                                                aria-describedby="howIMetThisApp"
-                                                data-show-placeholder="$scope.isRegistered" required
-                                                ng-class="{'selected': registerModel.metThisAppBy.length != 0}">
-                                                <option value="" ng-disabled="!!registerModel.metThisAppBy">Conocí esta app por:</option>
-                                            </select>
-                                            <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="checkbox checkbox-custom">
-                                    <label>
-                                        <input type="checkbox" ng-disabled="isRegistered" name="termsAndConditions"
-                                               ng-model="registerModel.termsAndConditions"/>
-                                        <span><a href="" ng-click="openModal()">Acepto los términos y
-                                            condiciones</a></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="page-number">
-                                    <p class="text-center">
-                                        <span>2</span>
-                                        <span>/</span>
-                                        <span class="total-number">2</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">-->
-                            <!--<div class="col-xs-12" ng-show="!isRegistered">
-                                <div class="button-group">
-                                    <a role="button" ng-show="!isRegistered" class="btn btn-primary btn-lg"
-                                       ng-click="navigateToPage(1)">
-                                        <span class="icomoon icon-arrow-slim-left"></span>
-                                    </a>
-                                    <a role="button" ng-show="!isRegistered" ng-click="register()"
-                                       ng-disabled="registerForm.password.$pristine || !showPasswd || !showPasswdCf"
-                                       class="btn btn-primary btn-lg">Registrarme</a>
-                                </div>
-                            </div>
-                            <div class="col-xs-12" ng-show="!isRegistered">
-                                <a role="button" ng-disabled="isRegistered" ng-click="login()"
-                                   class="btn btn-default btn-transparent btn-lg btn-block">Cancelar</a>
-                            </div>-->
-                        </div>
-
+                          <div class="col-xs-12" ng-show="!isRegistered">                            
+                            <a role="button" ng-show="!isRegistered" ng-click="register()"
+                               ng-disabled="(registerForm.password.$pristine && !isFacebookUser)|| (!showPasswd && !isFacebookUser) || (!showPasswdCf && !isFacebookUser)"
+                               class="btn btn-primary btn-lg btn-block">Registrarme</a>
+                          </div>                         
+                          <div class="col-xs-12" ng-show="!isRegistered">
+                              <a role="button" ng-disabled="isRegistered" ng-click="login()"
+                                 class="btn btn-default btn-transparent btn-lg btn-block">Cancelar</a>
+                          </div>
+                        </div>                    
                     </div>
                 </div>
             </form>

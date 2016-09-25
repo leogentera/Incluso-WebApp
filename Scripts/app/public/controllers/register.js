@@ -29,6 +29,7 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
             $scope.mobilecheck = _comboboxCompat;
+            $scope.isFacebookUser = $routeParams.facebookUser;
 
             function offlineCallback() {
                 $timeout(function () {
@@ -113,10 +114,6 @@ angular
                 $location.path('/');
             };
 
-            $scope.navigateToPage = function (pageNumber) {
-                $scope.currentPage = pageNumber;
-                $scope.$emit('scrollTop');
-            };
 
             $scope.showPlaceHolderBirthday = function () {
                 var bd = $("input[name='birthday']").val();
@@ -180,13 +177,14 @@ angular
                 dpValue = datePickerValue;
                 var age = datePickerValue == "" ? age = 0 : calculate_age();
 
+                
                 if (!$scope.registerForm.firstName.$valid) {
                     errors.push("Formato de nombre incorrecto.");
                 }
                 if (!$scope.registerForm.lastName.$valid) {
                     errors.push("Formato de apellido paterno incorrecto.");
                 }                
-                if (!$scope.registerModel.gender) {
+                if (!$scope.registerModel.gender && !$scope.isFacebookUser) {
                     errors.push("Género inválido.");
                 }
                 if (!$scope.registerModel.country) {
@@ -195,10 +193,10 @@ angular
                 if (!$scope.registerForm.email.$valid) {
                     errors.push("Formato de correo incorrecto.");
                 }
-                if (!$scope.registerModel.secretQuestion) {
+                if (!$scope.registerModel.secretQuestion && !$scope.isFacebookUser) {
                     errors.push("Pregunta secreta inválida.");
                 }
-                if (!$scope.registerForm.secretAnswer.$valid) {
+                if (!$scope.registerForm.secretAnswer.$valid && !$scope.isFacebookUser) {
                     errors.push("Respuesta secreta inválida.");
                 }
                 if (!$scope.registerModel.metThisAppBy) {
@@ -225,46 +223,57 @@ angular
 
                 var currentTime = new Date().getTime();
 
-                $http({
-                    method: 'POST',
-                    url: API_RESOURCE.format("user"),
-                    timeout: $rootScope.globalTimeOut,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    data: $.param({
-                        username: $scope.registerModel.username.toString().toLowerCase(),
-                        firstname: $scope.registerModel.firstname,
-                        lastname: $scope.registerModel.lastname,
-                        password: $scope.registerModel.password,
-                        email: $scope.registerModel.email,
-                        country: $scope.registerModel.country,
-                        secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
-                        secretquestion: $scope.registerModel.secretQuestion,
-                        metThisAppBy: $scope.registerModel.metThisAppBy,
-                        birthday: dpValue,
-                        gender: $scope.registerModel.gender,
-                        autologin: true
-                    })
-                }).success(function (data, status, headers, config) {//Successfully register and logged in.
-                    $scope.incLoadedItem(); //1
-                    $scope.isRegistered = true;
-                    $scope.registerModel.modelState.isValid = true;
-                    $scope.$emit('scrollTop');
-                    $scope.autologin(data);
-
-                }).error(function (data, status, headers, config) {
-                    var errorMessage;
-
-                    if ((data != null && data.messageerror != null)) {
-                        errorMessage = window.atob(data.messageerror);
-                    } else {
-                        errorMessage = "Se necesita estar conectado a Internet para continuar.";
-                    }
-
+                if (!$scope.isFacebookUser) {
+                    //code
+                    $http({
+                        method: 'POST',
+                        url: API_RESOURCE.format("user"),
+                        timeout: $rootScope.globalTimeOut,
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        data: $.param({
+                            username: $scope.registerModel.username.toString().toLowerCase(),
+                            firstname: $scope.registerModel.firstname,
+                            lastname: $scope.registerModel.lastname,
+                            password: $scope.registerModel.password,
+                            email: $scope.registerModel.email,
+                            country: $scope.registerModel.country,
+                            secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
+                            secretquestion: $scope.registerModel.secretQuestion,
+                            metThisAppBy: $scope.registerModel.metThisAppBy,
+                            birthday: dpValue,
+                            gender: $scope.registerModel.gender,
+                            autologin: true
+                        })
+                    }).success(function (data, status, headers, config) {//Successfully register and logged in.
+                        $scope.incLoadedItem(); //1
+                        $scope.isRegistered = true;
+                        $scope.registerModel.modelState.isValid = true;
+                        $scope.$emit('scrollTop');
+                        $scope.autologin(data);
+    
+                    }).error(function (data, status, headers, config) {
+                        var errorMessage;
+    
+                        if ((data != null && data.messageerror != null)) {
+                            errorMessage = window.atob(data.messageerror);
+                        } else {
+                            errorMessage = "Se necesita estar conectado a Internet para continuar.";
+                        }
+    
+                        $scope.$emit('HidePreloader');
+                        $scope.$emit('scrollTop');
+                        
+                        $scope.registerModel.modelState.errorMessages = [errorMessage];
+                    });
+                
+                }else{
+                    
+                    //Update profile
                     $scope.$emit('HidePreloader');
                     $scope.$emit('scrollTop');
-                    
-                    $scope.registerModel.modelState.errorMessages = [errorMessage];
-                });
+                    console.log("update profile");
+                }
+                
             };
 
             $scope.autologin = function (data) {

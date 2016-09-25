@@ -214,7 +214,13 @@ angular
             controller: 'publicRegisterController',
             reloadOnSearch: false
         });
-
+        
+        $routeProvider.when('/Register/:facebookUser', {
+            templateUrl: 'Templates/Public/Register.html',
+            controller: 'publicRegisterController',
+            reloadOnSearch: false
+        });
+        
         $routeProvider.when('/Tutorial', {
             templateUrl: 'Templates/Programa/Tutorial.html',
             controller: 'programaTutorialController'
