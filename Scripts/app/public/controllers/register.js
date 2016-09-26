@@ -29,8 +29,49 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
             $scope.mobilecheck = _comboboxCompat;
-            $scope.isFacebookUser = $routeParams.facebookUser;
+            $scope.isNewFacebookUser = $routeParams.facebookUser == "true" ? true : false;
+            $scope.isUpdate = $routeParams.isUpdate == "true" ? true: false;
 
+            function initController() {
+                if ($scope.isNewFacebookUser) {
+                    var facebookUser = JSON.parse(localStorage.getItem("facebookUser"));
+                    if (facebookUser) {
+                        $scope.registerModel.firstname = facebookUser.first_name;
+                        $scope.registerModel.lastname = facebookUser.last_name;
+                        $scope.registerModel.gender = facebookUser.gender;
+                        $scope.registerModel.email = facebookUser.email;
+                    }else if($scope.isUpdate) {
+                        var profileModel = moodleFactory.Services.GetCacheJson("Perfil/" + userId);
+                        $scope.registerModel.email = profileModel.email;
+                        $scope.registerModel.firstname = profileModel.firstname;
+                        $scope.registerModel.lastname = profileModel.lastname;
+                        $scope.registerModel.country = profileModel.address.contry;
+                    }
+                }
+            }
+                //var registrationModel = {
+                //                username: $scope.registerModel.username.toString().toLowerCase(),
+                //                firstname: $scope.registerModel.firstname,
+                //                lastname: $scope.registerModel.lastname,
+                //                email: $scope.registerModel.email,
+                //                country: $scope.registerModel.country,
+                //                secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
+                //                secretquestion: $scope.registerModel.secretQuestion,
+                //                password: $scope.registerModel.password,
+                //                metThisAppBy: $scope.registerModel.metThisAppBy,
+                //                birthday: dpValue,
+                //                gender: $scope.registerModel.gender,
+                //                autologin: true
+                //            };
+                //        
+                //        if ($scope.isFacebookUser) {
+                //            var facebookUser = JSON.parse(localStorage.getItem("facebookUser"));
+                //            registrationModel.facebookid = facebookUser.facebookid;
+                //            registrationModel.alias = facebookUser.first_name;
+                //            registrationModel.gender = facebookUser.gender;
+                //        }
+            
+            
             function offlineCallback() {
                 $timeout(function () {
                     $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
@@ -184,7 +225,7 @@ angular
                 if (!$scope.registerForm.lastName.$valid) {
                     errors.push("Formato de apellido paterno incorrecto.");
                 }                
-                if (!$scope.registerModel.gender && !$scope.isFacebookUser) {
+                if (!$scope.registerModel.gender && !$scope.isFacebookUser && !$scope.isUpdate) {
                     errors.push("Género inválido.");
                 }
                 if (!$scope.registerModel.country) {
@@ -193,10 +234,10 @@ angular
                 if (!$scope.registerForm.email.$valid) {
                     errors.push("Formato de correo incorrecto.");
                 }
-                if (!$scope.registerModel.secretQuestion && !$scope.isFacebookUser) {
+                if (!$scope.registerModel.secretQuestion && !$scope.isFacebookUser && !$scope.isUpdate) {
                     errors.push("Pregunta secreta inválida.");
                 }
-                if (!$scope.registerForm.secretAnswer.$valid && !$scope.isFacebookUser) {
+                if (!$scope.registerForm.secretAnswer.$valid && !$scope.isFacebookUser && !$scope.isUpdate) {
                     errors.push("Respuesta secreta inválida.");
                 }
                 if (!$scope.registerModel.metThisAppBy) {
@@ -220,37 +261,70 @@ angular
             }
             
             var registerUser = function () {
-
-                var currentTime = new Date().getTime();
-
-                if (!$scope.isFacebookUser) {
-                    //code
+            
+                if ($scope.isUpdate) {
+                    var userId = moodleFactory.Services.GetCacheObject("userId");
+                    var profileModel = moodleFactory.Services.GetCacheJson("Perfil/" + userId);
+                    
+                    profileModel.username = $scope.registerModel.username.toString().toLowerCase();
+                    //localStorage.setItem("Perfil/"+ userId, JSON.stringify(profileModel));
+                    moodleFactory.Services.PutAsyncProfile(userId, profileModel,
+                        function (data) {//Save profile successful...
+                            $timeout(function () {
+                                $location.path('/ProgramaDashboard');
+                                }, 1000);
+                        },function (data) {
+                            var errorMessage;    
+                            if ((data != null && data.messageerror != null)) {
+                                errorMessage = window.atob(data.messageerror);
+                            } else {
+                                errorMessage = "Se necesita estar conectado a Internet para continuar.";
+                            }        
+                            $scope.$emit('HidePreloader');
+                            $scope.$emit('scrollTop');
+                            
+                            $scope.registerModel.modelState.errorMessages = [errorMessage];
+                        });
+                    
+                }else{
+            
+                    var currentTime = new Date().getTime();
+                                    
+                    var registrationModel = {
+                            username: $scope.registerModel.username.toString().toLowerCase(),
+                            firstname: $scope.registerModel.firstname,
+                            lastname: $scope.registerModel.lastname,
+                            email: $scope.registerModel.email,
+                            country: $scope.registerModel.country,
+                            secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
+                            secretquestion: $scope.registerModel.secretQuestion,
+                            password: $scope.registerModel.password,
+                            metThisAppBy: $scope.registerModel.metThisAppBy,
+                            birthday: dpValue,
+                            gender: $scope.registerModel.gender,
+                            autologin: true
+                        };
+                    
+                    if ($scope.isFacebookUser) {
+                        var facebookUser = JSON.parse(localStorage.getItem("facebookUser"));
+                        registrationModel.facebookid = facebookUser.facebookid;
+                        registrationModel.alias = facebookUser.first_name;
+                        registrationModel.gender = facebookUser.gender;
+                    }
+                    
+                    
                     $http({
                         method: 'POST',
                         url: API_RESOURCE.format("user"),
                         timeout: $rootScope.globalTimeOut,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                        data: $.param({
-                            username: $scope.registerModel.username.toString().toLowerCase(),
-                            firstname: $scope.registerModel.firstname,
-                            lastname: $scope.registerModel.lastname,
-                            password: $scope.registerModel.password,
-                            email: $scope.registerModel.email,
-                            country: $scope.registerModel.country,
-                            secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
-                            secretquestion: $scope.registerModel.secretQuestion,
-                            metThisAppBy: $scope.registerModel.metThisAppBy,
-                            birthday: dpValue,
-                            gender: $scope.registerModel.gender,
-                            autologin: true
-                        })
+                        data: $.param(registrationModel),                    
                     }).success(function (data, status, headers, config) {//Successfully register and logged in.
                         $scope.incLoadedItem(); //1
                         $scope.isRegistered = true;
                         $scope.registerModel.modelState.isValid = true;
                         $scope.$emit('scrollTop');
                         $scope.autologin(data);
-    
                     }).error(function (data, status, headers, config) {
                         var errorMessage;
     
@@ -265,17 +339,9 @@ angular
                         
                         $scope.registerModel.modelState.errorMessages = [errorMessage];
                     });
-                
-                }else{
-                    
-                    //Update profile
-                    $scope.$emit('HidePreloader');
-                    $scope.$emit('scrollTop');
-                    console.log("update profile");
                 }
-                
             };
-
+            
             $scope.autologin = function (data) {
                 //_loadDrupalResources();
 
@@ -488,6 +554,8 @@ angular
                 }
             }
 
+            initController();
+            
         }])
 
     .controller('termsAndConditionsController', function ($scope, $modalInstance) {

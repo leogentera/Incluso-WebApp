@@ -188,7 +188,7 @@
                         </div>
 
                         <!-- Gender-->
-                        <div class="row" ng-show="!isFacebookUser">
+                        <div class="row" ng-show="!isFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -270,7 +270,7 @@
                         </div>
 
                         <!-- Password-->
-                        <div class="row" ng-show="!isFacebookUser">
+                        <div class="row" ng-show="!isFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -306,7 +306,7 @@
                         </div>
 
                         <!-- Confirm password-->
-                        <div class="row" ng-show="!isFacebookUser">
+                        <div class="row" ng-show="!isFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -338,7 +338,7 @@
                         </div>
 
                         <!-- Show password checkbox-->
-                        <div class="row" ng-show="!isFacebookUser">
+                        <div class="row" ng-show="!isFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="checkbox checkbox-custom">
@@ -352,7 +352,7 @@
                         </div>
 
                         <!-- Security question-->
-                        <div class="row" ng-show="!isFacebookUser">
+                        <div class="row" ng-show="!isFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -387,7 +387,7 @@
                         </div>
 
                         <!-- Secret answer-->
-                        <div class="row" ng-show="!isFacebookUser">
+                        <div class="row" ng-show="!isFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -458,7 +458,8 @@
                         <div class="row">
                           <div class="col-xs-12" ng-show="!isRegistered">                            
                             <a role="button" ng-show="!isRegistered" ng-click="register()"
-                               ng-disabled="(registerForm.password.$pristine && !isFacebookUser)|| (!showPasswd && !isFacebookUser) || (!showPasswdCf && !isFacebookUser)"
+                               ng-disabled="(registerForm.password.$pristine && !isFacebookUser && !isUpdate)|| (!showPasswd && !isFacebookUser && !isUpdate) ||
+                                (!showPasswdCf && !isFacebookUser && !isUpdate)"
                                class="btn btn-primary btn-lg btn-block">Registrarme</a>
                           </div>                         
                           <div class="col-xs-12" ng-show="!isRegistered">

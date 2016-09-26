@@ -352,9 +352,10 @@ angular
                     
                 
                 if (userFacebook.is_new == true) {
+                    localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
                     $timeout(function () {
-                        $location.path('/Register/true');
-                    }, 1000);
+                        $location.path('/Register/'+ userFacebook.is_new  + '/' + !userFacebook.complete);
+                    }, 1);
                 }else{
                    
                    $rootScope.loaderForLogin = true; //For Login Preloader
@@ -440,10 +441,15 @@ angular
                                                                         moodleFactory.Services.GetProfilePoints(userId, course.courseid, userFacebook.token,function(){
                                                                             $scope.incLoadedItem();//16
                                                                             
-                                                                            
-                                                                            $timeout(function () {
-                                                                                $location.path('/ProgramaDashboard');
-                                                                            }, 1000);
+                                                                            if (userFacebook.complete == false) {
+                                                                                localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
+                                                                                $timeout(function () {
+                                                                                    $location.path('/Register/false/'+ !userFacebook.complete);
+                                                                                }, 1);
+                                                                            }else{
+                                                                                $timeout(function () {
+                                                                                    $location.path('/ProgramaDashboard');
+                                                                                }, 1000);}
                                                                         }, loginErrorCallback, true);
                                                                     }, loginErrorCallback, true);
                                                                 }, loginErrorCallback, true);
