@@ -32,59 +32,7 @@ angular
             $scope.isNewFacebookUser = $routeParams.facebookUser == "true" ? true : false;
             $scope.isUpdate = $routeParams.isUpdate == "true" ? true: false;
 
-            function initController() {
-                if ($scope.isNewFacebookUser) {
-                    var facebookUser = JSON.parse(localStorage.getItem("facebookUser"));
-                    if (facebookUser) {
-                        $scope.registerModel.firstname = facebookUser.first_name;
-                        $scope.registerModel.lastname = facebookUser.last_name;
-                        $scope.registerModel.gender = facebookUser.gender;
-                        $scope.registerModel.email = facebookUser.email;
-                    }else if($scope.isUpdate) {
-                        var profileModel = moodleFactory.Services.GetCacheJson("Perfil/" + userId);
-                        $scope.registerModel.email = profileModel.email;
-                        $scope.registerModel.firstname = profileModel.firstname;
-                        $scope.registerModel.lastname = profileModel.lastname;
-                        $scope.registerModel.country = profileModel.address.contry;
-                    }
-                }
-            }
-                //var registrationModel = {
-                //                username: $scope.registerModel.username.toString().toLowerCase(),
-                //                firstname: $scope.registerModel.firstname,
-                //                lastname: $scope.registerModel.lastname,
-                //                email: $scope.registerModel.email,
-                //                country: $scope.registerModel.country,
-                //                secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
-                //                secretquestion: $scope.registerModel.secretQuestion,
-                //                password: $scope.registerModel.password,
-                //                metThisAppBy: $scope.registerModel.metThisAppBy,
-                //                birthday: dpValue,
-                //                gender: $scope.registerModel.gender,
-                //                autologin: true
-                //            };
-                //        
-                //        if ($scope.isFacebookUser) {
-                //            var facebookUser = JSON.parse(localStorage.getItem("facebookUser"));
-                //            registrationModel.facebookid = facebookUser.facebookid;
-                //            registrationModel.alias = facebookUser.first_name;
-                //            registrationModel.gender = facebookUser.gender;
-                //        }
             
-            
-            function offlineCallback() {
-                $timeout(function () {
-                    $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                    $scope.$emit('scrollTop');
-                }, 1000);
-            }
-
-            $scope.genderItems = _getCatalogValuesBy("gender");
-            $scope.countryItems = _getCatalogValuesBy("country");
-            $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
-            $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
-            $scope.showPlaceHolder = true;
-
             $scope.registerModel = {
                 username: undefined,
                 firstname: "",
@@ -104,6 +52,41 @@ angular
                     errorMessages: []
                 }
             };
+            
+            function initController() {
+                
+                if ($scope.isNewFacebookUser) {
+                    var facebookUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    if (facebookUser) {
+                        $scope.registerModel.firstname = facebookUser.first_name;
+                        $scope.registerModel.lastname = facebookUser.last_name;
+                        $scope.registerModel.gender = facebookUser.gender;
+                        $scope.registerModel.email = facebookUser.email;
+                    }
+                }else if($scope.isUpdate) {
+                    var userId = moodleFactory.Services.GetCacheObject("userId");
+                    var profileModel = JSON.parse(localStorage.getItem("Perfil/" + userId));
+                    $scope.registerModel.email = profileModel.email;
+                    $scope.registerModel.firstname = profileModel.firstname;
+                    $scope.registerModel.lastname = profileModel.lastname;
+                    $scope.registerModel.country = profileModel.address.country;
+                }
+            }
+            
+            function offlineCallback() {
+                $timeout(function () {
+                    $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                    $scope.$emit('scrollTop');
+                }, 1000);
+            }
+
+            $scope.genderItems = _getCatalogValuesBy("gender");
+            $scope.countryItems = _getCatalogValuesBy("country");
+            $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
+            $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
+            $scope.showPlaceHolder = true;
+
+            
 
             $scope.currentUserModel = {
                 token: "",
@@ -219,13 +202,17 @@ angular
                 var age = datePickerValue == "" ? age = 0 : calculate_age();
 
                 
+                if (!$scope.registerForm.userName.$valid) {
+                    errors.push("Formato de nombre de usuario incorrecto.");
+                }
+                
                 if (!$scope.registerForm.firstName.$valid) {
                     errors.push("Formato de nombre incorrecto.");
                 }
                 if (!$scope.registerForm.lastName.$valid) {
                     errors.push("Formato de apellido paterno incorrecto.");
                 }                
-                if (!$scope.registerModel.gender && !$scope.isFacebookUser && !$scope.isUpdate) {
+                if (!$scope.registerModel.gender && !$scope.isNewFacebookUser && !$scope.isUpdate) {
                     errors.push("Género inválido.");
                 }
                 if (!$scope.registerModel.country) {
@@ -234,10 +221,10 @@ angular
                 if (!$scope.registerForm.email.$valid) {
                     errors.push("Formato de correo incorrecto.");
                 }
-                if (!$scope.registerModel.secretQuestion && !$scope.isFacebookUser && !$scope.isUpdate) {
+                if (!$scope.registerModel.secretQuestion && !$scope.isNewFacebookUser && !$scope.isUpdate) {
                     errors.push("Pregunta secreta inválida.");
                 }
-                if (!$scope.registerForm.secretAnswer.$valid && !$scope.isFacebookUser && !$scope.isUpdate) {
+                if (!$scope.registerForm.secretAnswer.$valid && !$scope.isNewFacebookUser && !$scope.isUpdate) {
                     errors.push("Respuesta secreta inválida.");
                 }
                 if (!$scope.registerModel.metThisAppBy) {
@@ -262,17 +249,19 @@ angular
             
             var registerUser = function () {
             
-                if ($scope.isUpdate) {
-                    var userId = moodleFactory.Services.GetCacheObject("userId");
-                    var profileModel = moodleFactory.Services.GetCacheJson("Perfil/" + userId);
-                    
+                if ($scope.isUpdate && !$scope.isNewFacebookUser) {
+                    var userId = localStorage.getItem("userId");
+                    var profileModel = JSON.parse(localStorage.getItem("Perfil/" + userId));
                     profileModel.username = $scope.registerModel.username.toString().toLowerCase();
-                    //localStorage.setItem("Perfil/"+ userId, JSON.stringify(profileModel));
                     moodleFactory.Services.PutAsyncProfile(userId, profileModel,
-                        function (data) {//Save profile successful...
-                            $timeout(function () {
-                                $location.path('/ProgramaDashboard');
-                                }, 1000);
+                        function (data) {//Save profile successful...                            
+                            $scope.incLoadedItem(); //1
+                            $scope.isRegistered = true;
+                            $scope.registerModel.modelState.isValid = true;
+                            $scope.$emit('scrollTop');
+                            
+                            var userData = JSON.parse(localStorage.getItem("CurrentUser"));
+                            $scope.autologin(userData);
                         },function (data) {
                             var errorMessage;    
                             if ((data != null && data.messageerror != null)) {
@@ -305,8 +294,8 @@ angular
                             autologin: true
                         };
                     
-                    if ($scope.isFacebookUser) {
-                        var facebookUser = JSON.parse(localStorage.getItem("facebookUser"));
+                    if ($scope.isNewFacebookUser) {
+                        var facebookUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         registrationModel.facebookid = facebookUser.facebookid;
                         registrationModel.alias = facebookUser.first_name;
                         registrationModel.gender = facebookUser.gender;

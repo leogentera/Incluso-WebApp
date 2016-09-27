@@ -350,12 +350,28 @@ angular
                 _loadedDrupalResourcesWithErrors = false;
                 _loadedDrupalResources = false;
                     
+                //save token for further requests and autologin
+                $scope.currentUserModel = userFacebook;
+                $scope.currentUserModel.token = userFacebook.token;
+                $scope.currentUserModel.userId = userFacebook.id;
+    
+                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+    
+                _setId(userFacebook.id);        
+                    
                 
                 if (userFacebook.is_new == true) {
-                    localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
+                    //localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
                     $timeout(function () {
                         $location.path('/Register/'+ userFacebook.is_new  + '/' + !userFacebook.complete);
                     }, 1);
+                }else if (userFacebook.complete == false) {
+                    moodleFactory.Services.GetAsyncProfile(userFacebook.id, userFacebook.token, function(){
+                        localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
+                        $timeout(function () {
+                            $location.path('/Register/false/'+ !userFacebook.complete);
+                        }, 1);
+                    },loginErrorCallback, true);
                 }else{
                    
                    $rootScope.loaderForLogin = true; //For Login Preloader
@@ -378,14 +394,7 @@ angular
     
     
     
-                    //save token for further requests and autologin
-                    $scope.currentUserModel = userFacebook;
-                    $scope.currentUserModel.token = userFacebook.token;
-                    $scope.currentUserModel.userId = userFacebook.id;
-    
-                    _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-    
-                    _setId(userFacebook.id);                          
+                                          
                     
                     //Run queue
                     moodleFactory.Services.ExecuteQueue(function () {
@@ -440,16 +449,9 @@ angular
                                                                         
                                                                         moodleFactory.Services.GetProfilePoints(userId, course.courseid, userFacebook.token,function(){
                                                                             $scope.incLoadedItem();//16
-                                                                            
-                                                                            if (userFacebook.complete == false) {
-                                                                                localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
-                                                                                $timeout(function () {
-                                                                                    $location.path('/Register/false/'+ !userFacebook.complete);
-                                                                                }, 1);
-                                                                            }else{
-                                                                                $timeout(function () {
-                                                                                    $location.path('/ProgramaDashboard');
-                                                                                }, 1000);}
+                                                                            $timeout(function () {
+                                                                                $location.path('/ProgramaDashboard');
+                                                                            }, 1000);
                                                                         }, loginErrorCallback, true);
                                                                     }, loginErrorCallback, true);
                                                                 }, loginErrorCallback, true);
