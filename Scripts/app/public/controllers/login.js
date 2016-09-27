@@ -360,15 +360,17 @@ angular
                 _setId(userFacebook.id);        
                     
                 
-                if (userFacebook.is_new == true) {
+                if (userFacebook.is_new == true && userFacebook.complete != undefined) {
                     //localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
                     $timeout(function () {
+                        $scope.$emit('ShowPreloader');
                         $location.path('/Register/'+ userFacebook.is_new  + '/' + !userFacebook.complete);
                     }, 1);
                 }else if (userFacebook.complete == false) {
                     moodleFactory.Services.GetAsyncProfile(userFacebook.id, userFacebook.token, function(){
                         localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
                         $timeout(function () {
+                            $scope.$emit('ShowPreloader');
                             $location.path('/Register/false/'+ !userFacebook.complete);
                         }, 1);
                     },loginErrorCallback, true);

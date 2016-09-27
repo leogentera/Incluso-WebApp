@@ -261,7 +261,7 @@ angular
                             $scope.$emit('scrollTop');
                             
                             var userData = JSON.parse(localStorage.getItem("CurrentUser"));
-                            $scope.autologin(userData);
+                            $scope.autologin(userData, true);
                         },function (data) {
                             var errorMessage;    
                             if ((data != null && data.messageerror != null)) {
@@ -331,7 +331,7 @@ angular
                 }
             };
             
-            $scope.autologin = function (data) {
+            $scope.autologin = function (data, toDashboard) {
                 //_loadDrupalResources();
 
                 /* loads drupal resources (content) */
@@ -430,7 +430,11 @@ angular
                                                                     $timeout(function () {
                                                                         try {
                                                                             //- $scope.$emit('HidePreloader');
-                                                                            $location.path('/Tutorial');
+                                                                            if (toDashboard) {
+                                                                                $location.path('/ProgramaDashboard');
+                                                                            }else{
+                                                                                $location.path('/Tutorial');
+                                                                            }
                                                                         } catch (e) {
                                                                             $location.path('/ProgramaDashboard');
                                                                         }
