@@ -338,7 +338,10 @@ angular
                 $scope.userCredentialsModel.modelState.errorMessages = [];
 
                 if (window.mobilecheck()) {
-                    cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
+                    $timeout(function () {
+                        $scope.$emit('ShowPreloader');
+                        cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
+                    }, 1);                    
                 }
             }
 
@@ -362,15 +365,14 @@ angular
                 
                 if (userFacebook.is_new == true && userFacebook.complete != undefined) {
                     //localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
-                    $timeout(function () {
-                        $scope.$emit('ShowPreloader');
+                    $timeout(function () {                        
                         $location.path('/Register/'+ userFacebook.is_new  + '/' + !userFacebook.complete);
                     }, 1);
                 }else if (userFacebook.complete == false) {
                     moodleFactory.Services.GetAsyncProfile(userFacebook.id, userFacebook.token, function(){
                         localStorage.setItem("facebookUser", JSON.stringify(userFacebook));
                         $timeout(function () {
-                            $scope.$emit('ShowPreloader');
+                            //$scope.$emit('ShowPreloader');
                             $location.path('/Register/false/'+ !userFacebook.complete);
                         }, 1);
                     },loginErrorCallback, true);
@@ -380,7 +382,7 @@ angular
                     $rootScope.totalLoads = 12; //Number of Requests
                     progressBar.set(0); //For Login Preloader
                     $scope.loaderRandom(); //For Login Preloader
-                    $scope.$emit('ShowPreloader');
+                    //$scope.$emit('ShowPreloader');
     
                     drupalFactory.Services.GetDrupalContent(function () {
                         _loadedDrupalResources = true;
