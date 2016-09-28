@@ -1034,10 +1034,6 @@ angular
                         errors.push("Formato de apellido paterno incorrecto.");
                     }
 
-                    if (!$scope.model.mothername) {
-                        errors.push("Formato de apellido materno incorrecto.");
-                    }
-
                     if (!$scope.model.gender) {
                         errors.push("Debe indicar su género.");
                     }
