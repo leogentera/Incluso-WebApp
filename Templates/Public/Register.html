@@ -99,6 +99,7 @@
                                         </p>
                                         <input type="text"
                                                ng-model="registerModel.username"
+                                               ng-blur="clearErrorMessages()"
                                                name="userName" id="userName"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Nombre de usuario"
@@ -187,7 +188,7 @@
                             </div>
                         </div>
 
-                        <!-- Gender-->
+                        <!-- Gender select-->
                         <div class="row" ng-show="!isNewFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -201,7 +202,7 @@
                                             ng-click="selectClick(genderItems, 'gender')"
                                             ng-show="mobilecheck()">{{registerModel.gender || 'Género'}}</label>
                                             <select ng-model="registerModel.gender" name="gender"
-                                                    ng-blur="clearErrorMessages()"
+                                                    ng-change="clearErrorMessages()"
                                                     ng-options="item for item in genderItems"
                                                     ng-init="registerModel.gender == null"
                                                     ng-show="!mobilecheck()"
@@ -217,7 +218,7 @@
                             </div>
                         </div>
 
-                        <!-- Country-->
+                        <!-- Country select-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -231,7 +232,7 @@
                                             ng-click="selectClick(countryItems, 'country')"
                                             ng-show="mobilecheck()">{{registerModel.country || 'País'}}</label>
                                             <select ng-model="registerModel.country" name="country"
-                                                    ng-blur="clearErrorMessages()"
+                                                    ng-change="clearErrorMessages()"
                                                     ng-options="item for item in countryItems"
                                                     ng-init="registerModel.country == null"
                                                     ng-show="!mobilecheck()"
@@ -351,7 +352,7 @@
                             </div>
                         </div>
 
-                        <!-- Security question-->
+                        <!-- Security question select-->
                         <div class="row" ng-show="!isNewFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -366,7 +367,7 @@
                                             ng-show="mobilecheck()">{{registerModel.secretQuestion || 'Pregunta de seguridad'}}</label>
                                             <select ng-disabled="isRegistered"
                                                     ng-model="registerModel.secretQuestion"
-                                                    ng-blur="clearErrorMessages()"
+                                                    ng-change="clearErrorMessages()"
                                                     ng-init="registerModel.secretQuestion == null"
                                                     ng-options="item for item in securityquestionItems"
                                                     ng-show="!mobilecheck()"
@@ -408,7 +409,7 @@
                             </div>
                         </div>
     
-                        <!-- Met this app by-->
+                        <!-- Met this app by select-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -423,7 +424,7 @@
                                             ng-show="mobilecheck()">{{registerModel.metThisAppBy || 'Conocí esta app por:'}}</label>
                                             <select ng-disabled="isRegistered"
                                                 ng-model="registerModel.metThisAppBy"
-                                                ng-blur="clearErrorMessages()"
+                                                ng-change="clearErrorMessages()"
                                                 ng-init="registerModel.metThisAppBy == null"
                                                 ng-options="item for item in metThisAppByItems"
                                                 ng-show="!mobilecheck()"

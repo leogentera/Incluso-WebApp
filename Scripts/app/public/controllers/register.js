@@ -297,7 +297,7 @@ angular
                     if ($scope.isNewFacebookUser) {
                         var facebookUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         registrationModel.facebookid = facebookUser.facebookid;
-                        registrationModel.alias = facebookUser.first_name;
+                        registrationModel.alias = $scope.registerModel.username.toString().toLowerCase();
                         registrationModel.gender = facebookUser.gender;
                     }
                     
