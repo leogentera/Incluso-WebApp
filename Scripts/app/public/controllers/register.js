@@ -29,30 +29,17 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
             $scope.mobilecheck = _comboboxCompat;
+            $scope.isNewFacebookUser = $routeParams.facebookUser == "true" ? true : false;
+            $scope.isUpdate = $routeParams.isUpdate == "true" ? true: false;
 
-            function offlineCallback() {
-                $timeout(function () {
-                    $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                    $scope.$emit('scrollTop');
-                }, 1000);
-            }
-
-            $scope.genderItems = _getCatalogValuesBy("gender");
-            $scope.countryItems = _getCatalogValuesBy("country");
-            $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
-            $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
-            $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
-            $scope.showPlaceHolder = true;
-
+            
             $scope.registerModel = {
                 username: undefined,
                 firstname: "",
                 lastname: "",
-                mothername: "",
                 birthday: "",
                 gender: "",
-                country: "",
-                city: "",
+                country: "",                
                 email: "",
                 password: undefined,
                 confirmPassword: undefined,
@@ -65,6 +52,41 @@ angular
                     errorMessages: []
                 }
             };
+            
+            function initController() {
+                
+                if ($scope.isNewFacebookUser) {
+                    var facebookUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    if (facebookUser) {
+                        $scope.registerModel.firstname = facebookUser.first_name;
+                        $scope.registerModel.lastname = facebookUser.last_name;
+                        $scope.registerModel.gender = facebookUser.gender;
+                        $scope.registerModel.email = facebookUser.email;
+                    }
+                }else if($scope.isUpdate) {
+                    var userId = moodleFactory.Services.GetCacheObject("userId");
+                    var profileModel = JSON.parse(localStorage.getItem("Perfil/" + userId));
+                    $scope.registerModel.email = profileModel.email;
+                    $scope.registerModel.firstname = profileModel.firstname;
+                    $scope.registerModel.lastname = profileModel.lastname;
+                    $scope.registerModel.country = profileModel.address.country;
+                }
+            }
+            
+            function offlineCallback() {
+                $timeout(function () {
+                    $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                    $scope.$emit('scrollTop');
+                }, 1000);
+            }
+
+            $scope.genderItems = _getCatalogValuesBy("gender");
+            $scope.countryItems = _getCatalogValuesBy("country");
+            $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
+            $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
+            $scope.showPlaceHolder = true;
+
+            
 
             $scope.currentUserModel = {
                 token: "",
@@ -116,10 +138,6 @@ angular
                 $location.path('/');
             };
 
-            $scope.navigateToPage = function (pageNumber) {
-                $scope.currentPage = pageNumber;
-                $scope.$emit('scrollTop');
-            };
 
             $scope.showPlaceHolderBirthday = function () {
                 var bd = $("input[name='birthday']").val();
@@ -183,31 +201,30 @@ angular
                 dpValue = datePickerValue;
                 var age = datePickerValue == "" ? age = 0 : calculate_age();
 
+                
+                if (!$scope.registerForm.userName.$valid) {
+                    errors.push("Formato de nombre de usuario incorrecto.");
+                }
+                
                 if (!$scope.registerForm.firstName.$valid) {
                     errors.push("Formato de nombre incorrecto.");
                 }
                 if (!$scope.registerForm.lastName.$valid) {
                     errors.push("Formato de apellido paterno incorrecto.");
-                }
-                if (!$scope.registerForm.motherName.$valid) {
-                    errors.push("Formato de apellido materno incorrecto.");
-                }
-                if (!$scope.registerModel.gender) {
+                }                
+                if (!$scope.registerModel.gender && !$scope.isNewFacebookUser && !$scope.isUpdate) {
                     errors.push("Género inválido.");
                 }
                 if (!$scope.registerModel.country) {
                     errors.push("País inválido.");
                 }
-                if (!$scope.registerModel.city) {
-                    errors.push("Estado inválido.");
-                }
                 if (!$scope.registerForm.email.$valid) {
                     errors.push("Formato de correo incorrecto.");
                 }
-                if (!$scope.registerModel.secretQuestion) {
+                if (!$scope.registerModel.secretQuestion && !$scope.isNewFacebookUser && !$scope.isUpdate) {
                     errors.push("Pregunta secreta inválida.");
                 }
-                if (!$scope.registerForm.secretAnswer.$valid) {
+                if (!$scope.registerForm.secretAnswer.$valid && !$scope.isNewFacebookUser && !$scope.isUpdate) {
                     errors.push("Respuesta secreta inválida.");
                 }
                 if (!$scope.registerModel.metThisAppBy) {
@@ -226,55 +243,95 @@ angular
                 return (errors.length === 0);
             }
 
+            $scope.clearErrorMessages = function(){
+                $scope.registerModel.modelState.errorMessages = [];
+            }
+            
             var registerUser = function () {
-
-                var currentTime = new Date().getTime();
-
-                $http({
-                    method: 'POST',
-                    url: API_RESOURCE.format("user"),
-                    timeout: $rootScope.globalTimeOut,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    data: $.param({
-                        username: $scope.registerModel.username.toString().toLowerCase(),
-                        firstname: $scope.registerModel.firstname,
-                        lastname: $scope.registerModel.lastname,
-                        mothername: $scope.registerModel.mothername,
-                        password: $scope.registerModel.password,
-                        email: $scope.registerModel.email,
-                        city: $scope.registerModel.city,
-                        country: $scope.registerModel.country,
-                        secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
-                        secretquestion: $scope.registerModel.secretQuestion,
-                        metThisAppBy: $scope.registerModel.metThisAppBy,
-                        birthday: dpValue,
-                        gender: $scope.registerModel.gender,
-                        autologin: true
-                    })
-                }).success(function (data, status, headers, config) {//Successfully register and logged in.
-                    $scope.incLoadedItem(); //1
-                    $scope.isRegistered = true;
-                    $scope.registerModel.modelState.isValid = true;
-                    $scope.$emit('scrollTop');
-                    $scope.autologin(data);
-
-                }).error(function (data, status, headers, config) {
-                    var errorMessage;
-
-                    if ((data != null && data.messageerror != null)) {
-                        errorMessage = window.atob(data.messageerror);
-                    } else {
-                        errorMessage = "Se necesita estar conectado a Internet para continuar.";
-                    }
-
-                    $scope.$emit('HidePreloader');
-                    $scope.$emit('scrollTop');
+            
+                if ($scope.isUpdate && !$scope.isNewFacebookUser) {
+                    var userId = localStorage.getItem("userId");
+                    var profileModel = JSON.parse(localStorage.getItem("Perfil/" + userId));
+                    profileModel.username = $scope.registerModel.username.toString().toLowerCase();
+                    moodleFactory.Services.PutAsyncProfile(userId, profileModel,
+                        function (data) {//Save profile successful...                            
+                            $scope.incLoadedItem(); //1
+                            $scope.isRegistered = true;
+                            $scope.registerModel.modelState.isValid = true;
+                            $scope.$emit('scrollTop');
+                            
+                            var userData = JSON.parse(localStorage.getItem("CurrentUser"));
+                            $scope.autologin(userData, true);
+                        },function (data) {
+                            var errorMessage;    
+                            if ((data != null && data.messageerror != null)) {
+                                errorMessage = window.atob(data.messageerror);
+                            } else {
+                                errorMessage = "Se necesita estar conectado a Internet para continuar.";
+                            }        
+                            $scope.$emit('HidePreloader');
+                            $scope.$emit('scrollTop');
+                            
+                            $scope.registerModel.modelState.errorMessages = [errorMessage];
+                        });
                     
-                    $scope.registerModel.modelState.errorMessages = [errorMessage];
-                });
+                }else{
+            
+                    var currentTime = new Date().getTime();
+                                    
+                    var registrationModel = {
+                            username: $scope.registerModel.username.toString().toLowerCase(),
+                            firstname: $scope.registerModel.firstname,
+                            lastname: $scope.registerModel.lastname,
+                            email: $scope.registerModel.email,
+                            country: $scope.registerModel.country,
+                            secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
+                            secretquestion: $scope.registerModel.secretQuestion,
+                            password: $scope.registerModel.password,
+                            metThisAppBy: $scope.registerModel.metThisAppBy,
+                            birthday: dpValue,
+                            gender: $scope.registerModel.gender,
+                            autologin: true
+                        };
+                    
+                    if ($scope.isNewFacebookUser) {
+                        var facebookUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        registrationModel.facebookid = facebookUser.facebookid;
+                        registrationModel.alias = $scope.registerModel.username.toString().toLowerCase();
+                        registrationModel.gender = facebookUser.gender;
+                    }
+                    
+                    
+                    $http({
+                        method: 'POST',
+                        url: API_RESOURCE.format("user"),
+                        timeout: $rootScope.globalTimeOut,
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        data: $.param(registrationModel),                    
+                    }).success(function (data, status, headers, config) {//Successfully register and logged in.
+                        $scope.incLoadedItem(); //1
+                        $scope.isRegistered = true;
+                        $scope.registerModel.modelState.isValid = true;
+                        $scope.$emit('scrollTop');
+                        $scope.autologin(data);
+                    }).error(function (data, status, headers, config) {
+                        var errorMessage;
+    
+                        if ((data != null && data.messageerror != null)) {
+                            errorMessage = window.atob(data.messageerror);
+                        } else {
+                            errorMessage = "Se necesita estar conectado a Internet para continuar.";
+                        }
+    
+                        $scope.$emit('HidePreloader');
+                        $scope.$emit('scrollTop');
+                        
+                        $scope.registerModel.modelState.errorMessages = [errorMessage];
+                    });
+                }
             };
-
-            $scope.autologin = function (data) {
+            
+            $scope.autologin = function (data, toDashboard) {
                 //_loadDrupalResources();
 
                 /* loads drupal resources (content) */
@@ -373,7 +430,11 @@ angular
                                                                     $timeout(function () {
                                                                         try {
                                                                             //- $scope.$emit('HidePreloader');
-                                                                            $location.path('/Tutorial');
+                                                                            if (toDashboard) {
+                                                                                $location.path('/ProgramaDashboard');
+                                                                            }else{
+                                                                                $location.path('/Tutorial');
+                                                                            }
                                                                         } catch (e) {
                                                                             $location.path('/ProgramaDashboard');
                                                                         }
@@ -480,13 +541,14 @@ angular
                     clearInterval(waitForCatalogsLoaded);
                     $scope.genderItems = _getCatalogValuesBy("gender");
                     $scope.countryItems = _getCatalogValuesBy("country");
-                    $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
                     $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
                     $scope.metThisAppByItems = _getCatalogValuesBy("metThisAppBy");
                     $scope.$apply();
                 }
             }
 
+            initController();
+            
         }])
 
     .controller('termsAndConditionsController', function ($scope, $modalInstance) {

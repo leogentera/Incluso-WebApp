@@ -89,6 +89,7 @@
                 <div class="pages">
 
                     <div class="page" data-page="1" ng-class="currentPage === 1 ? 'active' : ''">
+                        <!-- Username -->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -98,6 +99,7 @@
                                         </p>
                                         <input type="text"
                                                ng-model="registerModel.username"
+                                               ng-blur="clearErrorMessages()"
                                                name="userName" id="userName"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Nombre de usuario"
@@ -118,6 +120,7 @@
                             </div>
                         </div>
 
+                        <!-- Firstname -->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -127,6 +130,7 @@
                                         </p>
                                         <input type="text"
                                                ng-model="registerModel.firstname"
+                                               ng-blur="clearErrorMessages()"
                                                name="firstName"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Nombre(s)"
@@ -138,6 +142,7 @@
                             </div>
                         </div>
 
+                        <!-- Lastname -->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -147,6 +152,7 @@
                                         </p>
                                         <input type="text"
                                                ng-model="registerModel.lastname"
+                                               ng-blur="clearErrorMessages()"
                                                name="lastName"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Apellido paterno"
@@ -157,27 +163,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="aliasAddOn">
-                                            <span class="icomoon icon-user"></span>
-                                        </p>
-                                        <input type="text"
-                                               ng-model="registerModel.mothername"
-                                               name="motherName"
-                                               class="form-control form-control-lg theme-default"
-                                               placeholder="Apellido materno"
-                                               aria-describedby="aliasAddOn"
-                                               ng-pattern="/^[\s\-a-zA-ZáéíóúÁÉÍÓÚ'ñÑ0-9]+$/"
-                                               ng-trim="true" required/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <!-- Birthday-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -189,6 +175,7 @@
                                         <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                                             <input type="text"
                                                    ng-model="registerModel.birthday"
+                                                   ng-blur="clearErrorMessages()"
                                                    name="birthday"
                                                    ng-click="datePickerClick()"
                                                    ng-focus="showPlaceHolderBirthday()"
@@ -201,7 +188,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Gender select-->
+                        <div class="row" ng-show="!isNewFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -214,6 +202,7 @@
                                             ng-click="selectClick(genderItems, 'gender')"
                                             ng-show="mobilecheck()">{{registerModel.gender || 'Género'}}</label>
                                             <select ng-model="registerModel.gender" name="gender"
+                                                    ng-change="clearErrorMessages()"
                                                     ng-options="item for item in genderItems"
                                                     ng-init="registerModel.gender == null"
                                                     ng-show="!mobilecheck()"
@@ -229,6 +218,7 @@
                             </div>
                         </div>
 
+                        <!-- Country select-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -242,6 +232,7 @@
                                             ng-click="selectClick(countryItems, 'country')"
                                             ng-show="mobilecheck()">{{registerModel.country || 'País'}}</label>
                                             <select ng-model="registerModel.country" name="country"
+                                                    ng-change="clearErrorMessages()"
                                                     ng-options="item for item in countryItems"
                                                     ng-init="registerModel.country == null"
                                                     ng-show="!mobilecheck()"
@@ -256,63 +247,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="input-group input-group-lg theme-default">
-                                        <p class="input-group-addon" id="cityAddOn">
-                                            <span class="icomoon icon-map"></span>
-                                        </p>
-                                        <div class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
-                                            <label class="form-control form-control-lg theme-default"
-                                            ng-class="{'placeholder': registerModel.city == ''}"
-                                            ng-click="selectClick(cityItems, 'city')"
-                                            ng-show="mobilecheck()">{{registerModel.city || 'Estado'}}</label>
-                                            <select ng-model="registerModel.city" name="city"
-                                                    ng-options="item for item in cityItems"
-                                                    ng-init="registerModel.city == null"
-                                                    ng-show="!mobilecheck()"
-                                                    class="form-control form-control-lg theme-default"
-                                                    aria-describedby="cityAddOn" required
-                                                    ng-class="{'selected': registerModel.city.length != 0}">
-                                                <option value="" ng-disabled="!!registerModel.city">Estado</option>
-                                            </select>
-                                            <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="page-number">
-                                    <p class="text-center">
-                                        <span>1</span>
-                                        <span>/</span>
-                                        <span class="total-number">2</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <a role="button" class="btn btn-primary btn-lg btn-block"
-                                   ng-disabled="registerForm.userName.$pristine || registerForm.userName.$error.pattern || registerForm.userName.$error.required"
-                                   ng-click="navigateToPage(2)">Continuar</a>
-                            </div>
-                            <div class="col-xs-12">
-                                <a role="button" class="btn btn-default btn-transparent btn-lg btn-block"
-                                   ng-click="login()">Cancelar</a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : ''">
-
+                        <!-- Email-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -323,6 +258,7 @@
                                         <input type="text"
                                                ng-disabled="isRegistered"
                                                ng-model="registerModel.email"
+                                               ng-blur="clearErrorMessages()"
                                                name="email"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Correo"
@@ -334,16 +270,18 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Password-->
+                        <div class="row" ng-show="!isNewFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
                                         <p class="input-group-addon" id="accountPasswordAddOn">
                                             <span class="icomoon icon-lock"></span>
                                         </p>
-                                        <input type="password"
+                                        <input type="text"
                                                ng-disabled="isRegistered"
                                                ng-model="registerModel.password"
+                                               ng-blur="clearErrorMessages()"
                                                name="password" id="password"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Contraseña"
@@ -368,16 +306,18 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Confirm password-->
+                        <div class="row" ng-show="!isNewFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
                                         <p class="input-group-addon" id="confirmPasswordAddOn">
                                             <span class="icomoon icon-lock"></span>
                                         </p>
-                                        <input type="password"
+                                        <input type="text"
                                                ng-disabled="isRegistered"
                                                ng-model="registerModel.confirmPassword"
+                                               ng-blur="clearErrorMessages()"
                                                name="confirmPassword" id="confirmPassword"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Repetir contraseña"
@@ -398,12 +338,13 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Show password checkbox-->
+                        <div class="row" ng-show="!isNewFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="checkbox checkbox-custom">
                                         <label>
-                                            <input type="checkbox" name="showPassword" ng-click="togglePassword()"/>
+                                            <input type="checkbox" checked="checked" name="showPassword" ng-click="togglePassword()"/>
                                             <span>Mostrar contraseña</span>
                                         </label>
                                     </div>
@@ -411,7 +352,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Security question select-->
+                        <div class="row" ng-show="!isNewFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -425,6 +367,7 @@
                                             ng-show="mobilecheck()">{{registerModel.secretQuestion || 'Pregunta de seguridad'}}</label>
                                             <select ng-disabled="isRegistered"
                                                     ng-model="registerModel.secretQuestion"
+                                                    ng-change="clearErrorMessages()"
                                                     ng-init="registerModel.secretQuestion == null"
                                                     ng-options="item for item in securityquestionItems"
                                                     ng-show="!mobilecheck()"
@@ -444,7 +387,8 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- Secret answer-->
+                        <div class="row" ng-show="!isNewFacebookUser && !isUpdate">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="input-group input-group-lg theme-default">
@@ -453,6 +397,7 @@
                                         </p>
                                         <input type="text" ng-disabled="isRegistered"
                                                ng-model="registerModel.secretAnswer"
+                                               ng-blur="clearErrorMessages()"
                                                name="secretAnswer"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Respuesta de seguridad"
@@ -464,6 +409,7 @@
                             </div>
                         </div>
     
+                        <!-- Met this app by select-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -478,6 +424,7 @@
                                             ng-show="mobilecheck()">{{registerModel.metThisAppBy || 'Conocí esta app por:'}}</label>
                                             <select ng-disabled="isRegistered"
                                                 ng-model="registerModel.metThisAppBy"
+                                                ng-change="clearErrorMessages()"
                                                 ng-init="registerModel.metThisAppBy == null"
                                                 ng-options="item for item in metThisAppByItems"
                                                 ng-show="!mobilecheck()"
@@ -495,6 +442,7 @@
                             </div>
                         </div>
                         
+                        <!-- Accept terms and contitions checkbox-->
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="checkbox checkbox-custom">
@@ -507,37 +455,19 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- Register and cancel buttons-->
                         <div class="row">
-                            <div class="col-xs-12">
-                                <div class="page-number">
-                                    <p class="text-center">
-                                        <span>2</span>
-                                        <span>/</span>
-                                        <span class="total-number">2</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12" ng-show="!isRegistered">
-                                <div class="button-group">
-                                    <a role="button" ng-show="!isRegistered" class="btn btn-primary btn-lg"
-                                       ng-click="navigateToPage(1)">
-                                        <span class="icomoon icon-arrow-slim-left"></span>
-                                    </a>
-                                    <a role="button" ng-show="!isRegistered" ng-click="register()"
-                                       ng-disabled="registerForm.password.$pristine || !showPasswd || !showPasswdCf"
-                                       class="btn btn-primary btn-lg">Registrarme</a>
-                                </div>
-                            </div>
-                            <div class="col-xs-12" ng-show="!isRegistered">
-                                <a role="button" ng-disabled="isRegistered" ng-click="login()"
-                                   class="btn btn-default btn-transparent btn-lg btn-block">Cancelar</a>
-                            </div>
-                        </div>
-
+                          <div class="col-xs-12" ng-show="!isRegistered">                            
+                            <a role="button" ng-show="!isRegistered" ng-click="register()"
+                               ng-disabled="(registerForm.password.$pristine && !isNewFacebookUser && !isUpdate)|| (!showPasswd && !isNewFacebookUser && !isUpdate) ||
+                                (!showPasswdCf && !isNewFacebookUser && !isUpdate)"
+                               class="btn btn-primary btn-lg btn-block">Registrarme</a>
+                          </div>                         
+                          <div class="col-xs-12" ng-show="!isRegistered">
+                              <a role="button" ng-disabled="isRegistered" ng-click="login()"
+                                 class="btn btn-default btn-transparent btn-lg btn-block">Cancelar</a>
+                          </div>
+                        </div>                    
                     </div>
                 </div>
             </form>

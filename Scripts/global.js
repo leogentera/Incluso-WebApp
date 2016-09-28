@@ -1670,9 +1670,20 @@ function onResume() {
     
     if (window.location.href.indexOf("Tutorial") > -1 && videoPlayed && !createAvatar) {
       //window.location.href = "file:///storage/emulated/0/Android/data/com.gentera.misionincluso/files/app/initializr/index.html#/Tutorial";
-      location.reload();
+      //location.reload();
+        var scope = angular.element($(".incluso-app.tutorial")).scope();
+        cordova.exec(function (data) {
+          scope.isInstalled = data.isInstalled;
+          scope.$digest();
+          if (scope.isInstalled) {
+              scope.navigateToPage(3);
+          }else{
+              scope.navigateToPage(2);
+          }
+        }, function (e) {
+          alert(e);
+        }, "CallToAndroid", " isInstalled", []);
     }
-    
 }
 
 function getcurrentVersion() {
