@@ -253,6 +253,7 @@ angular
                     var userId = localStorage.getItem("userId");
                     var profileModel = JSON.parse(localStorage.getItem("Perfil/" + userId));
                     profileModel.username = $scope.registerModel.username.toString().toLowerCase();
+                    profileModel.alias = profileModel.username;
                     moodleFactory.Services.PutAsyncProfile(userId, profileModel,
                         function (data) {//Save profile successful...                            
                             $scope.incLoadedItem(); //1
