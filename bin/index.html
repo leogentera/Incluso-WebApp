@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html id="ng-app" ng-app="contactmaster" xmlns:ng="http://angularjs.org" class="incluso-app">
+<head>
+    <meta http-equiv="content-type" content="text/html;" charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>Incluso Digital</title>
+    <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-hover.min.css"/>
+    <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-base.min.css"/>
+    <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-desktop.min.css"/>
+    <link href="assets/styles/dev-css.css" rel='stylesheet' type='text/css'/>
+    <link href="assets/styles/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <style>
+        [ng-cloak] {
+            display: none !important;
+            height: 0;
+        }
+
+        @media screen {
+            div#img-cache {
+                position: absolute;
+                left: -9999px;
+                top: -9999px;
+            }
+
+            div#img-cache img {
+                display: block;
+            }
+        }
+
+        @media print {
+            div#img-cache,
+            div#img-cache img {
+                display: none;
+                visibility: hidden;
+            }
+        }
+    </style>
+    <!-- Test commit 2 -->
+</head>
+
+<body ng-controller="homeCtrl" class="incluso-app ng-scope has-sidebar-left" ng-class="{'sidebar-left-active': sidebar, 'spinner-active-body': loading}">
+<!-- preloader -->
+<preloader-component></preloader-component>
+
+<!-- Main menu / sidebar -->
+<menu-component ng-class="{'spinner-active': loading}"></menu-component>
+
+<!-- app wrapper -->
+<div class="app" ng-class="{'spinner-active': loading}">
+    <a class="anchor-scroll" id="top"></a>
+
+    <!-- toolbar for private views -->
+    <toolbar-component></toolbar-component>
+
+    <!-- App Body -->
+    <div class="app-body" ng-click="sideToggle('outside')">
+        <div class="app-content">
+            <ng-view></ng-view>
+
+            <script type="text/ng-template" id="updateApp.html">
+                <div class="modal-robot robot-lg user-help">
+                    <img src="assets/images/img-robot-lg.svg" alt="robot"/>
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="subtitle centered">Actualizaci&oacute;n</h3>
+                        <p class="centered">Hemos detectado que no cuentas con la &uacute;ltima versi&oacute;n de Misi&oacute;n Incluso, por lo que la aplicaci&oacute;n ser&aacute; actualizada en este momento para que puedas continuar navegando.</p>
+                        <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="updateApp()">Continuar</a>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="ClosingCabinaChallengeModal.html">
+                <div class="modal-robot robot-sm closing-stage-modal user-help">
+                    <img src="assets/images/img-robot-sm.svg" alt="robot"/>
+                    <div class="modal-header">
+                        <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                            <span class="icomoon icon-cross"></span>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                        <p class="txt-renglon centered">{{actualMessage.message}}</p>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="openingRequirementsModal.html">
+                <div class="modal-robot robot-lg user-help">
+                    <img src="assets/images/img-robot-lg.svg" alt="robot"/>
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="subtitle centered" ng-bind="contentResources.generic_title"></h3>
+                        <div class="centered" ng-bind-html="contentResources.generic_content.safe_value"></div>
+                        <div class="checkbox checkbox-custom change-of-term centered">
+                            <label>
+                                <input type="checkbox" name="neverShowAgain" class="ng-pristine ng-untouched ng-valid" ng-model="neverShowAgain">
+                                <span>No volver a mostrar</span>
+                            </label>
+                        </div>
+                        <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="continue()">CONTINUAR</a>
+                    </div>
+                </div>
+            </script>
+
+
+            <!--  Robot for Time Out -->
+            <script type="text/ng-template" id="timeOutModal.html">
+                <div class="modal-robot robot-sm user-help modal-timeout">
+                    <div class="icon-img">
+                        <img src="assets/images/svg/icon-time-expired.svg" alt="Logo"/>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="subtitle centered">EL TIEMPO DE CARGA HA EXPIRADO</h3>
+                        <div>
+                            <p class="centered">Revisa tu conexión a Internet<br>y vuelve a intentar.</p>
+                        </div>
+                        <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">Aceptar</a>
+                    </div>
+                </div>
+            </script>
+
+            <!-- Quiz Start Modal -->
+            <script type="text/ng-template" id="quizModal.html">
+                <div class="modal-robot robot-lg closing-stage-modal user-help">
+                    <img src="assets/images/img-robot-lg.svg">
+
+                    <div class="modal-header">
+                        <a class="icon icon-close btn btn-circle" ng-click="cancelModal()">
+                            <span class="icomoon icon-cross"></span>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="subtitle text-center">{{title}}</h3>
+
+                        <p class="txt-renglon centered">
+                            {{instructions}}
+                        </p>
+                    </div>
+                </div>
+            </script>
+
+            <div tabindex="-1" id="offlineModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-robot robot-lg closing-stage-modal user-help ng-scope">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <img src="assets/images/img-error-msg.svg" alt="...">
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center text-uppercase">Error en la conexión</h3>
+                                <div>
+                                    <p class="txt-renglon centered">
+                                        No puedes seguir con tu aventura, porque actualmente no estás conectado a la internet.
+                                    </p>
+                                    <p class="txt-renglon centered">
+                                        Asegúrate de restablecer tu conexión para continuar con tu aventura, en Misión Incluso.
+                                    </p>
+                                </div>
+                                <a role="button" id="OfflineRedirect" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">CONTINUAR</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div tabindex="-1" id="errorConnectionModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-robot robot-lg closing-stage-modal user-help ng-scope">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <img src="assets/images/img-error-msg.svg" alt="...">
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center text-uppercase">Conexión inestable</h3>
+                                <div>
+                                    <p class="txt-renglon centered">
+                                        Para continuar, busca otra red o bien puedes apagar tus datos y/o WiFi y avanzar hasta que cuentes con una red estable, recuerda puedes avanzar sin tener conexión a internet.
+                                    </p>
+                                </div>
+                                <a role="button" id="errorConnectionRedirect" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">CONTINUAR</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div tabindex="-1" id="timeoutModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-robot robot-lg closing-stage-modal user-help ng-scope">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <img src="assets/images/img-error-msg.svg" alt="...">
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center text-uppercase">Tu conexión está lenta</h3>
+                                <div>
+                                    <p class="txt-renglon centered">
+                                        Tu conexión está lenta.
+                                    </p>
+                                    <p class="txt-renglon centered">
+                                        Tu conexión está lenta.
+                                    </p>
+                                </div>
+                                <a role="button" id="timeOutRedirect" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">CONTINUAR</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div tabindex="-1" id="pendingQueueModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-robot robot-lg closing-stage-modal user-help ng-scope">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <img src="assets/images/img-error-msg.svg" alt="...">
+                            <div class="modal-body">
+                                <h3 class="subtitle text-center text-uppercase">¡Espera!</h3>
+                                <div>
+                                    <p class="txt-renglon centered">
+                                        Aún hay datos que no hemos guardado en nuestros servidores, si abandonas la aplicación en este momento podrías perder parte de tu avance en la misión.
+                                    </p>
+                                    <p class="txt-renglon centered">
+                                        ¿Estás seguro qué deseas salir?
+                                    </p>
+                                </div>
+                                <a role="button" id="leavePendingQueue" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">Si</a>
+                                <br/>
+                                <a role="button" id="stayPendingQueue" class="btn btn-primary btn-lg btn-block" ng-click="ToDashboard()">No</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <footer-component></footer-component>
+</div><!-- ~ .app -->
+
+<div id="img-cache">
+    <img width="1" height="1" src="assets/images/bg-sm-public-page.jpg"/>
+    <img width="1" height="1" src="assets/images/bg-dashboard-full.gif"/>
+    <img width="1" height="1" src="assets/images/bg-footer.gif"/>
+
+    <img width="1" height="1" src="assets/images/bg-stage-1-dashboard.gif"/>
+    <img width="1" height="1" src="assets/images/bg-stage-1-theme-bottom.gif"/>
+    <img width="1" height="1" src="assets/images/bg-stage-1-theme-pattern.gif"/>
+    <img width="1" height="1" src="assets/images/bg-stage-1-theme-spaceship.gif"/>
+
+    <img width="1" height="1" src="assets/images/challenges/stage-1/img-cabina-soporte.svg"/>
+    <img width="1" height="1" src="assets/images/challenges/stage-1/img-conocete.svg"/>
+    <img width="1" height="1" src="assets/images/challenges/stage-1/img-cuarto-recursos.svg"/>
+    <img width="1" height="1" src="assets/images/challenges/stage-1/img-evaluacion-inicial.svg"/>
+    <img width="1" height="1" src="assets/images/challenges/stage-1/img-evaluacion-final.svg"/>
+    <img width="1" height="1" src="assets/images/challenges/stage-1/img-mis-suenos.svg"/>
+    <script src="Scripts/autosize.min.js"></script>
+    <img width="1" height="1" src="assets/images/img-robot-sm.svg"/>
+    <img width="1" height="1" src="assets/images/img-robot-lg.svg"/>
+
+    <img width="1" height="1" src="assets/images/bg-notifications-sky.gif"/>
+    <img width="1" height="1" src="assets/images/bg-notifications-bottom.gif"/>
+    <img width="1" height="1" src="assets/media/thumb-tutorial.jpg"/>
+    <img width="1" height="1" src="assets/media/thumb-zona-de-aterrizaje.jpg"/>
+    <img width="1" height="1" src="assets/media/thumb-zona-de-vuelo.jpg"/>
+</div>
+
+<script src="Scripts/cordova.js"></script>
+<script src="Scripts/jquery-2.1.4.min.js"></script>
+<script src="Scripts/Plugins/jquery-ui.js"></script>
+<script src="Scripts/Plugins/underscore-min.js"></script>
+<script src="Scripts/backbone.js"></script>
+<script src="Scripts/backbone_offline.js"></script>
+
+
+<script src="Scripts/angular-ui/angular.min.js"></script>
+<script src="Scripts/angular-route.js"></script>
+<script src="Scripts/app/GlobalAppConstants.js"></script>
+
+<script src="Scripts/angular-sanitize.js"></script>
+<script src="Scripts/angular-resource.js"></script>
+<script src="Scripts/angular-ui/ui-bootstrap.js"></script>
+<script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+<script src="Scripts/moment.js"></script>
+<script src="Scripts/owl.carousel.min.js"></script>
+<script src="Scripts/i18n/angular-locale_es-mx.js"></script>
+
+<script src="Scripts/angular-ui/compoenents/sidebars.js"></script>
+<script src="Scripts/utils.js"></script>
+<script src="Scripts/global.js"></script>
+
+<script src="Scripts/app/all.js"></script>
+<script src="Scripts/app/module.js"></script>
+
+<script src="Scripts/Plugins/html2canvas.js"></script>
+<script src="Scripts/jquery.signalR-2.0.1.min.js"></script>
+</body>
+</html>
