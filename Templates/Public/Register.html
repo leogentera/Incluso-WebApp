@@ -12,10 +12,16 @@
             </div>
         </div>
 
-        <div class="alert alert-success" role="alert" ng-if="isRegistered">
+        <div class="alert alert-success" role="alert" ng-if="isRegistered && (isNewFacebookUser || (!isNewFacebookUser && !isUpdate))">
             <div class="alert-message">
                 <div class="icomoon icon-checked-clip"></div>
                 <p>¡Te has registrado correctamente!</p>
+            </div>
+        </div>
+        <div class="alert alert-success" role="alert" ng-if="isRegistered && (isUpdate && !isNewFacebookUser)">
+            <div class="alert-message">
+                <div class="icomoon icon-checked-clip"></div>
+                <p>¡Tú información se ha actualizado correctamente!</p>
             </div>
         </div>
 
@@ -82,8 +88,11 @@
         <section>
             <form action="" class="register-form container-fluid" name="registerForm" novalidate>
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" ng-show="isNewFacebookUser || (!isNewFacebookUser && !isUpdate)">
                         <h1>Datos de registro</h1>
+                    </div>
+                    <div class="col-xs-12" ng-show="(isUpdate && !isNewFacebookUser)">
+                        <h1>Actualizar información</h1>
                     </div>
                 </div>
                 <div class="pages">
@@ -457,12 +466,18 @@
                         </div>
                         <!-- Register and cancel buttons-->
                         <div class="row">
-                          <div class="col-xs-12" ng-show="!isRegistered">                            
+                          <div class="col-xs-12" ng-show="(!isRegistered && (isNewFacebookUser || (!isNewFacebookUser && !isUpdate)))">
                             <a role="button" ng-show="!isRegistered" ng-click="register()"
                                ng-disabled="(registerForm.password.$pristine && !isNewFacebookUser && !isUpdate)|| (!showPasswd && !isNewFacebookUser && !isUpdate) ||
                                 (!showPasswdCf && !isNewFacebookUser && !isUpdate)"
-                               class="btn btn-primary btn-lg btn-block">Registrarme</a>
-                          </div>                         
+                               class="btn btn-primary btn-lg btn-block" ng-show="!isUpdate">Registrarme</a>
+                          </div>
+                          <div class="col-xs-12" ng-show="(!isRegistered && isUpdate && !isNewFacebookUser)">
+                            <a role="button" ng-show="!isRegistered" ng-click="register()"
+                               ng-disabled="(registerForm.password.$pristine && !isNewFacebookUser && !isUpdate)|| (!showPasswd && !isNewFacebookUser && !isUpdate) ||
+                                (!showPasswdCf && !isNewFacebookUser && !isUpdate)"
+                               class="btn btn-primary btn-lg btn-block">Actualizar</a>
+                          </div>
                           <div class="col-xs-12" ng-show="!isRegistered">
                               <a role="button" ng-disabled="isRegistered" ng-click="login()"
                                  class="btn btn-default btn-transparent btn-lg btn-block">Cancelar</a>
