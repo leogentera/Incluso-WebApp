@@ -160,11 +160,11 @@ angular
                         var modalInstance = $modal.open({
                             animation: $scope.animationsEnabled,
                             templateUrl: 'CabinaSoporteMsj.html',
-                            controller: function ($scope, $modalInstance) {
+                            controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
                                 };
-                            },
+                            }],
                             size: size,
                             windowClass: 'user-help-modal'
                         });
@@ -213,8 +213,8 @@ angular
                 //}, 1000);
             };
         }])
-    .controller('closingStageController', function ($scope, $modalInstance) {
+    .controller('closingStageController', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-    });
+    }]);

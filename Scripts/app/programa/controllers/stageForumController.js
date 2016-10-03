@@ -375,7 +375,7 @@ angular
             }
 
         }]).
-controller('closingChallengeController', function ($scope, $modalInstance, $routeParams) {
+controller('closingChallengeController', ['$scope', '$modalInstance', '$routeParams', function ($scope, $modalInstance, $routeParams) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -403,8 +403,8 @@ controller('closingChallengeController', function ($scope, $modalInstance, $rout
 
     var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
 
-}).controller('tutorialController', function ($scope, $modalInstance) {
+}]).controller('tutorialController', ['$scope', '$modalInstance',function ($scope, $modalInstance) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-});
+}]);

@@ -530,11 +530,11 @@ angular
                 }, 1000);
             }
 
-        }]).controller('timeOutLogin', function ($scope, $modalInstance, $route) {//TimeOut Robot
+        }]).controller('timeOutLogin', ['$scope', '$modalInstance', '$route', function ($scope, $modalInstance, $route) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
         //$route.reload();
     };
-});
+}]);
