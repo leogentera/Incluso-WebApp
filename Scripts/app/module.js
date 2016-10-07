@@ -23,7 +23,7 @@ angular
         'incluso.programa.postPhotoGalleryDetailController',
         'incluso.juegos.avatar',
         'incluso.programa.dashboard',
-        //'incluso.programa.dashboard.etapa',
+        // 'incluso.programa.dashboard.etapa',
         'incluso.programa.profile',
         'incluso.program.systemRequirements',
         'incluso.programa.notificationcontroller',
@@ -65,7 +65,7 @@ angular
         'incluso.programa.evaluacionFormulario',
         'incluso.program.FAQs'
     ])
-    .run(function ($templateCache, $http, $rootScope) {
+    .run(['$templateCache', '$http', '$rootScope',function ($templateCache, $http, $rootScope) {
         
         $http.get('Templates/Public/Login.html', { cache: true });
         $http.get('Templates/Public/RecoverPassword.html', { cache: true });
@@ -148,7 +148,7 @@ angular
             $rootScope.$broadcast("documentClicked", e.target);
 
         });
-    })
+    }])
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
         $routeProvider.when('/Perfil/Editar/:id', {

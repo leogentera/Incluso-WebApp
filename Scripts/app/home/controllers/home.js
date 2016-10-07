@@ -12,7 +12,7 @@ angular
         '$modal',
         '$timeout',
         function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal, $timeout) {
-            
+
             $rootScope.OAUTH_ENABLED = false;
             $rootScope.loadedItem = 0;
             $rootScope.totalLoads = 16;
@@ -48,7 +48,7 @@ angular
                     myLoop(infValue, upperValue);
                 }
             };
-            
+
             // To handle page reloads
             _httpFactory = $http;
 
@@ -120,7 +120,7 @@ angular
 								$location.path('/Offline'); //This behavior could change
 							  }, 1);
 							} else {//Another kind of Error happened
-								$timeout(function () {								
+								$timeout(function () {
 									$scope.$emit('HidePreloader');
 									$location.path('/connectionError');
 								}, 1);
@@ -253,7 +253,7 @@ angular
                 }
 
             };
-            
+
             $scope.toolbarOptionActive = function (path) {
 
                 if (path.constructor === Array) {
@@ -395,7 +395,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'updateApp.html',
-                    controller: function ($scope, $modalInstance) {
+                    controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
                         $scope.updateApp = function () {
                             if (window.mobilecheck()) {
@@ -404,7 +404,7 @@ angular
                                 }, "CallToAndroid", "restart", []);
                             }
                         };
-                    },
+                    }],
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
@@ -426,8 +426,8 @@ angular
                 });
             };
 
-            
-        } ]).controller('WelcomeAboardFromMenu', function ($scope, $modalInstance) {//To show Inclubot from MENU.
+
+        } ]).controller('WelcomeAboardFromMenu', ['$scope', '$modalInstance',function ($scope, $modalInstance) {//To show Inclubot from MENU.
     drupalFactory.Services.GetContent("robot-inclubot", function (data, key) {
 
         if (data.node != null) {
@@ -440,7 +440,7 @@ angular
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };
-}).controller('quizModalController', function ($scope, $rootScope, $modalInstance, $location, $timeout) {
+}]).controller('quizModalController', ['$scope', '$rootScope', '$modalInstance', '$location', '$timeout',function ($scope, $rootScope, $modalInstance, $location, $timeout) {
 
     drupalFactory.Services.GetContent($rootScope.quizIdentifier, function (data, key) {
 
@@ -463,4 +463,4 @@ angular
         //    $location.path($rootScope.quizUrl);
         //}, 200);
     };
-});
+}]);

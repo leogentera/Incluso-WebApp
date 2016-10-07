@@ -580,7 +580,7 @@ angular
                     var modalInstance = $modal.open({
                         animation: false,
                         templateUrl: 'openingRequirementsModal.html',
-                        controller: function ($scope, $modalInstance) {
+                        controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
                             $scope.neverShowAgain = false;
                             drupalFactory.Services.GetContent("fuenteDeEnergiaRequirements", function (data, key) {
                                 $scope.contentResources = data.node;
@@ -614,7 +614,7 @@ angular
                                     $modalInstance.dismiss('cancel');
                                 }, 500);
                             };
-                        },
+                        }],
                         size: size,
                         windowClass: 'user-help-modal dashboard-stage-intro'
                     });
@@ -788,11 +788,11 @@ angular
                 }, false);
             }
 
-        }]).controller('timeOutFuentesEnergia', function ($scope, $modalInstance) {//TimeOut Robot
+        }]).controller('timeOutFuentesEnergia', ['$scope', '$modalInstance', function ($scope, $modalInstance) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };
 
-});
+}]);

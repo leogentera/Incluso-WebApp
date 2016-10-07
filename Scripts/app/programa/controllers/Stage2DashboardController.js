@@ -404,7 +404,7 @@ angular
             }
 
         }])
-    .controller('closingStageTwoChallengeController', function ($scope, $modalInstance) {
+    .controller('closingStageTwoChallengeController', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
@@ -413,7 +413,7 @@ angular
 
         $scope.actualMessage = challengeMessage;
 
-    }).controller('OpeningStage2', function ($scope, $modalInstance) {//To show Opening Stage Robot
+    }]).controller('OpeningStage2', ['$scope', '$modalInstance', function ($scope, $modalInstance) {//To show Opening Stage Robot
         drupalFactory.Services.GetContent("2000", function (data, key) {
 
             if (data.node != null) {
@@ -426,8 +426,8 @@ angular
             $modalInstance.dismiss('cancel');
         };
 
-    })
-    .controller('closingStageTwoController', function ($scope, $modalInstance, $location) {
+    }])
+    .controller('closingStageTwoController', ['$scope', '$modalInstance', '$location', function ($scope, $modalInstance, $location) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
@@ -445,5 +445,5 @@ angular
             $location.path('/ProgramaDashboard');
         };
         _setLocalStorageItem('robotEndStageTwoShown', true);
-    });
+    }]);
 

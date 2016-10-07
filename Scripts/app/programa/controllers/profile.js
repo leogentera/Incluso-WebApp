@@ -2824,18 +2824,18 @@ angular
 
             }
 
-        }]).controller('badgeRobotMessageModal', function ($scope, $modalInstance) {
+        }]).controller('badgeRobotMessageModal', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
 
     var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
     $scope.actualMessage = robotMessage;
-}).controller('timeOutProfile', function ($scope, $modalInstance) {//TimeOut Robot
+}]).controller('timeOutProfile', ['$scope', '$modalInstance', function ($scope, $modalInstance) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };
 
-});
+}]);
