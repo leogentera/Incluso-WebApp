@@ -3215,11 +3215,11 @@ angular
             }
             controllerInit();
             $scope.$emit('HidePreloader');
-        }]).controller('timeOutReconocimiento', function ($scope, $modalInstance) {//TimeOut Robot
+        }]).controller('timeOutReconocimiento', ['$scope', '$modalInstance', function ($scope, $modalInstance) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };
 
-});
+}]);

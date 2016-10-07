@@ -1,10 +1,10 @@
 /* Controller to handle navigation controls */
 var app = angular.module('inlcuso.shared.mainNavigation', ['ui.bootstrap']);
-app.controller('navController', function($scope){
-	
+app.controller('navController', ['$scope', function($scope){
+
 	/* Shows left menu */
-	$scope.isNavCollapsed = true;	
-});
+	$scope.isNavCollapsed = true;
+}]);
 
 /* Controller to handle navigation controls */
 app.controller('menuController', [

@@ -472,11 +472,11 @@ angular
                     );
                 }
             }
-        }]).controller('timeOutMapaDelEmprendedor', function ($scope, $modalInstance) {//TimeOut Robot
+        }]).controller('timeOutMapaDelEmprendedor', ['$scope', '$modalInstance', function ($scope, $modalInstance) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };
 
-});
+}]);

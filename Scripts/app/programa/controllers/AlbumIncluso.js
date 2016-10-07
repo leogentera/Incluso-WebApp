@@ -968,11 +968,11 @@ angular
                 }
                 context.fillText(line, x, y);
             }
-        }]).controller('timeOutAlbumIncluso', function ($scope, $modalInstance) {//TimeOut Robot
+        }]).controller('timeOutAlbumIncluso', [ '$scope', '$modalInstance',function ($scope, $modalInstance) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('HidePreloader');
         $modalInstance.dismiss('cancel');
     };
 
-});
+}]);

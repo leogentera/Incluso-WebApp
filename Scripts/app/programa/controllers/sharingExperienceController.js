@@ -190,11 +190,11 @@ angular
                 getContentResources("compartir-experiencia");
             }
 
-        }]).controller('timeOutSharingExperience', function ($scope, $modalInstance) {//TimeOut Robot
+        }]).controller('timeOutSharingExperience', ['$scope', '$modalInstance', function ($scope, $modalInstance) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };
 
-});
+}]);

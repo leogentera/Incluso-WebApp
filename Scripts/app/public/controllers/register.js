@@ -552,7 +552,7 @@ angular
             
         }])
 
-    .controller('termsAndConditionsController', function ($scope, $modalInstance) {
+    .controller('termsAndConditionsController', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
         drupalFactory.Services.GetContent("TermsAndConditions", function (data, key) {
             $scope.contentTandC = data.node;
@@ -564,4 +564,4 @@ angular
         };
 
 
-    });
+    }]);

@@ -1531,9 +1531,9 @@ angular
             }
 
         }
-    ]).controller('videoCollapsiblePanelController', function ($scope) {
+    ]).controller('videoCollapsiblePanelController', ['$scope',function ($scope) {
         $scope.isCollapsed = false;
-    }).directive("owlCarousel", function () {
+    }]).directive("owlCarousel", function () {
         //Source: http://stackoverflow.com/questions/29157623/owl-carousel-not-identifying-elements-of-ng-repeat
 
         return {
