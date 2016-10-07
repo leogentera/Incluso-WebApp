@@ -866,11 +866,11 @@ angular
                 
             }
             
-        }]).controller('badgeForumRobotMessageModal', function ($scope, $modalInstance) {
+        }]).controller('badgeForumRobotMessageModal', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
-                
-                var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));            
+
+                var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
                 $scope.actualMessage = robotMessage;
-        });
+        }]);

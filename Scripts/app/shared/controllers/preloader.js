@@ -20,8 +20,8 @@ preloader.controller('preloaderController', [
         };
 	}
 ]);
-preloader.controller('modalController', function ($scope, $modalInstance) {
+preloader.controller('modalController', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
 	};
-});
+}]);

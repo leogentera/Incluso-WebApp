@@ -585,11 +585,11 @@ angular
                 }
             }
 
-        }]).controller('timeOutMapaDeVida', function ($scope, $modalInstance) {//TimeOut Robot
+        }]).controller('timeOutMapaDeVida', ['$scope', '$modalInstance', function ($scope, $modalInstance) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
     };
 
-});
+}]);

@@ -422,10 +422,10 @@ angular
             }
 
         }])
-    .controller('stageMultiplicaTuDineroModalController', function ($scope, $modalInstance, content) {
+    .controller('stageMultiplicaTuDineroModalController', ['$scope', '$modalInstance', 'content', function ($scope, $modalInstance, content) {
         $scope.message = content.mensaje;
         $scope.title = content.titulo;
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-    });
+    }]);

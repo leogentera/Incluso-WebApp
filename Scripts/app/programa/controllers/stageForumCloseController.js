@@ -251,8 +251,8 @@ angular
 
 
 
-        }]).controller('tutorialController', function ($scope, $modalInstance) {
+        }]).controller('tutorialController', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
-        });  
+        }]);

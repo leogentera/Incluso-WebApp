@@ -393,7 +393,7 @@ angular
                 }
             }
 
-        }]).controller('closingStageThreeChallengeController', function ($scope, $modalInstance) {
+        }]).controller('closingStageThreeChallengeController', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -402,7 +402,7 @@ angular
 
     $scope.actualMessage = challengeMessage;
 
-}).controller('OpeningStage3', function ($scope, $modalInstance) {//To show Opening Stage Robot
+}]).controller('OpeningStage3', ['$scope', '$modalInstance', function ($scope, $modalInstance) {//To show Opening Stage Robot
     drupalFactory.Services.GetContent("1000", function (data, key) {
 
         if (data.node != null) {
@@ -415,7 +415,7 @@ angular
         $modalInstance.dismiss('cancel');
     };
 
-}).controller('closingStageThreeController', function ($scope, $modalInstance, $location) {
+}]).controller('closingStageThreeController', ['$scope', '$modalInstance', '$location', function ($scope, $modalInstance, $location) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -440,4 +440,4 @@ angular
     };
 
     _setLocalStorageItem('robotEndStageThreeShown', true);
-});
+}]);

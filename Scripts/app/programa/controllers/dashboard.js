@@ -513,7 +513,7 @@ angular
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'changeOfTerms.html',
-                    controller: function ($scope, $modalInstance) {
+                    controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
                         drupalFactory.Services.GetContent('TermsAndConditions', function (data, key) {
                             $scope.termsContent = data.node;
                         }, function () {
@@ -521,17 +521,17 @@ angular
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
-                    },
+                    }],
                     size: size,
                     windowClass: 'user-help-modal dashboard-programa'
                 });
             };
 
         }])
-    .controller('videoCollapsiblePanelController', function ($scope) {
+    .controller('videoCollapsiblePanelController', ['$scope', function ($scope) {
         $scope.isCollapsed = false;
-    })
-    .controller('WelcomeAboard', function ($scope, $modalInstance) {//To show Inclubot from CONTINUAR MISION button
+    }])
+    .controller('WelcomeAboard', ['$scope', '$modalInstance', function ($scope, $modalInstance) {//To show Inclubot from CONTINUAR MISION button
         drupalFactory.Services.GetContent("robot-inclubot", function (data, key) {
 
             if (data.node != null) {
@@ -545,5 +545,5 @@ angular
             $modalInstance.dismiss('cancel');
         };
 
-    });
+    }]);
     

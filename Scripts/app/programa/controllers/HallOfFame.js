@@ -182,12 +182,12 @@ hallOfFameModule
             }
         }]);
 
-hallOfFameModule.controller('timeOutFame', function ($scope, $modalInstance, $route) {//TimeOut Robot
+hallOfFameModule.controller('timeOutFame', ['$scope', '$modalInstance', '$route', function ($scope, $modalInstance, $route) {//TimeOut Robot
     $scope.ToDashboard = function () {
         $modalInstance.dismiss('cancel');
         //$route.reload();
     };
-});
+}]);
 
 hallOfFameModule.directive('progressBar', function ($compile) {
         var directDefObject =

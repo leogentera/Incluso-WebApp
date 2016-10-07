@@ -255,9 +255,9 @@ angular
 
 
 
-        }]).controller('termsAndConditionsController', function ($scope, $modalInstance) {
+        }]).controller('termsAndConditionsController', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-});;
+}]);;

@@ -922,20 +922,20 @@ angular
 
             }
 
-        }]).controller('badgeForumRobotMessageModal', function ($scope, $modalInstance) {
+        }]).controller('badgeForumRobotMessageModal', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
 
     var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
     $scope.actualMessage = robotMessage;
-}).controller('timeOutForum', function ($scope, $modalInstance, $route) {//TimeOut Robot
+}]).controller('timeOutForum', ['$scope', '$modalInstance', '$route', function ($scope, $modalInstance, $route) {//TimeOut Robot
 
     $scope.ToDashboard = function () {
         $scope.$emit('ShowPreloader');
         $modalInstance.dismiss('cancel');
         $route.reload();
     };
-});
+}]);
 
 
