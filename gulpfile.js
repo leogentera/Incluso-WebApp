@@ -47,7 +47,7 @@ gulp.task('production', function () {
 });
 
 gulp.task('default', function(){
-    gulp.watch('Scripts/**/*.js', [uglify]);
+    gulp.watch('Scripts/**/*.js', ['production']);
 });
 
 gulp.task('concat', function(){
