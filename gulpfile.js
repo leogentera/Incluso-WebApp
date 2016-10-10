@@ -24,6 +24,9 @@ gulp.task('move_files', function () {
 
     gulp.src('bin/index.html')
         .pipe(gulp.dest('dist/'));
+
+    gulp.src('redirectToAndroid.html')
+        .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('js', function () {
