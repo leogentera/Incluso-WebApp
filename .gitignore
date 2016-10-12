@@ -2,3 +2,5 @@
 Thumbs.db
 *.sln
 /.vs/
+/dist
+/node_modules
