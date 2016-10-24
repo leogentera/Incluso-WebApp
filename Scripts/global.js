@@ -1,5 +1,5 @@
 //var API_RESOURCE = "http://definityincluso.cloudapp.net:82/testing/api/RestfulAPI/public/{0}" // Internal QA Development environment
-var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv1-3/RestfulAPI/public/{0}"; //Azure Development environment
+var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv1-2/RestfulAPI/public/{0}"; //Azure Development environment
 var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
 var DRUPAL_CONTENT_RESOURCE = "http://definityincluso.cloudapp.net/drupal_proxy/proxy.php";
 var SIGNALR_API_RESOURCE = "http://signalrchat-incluso.azurewebsites.net/realtime/echo"; //Azure Development environment
