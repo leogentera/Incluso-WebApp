@@ -255,7 +255,7 @@
             } else {
                 return JSON.parse(str);
             }
-        };
+        };        
 
         var _getAsyncDataByActivities = function (key, url, activitiesArray, userId, token, successCallback, errorCallback, forceRefresh, isLoginRequest) {
 
@@ -268,6 +268,18 @@
                 timeOut = longTimeOut;
             }
 
+            var activityQuizzes = JSON.parse(localStorage.getItem("quizzes"));
+
+            var moodleIdActivitiesArray = [];
+
+            _.each(activitiesArray, function (activity_identifier, index) {
+                _.each(activityQuizzes, function (quiz) {
+                    if (quiz.activity_identifier == activity_identifier) {
+                        moodleIdActivitiesArray.push(quiz.coursemoduleid);
+                    }
+                })
+            });
+
             if (!forceRefresh) {
                 var returnValue =  _getCacheJson(key);
                 _timeout(function () {
@@ -276,8 +288,8 @@
                 //return returnValue;
             }else if (forceRefresh && token) {
                 _httpFactory({
-                    method: 'POST',
-                    data: { "userid": userId, "activities": activitiesArray },
+                    method: 'POST',                    
+                    data: { "userid": userId, "activities": moodleIdActivitiesArray },
                     url: url,
                     timeout: timeOut,
                     headers: {'Content-Type': 'application/json', 'Authorization': token}
@@ -286,8 +298,16 @@
 
                     var proc = setInterval(function () {//Get & save each activity object.
                         if (data.length > 0) {
-                            var activity = data.shift();
-                            var activitiesToConvert = [75, 89, 96, 170, 211, 150, 71, 70, 72, 100, 75, 159, 82, 86, 89, 96];
+                            var activity = data.shift();                            
+                            var activitiesToConvert = [2001, 3101, 3601, 2013, 3303, 1001, 1005, 1006, 1007, 1009, 2009, 2025, 2023];
+
+                            _.each(activitiesToConvert, function (activity_identifier,index) {
+                                _.each(activityQuizzes, function (quiz) {
+                                    if (quiz.activity_identifier == activity_identifier) {
+                                        activitiesToConvert[index] = quiz.coursemoduleid;
+                                    }
+                                })
+                            });                            
 
                             if (activity && activity.data[0]) {
 
@@ -971,6 +991,7 @@
         var createTree = function (activities) {
 
             var activityManagers = [];
+            var quizzes = [];
 
             if (activities.length > 0) {
 
@@ -1161,8 +1182,17 @@
                 //set stages as completed in local storage, as this is not set by the back-end
                 _setStagesStatus();
                 _setLocalStorageJsonItem("course", course);
-                _setLocalStorageJsonItem("activityManagers", activityManagers);
+                _setLocalStorageJsonItem("activityManagers", activityManagers);                               
 
+                _.each(activityManagers, function (seudoActivity) {
+                    _.each(seudoActivity.activities, function (activity) {
+                        if (activity.activity_type == "quiz" && activity.activity_identifier != "") {
+                            quizzes.push(activity);
+                        }
+                    });
+                });
+
+                _setLocalStorageJsonItem("quizzes", quizzes);
             }
         };
         
