@@ -385,8 +385,14 @@ angular
                     //$scope.$emit('ShowPreloader');
     
                     drupalFactory.Services.GetDrupalContent(function () {
+                        
                         _loadedDrupalResources = true;
                         $scope.incLoadedItem(); //1
+                        $timeout(
+                            function () {
+                            loginCordova();
+                        },1000);
+                        
                     }, function (obj) {
                             _loadedDrupalResources = false;
                             _loadedDrupalResourcesWithErrors = true;
@@ -395,11 +401,7 @@ angular
                     /*******************  ******/
     
                     $rootScope.OAUTH_ENABLED = true;
-    
-    
-    
-                                          
-                    
+                                                    
                     //Run queue
                     moodleFactory.Services.ExecuteQueue(function () {
                         //Preparing for syncAll...                    
