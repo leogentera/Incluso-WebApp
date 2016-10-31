@@ -29,12 +29,52 @@ angular
             $scope.userToken = $scope.user.token != '' ? $scope.user.token : "";
             var userId = _getItem("userId");
                         
+            var _readNotification = function (currentUserId, notificationId,usernotificationId, userNotifications) {
+                
+                
+                for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
+                    if (userNotifications[indexNotification].usernotificationid == usernotificationId) {
+                        var seen_date_now = new Date();
+                        userNotifications[indexNotification].seen_date = seen_date_now;
+                    }
+                }
+                
+                _setLocalStorageJsonItem("notifications", userNotifications);
+                
+                var data = {                    
+                    notificationid: notificationId,
+                    seen_date: seen_date_now,
+                    usernotificationid: usernotificationId
+                    
+                };
+            
+                moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
+                    document.addEventListener("deviceready",function(){
+                            cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
+                        }, false);
+                }, function (obj) {
+                                $scope.$emit('HidePreloader');
+                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
+                                  $timeout(function () {
+                                    $location.path('/Offline'); //This behavior could change
+                                  }, 1);
+                                } else {//Another kind of Error happened
+                                  $timeout(function () {
+                                      console.log("Another kind of Error happened");
+                                      $scope.$emit('HidePreloader');
+                                      $location.path('/connectionError');
+                                  }, 1);
+                                }
+                            }, true);
+            };
+
             function initialLoading(){
                 if ($routeParams.usernotificationId == "undefined" || $routeParams.usernotificationId == "-1") {
                     $scope.notification = _.find(userNotifications, function(not){return not.notificationid == $routeParams.notificationId;});                    
                 }else{
                     $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId;});
                     getPost();
+                    _readNotification(userId, $routeParams.notificationId, $routeParams.usernotificationId, userNotifications);
                 }
 
             }
@@ -70,8 +110,7 @@ angular
 
                 moodleFactory.Services.GetUserNotification(userId, courseid, $scope.user.token, function () {
                     var userNotifications = JSON.parse(localStorage.getItem("notifications"));
-                    $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId; });
-                    _readNotification(userId, $routeParams.notificationId, $routeParams.usernotificationId, userNotifications);
+                    $scope.notification = _.find(userNotifications, function(notif){return notif.usernotificationid == $routeParams.usernotificationId; });                    
                     getPost();
                 }, function (obj) {
                                 $scope.$emit('HidePreloader');
@@ -103,45 +142,7 @@ angular
                 });
             };
                 
-            var _readNotification = function (currentUserId, notificationId,usernotificationId, userNotifications) {
-                
-                
-                for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
-                    if (userNotifications[indexNotification].usernotificationid == usernotificationId) {
-                        var seen_date_now = new Date();
-                        userNotifications[indexNotification].seen_date = seen_date_now;
-                    }
-                }
-                
-                _setLocalStorageJsonItem("notifications", userNotifications);
-                
-                var data = {                    
-                    notificationid: notificationId,
-                    seen_date: seen_date_now,
-                    usernotificationid: usernotificationId
-                    
-                };
-            
-                moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
-                    cordova.exec(function () { }, function () { }, "CallToAndroid", "seenNotification", [usernotificationId]);
-                }, function (obj) {
-                                $scope.$emit('HidePreloader');
-                                if (obj && obj.statusCode && obj.statusCode == 408) {//Request Timeout
-                                  $timeout(function () {
-                                    $location.path('/Offline'); //This behavior could change
-                                  }, 1);
-                                } else {//Another kind of Error happened
-                                  $timeout(function () {
-                                      console.log("Another kind of Error happened");
-                                      $scope.$emit('HidePreloader');
-                                      $location.path('/connectionError');
-                                  }, 1);
-                                }
-                            }, true);
-            };
-            
-            
-            
+
             var initializeCommentsData = function(element, index, array){
                 //$scope.isCommentModalCollapsed[index] = false;
                 if ($scope.showAllCommentsByPost['id' + element.post_id] != 1000000) {
