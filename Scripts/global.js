@@ -1584,10 +1584,13 @@ function _getAPKVersion() {
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
 
     if (window.mobilecheck()) {
-        cordova.exec(function (data) {
-            _isDeviceOnline = data.online;
-            callback();
-        }, function () { errorIsOnlineCallback(); }, "CallToAndroid", "isonline", []);
+        document.addEventListener("deviceready", function(){
+            cordova.exec(function (data) {
+                _isDeviceOnline = data.online;
+                callback();
+            }, function () { errorIsOnlineCallback(); }, "CallToAndroid", "isonline", []);
+        }, false);
+        
     }
     else {
         _isDeviceOnline = true;
