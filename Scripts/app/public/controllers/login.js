@@ -179,7 +179,7 @@ angular
                         {
                             method: 'POST',
                             url: API_RESOURCE.format("authentication"),
-                            timeout: 30000,
+                            timeout: 120000,
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                             data: $.param({
                                 username: $scope.userCredentialsModel.username.toString().toLowerCase(),
